@@ -113,6 +113,9 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
 <meta property="og:site_name" content="Roobet Casino Rewards">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0d0919">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -297,6 +300,23 @@ PAGES["index.html"] = dict(
 """)
 
 # ================= LEADERBOARD =================
+try:
+    LB_DATA = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "leaderboard-data.json"), encoding="utf-8").read()
+except FileNotFoundError:
+    LB_DATA = '{"entries":[]}'
+
+LB_TABLE = f"""
+<div style="margin-top:70px" id="standings">
+  <div class="center rv"><span class="eyebrow">📊 Live Standings</span><h2>Current Top 100</h2>
+  <p class="lead">All wagers are weighted and in USD. Everyone in the top 100 also earns <b style="color:var(--gold)">ELITE Points</b>.</p></div>
+  <div class="tbl-wrap rv lb-wrap" id="lb-wrap" style="margin-top:36px"><table class="tbl" id="lb-table">
+    <thead><tr><th>#</th><th>Player</th><th>Wagered (weighted)</th><th>Prize</th><th>ELITE Points</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <div class="center" style="margin-top:22px"><button class="btn btn-ghost" id="lb-toggle">Show Full Top 100</button></div>
+</div>
+<script>window.LB_DATA = {LB_DATA};</script>"""
+
 PAGES["leaderboard.html"] = dict(
     title="$50,000 Roobet Wager Leaderboard — Monthly Cash Prizes | Code ELITE & DAILY",
     desc="Compete on the $50,000 monthly Roobet wager leaderboard. Wager under code ELITE or DAILY, climb the ranks and win cash prizes, free spins and redeemable points every month.",
@@ -310,15 +330,16 @@ PAGES["leaderboard.html"] = dict(
   <div class="hero-cta rv d3" style="justify-content:center">
     <a class="btn btn-gold btn-lg pulse" href="{SLOTS}" target="_blank" rel="noopener">Join the Race {ARR}</a>
   </div>
-  <p class="rv d4" style="margin-top:26px;color:var(--muted)">Resets in <b style="color:var(--gold);font-variant-numeric:tabular-nums" data-deadline="monthly">—</b></p>
+  <p class="rv d4" style="margin-top:26px;color:var(--muted)">Period: 16th &rarr; 15th, Midnight UTC &nbsp;·&nbsp; Ends in <b style="color:var(--gold);font-variant-numeric:tabular-nums" data-deadline="period16">—</b></p>
 </div></section>
 
 <section style="padding-top:20px"><div class="wrap">
   <div class="podium">
-    <div class="pod rv"><span class="medal">🥈</span><p class="place">2nd Place</p><p class="prize">$7,000</p><p style="color:var(--gold);font-weight:700;font-size:.95rem">+ 15,000 ELITE Points</p><p style="color:var(--muted);font-size:.9rem">+ free spins &amp; points</p></div>
-    <div class="pod first rv d1"><span class="medal">🥇</span><p class="place">1st Place</p><p class="prize">$12,500</p><p style="color:var(--gold);font-weight:700;font-size:.95rem">+ 15,000 ELITE Points</p><p style="color:var(--muted);font-size:.9rem">The biggest share of $50,000</p></div>
-    <div class="pod rv d2"><span class="medal">🥉</span><p class="place">3rd Place</p><p class="prize">$5,000</p><p style="color:var(--gold);font-weight:700;font-size:.95rem">+ 15,000 ELITE Points</p><p style="color:var(--muted);font-size:.9rem">+ free spins &amp; points</p></div>
+    <div class="pod rv"><span class="medal">🥈</span><p class="place">2nd Place</p><p class="pod-user" data-pod="2">—</p><p class="prize">$7,000</p><p style="color:var(--gold);font-weight:700;font-size:.95rem">+ 15,000 ELITE Points</p></div>
+    <div class="pod first rv d1"><span class="medal">🥇</span><p class="place">1st Place</p><p class="pod-user" data-pod="1">—</p><p class="prize">$12,500</p><p style="color:var(--gold);font-weight:700;font-size:.95rem">+ 15,000 ELITE Points</p></div>
+    <div class="pod rv d2"><span class="medal">🥉</span><p class="place">3rd Place</p><p class="pod-user" data-pod="3">—</p><p class="prize">$5,000</p><p style="color:var(--gold);font-weight:700;font-size:.95rem">+ 15,000 ELITE Points</p></div>
   </div>
+  {LB_TABLE}
   <div class="hero-grid" style="margin-top:60px">
     <div>
       <h2 class="rv">How the Leaderboard Works</h2>
