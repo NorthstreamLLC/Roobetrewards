@@ -77,6 +77,10 @@
       while (d.getUTCDay() !== 0) d.setUTCDate(d.getUTCDate() + 1);
       return d;
     }
+    if (kind === 'period16') { // leaderboard period: 16th 00:00 UTC -> next 16th
+      const t = Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), 16);
+      return new Date(n.getTime() < t ? t : Date.UTC(n.getUTCFullYear(), n.getUTCMonth() + 1, 16));
+    }
     return new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth() + 1, 1)); // monthly
   }
   document.querySelectorAll('[data-deadline]').forEach(el => {
@@ -113,4 +117,57 @@ document.querySelectorAll('.flip').forEach(c => {
   m.querySelector('.modal-x').addEventListener('click', close);
   m.addEventListener('click', e => { if (e.target === m) close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+
+// ===== live leaderboard =====
+(function () {
+  const tbl = document.getElementById('lb-table');
+  if (!tbl) return;
+  const fmtUsd = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const prize = r =>
+    r === 1 ? '$12,500' : r === 2 ? '$7,000' : r === 3 ? '$5,000' :
+    r === 4 ? '$3,500' : r === 5 ? '$2,500' : r === 6 ? '$2,000' :
+    r <= 10 ? '$1,100' : r <= 20 ? '$400' : r <= 30 ? '$250' :
+    r <= 40 ? '$150' : r <= 50 ? '$135' :
+    r <= 75 ? '100 × $1 Spins' : '50 × $1 Spins';
+  const points = r =>
+    r <= 15 ? 15000 : r <= 25 ? 10000 : r <= 35 ? 9000 :
+    r <= 45 ? 8000 : r <= 65 ? 7000 : r <= 84 ? 6000 : 5000;
+
+  function render(entries) {
+    if (!entries || !entries.length) return;
+    entries = entries.slice().sort((a, b) => a.rank - b.rank);
+    // podium names + wagered
+    entries.slice(0, 3).forEach(e => {
+      const el = document.querySelector(`[data-pod="${e.rank}"]`);
+      if (el) el.innerHTML = `<b>${e.username}</b><br><span style="color:var(--muted);font-size:.85rem">${fmtUsd(e.wagered)} wagered</span>`;
+    });
+    const tb = tbl.querySelector('tbody');
+    tb.innerHTML = entries.map(e => {
+      const p = prize(e.rank), spins = p.includes('Spins');
+      return `<tr class="${e.rank <= 3 ? 'lb-top' : ''}">
+        <td>${e.rank <= 3 ? ['🥇', '🥈', '🥉'][e.rank - 1] : e.rank}</td>
+        <td>${e.username}</td>
+        <td>${fmtUsd(e.wagered)}</td>
+        <td class="${spins ? 'lb-spins' : 'gold-td'}">${p}</td>
+        <td>⭐ ${points(e.rank).toLocaleString('en-US')}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  render(window.LB_DATA && window.LB_DATA.entries);
+
+  // upgrade to live API data when deployed (key stays server-side)
+  fetch('/api/leaderboard')
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { if (d && d.entries && d.entries.length) render(d.entries); })
+    .catch(() => {});
+
+  // collapse/expand
+  const wrap = document.getElementById('lb-wrap'), btn = document.getElementById('lb-toggle');
+  btn.addEventListener('click', () => {
+    const open = wrap.classList.toggle('open');
+    btn.textContent = open ? 'Show Top 10 Only' : 'Show Full Top 100';
+    if (!open) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 })();
