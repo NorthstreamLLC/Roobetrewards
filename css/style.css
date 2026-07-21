@@ -244,3 +244,12 @@ footer{border-top:1px solid rgba(123,92,255,.18);background:rgba(13,9,25,.8);pad
 .modal-back.show .modal{transform:none}
 .modal-x{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--muted);font-size:1.9rem;cursor:pointer;line-height:1;transition:color .2s}
 .modal-x:hover{color:var(--text)}
+
+/* ---------- leaderboard table ---------- */
+.lb-wrap{max-height:760px;overflow:hidden;position:relative}
+.lb-wrap:not(.open)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(transparent,var(--bg));pointer-events:none}
+.lb-wrap.open{max-height:none}
+.lb-top td{background:rgba(255,199,0,.06);font-weight:700}
+.lb-spins{color:#b8a6ff;font-weight:700;white-space:nowrap}
+.tbl td:first-child{width:56px}
+.pod-user{margin:4px 0 8px;font-size:1rem}
