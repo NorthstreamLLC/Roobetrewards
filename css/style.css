@@ -253,3 +253,14 @@ footer{border-top:1px solid rgba(123,92,255,.18);background:rgba(13,9,25,.8);pad
 .lb-spins{color:#b8a6ff;font-weight:700;white-space:nowrap}
 .tbl td:first-child{width:56px}
 .pod-user{margin:4px 0 8px;font-size:1rem}
+
+/* ---------- live toast ---------- */
+.live-toast{position:fixed;bottom:24px;right:24px;z-index:250;background:linear-gradient(160deg,var(--card),var(--bg2));border:1px solid rgba(255,60,60,.5);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(255,60,60,.15);max-width:340px;transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.7,.3,1)}
+.live-toast.show{transform:none}
+.live-dot{width:12px;height:12px;border-radius:50%;background:#ff3c3c;flex-shrink:0;animation:livepulse 1.6s infinite}
+@keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(255,60,60,.6)}70%{box-shadow:0 0 0 12px rgba(255,60,60,0)}100%{box-shadow:0 0 0 0 rgba(255,60,60,0)}}
+.live-toast b{color:#ff5c5c}
+.live-toast p{font-size:.88rem;color:var(--muted);line-height:1.4}
+.live-toast .btn{padding:9px 16px;font-size:.85rem}
+.live-toast .toast-x{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1;align-self:flex-start;padding:0}
+@media(max-width:680px){.live-toast{left:16px;right:16px;bottom:16px;max-width:none}}

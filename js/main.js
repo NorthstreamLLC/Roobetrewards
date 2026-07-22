@@ -171,3 +171,34 @@ document.querySelectorAll('.flip').forEach(c => {
     if (!open) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 })();
+
+// ===== "DailyGambling is LIVE" toast =====
+(function () {
+  let shown = false;
+  function showToast() {
+    if (shown || sessionStorage.getItem('liveToastClosed')) return;
+    shown = true;
+    const t = document.createElement('div');
+    t.className = 'live-toast';
+    t.innerHTML = `<span class="live-dot"></span>
+      <div><b>DailyGambling is LIVE</b>
+      <p>Watch on Kick — earn ELITE Points &amp; catch live giveaways.</p></div>
+      <a class="btn btn-gold" href="https://kick.com/dailygambling" target="_blank" rel="noopener">Watch</a>
+      <button class="toast-x" aria-label="Dismiss">&times;</button>`;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => setTimeout(() => t.classList.add('show'), 50));
+    t.querySelector('.toast-x').addEventListener('click', () => {
+      t.classList.remove('show');
+      sessionStorage.setItem('liveToastClosed', '1');
+      setTimeout(() => t.remove(), 500);
+    });
+  }
+  function check() {
+    fetch('/api/live').then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && d.live === true) showToast(); })
+      .catch(() => {});
+  }
+  // first check after the promo modal has had its moment
+  setTimeout(check, 8000);
+  setInterval(check, 180000); // re-check every 3 min
+})();
