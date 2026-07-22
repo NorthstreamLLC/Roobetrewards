@@ -22,13 +22,19 @@ pre{background:#1a1230;border:1px solid #3a2d66;border-radius:10px;padding:16px;
 <label>Ends at</label><input id="ends" type="datetime-local">
 <label>Winners to draw</label><input id="winners" type="number" value="5" min="1">
 <div>
-  <button onclick="call('create',{title:v('title'),prize:v('prize'),endsAt:v('ends')})">Create / Replace Raffle</button>
+  <button onclick="createRaffle()">Create / Replace Raffle</button>
   <button onclick="if(confirm('Draw winners now? This closes the raffle.'))call('draw',{winners:v('winners')})">Draw Winners</button>
   <button class="ghost" onclick="call('status',{})">Status</button>
 </div>
 <pre id="out">—</pre>
 <script>
 const v = id => document.getElementById(id).value;
+function createRaffle(){
+  const raw = v('ends');
+  if(!raw){ alert('Set a complete end date & time first (the field must not show ——).'); return; }
+  // datetime-local is your local time; convert to absolute UTC instant
+  call('create',{title:v('title'),prize:v('prize'),endsAt:new Date(raw).toISOString()});
+}
 function call(action, extra){
   fetch('/api/raffle',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify(Object.assign({action, key:v('key')},extra))})

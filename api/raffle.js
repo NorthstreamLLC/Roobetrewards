@@ -55,11 +55,14 @@ module.exports = async (req, res) => {
       return res.status(403).json({ error: "forbidden" });
     }
     if (body.action === "create") {
+      const endsAt = new Date(body.endsAt).getTime();
+      if (!endsAt || isNaN(endsAt)) return res.status(400).json({ error: "invalid or missing end date" });
+      if (endsAt < Date.now()) return res.status(400).json({ error: "end date is in the past" });
       const r = {
         id: Date.now().toString(36),
         title: body.title || "Community Raffle",
         prize: body.prize || "",
-        endsAt: new Date(body.endsAt).getTime() || Date.now() + 7 * 864e5,
+        endsAt,
         winners: [], drawn: false, created: Date.now(),
       };
       await redis("SET", "raffle:current", JSON.stringify(r));
