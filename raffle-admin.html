@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Raffle Admin</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#0d0919;color:#f4f1ff;max-width:640px;margin:40px auto;padding:0 20px}
+h1{color:#ffc700}label{display:block;margin:14px 0 4px;font-size:.9rem;color:#a89fc7}
+input{width:100%;padding:10px;border-radius:8px;border:1px solid #3a2d66;background:#1a1230;color:#f4f1ff;font-size:1rem}
+button{margin:16px 8px 0 0;padding:11px 22px;border-radius:10px;border:none;background:linear-gradient(135deg,#ffc700,#ffb400);color:#241a05;font-weight:700;cursor:pointer;font-size:.95rem}
+button.ghost{background:#241a42;color:#f4f1ff;border:1px solid #3a2d66}
+pre{background:#1a1230;border:1px solid #3a2d66;border-radius:10px;padding:16px;white-space:pre-wrap;word-break:break-all;margin-top:20px;font-size:.85rem}
+</style>
+</head>
+<body>
+<h1>🎟️ Raffle Admin</h1>
+<label>Admin key</label><input id="key" type="password" placeholder="RAFFLE_ADMIN_KEY">
+<label>Title</label><input id="title" value="Monthly Community Raffle">
+<label>Prize</label><input id="prize" placeholder="e.g. $500 split across 5 winners">
+<label>Ends at</label><input id="ends" type="datetime-local">
+<label>Winners to draw</label><input id="winners" type="number" value="5" min="1">
+<div>
+  <button onclick="call('create',{title:v('title'),prize:v('prize'),endsAt:v('ends')})">Create / Replace Raffle</button>
+  <button onclick="if(confirm('Draw winners now? This closes the raffle.'))call('draw',{winners:v('winners')})">Draw Winners</button>
+  <button class="ghost" onclick="call('status',{})">Status</button>
+</div>
+<pre id="out">—</pre>
+<script>
+const v = id => document.getElementById(id).value;
+function call(action, extra){
+  fetch('/api/raffle',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(Object.assign({action, key:v('key')},extra))})
+  .then(r=>r.json()).then(d=>document.getElementById('out').textContent=JSON.stringify(d,null,2))
+  .catch(e=>document.getElementById('out').textContent=String(e));
+}
+</script>
+</body>
+</html>

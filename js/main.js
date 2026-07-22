@@ -202,3 +202,67 @@ document.querySelectorAll('.flip').forEach(c => {
   setTimeout(check, 8000);
   setInterval(check, 180000); // re-check every 3 min
 })();
+
+// ===== live raffle widget (giveaways page) =====
+(function () {
+  const w = document.getElementById('raffle-widget');
+  if (!w) return;
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+
+  function countdown(el, endsAt) {
+    const upd = () => {
+      let s = Math.max(0, (endsAt - Date.now()) / 1000 | 0);
+      const d = s / 86400 | 0; s %= 86400;
+      const h = s / 3600 | 0; s %= 3600;
+      const m = s / 60 | 0;
+      el.textContent = `${d}d ${h}h ${m}m`;
+    };
+    upd(); setInterval(upd, 30000);
+  }
+
+  function render(d) {
+    const r = d && d.raffle;
+    if (!r) {
+      $('rf-title').textContent = 'No raffle live right now';
+      $('rf-info').innerHTML = 'Next drop is never far away — follow the <a href="https://discord.gg/slotessentials" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Discord</a> and watch <a href="https://kick.com/dailygambling" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">DailyGambling live</a> so you never miss one.';
+      $('rf-actions').innerHTML = '';
+      $('rf-meta').textContent = '';
+      return;
+    }
+    if (r.drawn) {
+      $('rf-title').textContent = `🏁 ${r.title} — Winners`;
+      $('rf-info').innerHTML = (r.prize ? `<b style="color:var(--gold)">${esc(r.prize)}</b> — ` : '') + 'congratulations to:';
+      $('rf-actions').innerHTML = r.winners.map(x => `<span class="btn btn-ghost" style="cursor:default">🎉 ${esc(x)}</span>`).join('');
+      $('rf-meta').textContent = 'Winners are contacted by the VIP team. Next raffle soon!';
+      return;
+    }
+    $('rf-title').textContent = `🎟️ ${r.title}`;
+    $('rf-info').innerHTML = (r.prize ? `Prize: <b style="color:var(--gold)">${esc(r.prize)}</b><br>` : '') +
+      `<span style="font-size:.95rem">Ends in <b style="color:var(--gold)" id="rf-cd">—</b> · <b>${d.count}</b> entries</span>`;
+    countdown($('rf-cd'), r.endsAt);
+    if (d.entered) {
+      $('rf-actions').innerHTML = `<span class="btn btn-gold" style="cursor:default">✅ You're in, ${esc(d.me.username)} — good luck!</span>`;
+      $('rf-meta').textContent = 'One entry per Kick account. Winners announced right here.';
+    } else if (d.me) {
+      $('rf-actions').innerHTML = `<button class="btn btn-gold btn-lg pulse" id="rf-enter">Enter Raffle — Free</button>`;
+      $('rf-meta').textContent = `Signed in as ${d.me.username} via Kick.`;
+      $('rf-enter').addEventListener('click', () => {
+        fetch('/api/raffle', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'enter' }) })
+          .then(r => r.json()).then(load);
+      });
+    } else {
+      $('rf-actions').innerHTML = `<a class="btn btn-gold btn-lg pulse" href="/api/kick/login">Sign in with Kick to Enter</a>`;
+      $('rf-meta').textContent = 'Free to enter · one entry per Kick account · active players only.';
+    }
+  }
+
+  function load() {
+    fetch('/api/raffle').then(r => r.ok ? r.json() : null).then(render)
+      .catch(() => {
+        $('rf-title').textContent = 'Raffle temporarily unavailable';
+        $('rf-info').textContent = 'Check back shortly.';
+      });
+  }
+  load();
+})();

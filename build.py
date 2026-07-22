@@ -690,7 +690,17 @@ PAGES["giveaways.html"] = dict(
   </div>
 </div></section>
 
-<section style="padding-top:10px"><div class="wrap"><div class="cards c3">
+<section id="raffle" style="padding-top:10px"><div class="wrap">
+  <div class="cta-banner rv" id="raffle-widget">
+    <span class="eyebrow">🎟️ Live Raffle</span>
+    <h2 id="rf-title">Checking for a live raffle…</h2>
+    <p class="lead" id="rf-info">One moment.</p>
+    <div class="hero-cta" style="justify-content:center;margin-top:22px" id="rf-actions"></div>
+    <p style="margin-top:16px;color:var(--muted);font-size:.88rem" id="rf-meta"></p>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap"><div class="cards c3">
   <div class="card rv"><div class="glow"></div><div class="ic">📺</div><h3>Live Stream Giveaways</h3><p>Drops happen live on <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Kick.com/DailyGambling</a> — show up, enter, win.</p></div>
   <div class="card rv d1"><div class="glow"></div><div class="ic">💬</div><h3>Community Drops</h3><p>Extra giveaways across the Slotessentials community all month long — <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">join the Discord</a> so you never miss one.</p></div>
   <div class="card rv d2"><div class="glow"></div><div class="ic">🚀</div><h3>Bigger for Members</h3><p>Players under code ELITE or DAILY get access to boosted, members-only giveaways.</p></div>
