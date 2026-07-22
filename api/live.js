@@ -11,6 +11,7 @@ async function appToken(id, secret) {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({ grant_type: "client_credentials", client_id: id, client_secret: secret }),
+    signal: AbortSignal.timeout(6000),
   });
   if (!r.ok) throw new Error(`token ${r.status}`);
   const d = await r.json();
@@ -37,6 +38,7 @@ module.exports = async (req, res) => {
       const t = await appToken(id, secret);
       const r = await fetch(`https://api.kick.com/public/v1/channels?slug=${CHANNEL}`, {
         headers: { Authorization: `Bearer ${t}` },
+        signal: AbortSignal.timeout(6000),
       });
       if (!r.ok) throw new Error(`channels ${r.status}`);
       return res.status(200).json({ live: parseLive(await r.json()), src: "official" });
@@ -44,6 +46,7 @@ module.exports = async (req, res) => {
     // fallback: unofficial endpoint
     const r = await fetch(`https://kick.com/api/v2/channels/${CHANNEL}`, {
       headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)", Accept: "application/json" },
+      signal: AbortSignal.timeout(6000),
     });
     if (!r.ok) throw new Error(`unofficial ${r.status}`);
     return res.status(200).json({ live: parseLive(await r.json()), src: "fallback" });
