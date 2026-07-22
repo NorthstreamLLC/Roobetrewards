@@ -53,6 +53,7 @@ def nav():
       <a href="/free-spins">Free Spins</a>
       <a href="/max-win-merch">Merch</a>
       <a href="/vip-transfer">VIP Transfer</a>
+      <a href="/blog">Blog</a>
       <a href="/#faq">FAQ</a>
     </div>
     <div class="nav-cta">
@@ -66,7 +67,7 @@ def nav():
 def footer():
     rew = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[:4])
     rew2 = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[4:])
-    rew2 += '<a href="/vip-transfer">VIP Transfer</a>'
+    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/blog">Blog</a>'
     return f"""<footer>
   <div class="wrap">
     <div class="foot-grid">
@@ -94,12 +95,38 @@ def footer():
   </div>
 </footer>"""
 
+ORG = {
+    "@context": "https://schema.org", "@type": "Organization",
+    "name": "Roobet Casino Rewards", "url": SITE,
+    "logo": SITE + "/assets/apple-touch-icon.png",
+    "sameAs": [KICK, DISCORD, TELEGRAM, "https://slotessentials.com"],
+}
+
 def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
     canon = SITE + ("/" if fname == "index.html" else "/" + fname[:-5])
-    schema_tag = f'<script type="application/ld+json">{json.dumps(schema)}</script>' if schema else ""
+    schemas = [schema] if schema and not isinstance(schema, list) else (schema or [])
+    if fname != "index.html":  # breadcrumb trail for every subpage
+        schemas = list(schemas) + [{
+            "@context": "https://schema.org", "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
+                {"@type": "ListItem", "position": 2, "name": title.split(" — ")[0].split(" | ")[0], "item": canon},
+            ]}]
+    else:
+        schemas = list(schemas) + [ORG]
+    schema_tag = "".join(f'<script type="application/ld+json">{json.dumps(s)}</script>' for s in schemas)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4XLL2RYBWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4XLL2RYBWD');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
@@ -111,7 +138,11 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canon}">
 <meta property="og:site_name" content="Roobet Casino Rewards">
+<meta property="og:image" content="{SITE}/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{SITE}/assets/og-image.png">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -171,7 +202,7 @@ faq_items = [
     ("What are the best Roobet casino rewards?",
      "Players using code ELITE or DAILY on Roobet unlock the full $100,000 monthly rewards package: the $50,000 Wager Leaderboard, up to $11,350 in Wager Milestones, exclusive Free Spins sign-up bonuses, Max Win Merch, ELITE Points, slot challenges, $5,000 in community giveaways, and VIP status transfer — all stacked on top of Roobet's own rakeback, daily, weekly and monthly bonuses."),
     ("How do I claim Roobet free spins?",
-     "Sign up at Roobet with code ELITE or DAILY, then deposit and wager to unlock the exclusive free spins bonus: deposit $500 and wager $5,000 for 75 free spins at $0.60, deposit $1,000 and wager $10,000 for 100 free spins at $0.80, or deposit $2,000 and wager $20,000 for 125 free spins at $1.00 each."),
+     "Sign up at Roobet with code ELITE or DAILY — your all-time deposit and wager totals unlock the exclusive free spins bonus (not a single deposit): $500 deposited and $5,000 wagered all-time earns 75 free spins at $0.60, $1,000 and $10,000 earns 100 free spins at $0.80, and $2,000 and $20,000 earns 125 free spins at $1.00 each."),
     ("How does the $50,000 Wager Leaderboard work?",
      "Every dollar you wager on Roobet under code ELITE or DAILY earns you a spot on the monthly leaderboard. The top wagerers split $50,000 in prizes each month — climb the ranks for cash prizes, free spins and redeemable points."),
     ("Is there a Roobet sign-up bonus?",
@@ -406,22 +437,24 @@ PAGES["free-spins.html"] = dict(
     desc="Get exclusive Roobet free spins with our sign-up bonus: up to 125 free spins at $1.00 per spin. Deposit, wager, and claim the biggest Roobet free spins package with code ELITE or DAILY.",
     kw="roobet free spins, free spins roobet, sign-up bonus, no deposit free spins, roobet sign up bonus, exclusive free spins",
     schema={"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-        {"@type":"Question","name":"How do I get Roobet free spins?","acceptedAnswer":{"@type":"Answer","text":"Sign up at Roobet with code ELITE or DAILY, deposit and wager to unlock up to 125 exclusive free spins worth up to $1.00 per spin."}},
+        {"@type":"Question","name":"How do I get Roobet free spins?","acceptedAnswer":{"@type":"Answer","text":"Sign up at Roobet with code ELITE or DAILY — your all-time deposit and wager totals unlock up to 125 exclusive free spins worth up to $1.00 per spin. It's cumulative, not a single deposit."}},
         {"@type":"Question","name":"Are there no deposit free spins on Roobet?","acceptedAnswer":{"@type":"Answer","text":"Our exclusive free spins packages require a deposit and wager. Active players can also win free spins and prizes through our $5,000 monthly community giveaways and by redeeming ELITE Points — giveaways are earned through activity, not luck."}}]},
     body=f"""
 <section class="page-hero"><div class="wrap">
   {crumb("Free Spins Bonus")}
   <span class="eyebrow rv">🎰 Exclusive Sign-Up Bonus</span>
   <h1 class="rv d1">Roobet Free Spins — Up to <span class="grad">125 Spins</span> at $1.00 Each</h1>
-  <p class="lead rv d2">The biggest Roobet free spins deal you'll find. Join with code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b>, hit your deposit &amp; wager tier, and the spins are yours.</p>
+  <p class="lead rv d2">The biggest Roobet free spins deal you'll find. Join with code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b> — your <b style="color:var(--text)">all-time</b> deposit &amp; wager totals unlock the tiers, so every session gets you closer.</p>
   <div class="hero-cta rv d3" style="justify-content:center"><a class="btn btn-gold btn-lg pulse" href="{SLOTS}" target="_blank" rel="noopener">Claim Free Spins {ARR}</a></div>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap"><div class="cards c3">
-  <div class="card rv center"><div class="glow"></div><p class="amount">75 Spins</p><p style="font-weight:700;color:var(--text)">$0.60 per spin — $45 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$500</b><br>Wager <b style="color:var(--gold)">$5,000</b></p></div>
-  <div class="card rv d1 center" style="border-color:rgba(255,199,0,.5)"><span class="tag">Most Popular</span><div class="glow"></div><p class="amount">100 Spins</p><p style="font-weight:700;color:var(--text)">$0.80 per spin — $80 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$1,000</b><br>Wager <b style="color:var(--gold)">$10,000</b></p></div>
-  <div class="card rv d2 center"><span class="tag">Max Value</span><div class="glow"></div><p class="amount">125 Spins</p><p style="font-weight:700;color:var(--text)">$1.00 per spin — $125 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$2,000</b><br>Wager <b style="color:var(--gold)">$20,000</b></p></div>
-</div></div></section>
+  <div class="card rv center"><div class="glow"></div><p class="amount">75 Spins</p><p style="font-weight:700;color:var(--text)">$0.60 per spin — $45 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$500</b> all-time<br>Wager <b style="color:var(--gold)">$5,000</b> all-time</p></div>
+  <div class="card rv d1 center" style="border-color:rgba(255,199,0,.5)"><span class="tag">Most Popular</span><div class="glow"></div><p class="amount">100 Spins</p><p style="font-weight:700;color:var(--text)">$0.80 per spin — $80 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$1,000</b> all-time<br>Wager <b style="color:var(--gold)">$10,000</b> all-time</p></div>
+  <div class="card rv d2 center"><span class="tag">Max Value</span><div class="glow"></div><p class="amount">125 Spins</p><p style="font-weight:700;color:var(--text)">$1.00 per spin — $125 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$2,000</b> all-time<br>Wager <b style="color:var(--gold)">$20,000</b> all-time</p></div>
+</div>
+<p class="rv center" style="margin-top:24px;color:var(--muted);font-size:.92rem">Tiers are based on your <b style="color:var(--gold)">all-time</b> deposit and wager totals under code DAILY or ELITE — not a single deposit. Every session counts toward your next tier.</p>
+</div></section>
 
 <section style="padding-top:0"><div class="wrap">
   <div class="cards c2">
@@ -752,6 +785,163 @@ for slug, name, prov, img in MERCH:
   </div>
 </div></div></section>
 {cta_banner("One Spin Away From the Rarest Merch", f"Every max win on {name} under DAILY or ELITE earns the shirt. Start hunting.")}
+""")
+
+# ================= BLOG =================
+BLOG_POSTS = [
+    ("how-to-deposit-on-roobet", "How to Deposit on Roobet", "Step-by-step guide to making your first Roobet deposit — crypto options, buying with card, confirmation times, and how to unlock your free spins bonus.", "2026-07-21", "5 min read", "💳"),
+    ("how-to-kyc-on-roobet", "How to KYC on Roobet", "What Roobet's verification asks for, when you need it, and how to pass it first try — documents, common mistakes, and how long it takes.", "2026-07-21", "4 min read", "🪪"),
+]
+blog_cards = "".join(f"""<a class="card rv d{i%3+1}" href="{slug}.html"><div class="glow"></div><div class="ic">{ic}</div><p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">{date} · {read}</p><h3>{t}</h3><p>{d}</p><span class="more">Read guide {ARR}</span></a>""" for i, (slug, t, d, date, read, ic) in enumerate(BLOG_POSTS))
+
+PAGES["blog.html"] = dict(
+    title="Roobet Guides & Blog — Deposits, Rewards, Free Spins | Roobet Casino Rewards",
+    desc="Guides for getting the most out of Roobet: how to deposit, claim rewards, earn free spins and climb the $50K leaderboard. By the team behind the $100,000 monthly rewards.",
+    kw="roobet guides, roobet blog, how to deposit on roobet, roobet tutorials, roobet rewards guide",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / Blog</p>
+  <span class="eyebrow rv">📚 Guides &amp; Blog</span>
+  <h1 class="rv d1">Roobet, <span class="grad">Explained</span></h1>
+  <p class="lead rv d2">Practical guides from the team behind the $100,000 monthly rewards — deposits, bonuses, leaderboards and everything in between.</p>
+</div></section>
+<section style="padding-top:10px"><div class="wrap">
+  <div class="cards c3">{blog_cards}
+  <div class="card rv center" style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:240px"><div class="ic">✍️</div><h3>More Guides Coming</h3><p>New guides drop regularly — follow the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Discord</a> to catch them first.</p></div>
+  </div>
+</div></section>
+{cta_banner("While You're Here","The $100K monthly rewards package is live right now — join with code DAILY and start claiming.")}
+""")
+
+deposit_faq = [
+    ("How long do Roobet deposits take?", "Crypto deposits are credited after network confirmation — usually within a few minutes. Bitcoin can take longer during network congestion; coins like Litecoin and Solana are typically near-instant."),
+    ("Do I need to verify my account before depositing?", "You can deposit quickly after signing up, but verification (KYC) is required to withdraw — it's smart to complete it upfront. Our step-by-step guide at HowToKYC.com walks you through the whole process."),
+    ("What is the minimum deposit on Roobet?", "Minimums are small and vary by cryptocurrency. The exclusive free spins bonus starts at $500 in all-time deposits under code DAILY or ELITE — cumulative across all your deposits, not one single deposit."),
+    ("Can I deposit on Roobet without crypto?", "Yes — Roobet lets you buy crypto directly in the deposit window with a card via third-party on-ramp providers, which then credits your balance."),
+]
+deposit_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in deposit_faq)
+
+PAGES["how-to-deposit-on-roobet.html"] = dict(
+    title="How to Deposit on Roobet — Step-by-Step Guide (2026) | Roobet Casino Rewards",
+    desc="How to deposit on Roobet in 2026: create your account with code DAILY, pick a crypto or buy with card, send your deposit and unlock up to 125 free spins. Full step-by-step guide.",
+    kw="how to deposit on roobet, roobet deposit, roobet deposit methods, roobet crypto deposit, roobet minimum deposit, roobet buy crypto with card",
+    schema=[
+        {"@context": "https://schema.org", "@type": "Article",
+         "headline": "How to Deposit on Roobet — Step-by-Step Guide",
+         "datePublished": "2026-07-21", "dateModified": "2026-07-21",
+         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
+         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "image": SITE + "/assets/og-image.png"},
+        {"@context": "https://schema.org", "@type": "FAQPage",
+         "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in deposit_faq]},
+    ],
+    og_type="article",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / How to Deposit on Roobet</p>
+  <span class="eyebrow rv">💳 Guide · 5 min read</span>
+  <h1 class="rv d1">How to Deposit on <span class="grad">Roobet</span></h1>
+  <p class="lead rv d2">Everything you need to make your first deposit — from creating your account to unlocking up to 125 free spins on top of it. Updated July 2026.</p>
+</div></section>
+
+<section style="padding-top:10px"><div class="wrap" style="max-width:860px">
+  <h2 class="rv">Step 1 — Create Your Account</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">Head to Roobet using code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> and create your account — it takes under a minute. Signing up under our code activates your +10% welcome rakeboost for 24 hours and makes every deposit count toward the <a href="/free-spins" style="color:var(--gold);font-weight:700">exclusive free spins bonus</a>, the <a href="/leaderboard" style="color:var(--gold);font-weight:700">$50K leaderboard</a> and <a href="/wager-milestones" style="color:var(--gold);font-weight:700">wager milestones</a>.</p>
+
+  <h2 class="rv">Step 2 — Verify Your Account (KYC)</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">You'll need to verify your identity to withdraw, so it's smartest to do it before your first deposit. It's a one-time process — ID plus a few details. Our sister site <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> has the full step-by-step walkthrough. Stuck? Message our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a>.</p>
+
+  <h2 class="rv">Step 3 — Choose Your Deposit Method</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 20px">Open your wallet (top of the screen) and hit Deposit. Roobet is crypto-first, and you have two routes:</p>
+  <div class="cards c2 rv" style="margin-bottom:30px">
+    <div class="card"><div class="glow"></div><div class="ic">🪙</div><h3>Already Have Crypto</h3><p>Pick your coin — Bitcoin, Ethereum, Litecoin, USDT and other major cryptocurrencies are supported. Roobet shows you a deposit address and QR code for that coin.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">💳</div><h3>Buy With Card</h3><p>No crypto? Use the buy-crypto option in the deposit window — a third-party on-ramp lets you purchase with a card, and it credits straight to your balance.</p></div>
+  </div>
+
+  <h2 class="rv">Step 4 — Send Your Deposit</h2>
+  <div style="display:grid;gap:12px;margin:20px 0 30px">
+    <div class="mile rv"><span class="amt">4.1</span><p style="flex:1;color:var(--muted)">Copy the deposit address (or scan the QR) for your chosen coin.</p></div>
+    <div class="mile rv d1"><span class="amt">4.2</span><p style="flex:1;color:var(--muted)"><b style="color:var(--text)">Double-check the network.</b> Sending on the wrong network (e.g. USDT on the wrong chain) can lose your funds — match the network Roobet shows exactly.</p></div>
+    <div class="mile rv d2"><span class="amt">4.3</span><p style="flex:1;color:var(--muted)">Send from your wallet or exchange. Account for the network fee so the full amount you intend arrives.</p></div>
+    <div class="mile rv d3"><span class="amt">4.4</span><p style="flex:1;color:var(--muted)">Wait for confirmation — usually minutes. Your balance updates automatically.</p></div>
+  </div>
+
+  <h2 class="rv">Step 5 — Make Your Deposit Work Harder</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 20px">This is where playing under code DAILY pays off. Your <b style="color:var(--text)">all-time</b> deposit and wager totals unlock the exclusive free spins bonus — it's cumulative, so every deposit moves you up:</p>
+  <div class="cards c3 rv" style="margin-bottom:30px">
+    <div class="card center"><p class="amount">75 Spins</p><p style="color:var(--muted)">$500 deposited · $5,000 wagered all-time</p></div>
+    <div class="card center" style="border-color:rgba(255,199,0,.5)"><p class="amount">100 Spins</p><p style="color:var(--muted)">$1,000 deposited · $10,000 wagered all-time</p></div>
+    <div class="card center"><p class="amount">125 Spins</p><p style="color:var(--muted)">$2,000 deposited · $20,000 wagered all-time</p></div>
+  </div>
+  <p class="rv" style="color:var(--muted);margin-bottom:30px">Every dollar you then wager counts toward the <a href="/leaderboard" style="color:var(--gold);font-weight:700">$50,000 monthly leaderboard</a>, <a href="/wager-milestones" style="color:var(--gold);font-weight:700">$11,350 in wager milestones</a> and <a href="/elite-points" style="color:var(--gold);font-weight:700">ELITE Points</a> — all at the same time.</p>
+
+  <h2 class="rv" style="margin-bottom:20px">Deposit FAQ</h2>
+  <div class="faq rv" style="max-width:none">{deposit_faq_html}</div>
+</div></section>
+
+{cta_banner("Ready for Your First Deposit?","Join with code DAILY, deposit, and walk away with up to 125 free spins on top.")}
+""")
+
+kyc_faq = [
+    ("Is KYC required to play on Roobet?", "You can sign up and deposit quickly, but identity verification is required before you can withdraw. Completing it right after signing up means your winnings are never stuck waiting."),
+    ("What documents do I need for Roobet KYC?", "Typically a government-issued photo ID (passport, driver's license or national ID) and a selfie. Depending on your account, proof of address or source-of-funds checks can also be requested."),
+    ("How long does Roobet verification take?", "Document checks are usually processed quickly — often within minutes to a few hours. Blurry photos or mismatched details are the most common cause of delays."),
+    ("My KYC got rejected — what now?", "Re-submit with a clear, glare-free photo of the original document and make sure your account details exactly match your ID. Still stuck? Message our VIP team on Telegram and we'll help you sort it."),
+]
+kyc_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in kyc_faq)
+
+PAGES["how-to-kyc-on-roobet.html"] = dict(
+    title="How to KYC on Roobet — Verification Guide (2026) | Roobet Casino Rewards",
+    desc="How to KYC on Roobet in 2026: which documents you need, how to pass verification first try, how long it takes, and what to do if it's rejected. Full walkthrough at HowToKYC.com.",
+    kw="how to kyc on roobet, roobet kyc, roobet verification, roobet identity verification, roobet documents, roobet kyc rejected",
+    schema=[
+        {"@context": "https://schema.org", "@type": "Article",
+         "headline": "How to KYC on Roobet — Verification Guide",
+         "datePublished": "2026-07-21", "dateModified": "2026-07-21",
+         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
+         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "image": SITE + "/assets/og-image.png"},
+        {"@context": "https://schema.org", "@type": "FAQPage",
+         "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in kyc_faq]},
+    ],
+    og_type="article",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / How to KYC on Roobet</p>
+  <span class="eyebrow rv">🪪 Guide · 4 min read</span>
+  <h1 class="rv d1">How to <span class="grad">KYC</span> on Roobet</h1>
+  <p class="lead rv d2">Verification is the one step between you and withdrawing your winnings. Here's how to pass it first try — updated July 2026.</p>
+</div></section>
+
+<section style="padding-top:10px"><div class="wrap" style="max-width:860px">
+  <h2 class="rv">Why Roobet Asks for KYC</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">KYC ("Know Your Customer") is standard identity verification every licensed casino runs — it protects your account, prevents fraud, and it's required before withdrawals. You can deposit and play beforehand, but do it early: nobody wants a max win sitting in limbo while documents process. New to the process entirely? Our dedicated sister site <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> covers every step with screenshots.</p>
+
+  <h2 class="rv">What You'll Need</h2>
+  <div class="cards c3 rv" style="margin:20px 0 30px">
+    <div class="card center"><div class="glow"></div><div class="ic">🪪</div><h3>Photo ID</h3><p>Passport, driver's license or national ID — valid and undamaged.</p></div>
+    <div class="card center"><div class="glow"></div><div class="ic">🤳</div><h3>A Selfie</h3><p>Taken live during verification to match you to your ID.</p></div>
+    <div class="card center"><div class="glow"></div><div class="ic">🧾</div><h3>Sometimes More</h3><p>Proof of address or source of funds, if requested on your account.</p></div>
+  </div>
+
+  <h2 class="rv">The Process, Step by Step</h2>
+  <div style="display:grid;gap:12px;margin:20px 0 30px">
+    <div class="mile rv"><span class="amt">Step 1</span><p style="flex:1;color:var(--muted)">Sign up (or log in) — join with code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> to stack the rewards while you're at it.</p></div>
+    <div class="mile rv d1"><span class="amt">Step 2</span><p style="flex:1;color:var(--muted)">Open your account settings and find the verification section.</p></div>
+    <div class="mile rv d2"><span class="amt">Step 3</span><p style="flex:1;color:var(--muted)">Upload your ID and complete the selfie check. Good lighting, no glare, all four corners of the document visible.</p></div>
+    <div class="mile rv d3"><span class="amt">Step 4</span><p style="flex:1;color:var(--muted)">Wait for approval — usually fast. Once verified, deposits, play and withdrawals are all frictionless.</p></div>
+  </div>
+
+  <h2 class="rv">Pass It First Try</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">The three mistakes that cause almost every rejection: blurry or cropped document photos, account details that don't exactly match the ID (name spelling, date of birth), and expired documents. Get those right and it's a one-and-done process. If anything goes sideways, message our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> or open a ticket in the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Discord</a> — we deal with this daily.</p>
+
+  <h2 class="rv" style="margin-bottom:20px">KYC FAQ</h2>
+  <div class="faq rv" style="max-width:none">{kyc_faq_html}</div>
+
+  <p class="rv" style="color:var(--muted);margin-top:30px">Verified and ready? Next up: <a href="/how-to-deposit-on-roobet" style="color:var(--gold);font-weight:700">how to make your first deposit</a> — and how to turn it into up to 125 free spins.</p>
+</div></section>
+
+{cta_banner("Verified? Time to Get Rewarded.","Join with code DAILY — your wagers count toward the $50K leaderboard from the very first spin.")}
 """)
 
 # ================= WRITE FILES =================
