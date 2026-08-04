@@ -58,6 +58,7 @@ def nav():
     </div>
     <div class="nav-cta">
       <a class="btn btn-ghost" href="/#how-to-sign-up">How to Sign-Up</a>
+      <a class="btn btn-ghost" href="/contact">Contact Us</a>
       <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with DAILY</a>
       <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -67,7 +68,7 @@ def nav():
 def footer():
     rew = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[:4])
     rew2 = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[4:])
-    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/blog">Blog</a>'
+    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/blog">Blog</a><a href="/contact">Contact Us</a>'
     return f"""<footer>
   <div class="wrap">
     <div class="foot-grid">
@@ -795,6 +796,48 @@ for slug, name, prov, img in MERCH:
   </div>
 </div></div></section>
 {cta_banner("One Spin Away From the Rarest Merch", f"Every max win on {name} under DAILY or ELITE earns the shirt. Start hunting.")}
+""")
+
+# ================= CONTACT =================
+DISCORD_GAMBA = "https://discord.gg/dailygamba"
+PAGES["contact.html"] = dict(
+    title="Contact Us — VIP Team on Telegram & Discord | Roobet Casino Rewards",
+    desc="Questions about our Roobet rewards? Contact our VIP Team on Telegram or join us on Discord — reward claims, VIP transfers, merch shipping and KYC help, handled personally.",
+    kw="contact roobet casino rewards, slotessentials vip team, roobet rewards support, telegram vip, discord",
+    schema={"@context": "https://schema.org", "@type": "ContactPage", "name": "Contact Roobet Casino Rewards", "url": SITE + "/contact"},
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / Contact Us</p>
+  <span class="eyebrow rv">💬 We Reply Fast</span>
+  <h1 class="rv d1">Questions? <span class="grad">One Message Away.</span></h1>
+  <p class="lead rv d2">Have any questions about our rewards? Our VIP team handles every message personally — claims, transfers, merch, KYC, anything.</p>
+</div></section>
+
+<section style="padding-top:10px"><div class="wrap">
+  <div class="cards c2">
+    <div class="card rv center" style="padding:44px 32px"><div class="glow"></div><div class="ic" style="margin:0 auto 18px">✈️</div>
+      <h3>VIP Team on Telegram</h3>
+      <p style="margin:10px 0 24px">The fastest way to reach us — direct line to the VIP team for rewards, claims and VIP transfers.</p>
+      <a class="btn btn-gold btn-lg pulse" href="{TELEGRAM}" target="_blank" rel="noopener">Message on Telegram {ARR}</a>
+      <p style="margin-top:14px;color:var(--muted);font-size:.85rem">t.me/slotessentialsVIP</p>
+    </div>
+    <div class="card rv d1 center" style="padding:44px 32px"><div class="glow"></div><div class="ic" style="margin:0 auto 18px">🎮</div>
+      <h3>Prefer Discord?</h3>
+      <p style="margin:10px 0 24px">Join the community — open a ticket for claims, or just hang out with the players.</p>
+      <a class="btn btn-gold btn-lg" href="{DISCORD_GAMBA}" target="_blank" rel="noopener">Join the Discord {ARR}</a>
+      <p style="margin-top:14px;color:var(--muted);font-size:.85rem">discord.gg/dailygamba</p>
+    </div>
+  </div>
+  <div class="cards c4" style="margin-top:40px">
+    <div class="card rv"><div class="glow"></div><div class="ic">🎁</div><h3>Reward Claims</h3><p>Milestones, giveaways, points — we verify and pay out.</p></div>
+    <div class="card rv d1"><div class="glow"></div><div class="ic">💎</div><h3>VIP Transfers</h3><p>Handled personally, start to finish.</p></div>
+    <div class="card rv d2"><div class="glow"></div><div class="ic">👕</div><h3>Merch Shipping</h3><p>Max win proof, sizes and delivery.</p></div>
+    <div class="card rv d3"><div class="glow"></div><div class="ic">🪪</div><h3>KYC Help</h3><p>Stuck on verification? We deal with it daily.</p></div>
+  </div>
+  <p class="rv center" style="margin-top:34px;color:var(--muted)">Quick answers might already be in our <a href="/#faq" style="color:var(--gold);font-weight:700">FAQ</a> or the <a href="/blog" style="color:var(--gold);font-weight:700">guides</a>.</p>
+</div></section>
+
+{cta_banner("While You Wait for a Reply…","The $100K monthly rewards don't pause. Join with code DAILY and start claiming.")}
 """)
 
 # ================= BLOG =================
