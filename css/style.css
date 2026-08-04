@@ -264,3 +264,9 @@ footer{border-top:1px solid rgba(123,92,255,.18);background:rgba(13,9,25,.8);pad
 .live-toast .btn{padding:9px 16px;font-size:.85rem}
 .live-toast .toast-x{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1;align-self:flex-start;padding:0}
 @media(max-width:680px){.live-toast{left:16px;right:16px;bottom:16px;max-width:none}}
+
+/* ---------- nav crowding fixes ---------- */
+.nav-links>a,.dropdown>button{white-space:nowrap}
+.nav-cta .btn{padding:11px 18px;font-size:.9rem}
+@media(max-width:1180px){.nav-cta .btn-ghost:first-child{display:none}}
+@media(max-width:1050px){.nav-links{gap:18px;font-size:.9rem}}

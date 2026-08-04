@@ -9,7 +9,7 @@ KICK = "https://kick.com/dailygambling"
 SLOTS = "https://slotessentials.com/rewards/sign-up-bonuses"
 KYC = "https://www.howtokyc.com/"
 TELEGRAM = "https://t.me/slotessentialsVIP"
-DISCORD = "https://discord.gg/slotessentials"
+DISCORD = "https://discord.gg/dailygamba"
 SLOTS_MILES = "https://slotessentials.com/rewards/wager-milestones"
 SLOTS_HOME = "https://slotessentials.com"
 
@@ -54,7 +54,6 @@ def nav():
       <a href="/max-win-merch">Merch</a>
       <a href="/vip-transfer">VIP Transfer</a>
       <a href="/blog">Blog</a>
-      <a href="/#faq">FAQ</a>
     </div>
     <div class="nav-cta">
       <a class="btn btn-ghost" href="/#how-to-sign-up">How to Sign-Up</a>
@@ -68,7 +67,7 @@ def nav():
 def footer():
     rew = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[:4])
     rew2 = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[4:])
-    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/blog">Blog</a><a href="/contact">Contact Us</a>'
+    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/blog">Blog</a><a href="/#faq">FAQ</a><a href="/contact">Contact Us</a>'
     return f"""<footer>
   <div class="wrap">
     <div class="foot-grid">
