@@ -96,25 +96,75 @@ def footer():
 </footer>"""
 
 ORG = {
-    "@context": "https://schema.org", "@type": "Organization",
-    "name": "Roobet Casino Rewards", "url": SITE,
-    "logo": SITE + "/assets/apple-touch-icon.png",
+    "@type": "Organization", "@id": SITE + "/#org",
+    "name": "Roobet Casino Rewards", "url": SITE + "/",
+    "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"},
     "sameAs": [KICK, DISCORD, TELEGRAM, "https://slotessentials.com"],
 }
 
+# Related-links pool for WebPage.isRelatedTo (mirrors the slotessentials schema pattern)
+REL_POOL = [
+    ("Roobet Casino Rewards Homepage", SITE + "/"),
+    ("$50,000 Roobet Wager Leaderboard", SITE + "/leaderboard"),
+    ("Roobet Wager Milestones", SITE + "/wager-milestones"),
+    ("Roobet Free Spins Bonus", SITE + "/free-spins"),
+    ("Roobet Max Win Merch", SITE + "/max-win-merch"),
+    ("ELITE Points Shop", SITE + "/elite-points"),
+    ("Roobet Slot Challenges", SITE + "/slot-challenges"),
+    ("$5,000 Monthly Giveaways", SITE + "/giveaways"),
+    ("Roobet Rewards Explained", SITE + "/roobet-rewards"),
+    ("Transfer Your VIP Status to Roobet", SITE + "/vip-transfer"),
+    ("Roobet Guides & Blog", SITE + "/blog"),
+    ("Play on Roobet with code DAILY", DAILY),
+    ("Slotessentials", "https://slotessentials.com/"),
+    ("How to KYC on Roobet", KYC),
+    ("Watch DailyGambling on Kick", KICK),
+]
+
 def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
     canon = SITE + ("/" if fname == "index.html" else "/" + fname[:-5])
-    schemas = [schema] if schema and not isinstance(schema, list) else (schema or [])
-    if fname != "index.html":  # breadcrumb trail for every subpage
-        schemas = list(schemas) + [{
-            "@context": "https://schema.org", "@type": "BreadcrumbList",
+    page_name = title.split(" — ")[0].split(" | ")[0]
+
+    graph = [
+        {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/",
+         "name": "Roobet Casino Rewards", "publisher": {"@id": SITE + "/#org"}, "inLanguage": "en"},
+        dict(ORG),
+    ]
+    webpage = {
+        "@type": "WebPage", "@id": canon + "#webpage", "url": canon,
+        "name": title, "description": desc,
+        "isPartOf": {"@id": SITE + "/#website"},
+        "primaryImageOfPage": {"@type": "ImageObject", "url": SITE + "/assets/og-image.png"},
+        "inLanguage": "en",
+        "isRelatedTo": [{"@type": "WebPage", "name": n, "url": u} for n, u in REL_POOL if u.rstrip("/") != canon.rstrip("/")][:12],
+    }
+    if fname != "index.html":
+        webpage["breadcrumb"] = {"@id": canon + "#breadcrumb"}
+        graph.append({
+            "@type": "BreadcrumbList", "@id": canon + "#breadcrumb",
             "itemListElement": [
-                {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
-                {"@type": "ListItem", "position": 2, "name": title.split(" — ")[0].split(" | ")[0], "item": canon},
-            ]}]
-    else:
-        schemas = list(schemas) + [ORG]
-    schema_tag = "".join(f'<script type="application/ld+json">{json.dumps(s)}</script>' for s in schemas)
+                {"@type": "ListItem", "position": 1, "name": "Roobet Casino Rewards", "item": SITE + "/"},
+                {"@type": "ListItem", "position": 2, "name": page_name, "item": canon},
+            ]})
+
+    # merge page-specific entities into the graph, cross-linked via @id
+    extras = [schema] if schema and not isinstance(schema, list) else (schema or [])
+    id_map = {"FAQPage": "#faq", "Article": "#article", "Product": "#product", "VideoGame": "#game"}
+    for s in extras:
+        s = dict(s); s.pop("@context", None)
+        t = s.get("@type")
+        if t == "ContactPage":       # ContactPage IS the WebPage
+            webpage["@type"] = "ContactPage"
+            continue
+        s["@id"] = canon + id_map.get(t, "#entity")
+        if "mainEntity" not in webpage and t in id_map:
+            webpage["mainEntity"] = {"@id": s["@id"]}
+        if t == "Article":
+            s["mainEntityOfPage"] = {"@id": canon + "#webpage"}
+        graph.append(s)
+
+    graph.insert(2, webpage)
+    schema_tag = f'<script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@graph": graph})}</script>'
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -234,10 +284,6 @@ faq_schema = {
     "@context": "https://schema.org", "@type": "FAQPage",
     "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq_items],
 }
-home_schema = [
-    {"@context": "https://schema.org", "@type": "WebSite", "name": "Roobet Casino Rewards", "url": SITE},
-    faq_schema,
-]
 faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in faq_items)
 reward_cards = "".join(f"""<a class="card rv d{i%3+1}" href="/{f[:-5]}"><div class="glow"></div><div class="ic">{ic}</div><h3>{t}</h3><p>{d}</p><span class="more">Explore {ARR}</span></a>"""
     for i, (f, ic, t, d) in enumerate([
@@ -256,7 +302,7 @@ PAGES["index.html"] = dict(
     title="Best Roobet Casino Rewards — $100,000 in Monthly Rewards | Code ELITE & DAILY",
     desc="The best Roobet casino rewards: $100,000 in monthly rewards including a $50,000 wager leaderboard, Roobet free spins, wager milestones, max win merch and more. Join with code ELITE or DAILY.",
     kw="best casino rewards, best roobet casino rewards, roobet free spins, free spins roobet, sign-up bonus, roobet rewards, $100,000 in monthly rewards",
-    schema=home_schema,
+    schema=faq_schema,
     body=f"""
 <section class="hero"><div class="wrap hero-grid">
   <div>
