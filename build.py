@@ -889,6 +889,9 @@ PAGES["contact.html"] = dict(
 BLOG_POSTS = [
     ("how-to-deposit-on-roobet", "How to Deposit on Roobet", "Step-by-step guide to making your first Roobet deposit — crypto options, buying with card, confirmation times, and how to unlock your free spins bonus.", "2026-07-21", "5 min read", "💳"),
     ("how-to-kyc-on-roobet", "How to KYC on Roobet", "What Roobet's verification asks for, when you need it, and how to pass it first try — documents, common mistakes, and how long it takes.", "2026-07-21", "4 min read", "🪪"),
+    ("roobet-rewards-guide", "Roobet Rewards: The Complete Guide", "Every Roobet reward explained — rakeback & cashback, deposit bonus, daily/weekly/monthly bonus release times, the VIP program and rank system, plus the $100K monthly extras.", "2026-08-07", "7 min read", "💰"),
+    ("best-roobet-slots", "Best Roobet Slots to Play", "The best slots on Roobet right now — RTP, max win potential, and which ones earn you free Max Win Merch under code DAILY or ELITE.", "2026-08-07", "6 min read", "🎰"),
+    ("how-to-withdraw-on-roobet", "How to Withdraw on Roobet", "Step-by-step Roobet withdrawal guide — KYC, crypto payouts, timing, fees, why a withdrawal might be blocked, and how tips work.", "2026-08-07", "5 min read", "💸"),
 ]
 blog_cards = "".join(f"""<a class="card rv d{i%3+1}" href="{slug}.html"><div class="glow"></div><div class="ic">{ic}</div><p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">{date} · {read}</p><h3>{t}</h3><p>{d}</p><span class="more">Read guide {ARR}</span></a>""" for i, (slug, t, d, date, read, ic) in enumerate(BLOG_POSTS))
 
@@ -1040,6 +1043,204 @@ PAGES["how-to-kyc-on-roobet.html"] = dict(
 </div></section>
 
 {cta_banner("Verified? Time to Get Rewarded.","Join with code DAILY — your wagers count toward the $50K leaderboard from the very first spin.")}
+""")
+
+# ================= BLOG: ROOBET REWARDS GUIDE =================
+rw_faq = [
+    ("Is there a Roobet deposit bonus?", "Yes — under code DAILY or ELITE your all-time deposits and wagers unlock an exclusive free spins deposit bonus: $500 deposited / $5,000 wagered earns 75 free spins, $1,000 / $10,000 earns 100 spins, and $2,000 / $20,000 earns 125 spins at $1.00 each. New sign-ups also get a +10% welcome rakeboost for 24 hours."),
+    ("Does Roobet have cashback?", "Yes — Roobet's cashback is called Instant Rakeback: a percentage of every wager comes back to you, claimable every 30 minutes, and it never expires. Part credits instantly and part flows to your Vault, which unlocks 3 claims per day. Rakeboosts of up to +20% multiply it."),
+    ("When does Roobet release the monthly bonus?", "The monthly bonus is released on the 1st of every month at midnight UTC. The weekly bonus drops every Saturday at 7 PM EST / midnight UTC, and the daily bonus can be claimed every 24 hours at midnight UTC."),
+    ("How does the Roobet VIP program and rank system work?", "Wagering levels up your account, and every rank-up pays a level-up bonus plus a +10% rakeboost for 60 minutes — the higher your level, the bigger your daily, weekly and monthly bonus percentages. Already VIP at another casino? You can transfer your status directly to Roobet under code DAILY or ELITE."),
+    ("What extra rewards do DAILY and ELITE players get?", "On top of Roobet's own system: the $50,000 monthly wager leaderboard, up to $11,350 in wager milestones, exclusive free spins, Max Win Merch, ELITE Points redeemable for real prizes, slot challenges and $5,000 in monthly community giveaways — about $100,000 in total monthly rewards."),
+]
+rw_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in rw_faq)
+
+PAGES["roobet-rewards-guide.html"] = dict(
+    title="Roobet Rewards: The Complete 2026 Guide — Rakeback, Cashback, VIP Program & Bonuses",
+    desc="Every Roobet reward explained: rakeback and cashback every 30 minutes, the deposit bonus, daily/weekly/monthly bonus release times, the VIP program and rank system, and $100,000 in extra monthly rewards with code DAILY or ELITE.",
+    kw="roobet rewards, roobet deposit bonus, roobet cashback, roobet rakeback, roobet vip program, roobet vip, roobet rank system, when does roobet release monthly bonus",
+    schema=[
+        {"@context": "https://schema.org", "@type": "Article",
+         "headline": "Roobet Rewards: The Complete 2026 Guide",
+         "datePublished": "2026-08-07", "dateModified": "2026-08-07",
+         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
+         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "image": SITE + "/assets/og-image.png"},
+        {"@context": "https://schema.org", "@type": "FAQPage",
+         "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in rw_faq]},
+    ],
+    og_type="article",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Roobet Rewards Guide</p>
+  <span class="eyebrow rv">💰 Guide · 7 min read</span>
+  <h1 class="rv d1">Roobet Rewards: <span class="grad">The Complete Guide</span></h1>
+  <p class="lead rv d2">Rakeback, cashback, deposit bonuses, the VIP program — and the $100,000 monthly package on top. Everything Roobet pays you, in one place. Updated August 2026.</p>
+</div></section>
+
+<section style="padding-top:10px"><div class="wrap" style="max-width:860px">
+  <h2 class="rv">Rakeback &amp; Cashback — Every 30 Minutes</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">Roobet's cashback system is <b style="color:var(--text)">Instant Rakeback</b>: a slice of every wager comes back to you, claimable every 30 minutes, and it never expires. Part hits your balance instantly; part fills your Vault (3 claims a day, every 8 hours). Rakeboosts push it further — +10% on signup and rank-ups, +15% on vault calendar claims, and the big one: <b style="color:var(--gold)">+20% for 72 hours</b> when you redeem code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> or <a href="{ELITE}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a>. Full mechanics on our <a href="/roobet-rewards" style="color:var(--gold);font-weight:700">Roobet rewards system page</a>.</p>
+
+  <h2 class="rv">The Roobet Deposit Bonus</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 20px">Roobet doesn't do a classic "match bonus" — under our codes you get something better: an <a href="/free-spins" style="color:var(--gold);font-weight:700">exclusive free spins deposit bonus</a> based on your all-time totals, so every deposit moves you up a tier:</p>
+  <div class="cards c3 rv" style="margin-bottom:30px">
+    <div class="card center"><p class="amount">75 Spins</p><p style="color:var(--muted)">$500 deposited · $5,000 wagered all-time</p></div>
+    <div class="card center" style="border-color:rgba(255,199,0,.5)"><p class="amount">100 Spins</p><p style="color:var(--muted)">$1,000 · $10,000 all-time</p></div>
+    <div class="card center"><p class="amount">125 Spins</p><p style="color:var(--muted)">$2,000 · $20,000 all-time</p></div>
+  </div>
+
+  <h2 class="rv">Daily, Weekly &amp; Monthly Bonuses — Release Times</h2>
+  <div style="display:grid;gap:12px;margin:20px 0 30px">
+    <div class="mile rv"><span class="amt">Daily</span><p style="flex:1;color:var(--muted)">Claimable every 24 hours at <b style="color:var(--text)">midnight UTC</b> — accumulates up to 72 hours if you miss a day.</p></div>
+    <div class="mile rv d1"><span class="amt">Weekly</span><p style="flex:1;color:var(--muted)">Released every <b style="color:var(--text)">Saturday at 7 PM EST / midnight UTC</b>, with a 14-day vault calendar.</p></div>
+    <div class="mile rv d2"><span class="amt">Monthly</span><p style="flex:1;color:var(--muted)">Released on the <b style="color:var(--text)">1st of every month at midnight UTC</b>. Percentages scale with your level. Next drop: <b style="color:var(--gold);font-variant-numeric:tabular-nums" data-deadline="monthly">—</b></p></div>
+  </div>
+
+  <h2 class="rv">The VIP Program &amp; Rank System</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">Wagering levels up your account. Every rank-up pays a <b style="color:var(--text)">level-up bonus</b> and triggers a +10% rakeboost for 60 minutes — and your level sets the instant percentage of every daily, weekly and monthly bonus. The shortcut: if you're already VIP somewhere else, <a href="/vip-transfer" style="color:var(--gold);font-weight:700">transfer your VIP status to Roobet</a> and start at the top instead of grinding from zero. Our VIP team handles it personally.</p>
+
+  <h2 class="rv">The Extra $100,000 — DAILY &amp; ELITE Only</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 20px">Everything above is Roobet's own system. Playing under our codes stacks a second layer on top:</p>
+  <div class="cards c2 rv" style="margin-bottom:30px">
+    <a class="card" href="/leaderboard"><div class="glow"></div><div class="ic">🏆</div><h3>$50K Wager Leaderboard</h3><p>Monthly race — $12,500 top prize + 15,000 ELITE Points for the podium.</p><span class="more">Explore {ARR}</span></a>
+    <a class="card" href="/wager-milestones"><div class="glow"></div><div class="ic">🎯</div><h3>$11,350 Wager Milestones</h3><p>Guaranteed payouts at every tier, resets monthly.</p><span class="more">Explore {ARR}</span></a>
+    <a class="card" href="/elite-points"><div class="glow"></div><div class="ic">⭐</div><h3>ELITE Points Shop</h3><p>Earn daily, redeem free balance and bonus buys.</p><span class="more">Explore {ARR}</span></a>
+    <a class="card" href="/max-win-merch"><div class="glow"></div><div class="ic">👕</div><h3>Max Win Merch</h3><p>Free exclusive shirts for every max win you hit.</p><span class="more">Explore {ARR}</span></a>
+  </div>
+
+  <h2 class="rv" style="margin-bottom:20px">Roobet Rewards FAQ</h2>
+  <div class="faq rv" style="max-width:none">{rw_faq_html}</div>
+</div></section>
+
+{cta_banner("Claim the Whole Stack","One code unlocks both layers — Roobet's rewards plus our $100K monthly package. Join with DAILY.")}
+""")
+
+# ================= BLOG: BEST ROOBET SLOTS =================
+slots_data = [
+    ("Gates of Olympus", "Pragmatic Play", "96.5% RTP · 5,000x max win", "Zeus, tumbling wins and random multipliers — the eternal crowd favourite and a leaderboard grinder's staple.", "gates-of-olympus-max-win-shirt.html"),
+    ("Sweet Bonanza", "Pragmatic Play", "96.5% RTP · 21,100x max win", "Candy-cluster chaos with 100x bomb multipliers in free spins. Huge win ceiling for a sweet theme.", "sweet-bonanza-max-win-shirt.html"),
+    ("Sugar Rush", "Pragmatic Play", "96.5% RTP · 25,000x max win", "Position-based multiplier spots that snowball — one of the biggest max wins in the Pragmatic lineup.", "sugar-rush-max-win-shirt.html"),
+    ("Big Bass", "Pragmatic Play", "Fisherman free spins & money collects", "The most famous bonus round in slots. Retrigger the fisherman and the collects stack fast.", "big-bass-max-win-shirt.html"),
+    ("Le Bandit", "Hacksaw Gaming", "96.34% RTP · 10,000x max win", "Cluster pays, golden squares and rainbow symbols — Hacksaw at its most explosive.", "le-bandit-max-win-shirt.html"),
+    ("Wanted Dead or a Wild", "Hacksaw Gaming", "96.38% RTP · 12,500x max win", "The wild-west volatility monster. Duel and Dead Man's Hand bonuses produce legendary clips.", None),
+    ("Mental", "Nolimit City", "96.08% RTP · 66,666x max win", "Nolimit's darkest and most extreme math — for players who want the biggest possible ceiling.", "mental-max-win-shirt.html"),
+    ("Six Six Six", "Hacksaw Gaming", "Devilish multipliers & bonus modes", "Hacksaw's occult grid slot — sticky multiplier respins that can turn a bonus into a monster.", "six-six-six-max-win-shirt.html"),
+]
+slots_cards = "".join(f"""<div class="card rv d{i%2+1}"><div class="glow"></div><span class="tag">{prov}</span><h3>{name}</h3><p style="color:var(--gold);font-weight:700;font-size:.9rem;margin-bottom:8px">{stats}</p><p>{desc}</p>{f'<a class="more" href="{merch}">Max Win Merch available {ARR}</a>' if merch else ''}</div>""" for i, (name, prov, stats, desc, merch) in enumerate(slots_data))
+
+sl_faq = [
+    ("What are the best slots on Roobet?", "Player favourites on Roobet include Gates of Olympus, Sweet Bonanza and Sugar Rush from Pragmatic Play, Le Bandit and Wanted Dead or a Wild from Hacksaw Gaming, and Mental from Nolimit City — a mix of high max win potential and bonus-round quality. The best slot for you depends on how much volatility you want."),
+    ("Do slots count fully toward the leaderboard and milestones?", "Yes — slots and similar gameplay at 97% RTP or lower contribute at the full 100% rate to weighted wagering, which drives the $50,000 leaderboard and wager milestones. Games above 97% RTP contribute 50%, and 98%+ (mostly house games) contribute 10%."),
+    ("Which Roobet slots earn Max Win Merch?", "Hitting the max win on featured Pragmatic Play, Hacksaw Gaming or Nolimit City slots under code DAILY or ELITE earns you an exclusive free shirt for that game — 16 designs exist, including Gates of Olympus, Sweet Bonanza, Sugar Rush, Big Bass, Le Bandit, Six Six Six and Mental."),
+    ("Are slot RTPs the same on Roobet as other casinos?", "Providers publish a default RTP for each game, and casinos may license certain RTP configurations. The figures listed here are the providers' standard published values — always check the in-game info panel for the exact RTP of the version you're playing."),
+]
+sl_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in sl_faq)
+
+PAGES["best-roobet-slots.html"] = dict(
+    title="Best Roobet Slots in 2026 — Top Picks by Max Win, RTP & Bonus Rounds",
+    desc="The best slots on Roobet in 2026: Gates of Olympus, Sweet Bonanza, Sugar Rush, Le Bandit, Mental and more — RTP, max win potential, and which slots earn free Max Win Merch under code DAILY or ELITE.",
+    kw="best roobet slots, roobet best slots, roobet slots, best slots on roobet, roobet slot picks, roobet max win slots",
+    schema=[
+        {"@context": "https://schema.org", "@type": "Article",
+         "headline": "Best Roobet Slots in 2026 — Top Picks",
+         "datePublished": "2026-08-07", "dateModified": "2026-08-07",
+         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
+         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "image": SITE + "/assets/og-image.png"},
+        {"@context": "https://schema.org", "@type": "FAQPage",
+         "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in sl_faq]},
+    ],
+    og_type="article",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Best Roobet Slots</p>
+  <span class="eyebrow rv">🎰 Guide · 6 min read</span>
+  <h1 class="rv d1">Best <span class="grad">Roobet Slots</span> to Play in 2026</h1>
+  <p class="lead rv d2">The slots our community actually grinds — ranked by max win potential, bonus quality and clip-ability. Every one counts 100% toward the <a href="/leaderboard" style="color:var(--gold);font-weight:700">$50K leaderboard</a>. Updated August 2026.</p>
+</div></section>
+
+<section style="padding-top:10px"><div class="wrap" style="max-width:1000px">
+  <div class="cards c2">{slots_cards}</div>
+
+  <div class="cta-banner rv" style="margin-top:40px">
+    <h2>Why Slots Are the Smart Grind</h2>
+    <p class="lead">Weighted wagering means slots at 97% RTP or lower count at the <b style="color:var(--gold)">full 100% rate</b> toward the leaderboard and milestones — house games above 98% RTP only count 10%. Same bankroll, ten times the progress.</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play on Roobet with DAILY {ARR}</a>
+      <a class="btn btn-ghost btn-lg" href="/wager-milestones">See Milestone Payouts</a>
+    </div>
+  </div>
+
+  <h2 class="rv" style="margin-top:60px;margin-bottom:20px">Roobet Slots FAQ</h2>
+  <div class="faq rv" style="max-width:none">{sl_faq_html}</div>
+
+  <p class="rv" style="color:var(--muted);margin-top:30px">Deep slot stats, hot &amp; cold data and record win tracking live on our sister site <a href="https://slotessentials.com/slot-database" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Slotessentials Slot Database</a>.</p>
+</div></section>
+
+{cta_banner("Hit a Max Win, Wear the Proof","Every max win on a featured slot under DAILY or ELITE earns exclusive free merch. Start with the list above.")}
+""")
+
+# ================= BLOG: HOW TO WITHDRAW =================
+wd_faq = [
+    ("How long do Roobet withdrawals take?", "Withdrawals are typically processed quickly — often within minutes once approved. Total time depends on the blockchain: Litecoin and Solana are near-instant, Bitcoin can take longer during network congestion."),
+    ("Why can't I withdraw from Roobet?", "The most common reasons: your account isn't verified yet (KYC is required for withdrawals), active bonus funds carry wagering conditions, or the withdrawal amount is below the minimum for that coin. If none of those apply, message our VIP team on Telegram and we'll help you sort it."),
+    ("Do I need KYC to withdraw on Roobet?", "Yes — identity verification is required before your first withdrawal. Complete it early so your winnings are never stuck waiting. Our guide at HowToKYC.com walks through every step."),
+    ("When can you receive tips on Roobet?", "Roobet's tipping feature lets players send balance to each other, but it unlocks with account standing — typically a verified (KYC'd) account with real wagering history, as an anti-abuse measure. If tipping isn't available on your account yet, keep playing and verify, or ask Roobet support for your account's specific requirements."),
+    ("Are there withdrawal fees on Roobet?", "You pay the blockchain network fee for the coin you withdraw. Choosing a faster, cheaper chain like Litecoin usually costs a fraction of a Bitcoin transaction."),
+]
+wd_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in wd_faq)
+
+PAGES["how-to-withdraw-on-roobet.html"] = dict(
+    title="How to Withdraw on Roobet — Step-by-Step Guide (2026) | Roobet Casino Rewards",
+    desc="How to withdraw on Roobet in 2026: complete KYC, pick your crypto, avoid network mistakes and get paid fast. Plus withdrawal times, fees, common blockers and how Roobet tips work.",
+    kw="how to withdraw on roobet, roobet withdrawal, roobet withdraw, roobet withdrawal time, roobet tips, when can you receive tips roobet",
+    schema=[
+        {"@context": "https://schema.org", "@type": "Article",
+         "headline": "How to Withdraw on Roobet — Step-by-Step Guide",
+         "datePublished": "2026-08-07", "dateModified": "2026-08-07",
+         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
+         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "image": SITE + "/assets/og-image.png"},
+        {"@context": "https://schema.org", "@type": "FAQPage",
+         "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in wd_faq]},
+    ],
+    og_type="article",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / How to Withdraw on Roobet</p>
+  <span class="eyebrow rv">💸 Guide · 5 min read</span>
+  <h1 class="rv d1">How to <span class="grad">Withdraw</span> on Roobet</h1>
+  <p class="lead rv d2">You hit the win — now get it out clean. The full withdrawal process, what blocks payouts, and how to avoid the one mistake that loses funds. Updated August 2026.</p>
+</div></section>
+
+<section style="padding-top:10px"><div class="wrap" style="max-width:860px">
+  <h2 class="rv">Before Anything: Verify Your Account</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">KYC is required before your first withdrawal — no way around it, and it's why we tell everyone to verify on day one. If you haven't yet, our <a href="/how-to-kyc-on-roobet" style="color:var(--gold);font-weight:700">KYC guide</a> and <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> get you through it in minutes.</p>
+
+  <h2 class="rv">Withdrawing, Step by Step</h2>
+  <div style="display:grid;gap:12px;margin:20px 0 30px">
+    <div class="mile rv"><span class="amt">Step 1</span><p style="flex:1;color:var(--muted)">Open your wallet on Roobet and hit <b style="color:var(--text)">Withdraw</b>.</p></div>
+    <div class="mile rv d1"><span class="amt">Step 2</span><p style="flex:1;color:var(--muted)">Pick your coin. Tip: Litecoin or Solana are fast with tiny network fees; Bitcoin is slower and pricier.</p></div>
+    <div class="mile rv d2"><span class="amt">Step 3</span><p style="flex:1;color:var(--muted)"><b style="color:var(--text)">Paste your wallet address and triple-check the network.</b> Sending to the wrong chain is the one mistake that can permanently lose funds.</p></div>
+    <div class="mile rv d3"><span class="amt">Step 4</span><p style="flex:1;color:var(--muted)">Confirm the amount (minding the coin's minimum), submit, and watch it land — usually within minutes.</p></div>
+  </div>
+
+  <h2 class="rv">If Your Withdrawal Won't Go Through</h2>
+  <div class="cards c3 rv" style="margin:20px 0 30px">
+    <div class="card"><div class="glow"></div><div class="ic">🪪</div><h3>Not Verified</h3><p>The #1 blocker. Complete KYC and the button unlocks.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">🎁</div><h3>Bonus Conditions</h3><p>Active bonus funds can carry wagering conditions before cash-out.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">📉</div><h3>Below Minimum</h3><p>Each coin has a small minimum — switch coins or top the amount up.</p></div>
+  </div>
+  <p class="rv" style="color:var(--muted);margin-bottom:30px">Still stuck? Message our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> or open a ticket in the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Discord</a> — withdrawal issues are our daily bread.</p>
+
+  <h2 class="rv" style="margin-bottom:20px">Withdrawals &amp; Tips FAQ</h2>
+  <div class="faq rv" style="max-width:none">{wd_faq_html}</div>
+
+  <p class="rv" style="color:var(--muted);margin-top:30px">Full circle: <a href="/how-to-deposit-on-roobet" style="color:var(--gold);font-weight:700">how to deposit</a> → <a href="/how-to-kyc-on-roobet" style="color:var(--gold);font-weight:700">how to KYC</a> → withdraw. And everything you wager in between counts toward the <a href="/roobet-rewards-guide" style="color:var(--gold);font-weight:700">full rewards stack</a>.</p>
+</div></section>
+
+{cta_banner("Win It, Then Withdraw It Clean","Join with code DAILY — and when the big one hits, you'll know exactly how to cash it out.")}
 """)
 
 # ================= WRITE FILES =================
