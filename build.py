@@ -887,6 +887,10 @@ PAGES["contact.html"] = dict(
 
 # ================= BLOG =================
 BLOG_POSTS = [
+    ("roobet-vip-program-rank-system", "Roobet VIP Program & Rank System Explained", "How Roobet VIP ranks work, how players level up, what rewards unlock, and how to transfer VIP status from another casino.", "2026-08-18", "6 min read", "💎"),
+    ("roobet-rakeback-cashback-bonus-schedule", "Roobet Rakeback, Cashback & Bonus Schedule", "When Roobet rakeback, daily, weekly and monthly bonuses become available — plus Vault timing, expiry rules and rakeboosts.", "2026-08-18", "7 min read", "💰"),
+    ("roobet-deposit-bonus-free-spins", "Roobet Deposit Bonus & Free Spins Guide", "How the Roobet free-spins offer works under code DAILY, including cumulative all-time deposit and wager requirements for every tier.", "2026-08-18", "5 min read", "🎁"),
+    ("when-can-you-receive-tips-roobet", "When Can You Receive Tips on Roobet?", "A practical guide to receiving Roobet tips, account eligibility, verification, common restrictions and what to check when a tip does not arrive.", "2026-08-18", "4 min read", "💸"),
     ("how-to-deposit-on-roobet", "How to Deposit on Roobet", "Step-by-step guide to making your first Roobet deposit — crypto options, buying with card, confirmation times, and how to unlock your free spins bonus.", "2026-07-21", "5 min read", "💳"),
     ("how-to-kyc-on-roobet", "How to KYC on Roobet", "What Roobet's verification asks for, when you need it, and how to pass it first try — documents, common mistakes, and how long it takes.", "2026-07-21", "4 min read", "🪪"),
     ("roobet-rewards-guide", "Roobet Rewards: The Complete Guide", "Every Roobet reward explained — rakeback & cashback, deposit bonus, daily/weekly/monthly bonus release times, the VIP program and rank system, plus the $100K monthly extras.", "2026-08-07", "7 min read", "💰"),
@@ -1241,6 +1245,173 @@ PAGES["how-to-withdraw-on-roobet.html"] = dict(
 </div></section>
 
 {cta_banner("Win It, Then Withdraw It Clean","Join with code DAILY — and when the big one hits, you'll know exactly how to cash it out.")}
+""")
+
+# ================= BLOG: VIP PROGRAM & RANK SYSTEM =================
+vip_faq = [
+    ("How does the Roobet VIP program work?", "Players progress through account ranks by wagering. Higher ranks can unlock larger level-up rewards and access to more valuable ongoing rewards. Exact benefits can depend on account activity and current terms."),
+    ("How do I increase my Roobet rank?", "Wager eligible games on your account. Weighted wagering can apply, so some game categories contribute less than slots and similar gameplay."),
+    ("Can I transfer VIP status to Roobet?", "Eligible players can request a VIP transfer from another casino. Use the SlotEssentials VIP form, then contact the VIP team on Telegram or open a Discord ticket for help."),
+    ("Does ranking up activate a rakeboost?", "Under the current rewards structure, ranking up activates a 10% rakeboost for 60 minutes. Rakeboosts run in parallel rather than stacking; the highest active percentage applies."),
+]
+PAGES["roobet-vip-program-rank-system.html"] = dict(
+    title="Roobet VIP Program & Rank System Explained (2026)",
+    desc="Roobet VIP program and rank system explained: how to level up, rank rewards, rakeboosts, VIP transfers and how to access the complete rewards package.",
+    kw="roobet vip program, roobet vip, roobet rank system, roobet vip transfer, roobet levels",
+    schema=[
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet VIP Program & Rank System Explained","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in vip_faq]},
+    ],
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Roobet VIP Program</p>
+  <span class="eyebrow rv">💎 VIP Guide · Updated August 2026</span>
+  <h1 class="rv d1">Roobet VIP Program &amp; <span class="grad">Rank System</span></h1>
+  <p class="lead rv d2">Roobet rewards active players as they progress through account ranks. Here is how ranking, level-up bonuses, rakeboosts and VIP transfers fit together.</p>
+</div></section>
+<section style="padding-top:10px"><div class="wrap" style="max-width:900px">
+  <h2 class="rv">How Roobet VIP Ranks Work</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 28px">Your account rank progresses through eligible wagering. The higher your level, the larger your potential level-up bonus. Because wagering can be weighted by game type, the amount displayed as progress may differ from your raw bet total.</p>
+  <div class="cards c3 rv">
+    <div class="card"><div class="ic">📈</div><h3>Wager &amp; Progress</h3><p>Eligible wagering moves your rank forward. Slots and similar games generally provide the strongest contribution.</p></div>
+    <div class="card"><div class="ic">🎉</div><h3>Level-Up Rewards</h3><p>Advancing to a new rank can trigger a level-up bonus and a temporary rakeboost.</p></div>
+    <div class="card"><div class="ic">💰</div><h3>Ongoing Rewards</h3><p>Rakeback, daily, weekly, monthly and Vault rewards continue alongside rank progression.</p></div>
+  </div>
+  <h2 class="rv" style="margin-top:46px">Rank-Up Rakeboost</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 28px">Ranking up currently activates a <b style="color:var(--text)">10% boost for 60 minutes</b> on Instant Rakeback. Rakeboosts do not stack or queue; if several are active, only the highest percentage applies.</p>
+  <h2 class="rv">Transfer Your Existing VIP Status</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 22px">Already VIP somewhere else? You may be able to transfer that status directly to Roobet and unlock access to our full rewards ecosystem: the $50K leaderboard, wager milestones, free spins, ELITE Points, slot challenges, giveaways, Max Win Merch and VIP support.</p>
+  <div class="hero-cta rv"><a class="btn btn-gold btn-lg" href="{SLOTS}" target="_blank" rel="noopener">Start VIP Transfer {ARR}</a><a class="btn btn-ghost btn-lg" href="{TELEGRAM}" target="_blank" rel="noopener">Message VIP Team</a></div>
+  <h2 class="rv" style="margin-top:46px">Roobet VIP FAQ</h2>
+  <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in vip_faq)}</div>
+  <p class="rv" style="color:var(--muted);margin-top:30px">Next: read the <a href="/roobet-rakeback-cashback-bonus-schedule" style="color:var(--gold);font-weight:700">Roobet bonus schedule</a> or explore our <a href="/roobet-rewards-guide" style="color:var(--gold);font-weight:700">complete rewards guide</a>.</p>
+</div></section>
+{cta_banner("Bring Your VIP Status With You","Join with code DAILY, submit the VIP form and let our team handle the transfer.")}
+""")
+
+# ================= BLOG: RAKEBACK / CASHBACK / BONUS SCHEDULE =================
+bonus_faq = [
+    ("When does Roobet release the monthly bonus?", "The monthly bonus is currently released on the first day of each month at 00:00 UTC. A portion may be credited immediately and a portion placed into the Vault calendar, subject to level and current terms."),
+    ("When does Roobet release the weekly bonus?", "The weekly bonus is currently released every Saturday at 00:00 UTC, equivalent to 7:00 PM EST during standard time."),
+    ("How often can I claim Roobet rakeback?", "Instant Rakeback can currently be claimed every 30 minutes. Part may go directly to your balance and part to the Vault."),
+    ("Is Roobet cashback the same as rakeback?", "Players often use cashback as a general term for money returned from wagering. Roobet's named recurring feature is Instant Rakeback, alongside daily, weekly, monthly and Vault rewards."),
+]
+PAGES["roobet-rakeback-cashback-bonus-schedule.html"] = dict(
+    title="Roobet Rakeback, Cashback & Bonus Schedule (2026)",
+    desc="Roobet rakeback and cashback guide with daily, weekly and monthly bonus release times, Vault claims, expiry rules and every rakeboost percentage.",
+    kw="roobet cashback, roobet rakeback, when does roobet release monthly bonus, roobet monthly bonus, roobet weekly bonus",
+    schema=[
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Rakeback, Cashback & Bonus Schedule","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in bonus_faq]},
+    ],
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Rakeback &amp; Bonus Schedule</p>
+  <span class="eyebrow rv">💰 Reward Calendar · Updated August 2026</span>
+  <h1 class="rv d1">Roobet Rakeback, Cashback &amp; <span class="grad">Bonus Schedule</span></h1>
+  <p class="lead rv d2">What players call Roobet cashback is a stack of recurring rewards. Here is when each one becomes claimable and how long you have before it expires.</p>
+</div></section>
+<section style="padding-top:10px"><div class="wrap" style="max-width:920px">
+  <div class="table-wrap rv"><table class="tbl"><thead><tr><th>Reward</th><th>Release / claim time</th><th>Important detail</th></tr></thead><tbody>
+    <tr><td><b>Instant Rakeback</b></td><td>Every 30 minutes</td><td>Never expires before being claimed; a portion may enter the Vault.</td></tr>
+    <tr><td><b>Daily Bonus</b></td><td>Every 24 hours at 00:00 UTC</td><td>Can accumulate for up to 72 hours.</td></tr>
+    <tr><td><b>Weekly Bonus</b></td><td>Saturday at 00:00 UTC</td><td>Vault-calendar portion can be claimable over 14 days.</td></tr>
+    <tr><td><b>Monthly Bonus</b></td><td>1st of each month at 00:00 UTC</td><td>Vault-calendar portion can be claimable over 14 days.</td></tr>
+    <tr><td><b>The Vault</b></td><td>Up to 3 claims daily, every 8 hours</td><td>Unlocked collections expire after 24 hours and cannot be taken all at once.</td></tr>
+  </tbody></table></div>
+  <h2 class="rv" style="margin-top:48px">Rakeboost Percentages</h2>
+  <div class="cards c3 rv" style="margin-top:20px">
+    <div class="card"><h3>+10%</h3><p>Welcome boost for 24 hours; rank-up, daily, weekly and monthly claims for 60 minutes.</p></div>
+    <div class="card"><h3>+15%</h3><p>Vault Calendar claim boost for 60 minutes.</p></div>
+    <div class="card"><h3>+20%</h3><p>Affiliate-code redemption boost for 72 hours.</p></div>
+  </div>
+  <p class="rv" style="color:var(--muted);margin:24px 0 40px">Boosts run in parallel but do not stack: the highest active boost is the one that applies. Reward availability and calculations remain subject to Roobet's current account terms.</p>
+  <h2 class="rv">Bonus Schedule FAQ</h2>
+  <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in bonus_faq)}</div>
+  <p class="rv" style="color:var(--muted);margin-top:30px">See the full <a href="/roobet-rewards" style="color:var(--gold);font-weight:700">Roobet rewards breakdown</a>, then add our <a href="/wager-milestones" style="color:var(--gold);font-weight:700">$11,350 wager milestones</a> and <a href="/leaderboard" style="color:var(--gold);font-weight:700">$50K leaderboard</a>.</p>
+</div></section>
+{cta_banner("Something to Claim Every 30 Minutes","Join with code DAILY and activate the full rewards stack.")}
+""")
+
+# ================= BLOG: DEPOSIT BONUS / FREE SPINS =================
+deposit_bonus_faq = [
+    ("Does Roobet have a deposit bonus?", "Our code DAILY offer rewards eligible players with free spins after cumulative all-time deposit and wager requirements are reached. It is not limited to one single deposit."),
+    ("How many free spins can I receive?", "The current tiers provide 75 free spins after $500 deposited and $5,000 wagered, 100 free spins after $1,000 deposited and $10,000 wagered, or 125 free spins after $2,000 deposited and $20,000 wagered."),
+    ("Do deposits have to be made all at once?", "No. The published offer is based on cumulative all-time deposits and wagering under the eligible affiliate code."),
+    ("Is this a no-deposit bonus?", "No. The free-spins tiers require both cumulative deposits and wagering. Always review the current offer terms before participating."),
+]
+PAGES["roobet-deposit-bonus-free-spins.html"] = dict(
+    title="Roobet Deposit Bonus & Free Spins — Code DAILY (2026)",
+    desc="Roobet deposit bonus and free spins guide: cumulative all-time deposit and wager tiers for 75, 100 or 125 spins when joining with code DAILY.",
+    kw="roobet deposit bonus, roobet welcome bonus, roobet free spins, free spins roobet, roobet bonus code daily",
+    schema=[
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Deposit Bonus & Free Spins Guide","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in deposit_bonus_faq]},
+    ],
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Deposit Bonus</p>
+  <span class="eyebrow rv">🎁 Code DAILY Offer · Updated August 2026</span>
+  <h1 class="rv d1">Roobet Deposit Bonus &amp; <span class="grad">Free Spins</span></h1>
+  <p class="lead rv d2">The key detail: these thresholds are cumulative all-time totals—not one giant deposit. Every eligible deposit and wager moves you toward the next tier.</p>
+</div></section>
+<section style="padding-top:10px"><div class="wrap" style="max-width:940px">
+  <div class="cards c3 rv">
+    <div class="card center"><span class="eyebrow">Tier 1</span><h2>75 Spins</h2><p><b>$500</b> cumulative deposits<br><b>$5,000</b> cumulative wager<br>$0.60 per spin</p></div>
+    <div class="card center"><span class="eyebrow">Tier 2</span><h2>100 Spins</h2><p><b>$1,000</b> cumulative deposits<br><b>$10,000</b> cumulative wager<br>$0.80 per spin</p></div>
+    <div class="card center"><span class="eyebrow">Tier 3</span><h2>125 Spins</h2><p><b>$2,000</b> cumulative deposits<br><b>$20,000</b> cumulative wager<br>$1.00 per spin</p></div>
+  </div>
+  <h2 class="rv" style="margin-top:48px">How to Qualify</h2>
+  <div style="display:grid;gap:12px;margin:20px 0 38px">
+    <div class="mile rv"><span class="amt">1</span><p style="flex:1;color:var(--muted)">Create your Roobet account using code <a href="{DAILY}" target="_blank" rel="nofollow sponsored" style="color:var(--gold);font-weight:700">DAILY</a>.</p></div>
+    <div class="mile rv d1"><span class="amt">2</span><p style="flex:1;color:var(--muted)">Complete KYC and make eligible deposits over time.</p></div>
+    <div class="mile rv d2"><span class="amt">3</span><p style="flex:1;color:var(--muted)">Build cumulative weighted wagering until you reach a tier.</p></div>
+    <div class="mile rv d3"><span class="amt">4</span><p style="flex:1;color:var(--muted)">Follow the claim process on SlotEssentials or contact the VIP team if you need help.</p></div>
+  </div>
+  <div class="hero-cta rv"><a class="btn btn-gold btn-lg" href="{SLOTS}" target="_blank" rel="noopener">View Offer &amp; Claim {ARR}</a><a class="btn btn-ghost btn-lg" href="/how-to-deposit-on-roobet">Deposit Guide</a></div>
+  <h2 class="rv" style="margin-top:48px">Deposit Bonus FAQ</h2>
+  <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in deposit_bonus_faq)}</div>
+</div></section>
+{cta_banner("Start Building Toward Your Free Spins","Join Roobet with code DAILY. Your qualifying totals build over time.")}
+""")
+
+# ================= BLOG: RECEIVING TIPS =================
+tips_faq = [
+    ("When can you receive tips on Roobet?", "There is no single public threshold that guarantees tip eligibility for every account. Availability can depend on account standing, verification, feature access and Roobet's current rules. Check whether the feature appears on your account or ask official support."),
+    ("Do I need KYC to receive a Roobet tip?", "Verification may be required for account and wallet features. Completing KYC early reduces the chance that a payment, tip or withdrawal is delayed."),
+    ("Why did my Roobet tip not arrive?", "Confirm the sender used the correct username, check account notifications and wallet history, and verify that both accounts are eligible. If it remains missing, contact official Roobet support."),
+    ("Can the VIP team send or recover Roobet tips?", "Our VIP team can help you understand reward claims, but it cannot access Roobet accounts or override platform restrictions. Account-specific tip issues should be handled by official Roobet support."),
+]
+PAGES["when-can-you-receive-tips-roobet.html"] = dict(
+    title="When Can You Receive Tips on Roobet? Eligibility Guide (2026)",
+    desc="When can you receive tips on Roobet? Learn about account eligibility, verification, common restrictions, missing tips and the safest steps to troubleshoot.",
+    kw="when can you receive tips roobet, roobet tips, receive tips on roobet, roobet tip eligibility",
+    schema=[
+        {"@context":"https://schema.org","@type":"Article","headline":"When Can You Receive Tips on Roobet?","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in tips_faq]},
+    ],
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Roobet Tips</p>
+  <span class="eyebrow rv">💸 Account Guide · Updated August 2026</span>
+  <h1 class="rv d1">When Can You Receive <span class="grad">Tips on Roobet?</span></h1>
+  <p class="lead rv d2">Tip access is account-specific. There is no responsible way to promise one universal wager or account-age threshold, but these checks cover the most common eligibility issues.</p>
+</div></section>
+<section style="padding-top:10px"><div class="wrap" style="max-width:880px">
+  <h2 class="rv">Tip Eligibility Checklist</h2>
+  <div class="cards c3 rv" style="margin-top:20px">
+    <div class="card"><div class="ic">🪪</div><h3>Account Standing</h3><p>Keep your account verified where required and free of unresolved restrictions.</p></div>
+    <div class="card"><div class="ic">👤</div><h3>Correct Username</h3><p>The sender must use the exact account username. A typo can send funds to the wrong user.</p></div>
+    <div class="card"><div class="ic">🔔</div><h3>Wallet &amp; Notices</h3><p>Check wallet history and notifications before assuming the transfer failed.</p></div>
+  </div>
+  <h2 class="rv" style="margin-top:48px">What to Do if a Tip Is Missing</h2>
+  <ol class="rv" style="color:var(--muted);line-height:2;padding-left:24px;margin:16px 0 34px"><li>Confirm the exact username and amount with the sender.</li><li>Check your wallet history and account notifications.</li><li>Complete any pending verification request.</li><li>Contact official Roobet support with the transaction details; never share your password or seed phrase.</li></ol>
+  <div class="card rv" style="border-color:rgba(255,199,0,.35)"><h3>Important distinction</h3><p>Our VIP team can help with our leaderboard, milestones, merch, points and promotional claims. It cannot enter your Roobet account, release platform-held funds or override Roobet's account rules.</p></div>
+  <h2 class="rv" style="margin-top:48px">Roobet Tips FAQ</h2>
+  <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in tips_faq)}</div>
+  <p class="rv" style="color:var(--muted);margin-top:30px">For wallet fundamentals, see <a href="/how-to-deposit-on-roobet" style="color:var(--gold);font-weight:700">how to deposit</a> and <a href="/how-to-withdraw-on-roobet" style="color:var(--gold);font-weight:700">how to withdraw on Roobet</a>.</p>
+</div></section>
+{cta_banner("Questions About Our Rewards?","Contact the VIP team for help with DAILY rewards, claims and promotions.")}
 """)
 
 # ================= WRITE FILES =================
