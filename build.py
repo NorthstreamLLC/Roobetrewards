@@ -2,7 +2,7 @@
 """Static site generator for roobetcasinorewards.com"""
 import os, json
 
-SITE = "https://roobetcasinorewards.com"
+SITE = "https://www.roobetcasinorewards.com"
 ELITE = "https://roobet.com/?ref=elite"
 DAILY = "https://roobet.com/?ref=daily"
 KICK = "https://kick.com/dailygambling"

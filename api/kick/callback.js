@@ -1,7 +1,7 @@
 // Kick OAuth callback: verify state, exchange code (PKCE), create session cookie
 const crypto = require("crypto");
 const { redis } = require("../../lib/redis");
-const SITE = "https://roobetcasinorewards.com";
+const SITE = "https://www.roobetcasinorewards.com";
 
 module.exports = async (req, res) => {
   try {

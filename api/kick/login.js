@@ -1,7 +1,7 @@
 // Starts the Kick OAuth login (PKCE + state, per Kick docs)
 const crypto = require("crypto");
 const { redis } = require("../../lib/redis");
-const SITE = "https://roobetcasinorewards.com";
+const SITE = "https://www.roobetcasinorewards.com";
 
 module.exports = async (req, res) => {
   try {
