@@ -382,17 +382,75 @@ try:
 except FileNotFoundError:
     LB_DATA = '{"entries":[]}'
 
+# ---- prize ladder: ONE source of truth, shared by the page and the JS renderer ----
+def lb_cash(r):
+    if r == 1: return "$12,500"
+    if r == 2: return "$7,000"
+    if r == 3: return "$5,000"
+    if r == 4: return "$3,500"
+    if r == 5: return "$2,500"
+    if r == 6: return "$2,000"
+    if r <= 10: return "$1,100"
+    if r <= 20: return "$400"
+    if r <= 30: return "$250"
+    if r <= 40: return "$150"
+    if r <= 50: return "$135"
+    if r <= 75: return "100 x $1 Spins"
+    return "50 x $1 Spins"
+
+def lb_points(r):
+    if r <= 15: return 15000
+    if r <= 25: return 10000
+    if r <= 35: return 9000
+    if r <= 45: return 8000
+    if r <= 65: return 7000
+    if r <= 84: return 6000
+    return 5000
+
+LB_TIERS = []
+for _r in range(1, 101):
+    _row = (lb_cash(_r), lb_points(_r))
+    if LB_TIERS and (LB_TIERS[-1]["prize"], LB_TIERS[-1]["points"]) == _row:
+        LB_TIERS[-1]["to"] = _r
+    else:
+        LB_TIERS.append({"from": _r, "to": _r, "prize": _row[0], "points": _row[1]})
+
+_tier_rows = []
+for t in LB_TIERS:
+    pos = "#%d" % t["from"] if t["from"] == t["to"] else "#%d-%d" % (t["from"], t["to"])
+    cls = "lb-spins" if "Spins" in t["prize"] else "gold-td"
+    _tier_rows.append('<tr><td>%s</td><td class="%s">%s</td><td>&#11088; %s</td></tr>'
+                      % (pos, cls, t["prize"], format(t["points"], ",")))
+tier_rows = "".join(_tier_rows)
+
 LB_TABLE = f"""
 <div style="margin-top:70px" id="standings">
-  <div class="center rv"><span class="eyebrow">📊 Live Standings</span><h2>Current Top 100</h2>
-  <p class="lead">All wagers are weighted and in USD. Everyone in the top 100 also earns <b style="color:var(--gold)">ELITE Points</b>.</p></div>
-  <div class="tbl-wrap rv lb-wrap" id="lb-wrap" style="margin-top:36px"><table class="tbl" id="lb-table">
-    <thead><tr><th>#</th><th>Player</th><th>Wagered (weighted)</th><th>Prize</th><th>ELITE Points</th></tr></thead>
-    <tbody></tbody>
+  <div class="center rv"><span class="eyebrow">&#128202; Live Standings</span><h2>Current Top 100</h2>
+  <p class="lead">Live from the Roobet API &mdash; all wagers weighted and in USD. Every player in the top 100 also earns <b style="color:var(--gold)">ELITE Points</b>.</p></div>
+
+  <div class="lb-bar rv">
+    <input id="lb-search" type="search" placeholder="Find your username..." aria-label="Search the leaderboard">
+    <span class="lb-updated" id="lb-updated">Loading live standings...</span>
+  </div>
+
+  <div class="tbl-wrap rv lb-wrap" id="lb-wrap"><table class="tbl lb-tbl" id="lb-table">
+    <thead><tr><th>#</th><th>Player</th><th>Wagered</th><th>Prize</th><th class="col-pts">ELITE Points</th></tr></thead>
+    <tbody id="lb-body"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:40px">Loading live standings...</td></tr></tbody>
   </table></div>
-  <div class="center" style="margin-top:22px"><button class="btn btn-ghost" id="lb-toggle">Show Full Top 100</button></div>
+  <div class="center" style="margin-top:20px">
+    <button class="btn btn-ghost" id="lb-toggle">Show Full Top 100</button>
+  </div>
+
+  <div style="margin-top:60px">
+    <div class="center rv"><span class="eyebrow">&#128181; Prize Structure</span><h2>What Every Position Pays</h2>
+    <p class="lead">The full ladder &mdash; cash down to #50, free spins to #100, ELITE Points for everyone on the board.</p></div>
+    <div class="tbl-wrap rv" style="margin-top:30px;max-width:720px;margin-left:auto;margin-right:auto"><table class="tbl">
+      <thead><tr><th>Position</th><th>Prize</th><th>ELITE Points</th></tr></thead>
+      <tbody>{tier_rows}</tbody>
+    </table></div>
+  </div>
 </div>
-<script>window.LB_DATA = {LB_DATA};</script>"""
+<script>window.LB_TIERS = {json.dumps(LB_TIERS)}; window.LB_DATA = {LB_DATA};</script>"""
 
 PAGES["leaderboard.html"] = dict(
     title="$50,000 Roobet Wager Leaderboard — Monthly Cash Prizes | Code ELITE & DAILY",

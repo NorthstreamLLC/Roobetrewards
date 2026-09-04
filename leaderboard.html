@@ -82,15 +82,32 @@
   </div>
   
 <div style="margin-top:70px" id="standings">
-  <div class="center rv"><span class="eyebrow">📊 Live Standings</span><h2>Current Top 100</h2>
-  <p class="lead">All wagers are weighted and in USD. Everyone in the top 100 also earns <b style="color:var(--gold)">ELITE Points</b>.</p></div>
-  <div class="tbl-wrap rv lb-wrap" id="lb-wrap" style="margin-top:36px"><table class="tbl" id="lb-table">
-    <thead><tr><th>#</th><th>Player</th><th>Wagered (weighted)</th><th>Prize</th><th>ELITE Points</th></tr></thead>
-    <tbody></tbody>
+  <div class="center rv"><span class="eyebrow">&#128202; Live Standings</span><h2>Current Top 100</h2>
+  <p class="lead">Live from the Roobet API &mdash; all wagers weighted and in USD. Every player in the top 100 also earns <b style="color:var(--gold)">ELITE Points</b>.</p></div>
+
+  <div class="lb-bar rv">
+    <input id="lb-search" type="search" placeholder="Find your username..." aria-label="Search the leaderboard">
+    <span class="lb-updated" id="lb-updated">Loading live standings...</span>
+  </div>
+
+  <div class="tbl-wrap rv lb-wrap" id="lb-wrap"><table class="tbl lb-tbl" id="lb-table">
+    <thead><tr><th>#</th><th>Player</th><th>Wagered</th><th>Prize</th><th class="col-pts">ELITE Points</th></tr></thead>
+    <tbody id="lb-body"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:40px">Loading live standings...</td></tr></tbody>
   </table></div>
-  <div class="center" style="margin-top:22px"><button class="btn btn-ghost" id="lb-toggle">Show Full Top 100</button></div>
+  <div class="center" style="margin-top:20px">
+    <button class="btn btn-ghost" id="lb-toggle">Show Full Top 100</button>
+  </div>
+
+  <div style="margin-top:60px">
+    <div class="center rv"><span class="eyebrow">&#128181; Prize Structure</span><h2>What Every Position Pays</h2>
+    <p class="lead">The full ladder &mdash; cash down to #50, free spins to #100, ELITE Points for everyone on the board.</p></div>
+    <div class="tbl-wrap rv" style="margin-top:30px;max-width:720px;margin-left:auto;margin-right:auto"><table class="tbl">
+      <thead><tr><th>Position</th><th>Prize</th><th>ELITE Points</th></tr></thead>
+      <tbody><tr><td>#1</td><td class="gold-td">$12,500</td><td>&#11088; 15,000</td></tr><tr><td>#2</td><td class="gold-td">$7,000</td><td>&#11088; 15,000</td></tr><tr><td>#3</td><td class="gold-td">$5,000</td><td>&#11088; 15,000</td></tr><tr><td>#4</td><td class="gold-td">$3,500</td><td>&#11088; 15,000</td></tr><tr><td>#5</td><td class="gold-td">$2,500</td><td>&#11088; 15,000</td></tr><tr><td>#6</td><td class="gold-td">$2,000</td><td>&#11088; 15,000</td></tr><tr><td>#7-10</td><td class="gold-td">$1,100</td><td>&#11088; 15,000</td></tr><tr><td>#11-15</td><td class="gold-td">$400</td><td>&#11088; 15,000</td></tr><tr><td>#16-20</td><td class="gold-td">$400</td><td>&#11088; 10,000</td></tr><tr><td>#21-25</td><td class="gold-td">$250</td><td>&#11088; 10,000</td></tr><tr><td>#26-30</td><td class="gold-td">$250</td><td>&#11088; 9,000</td></tr><tr><td>#31-35</td><td class="gold-td">$150</td><td>&#11088; 9,000</td></tr><tr><td>#36-40</td><td class="gold-td">$150</td><td>&#11088; 8,000</td></tr><tr><td>#41-45</td><td class="gold-td">$135</td><td>&#11088; 8,000</td></tr><tr><td>#46-50</td><td class="gold-td">$135</td><td>&#11088; 7,000</td></tr><tr><td>#51-65</td><td class="lb-spins">100 x $1 Spins</td><td>&#11088; 7,000</td></tr><tr><td>#66-75</td><td class="lb-spins">100 x $1 Spins</td><td>&#11088; 6,000</td></tr><tr><td>#76-84</td><td class="lb-spins">50 x $1 Spins</td><td>&#11088; 6,000</td></tr><tr><td>#85-100</td><td class="lb-spins">50 x $1 Spins</td><td>&#11088; 5,000</td></tr></tbody>
+    </table></div>
+  </div>
 </div>
-<script>window.LB_DATA = {
+<script>window.LB_TIERS = [{"from": 1, "to": 1, "prize": "$12,500", "points": 15000}, {"from": 2, "to": 2, "prize": "$7,000", "points": 15000}, {"from": 3, "to": 3, "prize": "$5,000", "points": 15000}, {"from": 4, "to": 4, "prize": "$3,500", "points": 15000}, {"from": 5, "to": 5, "prize": "$2,500", "points": 15000}, {"from": 6, "to": 6, "prize": "$2,000", "points": 15000}, {"from": 7, "to": 10, "prize": "$1,100", "points": 15000}, {"from": 11, "to": 15, "prize": "$400", "points": 15000}, {"from": 16, "to": 20, "prize": "$400", "points": 10000}, {"from": 21, "to": 25, "prize": "$250", "points": 10000}, {"from": 26, "to": 30, "prize": "$250", "points": 9000}, {"from": 31, "to": 35, "prize": "$150", "points": 9000}, {"from": 36, "to": 40, "prize": "$150", "points": 8000}, {"from": 41, "to": 45, "prize": "$135", "points": 8000}, {"from": 46, "to": 50, "prize": "$135", "points": 7000}, {"from": 51, "to": 65, "prize": "100 x $1 Spins", "points": 7000}, {"from": 66, "to": 75, "prize": "100 x $1 Spins", "points": 6000}, {"from": 76, "to": 84, "prize": "50 x $1 Spins", "points": 6000}, {"from": 85, "to": 100, "prize": "50 x $1 Spins", "points": 5000}]; window.LB_DATA = {
  "entries": [
   {
    "rank": 1,

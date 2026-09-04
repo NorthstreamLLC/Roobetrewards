@@ -123,52 +123,71 @@ document.querySelectorAll('.flip').forEach(c => {
 (function () {
   const tbl = document.getElementById('lb-table');
   if (!tbl) return;
-  const fmtUsd = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  const prize = r =>
-    r === 1 ? '$12,500' : r === 2 ? '$7,000' : r === 3 ? '$5,000' :
-    r === 4 ? '$3,500' : r === 5 ? '$2,500' : r === 6 ? '$2,000' :
-    r <= 10 ? '$1,100' : r <= 20 ? '$400' : r <= 30 ? '$250' :
-    r <= 40 ? '$150' : r <= 50 ? '$135' :
-    r <= 75 ? '100 × $1 Spins' : '50 × $1 Spins';
-  const points = r =>
-    r <= 15 ? 15000 : r <= 25 ? 10000 : r <= 35 ? 9000 :
-    r <= 45 ? 8000 : r <= 65 ? 7000 : r <= 84 ? 6000 : 5000;
+  const body = document.getElementById('lb-body');
+  const wrap = document.getElementById('lb-wrap');
+  const btn = document.getElementById('lb-toggle');
+  const search = document.getElementById('lb-search');
+  const stamp = document.getElementById('lb-updated');
+  const tiers = window.LB_TIERS || [];
+  let rows = [];
 
-  function render(entries) {
-    if (!entries || !entries.length) return;
-    entries = entries.slice().sort((a, b) => a.rank - b.rank);
-    // podium names + wagered
-    entries.slice(0, 3).forEach(e => {
-      const el = document.querySelector(`[data-pod="${e.rank}"]`);
-      if (el) el.innerHTML = `<b>${e.username}</b><br><span style="color:var(--muted);font-size:.85rem">${fmtUsd(e.wagered)} wagered</span>`;
-    });
-    const tb = tbl.querySelector('tbody');
-    tb.innerHTML = entries.map(e => {
-      const p = prize(e.rank), spins = p.includes('Spins');
-      return `<tr class="${e.rank <= 3 ? 'lb-top' : ''}">
-        <td>${e.rank <= 3 ? ['🥇', '🥈', '🥉'][e.rank - 1] : e.rank}</td>
-        <td>${e.username}</td>
-        <td>${fmtUsd(e.wagered)}</td>
-        <td class="${spins ? 'lb-spins' : 'gold-td'}">${p}</td>
-        <td>⭐ ${points(e.rank).toLocaleString('en-US')}</td>
-      </tr>`;
+  const usd = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const esc = s => String(s).replace(/[<>&"]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]));
+  const tierOf = r => tiers.find(t => r >= t.from && r <= t.to) || { prize: '—', points: 0 };
+
+  function paint(filter) {
+    const q = (filter || '').trim().toLowerCase();
+    const list = q ? rows.filter(e => e.username.toLowerCase().includes(q)) : rows;
+    if (!list.length) {
+      body.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:36px">' +
+        (q ? 'No player matches “' + esc(filter) + '”. Usernames are masked — try the first 3 letters.' : 'Standings will appear here shortly.') + '</td></tr>';
+      return;
+    }
+    body.innerHTML = list.map(e => {
+      const t = tierOf(e.rank), spins = String(t.prize).indexOf('Spins') > -1;
+      const medal = e.rank <= 3 ? ['🥇', '🥈', '🥉'][e.rank - 1] : e.rank;
+      return '<tr class="' + (e.rank <= 3 ? 'lb-top' : '') + '">' +
+        '<td>' + medal + '</td>' +
+        '<td>' + esc(e.username) + '</td>' +
+        '<td class="lb-wager">' + usd(e.wagered) + '</td>' +
+        '<td class="' + (spins ? 'lb-spins' : 'gold-td') + '">' + t.prize + '</td>' +
+        '<td class="col-pts">⭐ ' + t.points.toLocaleString('en-US') + '</td>' +
+        '</tr>';
     }).join('');
+    // searching always shows every match
+    if (q) wrap.classList.add('open');
   }
 
-  render(window.LB_DATA && window.LB_DATA.entries);
+  function render(entries, live, updated) {
+    if (!entries || !entries.length) return false;
+    rows = entries.slice().sort((a, b) => a.rank - b.rank);
+    rows.slice(0, 3).forEach(e => {
+      const el = document.querySelector('[data-pod="' + e.rank + '"]');
+      if (el) el.innerHTML = '<b>' + esc(e.username) + '</b><br><span style="color:var(--muted);font-size:.85rem">' + usd(e.wagered) + ' wagered</span>';
+    });
+    paint(search ? search.value : '');
+    if (stamp) {
+      stamp.innerHTML = live
+        ? '<span class="lb-dot"></span> Live · updated ' + new Date(updated || Date.now()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+        : 'Showing last saved standings';
+    }
+    return true;
+  }
 
-  // upgrade to live API data when deployed (key stays server-side)
+  // live first — the snapshot is only a safety net
   fetch('/api/leaderboard')
-    .then(r => r.ok ? r.json() : null)
-    .then(d => { if (d && d.entries && d.entries.length) render(d.entries); })
-    .catch(() => {});
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => {
+      if (!(d && d.entries && d.entries.length && render(d.entries, true, d.updated))) throw new Error('no live data');
+    })
+    .catch(() => { render(window.LB_DATA && window.LB_DATA.entries, false); });
 
-  // collapse/expand
-  const wrap = document.getElementById('lb-wrap'), btn = document.getElementById('lb-toggle');
+  if (search) search.addEventListener('input', () => paint(search.value));
+
   btn.addEventListener('click', () => {
     const open = wrap.classList.toggle('open');
     btn.textContent = open ? 'Show Top 10 Only' : 'Show Full Top 100';
-    if (!open) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!open) document.getElementById('standings').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 })();
 
