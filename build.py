@@ -50,12 +50,12 @@ def nav():
         <div class="menu">{menu}</div>
       </div>
       <a href="/leaderboard">Leaderboard</a>
-      <a href="/free-spins">Free Spins</a>
-      <a href="/max-win-merch">Merch</a>
+      <a href="/watch">Watch Live</a>
       <a href="/vip-transfer">VIP Transfer</a>
       <a href="/blog">Blog</a>
     </div>
     <div class="nav-cta">
+      <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
       <a class="btn btn-ghost" href="/#how-to-sign-up">How to Sign-Up</a>
       <a class="btn btn-ghost" href="/contact">Contact Us</a>
       <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with DAILY</a>
@@ -67,7 +67,7 @@ def nav():
 def footer():
     rew = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[:4])
     rew2 = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[4:])
-    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/blog">Blog</a><a href="/#faq">FAQ</a><a href="/contact">Contact Us</a>'
+    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/blog">Blog</a><a href="/watch">Watch Live</a><a href="/#faq">FAQ</a><a href="/contact">Contact Us</a>'
     return f"""<footer>
   <div class="wrap">
     <div class="foot-grid">
@@ -1470,6 +1470,62 @@ PAGES["when-can-you-receive-tips-roobet.html"] = dict(
   <p class="rv" style="color:var(--muted);margin-top:30px">For wallet fundamentals, see <a href="/how-to-deposit-on-roobet" style="color:var(--gold);font-weight:700">how to deposit</a> and <a href="/how-to-withdraw-on-roobet" style="color:var(--gold);font-weight:700">how to withdraw on Roobet</a>.</p>
 </div></section>
 {cta_banner("Questions About Our Rewards?","Contact the VIP team for help with DAILY rewards, claims and promotions.")}
+""")
+
+
+# ================= WATCH LIVE =================
+PAGES["watch.html"] = dict(
+    title="Watch DailyGambling Live on Kick — Roobet Streams & Live Giveaways",
+    desc="Watch DailyGambling live on Kick right here. Earn ELITE Points every 15 minutes of watch time, catch live giveaways and slot challenges, and play along with code DAILY on Roobet.",
+    kw="dailygambling live, watch dailygambling, dailygambling kick, roobet live stream, live slots stream, kick gambling stream",
+    schema={"@context": "https://schema.org", "@type": "VideoObject",
+            "name": "DailyGambling Live on Kick",
+            "description": "Live Roobet slots stream from DailyGambling with live giveaways, slot challenges and ELITE Points for watch time.",
+            "thumbnailUrl": SITE + "/assets/og-image.png",
+            "uploadDate": "2026-08-07",
+            "embedUrl": "https://player.kick.com/dailygambling",
+            "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards"}},
+    body=f"""
+<section class="page-hero" style="padding-bottom:18px"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / Watch Live</p>
+  <span class="eyebrow rv" id="watch-status">&#128250; Checking stream status&hellip;</span>
+  <h1 class="rv d1">Watch <span class="grad">DailyGambling</span> Live</h1>
+  <p class="lead rv d2" style="margin:16px auto 0">Every 15 minutes of watch time earns you <b style="color:var(--gold)">50 ELITE Points</b> &mdash; redeemable for real balance and bonus buys. Live giveaways drop during stream.</p>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="stream-grid rv">
+    <div class="stream-main">
+      <div class="stream-frame" id="stream-frame">
+        <iframe src="https://player.kick.com/dailygambling?autoplay=false&amp;muted=true"
+                title="DailyGambling live stream" allowfullscreen
+                allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe>
+      </div>
+      <div class="stream-actions">
+        <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Open on Kick {ARR}</a>
+        <a class="btn btn-ghost" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play along with code DAILY</a>
+      </div>
+    </div>
+    <div class="stream-chat">
+      <div class="stream-frame chat" id="chat-frame">
+        <iframe src="https://kick.com/popout/dailygambling/chat" title="DailyGambling chat"></iframe>
+      </div>
+      <p class="chat-note">Chat not loading? <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Open the stream on Kick</a> &mdash; some browsers block embedded chat.</p>
+    </div>
+  </div>
+</div></section>
+
+<section style="padding-top:10px"><div class="wrap">
+  <div class="center rv"><span class="eyebrow">&#9889; Why Watch Here</span><h2>Watch Time That Pays</h2></div>
+  <div class="cards c4" style="margin-top:36px">
+    <a class="card rv" href="/elite-points"><div class="glow"></div><div class="ic">&#11088;</div><h3>50 Points / 15 Min</h3><p>Watch time converts into ELITE Points, redeemable in the Point Shop for free balance and bonus buys.</p><span class="more">Point Shop {ARR}</span></a>
+    <a class="card rv d1" href="/giveaways#raffle"><div class="glow"></div><div class="ic">&#127881;</div><h3>Live Giveaways</h3><p>Drops happen during stream &mdash; and our raffle runs right here on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
+    <a class="card rv d2" href="/slot-challenges"><div class="glow"></div><div class="ic">&#127918;</div><h3>Slot Challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top.</p><span class="more">See challenges {ARR}</span></a>
+    <a class="card rv d3" href="/leaderboard"><div class="glow"></div><div class="ic">&#127942;</div><h3>Play the Leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings {ARR}</span></a>
+  </div>
+</div></section>
+
+{cta_banner("Playing Along Beats Just Watching","Join Roobet with code DAILY and every spin during stream counts toward the $50K leaderboard and your milestones.")}
 """)
 
 # ================= WRITE FILES =================

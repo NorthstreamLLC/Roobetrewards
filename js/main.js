@@ -191,19 +191,23 @@ document.querySelectorAll('.flip').forEach(c => {
   });
 })();
 
-// ===== "DailyGambling is LIVE" toast =====
+// ===== live status: nav pill + toast + watch page =====
 (function () {
-  let shown = false;
+  const pill = document.getElementById('live-pill');
+  const status = document.getElementById('watch-status');
+  const onWatch = !!document.getElementById('stream-frame');
+  let toastShown = false;
+
   function showToast() {
-    if (shown || sessionStorage.getItem('liveToastClosed')) return;
-    shown = true;
+    if (toastShown || onWatch || sessionStorage.getItem('liveToastClosed')) return;
+    toastShown = true;
     const t = document.createElement('div');
     t.className = 'live-toast';
-    t.innerHTML = `<span class="live-dot"></span>
-      <div><b>DailyGambling is LIVE</b>
-      <p>Watch on Kick — earn ELITE Points &amp; catch live giveaways.</p></div>
-      <a class="btn btn-gold" href="https://kick.com/dailygambling" target="_blank" rel="noopener">Watch</a>
-      <button class="toast-x" aria-label="Dismiss">&times;</button>`;
+    t.innerHTML = '<span class="live-dot"></span>' +
+      '<div><b>DailyGambling is LIVE</b>' +
+      '<p>Watch on site &amp; earn ELITE Points for your watch time.</p></div>' +
+      '<a class="btn btn-gold" href="/watch">Watch</a>' +
+      '<button class="toast-x" aria-label="Dismiss">&times;</button>';
     document.body.appendChild(t);
     requestAnimationFrame(() => setTimeout(() => t.classList.add('show'), 50));
     t.querySelector('.toast-x').addEventListener('click', () => {
@@ -212,14 +216,27 @@ document.querySelectorAll('.flip').forEach(c => {
       setTimeout(() => t.remove(), 500);
     });
   }
-  function check() {
-    fetch('/api/live').then(r => r.ok ? r.json() : null)
-      .then(d => { if (d && d.live === true) showToast(); })
-      .catch(() => {});
+
+  function apply(live) {
+    if (pill) pill.classList.toggle('on', live === true);
+    if (status) {
+      status.innerHTML = live === true
+        ? '<span class="live-dot"></span> LIVE NOW'
+        : (live === false ? '💤 Currently offline — replays and next stream on Kick' : '📺 Stream status unavailable');
+      status.classList.toggle('is-live', live === true);
+    }
+    if (live === true) showToast();
   }
-  // first check after the promo modal has had its moment
+
+  function check() {
+    fetch('/api/live')
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => apply(d ? d.live : null))
+      .catch(() => apply(null));
+  }
+  check();
   setTimeout(check, 8000);
-  setInterval(check, 180000); // re-check every 3 min
+  setInterval(check, 120000);
 })();
 
 // ===== live raffle widget (giveaways page) =====
