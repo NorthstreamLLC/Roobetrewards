@@ -63,20 +63,20 @@ CHEV = ('<svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none
         '<path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
 REWARD_LINKS = [
-    ("/leaderboard", "$50K Wager Leaderboard"),
-    ("/wager-milestones", "Wager Milestones"),
-    ("/free-spins", "Free Spins Bonus"),
-    ("/max-win-merch", "Max Win Merch"),
-    ("/vip-transfer", "VIP Transfer"),
-    ("/elite-points", "ELITE Points"),
-    ("/slot-challenges", "Slot Challenges"),
-    ("/giveaways", "$5K Giveaways"),
-    ("/roobet-rewards", "Roobet Rewards System"),
+    ("/leaderboard", "\U0001F3C6", "$50K Wager Leaderboard"),
+    ("/wager-milestones", "\U0001F3AF", "Wager Milestones"),
+    ("/free-spins", "\U0001F3B0", "Free Spins Bonus"),
+    ("/max-win-merch", "\U0001F455", "Max Win Merch"),
+    ("/vip-transfer", "\U0001F48E", "VIP Transfer"),
+    ("/elite-points", "\u2B50", "ELITE Points"),
+    ("/slot-challenges", "\U0001F3AE", "Slot Challenges"),
+    ("/giveaways", "\U0001F381", "$5K Giveaways"),
+    ("/roobet-rewards", "\U0001F4B0", "Roobet Rewards System"),
 ]
 
 def nav(active=""):
-    reward_slugs = {u.lstrip("/") for u, _ in REWARD_LINKS}
-    menu = "".join('<a href="%s">%s</a>' % (u, t) for u, t in REWARD_LINKS)
+    reward_slugs = {u.lstrip("/") for u, _, _ in REWARD_LINKS}
+    menu = "".join('<a href="%s"><span class="mi">%s</span>%s</a>' % (u, ic, t) for u, ic, t in REWARD_LINKS)
     def link(u, t):
         cls = ' class="active"' if u.lstrip("/") == active else ""
         return '<a href="%s"%s>%s</a>' % (u, cls, t)
@@ -382,10 +382,12 @@ reward_cards = "".join(f"""<a class="card rv d{i%3+1}" href="/{f[:-5]}"><div cla
 
 HERO_BD = """<div class="hero-bd" aria-hidden="true">
   <i class="bd-wash"></i><i class="bd-cone"></i>
+  <img class="bd-chip" src="/assets/roobet-chip.png" alt="" width="820" height="820" aria-hidden="true">
   <i class="bd-orb-a"></i><i class="bd-orb-b"></i><i class="bd-grid"></i><i class="bd-fade"></i>
 </div>"""
 
-HERO_BD_SHORT = HERO_BD.replace('class="hero-bd"', 'class="hero-bd short"')
+import re as _re
+HERO_BD_SHORT = _re.sub(r'\s*<img class="bd-chip"[^>]*>', '', HERO_BD).replace('class="hero-bd"', 'class="hero-bd short"')
 
 TICKER = """<div class="ticker" aria-hidden="true"><div class="ticker-track">
   <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; <b>$5,000+</b> monthly giveaways</span><span>&#128176; Rakeback every <b>30 minutes</b></span>
@@ -453,6 +455,10 @@ PAGES["index.html"] = dict(
 
   <div class="cards c3" style="margin-top:14px">
     <div class="detail rv">
+      <span class="detail-art spins" aria-hidden="true">
+        <img src="/assets/sweet-bonanza-pragmatic.png" alt="" width="300" height="300" loading="lazy">
+        <img src="/assets/sugar-rush-pragmatic.png" alt="" width="300" height="300" loading="lazy">
+      </span>
       <div class="head"><h3>Exclusive Free Spins<br>&ldquo;Sign Up Bonus&rdquo;</h3></div>
       <p class="statement">Claim <b style="color:var(--text)">ONE</b> exclusive free spin offer:</p>
       <ul>
@@ -465,6 +471,10 @@ PAGES["index.html"] = dict(
     </div>
 
     <div class="detail rv d1">
+      <span class="detail-art merch" aria-hidden="true">
+        <img src="/assets/le-bandit-hacksaw.png" alt="" width="300" height="300" loading="lazy">
+        <img src="/assets/mental-nolimit-city.png" alt="" width="300" height="300" loading="lazy">
+      </span>
       <div class="head"><h3>Max Win Merch</h3></div>
       <p class="statement"><b style="color:var(--text)">Max Win Merch</b> for every max win you hit!</p>
       <ul>
@@ -476,6 +486,7 @@ PAGES["index.html"] = dict(
     </div>
 
     <div class="detail rv d2">
+      <span class="detail-art vip" aria-hidden="true"><img src="/assets/crowns.svg" alt="" width="300" height="200" loading="lazy"></span>
       <div class="head"><h3>Exclusive In-House VIP Team</h3></div>
       <p class="statement">Real people, <b style="color:var(--text)">not a call centre</b></p>
       <ul>
