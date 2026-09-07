@@ -14,9 +14,16 @@ SLOTS_MILES = "https://slotessentials.com/rewards/wager-milestones"
 SLOTS_HOME = "https://slotessentials.com"
 YOUTUBE = "https://www.youtube.com/@dailygamba"
 
-# Weekly stream schedule — fill with real times and the /watch schedule block appears.
-# Format: (day label, time label or None if off)
-SCHEDULE = []
+# Weekly stream schedule (America/New_York). (day index 0=Sun, label, time or None, note)
+SCHEDULE = [
+    ("Mon", "2:45 PM", None),
+    ("Tue", "2:45 PM", "Community Day"),
+    ("Wed", "2:45 PM", None),
+    ("Thu", "2:45 PM", None),
+    ("Fri", "2:45 PM", None),
+    ("Sat", "2:45 PM", "Slot Tournament"),
+    ("Sun", None, None),
+]
 
 WEIGHTED = """<div style="margin-top:50px" class="rv"><h2 style="text-align:center">How Weighted Wagering Works</h2>
 <p class="lead" style="margin:10px auto 26px;text-align:center">Different game types contribute at different rates — slots and similar gameplay count at the full rate and ensure full payout eligibility.</p>
@@ -269,20 +276,23 @@ def cta_banner(h, p, extra="", funnel=None):
 def schedule_block():
     if not SCHEDULE:
         return ""
-    days = "".join(
-        '<div class="day%s"><b>%s</b>%s</div>' % (
-            " on" if t and str(t).lower() == "live" else ("" if t else " off"),
-            d, (t if t else "Off"))
-        for d, t in SCHEDULE)
+    tiles = []
+    for i, (d, t, note) in enumerate(SCHEDULE):
+        cls = "day" if t else "day off"
+        body = ('<span>%s</span>' % t) if t else '<span>Off</span>'
+        extra = ('<em>%s</em>' % note) if note else ''
+        tiles.append('<div class="%s" data-day="%s"><b>%s</b>%s%s</div>' % (cls, d, d.upper(), body, extra))
+    days = "".join(tiles)
     return """<section style="padding-top:8px"><div class="wrap">
   <div class="sched rv">
-    <div class="card" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="sched-next">
       <span class="earn-label">Next stream in</span>
-      <p class="hero-meta" style="font-size:22px;margin:8px 0 0"><b data-deadline="nextstream" aria-live="off">&mdash;</b></p>
+      <p class="sched-count"><b data-deadline="nextstream" aria-live="off">&mdash;</b></p>
+      <p class="sched-cap" id="sched-cap">Mon&ndash;Sat &middot; 2:45 PM EST</p>
     </div>
-    <div class="card">
+    <div class="sched-week">
       <span class="earn-label">Weekly schedule</span>
-      <div class="days" style="margin-top:12px">%s</div>
+      <div class="days">%s</div>
     </div>
   </div>
 </div></section>""" % days

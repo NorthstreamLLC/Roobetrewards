@@ -77,6 +77,30 @@
       while (d.getUTCDay() !== 0) d.setUTCDate(d.getUTCDate() + 1);
       return d;
     }
+    if (kind === 'nextstream') {
+      const nyNow = new Date(n.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      const off = n - nyNow;                       // UTC minus NY wall clock
+      const t = new Date(nyNow);
+      t.setHours(14, 45, 0, 0);
+      while (t <= nyNow || t.getDay() === 0) {     // Sunday off
+        t.setDate(t.getDate() + 1);
+        t.setHours(14, 45, 0, 0);
+      }
+      try {
+        const cap = document.getElementById('sched-cap');
+        if (cap) {
+          const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          const notes = { Tue: ' · Community Day', Sat: ' · Slot Tournament' };
+          const d = days[t.getDay()];
+          const today = nyNow.getDate() === t.getDate() ? 'Today' : (t.getDate() - nyNow.getDate() === 1 ? 'Tomorrow' : d);
+          cap.textContent = today + ' · 2:45 PM EST' + (notes[d] || '');
+          document.querySelectorAll('.day').forEach(el => {
+            el.classList.toggle('next', el.dataset.day === d);
+          });
+        }
+      } catch (e) {}
+      return new Date(t.getTime() + off);
+    }
     if (kind === 'period16') { // leaderboard period: 16th 00:00 UTC -> next 16th
       const t = Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), 16);
       return new Date(n.getTime() < t ? t : Date.UTC(n.getUTCFullYear(), n.getUTCMonth() + 1, 16));
@@ -382,6 +406,11 @@ document.querySelectorAll('.flip').forEach(c => {
       else w.hidden = true;
     }
     paintUptime(); paintSession();
+    try {
+      const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const nyDay = days[new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'})).getDay()];
+      document.querySelectorAll('.day').forEach(el => el.classList.toggle('on', liveNow && el.dataset.day === nyDay));
+    } catch (e) {}
   });
 
   setInterval(() => {
