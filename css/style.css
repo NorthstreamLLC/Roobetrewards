@@ -45,17 +45,17 @@ p{text-wrap:pretty}
 @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes blink{50%{opacity:.25}}
-@keyframes spinslow{to{transform:rotate(360deg)}}
+@keyframes spinslow{from{transform:translateX(-50%) rotate(0)}to{transform:translateX(-50%) rotate(360deg)}}
 @keyframes bokeh{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,26px) scale(1.08)}}
 
 /* ---------- hero backdrop layers ---------- */
 .hero-bd{position:absolute;top:0;left:0;right:0;height:680px;overflow:hidden;pointer-events:none;z-index:0}
 .hero-bd.short{height:560px}
-.hero-bd i{position:absolute;display:block}
+.hero-bd i,.hero-bd img{position:absolute;display:block}
 .bd-wash{inset:0;background:radial-gradient(130% 100% at 50% -18%,rgba(245,165,36,.20),transparent 58%)}
 .bd-cone{inset:0;background:conic-gradient(from 200deg at 50% -5%,transparent 0deg,rgba(245,165,36,.09) 30deg,transparent 62deg,rgba(245,165,36,.06) 96deg,transparent 130deg);-webkit-mask-image:linear-gradient(180deg,#000,transparent 72%);mask-image:linear-gradient(180deg,#000,transparent 72%)}
-.bd-chip{left:50%;top:-120px;width:820px;height:820px;margin-left:-410px;opacity:.26;animation:spinslow 120s linear infinite;-webkit-mask-image:radial-gradient(60% 60% at 50% 50%,#000,transparent);mask-image:radial-gradient(60% 60% at 50% 50%,#000,transparent)}
-.hero-bd.short .bd-chip{width:620px;height:620px;margin-left:-310px;opacity:.18}
+.bd-chip{left:50%;top:-120px;width:820px;height:820px;transform:translateX(-50%);transform-origin:50% 50%;opacity:.26;animation:spinslow 120s linear infinite;-webkit-mask-image:radial-gradient(60% 60% at 50% 50%,#000,transparent);mask-image:radial-gradient(60% 60% at 50% 50%,#000,transparent)}
+.hero-bd.short .bd-chip{width:620px;height:620px;opacity:.18}
 .bd-orb-a{left:14%;top:150px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(245,165,36,.16),transparent 62%);filter:blur(30px);animation:bokeh 22s ease-in-out infinite}
 .bd-orb-b{right:11%;top:80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(120,150,255,.10),transparent 62%);filter:blur(34px);animation:bokeh 28s 4s ease-in-out infinite}
 .bd-grid{inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(78% 62% at 50% 22%,#000,transparent);mask-image:radial-gradient(78% 62% at 50% 22%,#000,transparent)}
@@ -382,3 +382,4 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:44
   .banner-in{max-width:100%}
   .banner-art{inset:0 0 0 62%;opacity:.5}
 }
+.mile .perks{display:inline-block;margin-left:7px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}

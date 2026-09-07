@@ -523,6 +523,20 @@ for t in LB_TIERS:
                       % (pos, cls, t["prize"], format(t["points"], ",")))
 tier_rows = "".join(_tier_rows)
 
+
+# server-rendered top 10 (hydrated with live data by main.js)
+_lb_seed = json.loads(LB_DATA).get("entries", [])[:10]
+_medals = ["\U0001F947", "\U0001F948", "\U0001F949"]
+_ssr = []
+for e in _lb_seed:
+    r = e["rank"]; t_prize = lb_cash(r); t_pts = lb_points(r)
+    cls = ' class="lb-top"' if r <= 3 else ""
+    rank_cell = _medals[r-1] if r <= 3 else str(r)
+    pcls = "lb-spins" if "Spins" in t_prize else "gold-td"
+    _ssr.append('<tr%s><td>%s</td><td>%s</td><td class="lb-wager">$%s</td><td class="%s">%s</td><td class="col-pts">&#11088; %s</td></tr>'
+                % (cls, rank_cell, e["username"], format(e["wagered"], ",.2f"), pcls, t_prize, format(t_pts, ",")))
+ssr_rows = "".join(_ssr)
+
 LB_TABLE = f"""
 <div style="margin-top:70px" id="standings">
   <div class="center rv"><span class="eyebrow">&#128202; Live Standings</span><h2>Current Top 100</h2>
@@ -535,7 +549,7 @@ LB_TABLE = f"""
 
   <div class="tbl-wrap rv lb-wrap" id="lb-wrap"><table class="tbl lb-tbl" id="lb-table">
     <thead><tr><th>#</th><th>Player</th><th>Wagered</th><th>Prize</th><th class="col-pts">ELITE Points</th></tr></thead>
-    <tbody id="lb-body"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:40px">Loading live standings...</td></tr></tbody>
+    <tbody id="lb-body">{ssr_rows}</tbody>
   </table></div>
   <div class="center" style="margin-top:20px">
     <button class="btn btn-ghost" id="lb-toggle">Show Full Top 100</button>
@@ -557,15 +571,15 @@ PAGES["leaderboard.html"] = dict(
     desc="Compete on the $50,000 monthly Roobet wager leaderboard. Wager under code ELITE or DAILY, climb the ranks and win cash prizes, free spins and redeemable points every month.",
     kw="roobet wager leaderboard, $50,000 leaderboard, roobet leaderboard, best roobet casino rewards, wager race",
     body=f"""
-<section class="page-hero"><div class="wrap">
+<section class="page-hero">{HERO_BD_SHORT}<div class="wrap">
   {crumb("$50K Wager Leaderboard")}
-  <span class="eyebrow rv">🏆 Live Every Month</span>
+  <span class="eyebrow rv"><span class="live-dot"></span> Live Standings &middot; Updating Now</span>
   <h1 class="rv d1"><span class="grad" data-count="50000" data-prefix="$">$0</span> Wager Leaderboard</h1>
   <p class="lead rv d2">Every wager you place on Roobet under code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b> pushes you up the monthly leaderboard. Top spots split $50,000 — every single month.</p>
   <div class="hero-cta rv d3" style="justify-content:center">
     <a class="btn btn-gold btn-lg pulse" href="{SLOTS}" target="_blank" rel="noopener">Join the Race {ARR}</a>
   </div>
-  <p class="rv d4" style="margin-top:26px;color:var(--muted)">Period: 16th &rarr; 15th, Midnight UTC &nbsp;·&nbsp; Ends in <b style="color:var(--gold);font-variant-numeric:tabular-nums" data-deadline="period16">—</b></p>
+  <p class="hero-meta rv d4">Period 16th &rarr; 15th, midnight UTC &middot; Ends in <b data-deadline="period16" aria-live="off">&mdash;</b></p>
 </div></section>
 
 <section style="padding-top:20px"><div class="wrap">
@@ -587,6 +601,11 @@ PAGES["leaderboard.html"] = dict(
     </div>
     <div class="rv d2"><div class="phone"><video autoplay muted loop playsinline src="/assets/wager.mp4" aria-label="Wager leaderboard in action"></video></div></div>
   </div>
+  <div class="cards c3" style="margin-top:34px">
+    <div class="card rv"><div class="ic">&#128176;</div><h3>All 100 places paid</h3><p>Cash down to #50, free spins to #100, and ELITE Points for everyone on the board &mdash; not just the podium.</p></div>
+    <div class="card rv d1"><div class="ic">&#128260;</div><h3>Standings update live</h3><p>Wagers flow in from the Roobet API under both codes and re-rank the board continuously.</p></div>
+    <div class="card rv d2"><div class="ic">&#9989;</div><h3>Paid after the period closes</h3><p>Prizes are distributed once the 16th&ndash;15th period ends. The VIP team handles payouts directly.</p></div>
+  </div>
   {WEIGHTED}
 </div></section>
 
@@ -600,29 +619,63 @@ miles = [
     ("$1,000,000", "$500", True), ("$2,500,000", "$1,000", True), ("$3,500,000", "$1,750", True),
     ("$5,000,000", "$2,500", True), ("$10,000,000", "$5,000", True),
 ]
-mile_html = "".join(
-    f'<div class="mile rv"><span class="mw">Wager — {w}</span><span class="mr">{r}{"+" if plus else ""}</span>'
-    + (f'<a class="pill claim" href="{SLOTS_MILES}" target="_blank" rel="noopener">Claim</a>' if i == 0
-       else '<span class="pill locked">🔒 Locked</span>')
-    + '</div>'
-    for i, (w, r, plus) in enumerate(miles))
+_mile_rows = []
+for _i, (_w, _r, _plus) in enumerate(miles):
+    if _i == 0:
+        _pill = '<a class="pill claim" href="%s" target="_blank" rel="noopener">Claim</a>' % SLOTS_MILES
+    else:
+        _pill = '<span class="pill locked">&#128274; Locked</span>'
+    _perks = '<span class="perks">+ perks</span>' if _plus else ''
+    _mile_rows.append(
+        '<div class="mile rv"><span class="mw">Wager &mdash; %s</span>'
+        '<span class="bar"><i data-w="%d"></i></span>'
+        '<span class="mr">%s%s</span>%s</div>'
+        % (_w, min(100, int(8 + _i * 9.2)), _r, _perks, _pill))
+mile_html = "".join(_mile_rows)
+
 PAGES["wager-milestones.html"] = dict(
     title="Roobet Wager Milestones — Claim Up to $11,350 Extra Monthly | Code ELITE & DAILY",
     desc="Claim up to $11,350 in extra monthly rewards with Roobet wager milestones. Hit wager targets under code ELITE or DAILY and every milestone pays out — guaranteed, no luck needed.",
     kw="roobet wager milestones, wager rewards, roobet bonus, best casino rewards, $11,350 milestones",
     body=f"""
-<section class="page-hero"><div class="wrap">
+<section class="page-hero">{HERO_BD_SHORT}<div class="wrap">
   {crumb("Wager Milestones")}
-  <span class="eyebrow rv">🎯 Guaranteed Rewards</span>
-  <h1 class="rv d1">Claim Up to <span class="grad" data-count="11350" data-prefix="$">$0</span> Every Month</h1>
-  <p class="lead rv d2">No raffles. No luck. Hit a wager milestone under code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b> and the reward is yours — every month, the counter resets and you can claim it all again.</p>
-  <div class="hero-cta rv d3" style="justify-content:center"><a class="btn btn-gold btn-lg pulse" href="{ELITE}" rel="nofollow sponsored" target="_blank">Start Claiming {ARR}</a></div>
+  <span class="eyebrow rv">Guaranteed &middot; No Luck Needed</span>
+  <h1 class="rv d1">Claim up to <span class="grad" data-count="11350" data-prefix="$" aria-live="off">$11,350</span><br>every single month</h1>
+  <p class="lead rv d2">No raffles. No luck. Hit a wager milestone under code <b style="color:var(--gold)">DAILY</b> or <b style="color:var(--gold)">ELITE</b> and the reward is yours &mdash; every month the track resets and you can claim it all again.</p>
+  <div class="hero-cta rv d3">
+    <a class="btn btn-gold btn-lg pulse" href="{SLOTS_MILES}" target="_blank" rel="noopener">Start claiming</a>
+    <a class="btn btn-ghost btn-lg" href="#weighting">How weighting works</a>
+  </div>
+  <p class="hero-meta rv d4">Resets in <b data-deadline="monthly" aria-live="off">&mdash;</b></p>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:860px">
   <h2 class="center rv" style="margin-bottom:30px">Monthly Milestone Track</h2>
   {mile_html}
-  <p class="rv" style="color:var(--muted);font-size:.88rem;margin-top:18px;text-align:center">Tiers marked <b style="color:var(--gold)">+</b> can pay even more. Milestones stack with the <a href="/leaderboard" style="color:var(--gold)">$50K Leaderboard</a>: the same wagers count toward both.</p>
+  <p class="rv" style="color:var(--text-faint);font-size:13px;margin-top:16px;text-align:center">Tiers marked <b style="color:var(--gold)">+ perks</b> can pay more than the cash figure. Milestones stack with the <a href="/leaderboard" style="color:var(--gold)">$50K leaderboard</a> &mdash; the same wagers count toward both.</p>
+</div></section>
+
+<section style="padding-top:6px"><div class="wrap">
+  <div class="steps-split">
+    <div class="rv">
+      <h2>Your milestone journey</h2>
+      <p class="lead" style="margin:12px 0 14px">Every month you start fresh and level up through the track. Claims run all month long &mdash; from instant cash bonuses on the early tiers to gameplay perks and full Slotessentials VIP treatment as the numbers climb.</p>
+      <p class="lead">From <b style="color:var(--gold)">$250,000</b> upward, every tier adds gameplay bonuses on top of the cash: free spins, bonus buys and personal offers negotiated by the VIP team. Hit the number, message the team, claim it.</p>
+      <div class="hero-cta" style="justify-content:flex-start;margin-top:18px">
+        <a class="btn btn-gold btn-lg" href="{DAILY}" rel="nofollow sponsored" target="_blank">Start on code DAILY</a>
+        <a class="btn btn-ghost btn-lg" href="{TELEGRAM}" target="_blank" rel="noopener">Ask the VIP team</a>
+      </div>
+    </div>
+    <div class="rv d2"><div class="phone">
+      <div class="vid-mask"><img src="/assets/roobet-logo.png" alt="" width="17" height="17"><span><span class="b1">ROOBET</span>REWARDS</span></div>
+      <div class="vid-wash"></div>
+      <video src="/assets/wager.mp4" autoplay muted loop playsinline preload="none" poster="/assets/og-image.png" aria-label="Wager leaderboard preview"></video>
+    </div></div>
+  </div>
+</div></section>
+
+<section id="weighting" style="padding-top:6px"><div class="wrap" style="max-width:1000px">
   {WEIGHTED}
 </div></section>
 
@@ -1574,58 +1627,90 @@ PAGES["when-can-you-receive-tips-roobet.html"] = dict(
 
 
 # ================= WATCH LIVE =================
+watch_faq = [
+    ("How do I know when DailyGambling is live?",
+     "A green LIVE badge appears in the navigation of every page on this site the moment the stream goes live, and this page switches to LIVE NOW with the player ready to watch. You can also follow DailyGambling on Kick to get notified directly."),
+    ("How do I enter the stream giveaways?",
+     "Giveaways are announced and dropped live on stream, so being present is how you enter. Between streams we also run a raffle on this site \u2014 sign in with your Kick account on the giveaways page and you are entered with one click, one entry per account."),
+    ("Do I earn rewards for watching the stream?",
+     "Yes. Watch time on DailyGambling's Kick stream earns ELITE Points \u2014 50 points for every 15 minutes of activity \u2014 which you redeem in the ELITE Points Shop for free balance and bonus buys."),
+]
+watch_faq_html = "".join('<details class="rv"><summary>%s</summary><div class="a">%s</div></details>' % (q, a) for q, a in watch_faq)
+
 PAGES["watch.html"] = dict(
-    title="Watch DailyGambling Live on Kick — Roobet Streams & Live Giveaways",
-    desc="Watch DailyGambling live on Kick right here. Earn ELITE Points every 15 minutes of watch time, catch live giveaways and slot challenges, and play along with code DAILY on Roobet.",
+    title="Watch DailyGambling Live on Kick \u2014 Roobet Code DAILY | Roobet Casino Rewards",
+    desc="Watch DailyGambling live on Kick right here. Earn ELITE Points for your watch time, catch live giveaways and slot challenges, and play along on Roobet with code DAILY.",
     kw="dailygambling live, watch dailygambling, dailygambling kick, roobet live stream, live slots stream, kick gambling stream",
-    schema={"@context": "https://schema.org", "@type": "VideoObject",
-            "name": "DailyGambling Live on Kick",
-            "description": "Live Roobet slots stream from DailyGambling with live giveaways, slot challenges and ELITE Points for watch time.",
-            "thumbnailUrl": SITE + "/assets/og-image.png",
-            "uploadDate": "2026-08-07",
-            "embedUrl": "https://player.kick.com/dailygambling",
-            "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards"}},
+    schema=[
+        {"@context": "https://schema.org", "@type": "VideoObject",
+         "name": "DailyGambling Live on Kick",
+         "description": "Live Roobet slots stream from DailyGambling with live giveaways, slot challenges and ELITE Points for watch time.",
+         "thumbnailUrl": SITE + "/assets/og-image.png",
+         "uploadDate": "2026-08-07",
+         "embedUrl": "https://player.kick.com/dailygambling",
+         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards"}},
+        {"@context": "https://schema.org", "@type": "FAQPage",
+         "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in watch_faq]},
+    ],
     body=f"""
-<section class="page-hero" style="padding-bottom:18px"><div class="wrap">
+<section class="page-hero">{HERO_BD_SHORT}<div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Watch Live</p>
-  <span class="eyebrow rv" id="watch-status">&#128250; Checking stream status&hellip;</span>
-  <h1 class="rv d1">Watch <span class="grad">DailyGambling</span> Live</h1>
-  <p class="lead rv d2" style="margin:16px auto 0">Every 15 minutes of watch time earns you <b style="color:var(--gold)">50 ELITE Points</b> &mdash; redeemable for real balance and bonus buys. Live giveaways drop during stream.</p>
+  <span class="eyebrow rv" id="watch-status">Checking stream status&hellip;</span>
+  <h1 class="rv d1">Watch <span class="grad">DailyGambling</span> live on Kick</h1>
+  <p class="lead rv d2">Every 15 minutes of watch time earns you <b style="color:var(--gold)">50 ELITE Points</b> &mdash; redeemable for free balance and bonus buys. Live giveaways drop during stream.</p>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
   <div class="stream-grid rv">
-    <div class="stream-main">
+    <div>
       <div class="stream-frame" id="stream-frame">
         <iframe src="https://player.kick.com/dailygambling?autoplay=false&amp;muted=true"
-                title="DailyGambling live stream" allowfullscreen
+                title="DailyGambling live stream" allowfullscreen loading="lazy"
                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe>
       </div>
       <div class="stream-actions">
-        <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Open on Kick {ARR}</a>
-        <a class="btn btn-ghost" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play along with code DAILY</a>
+        <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Follow on Kick</a>
+        <a class="btn btn-ghost" href="{DISCORD}" target="_blank" rel="noopener">Join the Discord</a>
+        <a class="btn btn-ghost" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play along with DAILY</a>
       </div>
     </div>
-    <div class="stream-chat">
+    <div>
       <div class="stream-frame chat" id="chat-frame">
-        <iframe src="https://kick.com/popout/dailygambling/chat" title="DailyGambling chat"></iframe>
+        <iframe src="https://kick.com/popout/dailygambling/chat" title="DailyGambling chat" loading="lazy"></iframe>
       </div>
-      <p class="chat-note">Chat not loading? <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Open the stream on Kick</a> &mdash; some browsers block embedded chat.</p>
+      <p class="chat-note">Chat not loading? <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">Open the stream on Kick</a> &mdash; some browsers block embedded chat.</p>
     </div>
   </div>
 </div></section>
 
-<section style="padding-top:10px"><div class="wrap">
-  <div class="center rv"><span class="eyebrow">&#9889; Why Watch Here</span><h2>Watch Time That Pays</h2></div>
-  <div class="cards c4" style="margin-top:36px">
-    <a class="card rv" href="/elite-points"><div class="glow"></div><div class="ic">&#11088;</div><h3>50 Points / 15 Min</h3><p>Watch time converts into ELITE Points, redeemable in the Point Shop for free balance and bonus buys.</p><span class="more">Point Shop {ARR}</span></a>
-    <a class="card rv d1" href="/giveaways#raffle"><div class="glow"></div><div class="ic">&#127881;</div><h3>Live Giveaways</h3><p>Drops happen during stream &mdash; and our raffle runs right here on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
-    <a class="card rv d2" href="/slot-challenges"><div class="glow"></div><div class="ic">&#127918;</div><h3>Slot Challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top.</p><span class="more">See challenges {ARR}</span></a>
-    <a class="card rv d3" href="/leaderboard"><div class="glow"></div><div class="ic">&#127942;</div><h3>Play the Leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings {ARR}</span></a>
+<section><div class="wrap">
+  <div class="sec-head rv">
+    <div><span class="eyebrow">Watch Time That Pays</span><h2>Turn watch time into ELITE Points</h2></div>
+    <p class="lead">Points accrue while you watch and stack with everything else you earn on Roobet.</p>
+  </div>
+  <div class="cards c4">
+    <a class="card rv" href="/elite-points"><div class="ic">&#11088;</div><h3>50 points / 15 min</h3><p>Watch time on the Kick stream converts into ELITE Points, redeemable in the Point Shop for free balance and bonus buys.</p><span class="more">Point Shop {ARR}</span></a>
+    <a class="card rv d1" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
+    <a class="card rv d2" href="/slot-challenges"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges {ARR}</span></a>
+    <a class="card rv d3" href="/leaderboard"><div class="ic">&#127942;</div><h3>Play the leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings {ARR}</span></a>
   </div>
 </div></section>
 
-{cta_banner("Playing Along Beats Just Watching","Join Roobet with code DAILY and every spin during stream counts toward the $50K leaderboard and your milestones.")}
+<section style="padding-top:6px"><div class="wrap">
+  <div class="faq-split">
+    <div class="rv">
+      <span class="eyebrow">FAQ</span>
+      <h2>Watching &amp; earning</h2>
+      <p class="lead" style="font-size:14px">Three quick answers about the stream, giveaways and points.</p>
+      <div class="hero-cta" style="justify-content:flex-start;margin-top:16px">
+        <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play along on code DAILY</a>
+      </div>
+    </div>
+    <div class="faq rv d1">{watch_faq_html}</div>
+  </div>
+</div></section>
+
+{cta_banner("Playing along beats just watching","Join Roobet with code DAILY and every spin during stream counts toward the $50K leaderboard and your milestones.")}
 """)
 
 # ================= WRITE FILES =================
