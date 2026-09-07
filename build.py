@@ -37,31 +37,46 @@ MENU_ITEMS = [
     ("roobet-rewards.html", "💰", "Roobet Rewards", "Rakeback, vault & bonuses"),
 ]
 
-def nav():
+REWARD_BAR = [
+    ("/#rewards", "All Rewards"),
+    ("/leaderboard", "$50K Leaderboard"),
+    ("/wager-milestones", "Wager Milestones"),
+    ("/free-spins", "Free Spins"),
+    ("/max-win-merch", "Max Win Merch"),
+    ("/vip-transfer", "VIP Transfer"),
+    ("/giveaways", "Giveaways"),
+    ("/watch", "Watch Live"),
+]
+
+def nav(active=""):
     menu = "".join(
         f'<a href="/{f[:-5]}"><span class="ic">{ic}</span><span><b>{t}</b><span>{d}</span></span></a>'
         for f, ic, t, d in MENU_ITEMS)
+    bar_items = []
+    for u, t in REWARD_BAR:
+        cls = ' class="active"' if u.lstrip("/") == active else ""
+        bar_items.append('<a href="%s"%s>%s</a>' % (u, cls, t))
+    bar = "".join(bar_items)
     return f"""<nav aria-label="Main">
   <div class="nav-inner">
-    <a class="brand" href="/">{LOGO}<span><span class="b1">ROOBET</span>REWARDS</span></a>
+    <a class="brand" href="/"><img src="/assets/roobet-logo.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
     <div class="nav-links">
       <div class="dropdown">
         <button aria-haspopup="true">Rewards {CHEV}</button>
         <div class="menu">{menu}</div>
       </div>
       <a href="/leaderboard">Leaderboard</a>
-      <a href="/watch">Watch Live</a>
-      <a href="/vip-transfer">VIP Transfer</a>
+      <a href="/watch">Watch</a>
       <a href="/blog">Blog</a>
     </div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
-      <a class="btn btn-ghost" href="/#how-to-sign-up">How to Sign-Up</a>
-      <a class="btn btn-ghost" href="/contact">Contact Us</a>
+      <a class="btn btn-ghost" href="/contact">Contact</a>
       <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with DAILY</a>
       <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
+  <div class="nav-sub"><div class="nav-sub-inner">{bar}</div></div>
 </nav>"""
 
 def footer():
@@ -199,14 +214,14 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
 <meta name="theme-color" content="#0d0919">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
 {schema_tag}
 </head>
 <body>
 <div class="orbs"><div class="orb g"></div><div class="orb p"></div><div class="orb p2"></div></div>
 <div class="grid-bg"></div>
-{nav()}
+{nav(active=canon.rsplit('/',1)[-1])}
 <main>
 {body}
 </main>
@@ -298,82 +313,167 @@ reward_cards = "".join(f"""<a class="card rv d{i%3+1}" href="/{f[:-5]}"><div cla
         ("roobet-rewards.html", "💰", "Roobet Rewards System", "Instant rakeback every 30 minutes, daily/weekly/monthly bonuses, the Vault and rakeboosts up to +20% — fully explained."),
     ]))
 
+HERO_BD = """<div class="hero-bd" aria-hidden="true">
+  <i class="bd-wash"></i><i class="bd-cone"></i>
+  <img class="bd-chip" src="/assets/roobet-chip.png" alt="" width="820" height="820" aria-hidden="true">
+  <i class="bd-orb-a"></i><i class="bd-orb-b"></i><i class="bd-grid"></i><i class="bd-fade"></i>
+</div>"""
+
+HERO_BD_SHORT = HERO_BD.replace('class="hero-bd"', 'class="hero-bd short"')
+
+TICKER = """<div class="ticker" aria-hidden="true"><div class="ticker-track">
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; <b>$5,000+</b> monthly giveaways</span><span>&#128176; Rakeback every <b>30 minutes</b></span>
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; <b>$5,000+</b> monthly giveaways</span><span>&#128176; Rakeback every <b>30 minutes</b></span>
+</div></div>"""
+
 PAGES["index.html"] = dict(
-    title="Best Roobet Casino Rewards — $100,000 in Monthly Rewards | Code ELITE & DAILY",
-    desc="The best Roobet casino rewards: $100,000 in monthly rewards including a $50,000 wager leaderboard, Roobet free spins, wager milestones, max win merch and more. Join with code ELITE or DAILY.",
+    title="Best Roobet Casino Rewards \u2014 $100,000 in Monthly Rewards | Code DAILY & ELITE",
+    desc="The best Roobet casino rewards: $100,000 in monthly rewards including a $50,000 wager leaderboard, Roobet free spins, wager milestones, max win merch and more. Join with code DAILY or ELITE.",
     kw="best casino rewards, best roobet casino rewards, roobet free spins, free spins roobet, sign-up bonus, roobet rewards, $100,000 in monthly rewards",
     schema=faq_schema,
     body=f"""
-<section class="hero"><div class="wrap hero-grid">
-  <div>
-    <span class="eyebrow rv">🏆 The #1 Roobet Rewards Hub</span>
-    <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$">$0</span> in Monthly Rewards.<br>Every Single Month.</h1>
-    <p class="lead rv d2">The best Roobet casino rewards on the planet — a $50,000 wager leaderboard, exclusive free spins, wager milestones, max win merch, giveaways and more. All unlocked with code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b>.</p>
+<section class="hero">
+  {HERO_BD}
+  <div class="hero-inner">
+    <span class="eyebrow rv">The #1 Roobet Rewards Hub</span>
+    <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$" aria-live="off">$100,000</span> in Monthly Rewards.<br>Every Single Month.</h1>
+    <p class="lead rv d2">The best Roobet casino rewards on the planet &mdash; a $50,000 wager leaderboard, exclusive free spins, wager milestones, max win merch, giveaways and more. All unlocked with code <b style="color:var(--gold)">DAILY</b> or <b style="color:var(--gold)">ELITE</b>.</p>
     <div class="hero-cta rv d3">
-      <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY {ARR}</a>
+      <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY</a>
       <a class="btn btn-ghost btn-lg" href="{KYC}" target="_blank" rel="noopener">How to KYC on Roobet</a>
     </div>
-    <div class="trust rv d4">
-      <div><b data-count="50000" data-prefix="$">$0</b><span>Monthly Leaderboard</span></div>
-      <div><b data-count="11350" data-prefix="$">$0</b><span>Wager Milestones</span></div>
-      <div><b data-count="125" data-suffix="">0</b><span>Free Spins Bonus</span></div>
-      <div><b data-count="5000" data-prefix="$">$0</b><span>Monthly Giveaways</span></div>
+  </div>
+</section>
+
+<section id="rewards" style="padding-top:6px"><div class="wrap">
+  <div class="sec-head rv">
+    <div><span class="eyebrow">Our Rewards</span><h2>Earn More</h2></div>
+    <p class="lead">Two headline races, three exclusive perks, and Roobet&rsquo;s own rewards stacked underneath &mdash; all on one code.</p>
+  </div>
+
+  <div class="banners">
+    <div class="banner rv"><div class="banner-art"></div><div class="banner-in">
+      <p class="fig" data-count="50000" data-prefix="$" aria-live="off">$50,000</p>
+      <h3 class="ttl"><a href="/leaderboard">Roobet Wager Leaderboard</a></h3>
+      <p>Every dollar you wager under code <b style="color:var(--gold)">&ldquo;DAILY&rdquo;</b> climbs the monthly board. First place takes $12,500 plus 15,000 ELITE Points.</p>
+      <div class="row">
+        <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join Leaderboard</a>
+        <a class="btn btn-ghost" href="/leaderboard">View standings</a>
+      </div>
+    </div></div>
+
+    <div class="banner rv d1"><div class="banner-art"></div><div class="banner-in">
+      <p class="fig" data-count="11350" data-prefix="$" aria-live="off">$11,350</p>
+      <h3 class="ttl"><a href="/wager-milestones">Monthly Wager Milestones</a></h3>
+      <p>Guaranteed payouts at every tier under code <b style="color:var(--gold)">&ldquo;DAILY&rdquo;</b> &mdash; no luck, no raffle. The track resets every month.</p>
+      <div class="row">
+        <a class="btn btn-gold" href="{SLOTS_MILES}" target="_blank" rel="noopener">Claim Milestones</a>
+        <a class="btn btn-ghost" href="/wager-milestones">View tiers</a>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="cards c3" style="margin-top:14px">
+    <div class="detail rv">
+      <div class="head"><h3>Exclusive Free Spins &ldquo;Sign Up Bonus&rdquo;</h3></div>
+      <p class="statement">Claim <b style="color:var(--text)">ONE</b> exclusive free spin offer:</p>
+      <ul>
+        <li>Deposit $500 &middot; Wager $5,000 &rarr; <b>75 Free Spins</b> ($0.60 each)</li>
+        <li>Deposit $1,000 &middot; Wager $10,000 &rarr; <b>100 Free Spins</b> ($0.80 each)</li>
+        <li>Deposit $2,000 &middot; Wager $20,000 &rarr; <b>125 Free Spins</b> ($1.00 each)</li>
+        <li>Tiers use your <b>all-time</b> deposit and wager totals &mdash; every session counts.</li>
+      </ul>
+      <a class="btn btn-gold" href="/free-spins">Unlock Your Sign-Up Bonus</a>
+    </div>
+
+    <div class="detail rv d1">
+      <div class="head"><h3>Max Win Merch</h3></div>
+      <p class="statement">Hit a max win, <b style="color:var(--text)">keep the shirt</b></p>
+      <ul>
+        <li>Exclusive designs for Pragmatic Play, Hacksaw Gaming and Nolimit City hits</li>
+        <li>16 designs to collect &mdash; you can&rsquo;t buy them, only win them</li>
+        <li>Shipped free, anywhere, once the VIP team verifies your win</li>
+      </ul>
+      <a class="btn btn-gold" href="/max-win-merch">View Merch</a>
+    </div>
+
+    <div class="detail rv d2">
+      <div class="head"><h3>Exclusive In-House VIP Team</h3></div>
+      <p class="statement">Real people, <b style="color:var(--text)">not a call centre</b></p>
+      <ul>
+        <li>Individual bonuses and promos negotiated for you</li>
+        <li>Direct support on <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold)">Telegram</a> &amp; <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold)">Discord</a> for claims, KYC and payouts</li>
+        <li>VIP status transferred and matched from any casino</li>
+      </ul>
+      <a class="btn btn-gold" href="/contact">Meet the VIP Team</a>
     </div>
   </div>
-  <div class="rv d2"><div class="screen purple"><video autoplay muted loop playsinline src="/assets/home-hero.mp4" aria-label="Roobet rewards showcase"></video></div></div>
+
+  <p class="also rv">Also included:
+    <a href="/giveaways">$5,000+ Monthly Giveaways</a> &middot;
+    <a href="/slot-challenges">Slot Challenges</a> &middot;
+    <a href="/elite-points">ELITE Points</a> &middot;
+    <a href="/roobet-rewards">Roobet Rewards System</a> &mdash; rakeback every 30 minutes, the Vault, and rakeboosts up to +20%.
+  </p>
 </div></section>
 
-<div class="ticker" aria-hidden="true"><div class="ticker-track">
-  <span>🏆 <b>$50,000</b> Wager Leaderboard — live now</span><span>🎰 Up to <b>125 Free Spins</b> at $1.00 each</span><span>🎯 Claim up to <b>$11,350</b> in Wager Milestones</span><span>👕 Free <b>Max Win Merch</b> — 16 exclusive designs</span><span>💎 <b>VIP Transfer</b> from any casino</span><span>🎁 <b>$5,000</b> monthly community giveaways</span><span>💰 Instant Rakeback every <b>30 minutes</b></span>
-  <span>🏆 <b>$50,000</b> Wager Leaderboard — live now</span><span>🎰 Up to <b>125 Free Spins</b> at $1.00 each</span><span>🎯 Claim up to <b>$11,350</b> in Wager Milestones</span><span>👕 Free <b>Max Win Merch</b> — 16 exclusive designs</span><span>💎 <b>VIP Transfer</b> from any casino</span><span>🎁 <b>$5,000</b> monthly community giveaways</span><span>💰 Instant Rakeback every <b>30 minutes</b></span>
-</div></div>
-
-<section id="rewards"><div class="wrap">
-  <div class="center rv"><span class="eyebrow">Our Rewards</span><h2>Every Reward. One Code.</h2><p class="lead">Nine reward programs stacked on top of Roobet's own bonus system — this is the full package you unlock with ELITE or DAILY.</p></div>
-  <div class="cards c3" style="margin-top:44px">{reward_cards}</div>
-</div></section>
-
-<section><div class="wrap">
-  <div class="center rv"><span class="eyebrow">How It Works</span><h2>Biggest Rewards in 4 Steps</h2></div>
-  <div class="steps" style="margin-top:44px">
-    <div class="step rv"><h3>Join with DAILY or ELITE</h3><p>Sign up at Roobet with code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> or <a href="{ELITE}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a> and transfer your VIP status from any casino.</p></div>
-    <div class="step rv d1"><h3>Climb the $50K Leaderboard</h3><p>Every wager counts toward the monthly leaderboard — earn cash prizes, free spins and redeemable points as you climb.</p></div>
-    <div class="step rv d2"><h3>Collect Milestones &amp; Points</h3><p>Claim wager milestones up to $11,350/month and score ELITE Points daily via Slotessentials and <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">DailyGambling live</a>.</p></div>
-    <div class="step rv d3"><h3>Hit Max Wins, Get Merch</h3><p>Every max win you hit on Pragmatic, Hacksaw or Nolimit under our codes unlocks free exclusive Max Win Merch.</p></div>
+<section style="padding-top:6px"><div class="wrap">
+  <div class="vip-band rv">
+    <div class="col">
+      <span class="eyebrow">VIP Transfer</span>
+      <h2>Already VIP somewhere else? Bring it with you.</h2>
+      <p class="lead">Don&rsquo;t start from zero. Roobet matches your VIP status from any casino when you join under code DAILY or ELITE &mdash; level, rakeback rate and bonus percentages intact, and every reward on this site unlocks with it.</p>
+    </div>
+    <div class="col">
+      <a class="btn btn-gold btn-lg" href="{DISCORD}" target="_blank" rel="noopener">Transfer via Discord</a>
+      <a class="btn btn-ghost btn-lg" href="{TELEGRAM}" target="_blank" rel="noopener">Message the VIP team on Telegram</a>
+      <p class="cap">Our VIP team verifies your current status and matches it personally &mdash; usually the same day. <a href="/vip-transfer" style="color:var(--gold)">How it works</a></p>
+    </div>
   </div>
-</div></section>
-
-<section style="padding-top:0"><div class="wrap"><div class="cards c2">
-  <div class="card rv"><div class="glow"></div><div class="ic">⚡</div><h3>Something to Claim Every 30 Minutes</h3><p>Roobet's Instant Rakeback pays a slice of every wager back to you, claimable every half hour — and it never expires. Stack rakeboosts up to +20% on top. <a href="/roobet-rewards" style="color:var(--gold);font-weight:700">See the full rewards system {ARR}</a></p></div>
-  <div class="card rv d1"><div class="glow"></div><div class="ic">🔓</div><h3>The Vault — 3 Claims a Day</h3><p>Part of every reward flows to your Vault, unlocking every 8 hours starting midnight UTC. Daily, weekly and monthly bonuses feed your vault calendar for constant claims.</p></div>
-</div></div></section>
-
-<section id="faq"><div class="wrap">
-  <div class="center rv"><span class="eyebrow">FAQ</span><h2>Roobet Rewards — Answered</h2></div>
-  <div class="faq" style="margin-top:40px">{faq_html}</div>
 </div></section>
 
 <section id="how-to-sign-up"><div class="wrap">
-  <div class="center rv"><span class="eyebrow">🚀 Getting Started</span><h2>How to Sign Up on Roobet</h2><p class="lead">From zero to claiming rewards in a few minutes — here's the exact path.</p></div>
-  <div class="hero-grid" style="margin-top:44px">
+  <div class="sec-head rv">
+    <div><span class="eyebrow">How It Works</span><h2>How to sign up on Roobet</h2></div>
+    <p class="lead">From zero to claiming rewards in a few minutes &mdash; here&rsquo;s the exact path.</p>
+  </div>
+  <div class="steps-split">
     <div>
-      <div style="display:grid;gap:14px">
-        <div class="mile rv"><span class="amt">Step 1</span><p style="flex:1;color:var(--muted)">Head to Roobet with code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> and create your account — takes under a minute.</p></div>
-        <div class="mile rv d1"><span class="amt">Step 2</span><p style="flex:1;color:var(--muted)">Verify your account. New to KYC? Our step-by-step guide at <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> walks you through it. Any questions? Message our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a>.</p></div>
-        <div class="mile rv d2"><span class="amt">Step 3</span><p style="flex:1;color:var(--muted)">Deposit and grab your <a href="free-spins.html" style="color:var(--gold);font-weight:700">free spins tier</a> — your +10% welcome rakeboost is already running.</p></div>
-        <div class="mile rv d3"><span class="amt">Step 4</span><p style="flex:1;color:var(--muted)">Already VIP elsewhere? <a href="vip-transfer.html" style="color:var(--gold);font-weight:700">Transfer your status</a>, then start climbing the <a href="leaderboard.html" style="color:var(--gold);font-weight:700">$50K leaderboard</a>.</p></div>
+      <div class="steps">
+        <div class="step rv"><span class="step-label">Step 01</span><h3>Join with DAILY or ELITE</h3><p>Create your Roobet account with code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:600">DAILY</a> &mdash; it takes under a minute and starts your +10% welcome rakeboost.</p></div>
+        <div class="step rv d1"><span class="step-label">Step 02</span><h3>Verify your account</h3><p>Complete KYC early so withdrawals are never held up. Our guide at <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">HowToKYC.com</a> walks you through it.</p></div>
+        <div class="step rv d2"><span class="step-label">Step 03</span><h3>Deposit &amp; grab your free spins</h3><p>Your all-time deposit and wager totals unlock up to <a href="/free-spins" style="color:var(--gold);font-weight:600">125 free spins</a> at $1.00 each.</p></div>
+        <div class="step rv d3"><span class="step-label">Step 04</span><h3>Climb the $50K leaderboard</h3><p>Every wager counts toward the <a href="/leaderboard" style="color:var(--gold);font-weight:600">leaderboard</a> and your <a href="/wager-milestones" style="color:var(--gold);font-weight:600">milestones</a> at the same time.</p></div>
       </div>
-      <div class="hero-cta rv" style="margin-top:28px">
-        <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Create My Account {ARR}</a>
-        <a class="btn btn-ghost btn-lg" href="{KYC}" target="_blank" rel="noopener">KYC Guide</a>
+      <div class="hero-cta rv" style="justify-content:flex-start;margin-top:16px">
+        <a class="btn btn-gold btn-lg" href="{DAILY}" rel="nofollow sponsored" target="_blank">Create my account</a>
+        <a class="btn btn-ghost btn-lg" href="/how-to-kyc-on-roobet">KYC guide</a>
       </div>
     </div>
-    <div class="rv d2"><div class="phone purple"><video autoplay muted loop playsinline src="/assets/roo-signup.mp4" aria-label="Roobet sign-up walkthrough"></video></div></div>
+    <div class="rv d2"><div class="phone">
+      <div class="vid-mask"><img src="/assets/roobet-logo.png" alt="" width="17" height="17"><span><span class="b1">ROOBET</span>REWARDS</span></div>
+      <div class="vid-wash"></div>
+      <video src="/assets/roo-signup.mp4" autoplay muted loop playsinline preload="none" poster="/assets/og-image.png" aria-label="Roobet sign-up walkthrough"></video>
+    </div></div>
   </div>
 </div></section>
 
-{cta_banner("Ready for $100,000 in Monthly Rewards?",
-"Join Roobet with code ELITE or DAILY, transfer your VIP status, and start claiming the biggest casino rewards package anywhere.")}
+<section id="faq"><div class="wrap">
+  <div class="faq-split">
+    <div class="rv">
+      <span class="eyebrow">FAQ</span>
+      <h2>Roobet Rewards &mdash; Answered</h2>
+      <p class="lead" style="font-size:14px">Everything players ask before joining. Still stuck? The <a href="/contact" style="color:var(--gold);font-weight:600">VIP team</a> answers in minutes.</p>
+      <div class="hero-cta" style="justify-content:flex-start;margin-top:16px">
+        <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up on code DAILY</a>
+      </div>
+      <p class="mono" style="font-size:12px;letter-spacing:.1em;color:var(--text-faint);margin-top:14px">125 FREE SPINS &middot; $125 VALUE</p>
+    </div>
+    <div class="faq rv d1">{faq_html}</div>
+  </div>
+</div></section>
+
+{TICKER}
 """)
 
 # ================= LEADERBOARD =================
