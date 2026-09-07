@@ -375,16 +375,22 @@ document.querySelectorAll('.flip').forEach(c => {
   try { secs = parseInt(sessionStorage.getItem('watchSecs') || '0', 10) || 0; } catch (e) {}
 
   function paintSession() {
-    const box = $('sess-box'), box2 = $('sess-box2'), bar = $('sess-barwrap');
-    if (!box) return;
+    const lLabel = $('er-l-label'), lFig = $('er-l-fig'), right = $('er-r'), bar = $('sess-barwrap');
+    if (!lFig) return;
     const mins = Math.floor(secs / 60);
     const show = liveNow && secs > 0;
-    box.hidden = !show; if (box2) box2.hidden = !show; if (bar) bar.hidden = !show;
-    if (!show) return;
-    $('sess-min').innerHTML = mins + '<i>min</i>';
-    $('sess-pts').innerHTML = (Math.floor(mins / RATE_MIN) * RATE_PTS).toLocaleString('en-US') + '<i>pts</i>';
-    const pct = ((mins % RATE_MIN) / RATE_MIN) * 100;
-    const fill = $('sess-bar'); if (fill) fill.style.width = pct + '%';
+    if (right) right.hidden = !show;
+    if (bar) bar.hidden = !show;
+    if (!show) {
+      if (lLabel) lLabel.textContent = 'Earn rate';
+      lFig.innerHTML = '50<i>pts / 15 min</i>';
+      return;
+    }
+    if (lLabel) lLabel.textContent = 'This session';
+    lFig.innerHTML = mins + '<i>min</i>';
+    $('sess-pts').textContent = (Math.floor(mins / RATE_MIN) * RATE_PTS).toLocaleString('en-US');
+    const fill = $('sess-bar');
+    if (fill) fill.style.width = (((mins % RATE_MIN) / RATE_MIN) * 100) + '%';
   }
 
   function paintUptime() {
