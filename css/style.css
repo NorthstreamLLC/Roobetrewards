@@ -614,15 +614,6 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 /* ---------- detail card artwork ---------- */
 .detail{position:relative;overflow:hidden}
 .detail>*{position:relative;z-index:2}
-.detail-art{position:absolute;z-index:1;inset:auto 0 0 0;height:62%;pointer-events:none;
-  display:flex;align-items:flex-end;justify-content:center;gap:0;
-  -webkit-mask-image:linear-gradient(180deg,transparent,#000 55%);mask-image:linear-gradient(180deg,transparent,#000 55%)}
-.detail-art img{width:auto;height:100%;object-fit:contain}
-.detail-art.spins img,.detail-art.merch img{height:86%;opacity:.16;filter:saturate(.9)}
-.detail-art.spins img:first-child,.detail-art.merch img:first-child{transform:rotate(-8deg) translateX(18%)}
-.detail-art.spins img:last-child,.detail-art.merch img:last-child{transform:rotate(8deg) translateX(-18%)}
-.detail-art.vip{height:52%}
-.detail-art.vip img{height:74%;opacity:.2}
 
 /* ---------- dropdown items: modern ---------- */
 .menu{min-width:262px;padding:7px}
@@ -632,26 +623,15 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
   background:rgba(245,165,36,.1);border:1px solid rgba(245,165,36,.18);font-size:13px;line-height:1}
 .menu a:hover{background:rgba(245,165,36,.1);color:var(--gold)}
 .menu a:hover .mi{background:rgba(245,165,36,.2);border-color:rgba(245,165,36,.4)}
-/* three fanned shirts behind the Max Win Merch card */
-.detail-art.merch{height:66%}
-.detail-art.merch img{height:82%;opacity:.2}
-.detail-art.merch img:nth-child(1){transform:rotate(-11deg) translateX(46%);z-index:1}
-.detail-art.merch img:nth-child(2){transform:translateY(-4%) scale(1.04);opacity:.26;z-index:3}
-.detail-art.merch img:nth-child(3){transform:rotate(11deg) translateX(-46%);z-index:2}
-/* Anubis behind the Free Spins card */
-.detail-art.spins{height:70%;align-items:flex-end;justify-content:center}
-.detail-art.spins img{height:96%;opacity:.24;transform:none;filter:drop-shadow(0 12px 30px rgba(0,0,0,.5))}
 
-/* character art on the reward cards (v2) */
-.detail-art.spins{height:74%;align-items:flex-end;justify-content:center;gap:0}
-.detail-art.spins img{height:auto;max-height:100%;width:auto;opacity:.3;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
-.detail-art.spins img:nth-child(1){max-height:78%;transform:translateX(38%) rotate(-4deg);z-index:1}
-.detail-art.spins img:nth-child(2){max-height:70%;opacity:.34;z-index:3}
-.detail-art.spins img:nth-child(3){max-height:76%;transform:translateX(-38%) rotate(4deg);z-index:2}
-.detail-art.vip{height:78%;align-items:flex-end;justify-content:center}
-.detail-art.vip img{height:auto;max-height:100%;width:auto;opacity:.32;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
-/* four-character free spins lineup */
-.detail-art.spins img:nth-child(1){max-height:72%;transform:translateX(96%) rotate(-5deg);z-index:1}
-.detail-art.spins img:nth-child(2){max-height:80%;transform:translateX(34%) rotate(-2deg);z-index:2;opacity:.32}
-.detail-art.spins img:nth-child(3){max-height:66%;transform:translateX(-34%);z-index:4;opacity:.34}
-.detail-art.spins img:nth-child(4){max-height:72%;transform:translateX(-96%) rotate(5deg);z-index:3}
+
+/* ---------- reward card art: one character, bottom-right, cropped by the card ---------- */
+.detail-art{position:absolute;z-index:1;right:-6%;bottom:0;height:74%;width:auto;pointer-events:none;
+  display:flex;align-items:flex-end;justify-content:flex-end;
+  -webkit-mask-image:linear-gradient(180deg,transparent 2%,#000 42%);mask-image:linear-gradient(180deg,transparent 2%,#000 42%)}
+.detail-art img{height:100%;width:auto;object-fit:contain;opacity:.42;
+  filter:drop-shadow(0 16px 34px rgba(0,0,0,.6))}
+.detail{position:relative;overflow:hidden}
+.detail>*{position:relative;z-index:2}
+.detail .btn{z-index:3}
+@media(max-width:1024px){.detail-art{height:62%;opacity:.85}}
