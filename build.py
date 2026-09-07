@@ -1735,17 +1735,6 @@ PAGES["watch.html"] = dict(
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in watch_faq]},
     ],
     body=f"""
-<section class="watch-sec first"><div class="wrap watch-wrap">
-  <a class="promo-banner rv" href="{DAILY}" rel="nofollow sponsored" target="_blank">
-    <span class="pb-copy">
-      <span class="pb-eyebrow">Roobet Casino Rewards</span>
-      <span class="pb-title"><b>$100,000</b> in monthly rewards</span>
-      <span class="pb-sub">$50K leaderboard &middot; up to 125 free spins &middot; max win merch &mdash; all on code DAILY</span>
-    </span>
-    <span class="pb-cta">Join with DAILY</span>
-  </a>
-</div></section>
-
 <section class="page-hero watch-hero" style="padding:18px 0 14px">{HERO_BD_SHORT}<div class="wrap watch-wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Watch Live</p>
   <div class="watch-top">
