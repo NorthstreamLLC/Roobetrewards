@@ -306,7 +306,7 @@ def schedule_block():
 </div></section>
 
 <section class="watch-sec"><div class="wrap watch-wrap">
-  <a class="promo-banner rv" href="""" + DAILY + """" rel="nofollow sponsored" target="_blank">
+  <a class="promo-banner rv" href="https://roobet.com/?ref=daily" rel="nofollow sponsored" target="_blank">
     <span class="pb-art" aria-hidden="true"><img src="/assets/roobet-chip.png" alt="" width="220" height="220" loading="lazy"></span>
     <span class="pb-copy">
       <span class="pb-eyebrow">Roobet Casino Rewards</span>
