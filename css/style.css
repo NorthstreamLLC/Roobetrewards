@@ -65,7 +65,7 @@ p{text-wrap:pretty}
 
 /* ---------- nav ---------- */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--hairline)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1240px;margin:0 auto;height:var(--nav-h);padding:0 clamp(16px,4vw,32px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1340px;margin:0 auto;height:var(--nav-h);padding:0 clamp(16px,4vw,32px)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-.01em}
 .brand img{width:28px;height:28px;border-radius:8px}
 .brand svg{width:28px;height:28px;border-radius:8px}
@@ -91,7 +91,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 
 /* reward sub-bar (row 2) — a required internal-linking surface */
 .nav-sub{border-top:1px solid var(--hairline);background:rgba(10,15,31,.55)}
-.nav-sub-inner{max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,32px);display:flex;gap:26px;overflow-x:auto;scrollbar-width:none}
+.nav-sub-inner{max-width:1340px;margin:0 auto;padding:0 clamp(16px,4vw,32px);display:flex;gap:26px;overflow-x:auto;scrollbar-width:none}
 .nav-sub-inner::-webkit-scrollbar{display:none}
 .nav-sub a{display:flex;align-items:center;padding:9px 0;font-size:13px;font-weight:500;color:var(--text-dim);white-space:nowrap;transition:color .18s}
 .nav-sub a:hover{color:var(--text)}
@@ -109,7 +109,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 
 /* ---------- layout ---------- */
 main{padding-top:calc(var(--nav-h) + 37px)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+.wrap{max-width:1340px;margin:0 auto;padding:0 clamp(16px,4vw,36px)}
 section{padding:clamp(22px,3vw,32px) 0}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1px solid rgba(245,165,36,.25);background:rgba(245,165,36,.07);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .sec-head .eyebrow{padding:0;border:0;background:none;letter-spacing:.18em;margin-bottom:8px}
@@ -270,7 +270,7 @@ h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";font-family:var(--mono);font-size:18px;color:var(--gold);transition:transform .25s;line-height:1}
 .faq details[open] summary::after{transform:rotate(45deg)}
-.faq .a{padding:0 0 16px;color:var(--text-dim);font-size:13.5px;line-height:1.7;max-width:760px}
+.faq .a{padding:0 0 16px;color:var(--text-dim);font-size:13.5px;line-height:1.7;max-width:860px}
 
 /* ---------- cta banner ---------- */
 .cta-banner{position:relative;overflow:hidden;background:linear-gradient(180deg,#1b2445,var(--surface-2));border:1px solid rgba(245,165,36,.25);border-radius:var(--radius);padding:clamp(28px,4vw,44px);text-align:center}
@@ -318,10 +318,10 @@ h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
 .live-toast .toast-x{background:none;border:none;color:var(--text-faint);font-size:18px;cursor:pointer;line-height:1;align-self:flex-start;padding:0}
 
 /* ---------- watch page ---------- */
-.stream-grid{display:grid;grid-template-columns:1fr 320px;gap:14px;align-items:start}
+.stream-grid{display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start}
 .stream-frame{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--hairline);background:#000;box-shadow:var(--shadow)}
 .stream-frame::before{content:"";display:block;padding-top:56.25%}
-.stream-frame.chat::before{padding-top:0;height:620px}
+.stream-frame.chat::before{padding-top:0;height:640px}
 .stream-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .stream-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
 .chat-note{font-size:12px;color:var(--text-faint);margin-top:10px;text-align:center}

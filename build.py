@@ -1773,8 +1773,6 @@ PAGES["watch.html"] = dict(
   </div>
 </div></section>
 
-{schedule_block()}
-
 <section style="padding-top:8px"><div class="wrap">
   <div class="earn-panel rv">
     <div class="earn-copy">
@@ -1804,6 +1802,8 @@ PAGES["watch.html"] = dict(
     </div>
   </div>
 </div></section>
+
+{schedule_block()}
 
 <section style="padding-top:8px"><div class="wrap">
   <div class="cards c4">
