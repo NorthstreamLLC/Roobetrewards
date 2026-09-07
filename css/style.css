@@ -478,3 +478,50 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .day.on b,.day.on span,.day.on em{color:var(--bg)}
 @media(max-width:900px){.sched{grid-template-columns:1fr}.days{grid-template-columns:repeat(4,1fr)}}
 .vid-dur{position:absolute;right:8px;bottom:8px;padding:3px 7px;border-radius:6px;background:rgba(10,15,31,.85);font-family:var(--mono);font-size:10.5px;color:var(--text)}
+
+
+/* ================= watch page — matched to Roobet Stream Page design ================= */
+.watch-hero{text-align:left;padding-bottom:14px}
+.watch-top{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.watch-copy{display:flex;flex-direction:column;gap:12px;max-width:600px}
+.watch-copy .eyebrow{align-self:flex-start;margin-bottom:0}
+.watch-copy h1{font-size:clamp(30px,4vw,44px)}
+.watch-copy .lead{max-width:600px;font-size:15px;margin:0}
+
+.live-stats{flex:none;display:flex;align-items:flex-end;gap:26px;margin:0;padding:16px 20px;border-radius:14px;
+  background:rgba(10,15,31,.6);border:1px solid var(--hairline);backdrop-filter:blur(8px)}
+.ls-item{display:flex;flex-direction:column;gap:4px;text-align:left}
+.ls-item span{font-family:var(--mono);font-weight:600;font-size:9px;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint)}
+.ls-item b{font-family:var(--mono);font-weight:700;font-size:17px;line-height:1;color:var(--text)}
+#ls-watching b{color:var(--live)}
+.ls-item b.gold{color:var(--gold)}
+.live-stats .btn{padding:11px 18px;font-size:13px}
+
+/* chat card with header, as designed */
+.chat-card{display:flex;flex-direction:column;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:#101830;overflow:hidden}
+.chat-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--hairline)}
+.chat-head>span:first-child{font-family:var(--mono);font-weight:600;font-size:11px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim)}
+.chat-live{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--live)}
+.chat-card .stream-frame{border:0;border-radius:0;box-shadow:none}
+.stream-frame.chat::before{padding-top:0;height:520px}
+
+/* points figures */
+.earn-label{font-family:var(--mono);font-weight:500;font-size:11px;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim)}
+.earn-sub b{font-family:var(--mono);font-weight:700;font-size:34px;line-height:1;color:var(--gold)}
+.earn-fig b{font-family:var(--mono);font-weight:700;font-size:34px;line-height:1;color:var(--gold)}
+
+/* schedule: countdown beside the week, per the design */
+.sched{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:stretch}
+.sched-next{padding:22px;border-radius:14px;background:var(--surface-2);border:1px solid var(--hairline);
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;text-align:left}
+.sched-count{font-family:var(--mono);font-weight:700;font-size:30px;line-height:1;color:var(--gold);margin:0}
+.sched-cap{font-size:12px;color:var(--text-dim);margin-top:5px}
+.sched-week{padding:22px;border-radius:14px;background:var(--surface-2);border:1px solid var(--hairline);display:flex;flex-direction:column;gap:14px}
+.days{margin-top:0}
+.day{padding:12px 8px;border-radius:10px;background:var(--surface-3);border:1px solid rgba(255,255,255,.06);text-align:center}
+.day b{font-family:var(--mono);font-weight:700;font-size:11px;line-height:1;color:var(--text-dim);margin-bottom:6px}
+.day span{font-size:12px;font-weight:600;color:var(--text-mid);font-family:var(--font)}
+@media(max-width:900px){.sched{grid-template-columns:1fr}}
+
+/* clips header */
+#clip-grid{margin-top:0}

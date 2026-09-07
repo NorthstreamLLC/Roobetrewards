@@ -247,6 +247,8 @@ document.querySelectorAll('.flip').forEach(c => {
     const vc = document.getElementById('badge-viewers');
     const st = document.getElementById('stream-title');
     if (badge) badge.classList.toggle('on', live === true);
+    const chatLive = document.getElementById('chat-live');
+    if (chatLive) chatLive.hidden = live !== true;
     if (vc) {
       const n = d && typeof d.viewers === 'number' ? d.viewers : null;
       if (live === true && n !== null) { vc.textContent = n.toLocaleString('en-US') + ' watching'; vc.hidden = false; }

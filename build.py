@@ -1725,17 +1725,21 @@ PAGES["watch.html"] = dict(
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in watch_faq]},
     ],
     body=f"""
-<section class="page-hero" style="padding-bottom:14px">{HERO_BD_SHORT}<div class="wrap">
+<section class="page-hero watch-hero" style="padding-bottom:14px">{HERO_BD_SHORT}<div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Watch Live</p>
-  <span class="eyebrow rv" id="watch-status">Checking stream status&hellip;</span>
-  <h1 class="rv d1">Watch <span class="grad">DailyGambling</span> live on Kick</h1>
-  <p class="lead rv d2">Watch time earns <b style="color:var(--gold)">ELITE Points</b> &mdash; 50 points every 15 minutes &mdash; redeemable for free balance and bonus buys. Live giveaways drop during stream.</p>
-  <div class="live-stats rv d3">
+  <div class="watch-top">
+   <div class="watch-copy">
+    <span class="eyebrow rv" id="watch-status">Checking stream status&hellip;</span>
+    <h1 class="rv d1">Watch <span class="grad">DailyGambling</span> live on Kick</h1>
+    <p class="lead rv d2">Bonus buys, the $50K leaderboard grind and live giveaways &mdash; all under code <b style="color:var(--gold)">DAILY</b>.</p>
+   </div>
+   <div class="live-stats rv d3">
     <div class="ls-item" id="ls-watching" hidden><span>Watching</span><b>&mdash;</b></div>
     <div class="ls-item" id="ls-uptime" hidden><span>Uptime</span><b>&mdash;</b></div>
     <div class="ls-item"><span>Giveaways</span><b>$5,000+ / mo</b></div>
     <div class="ls-item"><span>Code</span><b class="gold">DAILY</b></div>
     <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Follow on Kick</a>
+   </div>
   </div>
 </div></section>
 
@@ -1765,8 +1769,11 @@ PAGES["watch.html"] = dict(
       </div>
     </div>
     <div>
-      <div class="stream-frame chat" id="chat-frame">
-        <iframe src="https://kick.com/popout/dailygambling/chat" title="DailyGambling chat" loading="lazy"></iframe>
+      <div class="chat-card">
+        <div class="chat-head"><span>Stream chat</span><span class="chat-live" id="chat-live" hidden><span class="live-dot"></span>live</span></div>
+        <div class="stream-frame chat" id="chat-frame">
+          <iframe src="https://kick.com/popout/dailygambling/chat" title="DailyGambling chat" loading="lazy"></iframe>
+        </div>
       </div>
       <p class="chat-note">Chat not loading? <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">Open the stream on Kick</a> &mdash; some browsers block embedded chat.</p>
     </div>
