@@ -625,16 +625,6 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .menu a:hover .mi{background:rgba(245,165,36,.2);border-color:rgba(245,165,36,.4)}
 
 
-/* ---------- reward card art: subtle accent, never fights the copy ---------- */
+/* ---------- reward cards ---------- */
 .detail{position:relative;overflow:hidden}
 .detail>*{position:relative;z-index:2}
-.detail-art{position:absolute;z-index:1;right:-8%;bottom:-2%;height:50%;width:auto;pointer-events:none;
-  display:flex;align-items:flex-end;justify-content:flex-end;
-  -webkit-mask-image:linear-gradient(180deg,transparent,#000 60%);mask-image:linear-gradient(180deg,transparent,#000 60%)}
-.detail-art img{height:100%;width:auto;object-fit:contain;opacity:.22;filter:drop-shadow(0 12px 26px rgba(0,0,0,.6))}
-.detail-art.merch{left:0;right:0;bottom:0;height:46%;justify-content:center}
-.detail-art.merch img{height:100%;opacity:.17}
-.detail-art.merch img:nth-child(1){transform:rotate(-10deg) translateX(42%)}
-.detail-art.merch img:nth-child(2){opacity:.22;transform:scale(1.03)}
-.detail-art.merch img:nth-child(3){transform:rotate(10deg) translateX(-42%)}
-@media(max-width:1024px){.detail-art{height:42%}}

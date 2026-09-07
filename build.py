@@ -455,7 +455,6 @@ PAGES["index.html"] = dict(
 
   <div class="cards c3" style="margin-top:14px">
     <div class="detail rv">
-      <span class="detail-art one" aria-hidden="true"><img src="/assets/fox-vip.png" alt="" width="458" height="700" loading="lazy"></span>
       <div class="head"><h3>Exclusive Free Spins<br>&ldquo;Sign Up Bonus&rdquo;</h3></div>
       <p class="statement">Claim <b style="color:var(--text)">ONE</b> exclusive free spin offer:</p>
       <ul>
@@ -468,11 +467,6 @@ PAGES["index.html"] = dict(
     </div>
 
     <div class="detail rv d1">
-      <span class="detail-art merch" aria-hidden="true">
-        <img src="/assets/shirt-666.png" alt="" width="520" height="520" loading="lazy">
-        <img src="/assets/shirt-milf.png" alt="" width="520" height="520" loading="lazy">
-        <img src="/assets/shirt-xhoarders.png" alt="" width="520" height="520" loading="lazy">
-      </span>
       <div class="head"><h3>Max Win Merch</h3></div>
       <p class="statement"><b style="color:var(--text)">Max Win Merch</b> for every max win you hit!</p>
       <ul>
@@ -484,7 +478,6 @@ PAGES["index.html"] = dict(
     </div>
 
     <div class="detail rv d2">
-      <span class="detail-art one" aria-hidden="true"><img src="/assets/zeus.png" alt="" width="333" height="700" loading="lazy"></span>
       <div class="head"><h3>Exclusive In-House VIP Team</h3></div>
       <p class="statement">Real people, <b style="color:var(--text)">not a call centre</b></p>
       <ul>
