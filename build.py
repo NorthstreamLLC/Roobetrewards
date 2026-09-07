@@ -303,6 +303,18 @@ def schedule_block():
     <a class="btn btn-ghost" href="https://kick.com/dailygambling/clips" target="_blank" rel="noopener">All clips on Kick</a>
   </div>
   <div class="vid-grid" id="clip-grid"><p style="color:var(--text-dim);font-size:14px;grid-column:1/-1">Loading recent clips&hellip;</p></div>
+</div></section>
+
+<section class="watch-sec"><div class="wrap watch-wrap">
+  <a class="promo-banner rv" href="""" + DAILY + """" rel="nofollow sponsored" target="_blank">
+    <span class="pb-art" aria-hidden="true"><img src="/assets/roobet-chip.png" alt="" width="220" height="220" loading="lazy"></span>
+    <span class="pb-copy">
+      <span class="pb-eyebrow">Roobet Casino Rewards</span>
+      <span class="pb-title"><b>$100,000</b> in monthly rewards</span>
+      <span class="pb-sub">$50K leaderboard &middot; up to 125 free spins &middot; max win merch &mdash; all on code DAILY</span>
+    </span>
+    <span class="pb-cta">Join with DAILY</span>
+  </a>
 </div></section>""" % days
 
 def crumb(name):
@@ -1725,18 +1737,6 @@ PAGES["watch.html"] = dict(
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in watch_faq]},
     ],
     body=f"""
-<section class="watch-sec first"><div class="wrap watch-wrap">
-  <a class="promo-banner rv" href="{DAILY}" rel="nofollow sponsored" target="_blank">
-    <span class="pb-art" aria-hidden="true"><img src="/assets/roobet-chip.png" alt="" width="220" height="220" loading="lazy"></span>
-    <span class="pb-copy">
-      <span class="pb-eyebrow">Roobet Casino Rewards</span>
-      <span class="pb-title"><b>$100,000</b> in monthly rewards</span>
-      <span class="pb-sub">$50K leaderboard &middot; up to 125 free spins &middot; max win merch &mdash; all on code DAILY</span>
-    </span>
-    <span class="pb-cta">Join with DAILY</span>
-  </a>
-</div></section>
-
 <section class="page-hero watch-hero" style="padding:18px 0 14px">{HERO_BD_SHORT}<div class="wrap watch-wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Watch Live</p>
   <div class="watch-top">
