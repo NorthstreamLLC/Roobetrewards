@@ -632,3 +632,9 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
   background:rgba(245,165,36,.1);border:1px solid rgba(245,165,36,.18);font-size:13px;line-height:1}
 .menu a:hover{background:rgba(245,165,36,.1);color:var(--gold)}
 .menu a:hover .mi{background:rgba(245,165,36,.2);border-color:rgba(245,165,36,.4)}
+/* three fanned shirts behind the Max Win Merch card */
+.detail-art.merch{height:66%}
+.detail-art.merch img{height:82%;opacity:.2}
+.detail-art.merch img:nth-child(1){transform:rotate(-11deg) translateX(46%);z-index:1}
+.detail-art.merch img:nth-child(2){transform:translateY(-4%) scale(1.04);opacity:.26;z-index:3}
+.detail-art.merch img:nth-child(3){transform:rotate(11deg) translateX(-46%);z-index:2}

@@ -472,8 +472,9 @@ PAGES["index.html"] = dict(
 
     <div class="detail rv d1">
       <span class="detail-art merch" aria-hidden="true">
-        <img src="/assets/le-bandit-hacksaw.png" alt="" width="300" height="300" loading="lazy">
-        <img src="/assets/mental-nolimit-city.png" alt="" width="300" height="300" loading="lazy">
+        <img src="/assets/shirt-666.png" alt="" width="300" height="300" loading="lazy">
+        <img src="/assets/shirt-milf.png" alt="" width="300" height="300" loading="lazy">
+        <img src="/assets/shirt-xhoarders.png" alt="" width="300" height="300" loading="lazy">
       </span>
       <div class="head"><h3>Max Win Merch</h3></div>
       <p class="statement"><b style="color:var(--text)">Max Win Merch</b> for every max win you hit!</p>
