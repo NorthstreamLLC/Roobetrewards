@@ -650,3 +650,8 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .detail-art.spins img:nth-child(3){max-height:76%;transform:translateX(-38%) rotate(4deg);z-index:2}
 .detail-art.vip{height:78%;align-items:flex-end;justify-content:center}
 .detail-art.vip img{height:auto;max-height:100%;width:auto;opacity:.32;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
+/* four-character free spins lineup */
+.detail-art.spins img:nth-child(1){max-height:72%;transform:translateX(96%) rotate(-5deg);z-index:1}
+.detail-art.spins img:nth-child(2){max-height:80%;transform:translateX(34%) rotate(-2deg);z-index:2;opacity:.32}
+.detail-art.spins img:nth-child(3){max-height:66%;transform:translateX(-34%);z-index:4;opacity:.34}
+.detail-art.spins img:nth-child(4){max-height:72%;transform:translateX(-96%) rotate(5deg);z-index:3}

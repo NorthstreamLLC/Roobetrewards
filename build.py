@@ -457,6 +457,7 @@ PAGES["index.html"] = dict(
     <div class="detail rv">
       <span class="detail-art spins" aria-hidden="true">
         <img src="/assets/zeus.png" alt="" width="333" height="700" loading="lazy">
+        <img src="/assets/fox-vip.png" alt="" width="458" height="700" loading="lazy">
         <img src="/assets/anubis.png" alt="" width="620" height="537" loading="lazy">
         <img src="/assets/fisherman.png" alt="" width="314" height="700" loading="lazy">
       </span>
@@ -488,7 +489,6 @@ PAGES["index.html"] = dict(
     </div>
 
     <div class="detail rv d2">
-      <span class="detail-art vip" aria-hidden="true"><img src="/assets/fox-vip.png" alt="" width="458" height="700" loading="lazy"></span>
       <div class="head"><h3>Exclusive In-House VIP Team</h3></div>
       <p class="statement">Real people, <b style="color:var(--text)">not a call centre</b></p>
       <ul>
