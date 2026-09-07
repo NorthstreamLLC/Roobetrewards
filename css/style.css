@@ -68,7 +68,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 .brand img{width:28px;height:28px;border-radius:8px}
 .brand svg{width:28px;height:28px;border-radius:8px}
 .brand .b1{color:var(--gold)}
-.nav-links{display:flex;align-items:center;gap:18px;font-size:13.5px;font-weight:500;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:center}
+.nav-links{display:flex;align-items:center;gap:26px;font-size:14px;font-weight:500}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-links>a{white-space:nowrap}
 .nav-links>a.active{color:var(--gold)}
@@ -77,15 +77,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 .dropdown{position:relative}
 .dropdown>button{background:none;border:none;color:var(--text-mid);font:inherit;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;padding:20px 0;transition:color .18s}
 .dropdown>button:hover{color:var(--text)}
-.dropdown>button svg{transition:transform .25s}
-.dropdown:hover>button svg,.dropdown:focus-within>button svg{transform:rotate(180deg)}
-.menu{position:absolute;top:calc(100% - 6px);left:50%;transform:translate(-50%,8px);background:rgba(17,26,51,.98);backdrop-filter:blur(18px);border:1px solid var(--hairline);border-radius:14px;padding:8px;width:296px;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s;box-shadow:var(--shadow)}
-.dropdown:hover .menu,.dropdown:focus-within .menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
-.menu a{display:flex;align-items:center;gap:11px;padding:10px;border-radius:9px;font-size:13.5px;color:var(--text-dim);transition:background .16s,color .16s}
+.dropdown>button .chev{transition:transform .22s;opacity:.7}
+.dropdown:hover>button .chev,.dropdown:focus-within>button .chev{transform:rotate(180deg);opacity:1}
+.dropdown>button.active{color:var(--gold)}
+.menu{position:absolute;top:calc(100% - 4px);left:0;background:rgba(17,26,51,.98);backdrop-filter:blur(18px);border:1px solid var(--hairline);border-radius:12px;padding:8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;transform:translateY(6px);box-shadow:var(--shadow)}
+.dropdown:hover .menu,.dropdown:focus-within .menu{position:absolute;top:calc(100% - 4px);left:0;background:rgba(17,26,51,.98);backdrop-filter:blur(18px);border:1px solid var(--hairline);border-radius:12px;padding:8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;transform:translateY(6px);box-shadow:var(--shadow)}
+.menu a{display:block;padding:9px 11px;border-radius:8px;font-size:13.5px;color:var(--text-dim);white-space:nowrap;transition:background .15s,color .15s}
 .menu a:hover{background:rgba(245,165,36,.08);color:var(--text)}
-.menu a .ic{width:32px;height:32px;border-radius:8px;background:rgba(245,165,36,.09);display:grid;place-items:center;font-size:15px;flex-shrink:0}
-.menu a b{display:block;color:var(--text);font-size:13.5px;font-weight:600}
-.menu a span span{display:block;font-size:11.5px;line-height:1.35;color:var(--text-faint)}
 .nav-cta{display:flex;align-items:center;gap:9px}
 .burger{display:none;background:none;border:none;cursor:pointer;padding:6px}
 .burger span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;border-radius:2px;transition:.3s}
@@ -394,8 +392,8 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
   .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(10,15,31,.98);backdrop-filter:blur(18px);flex-direction:column;align-items:flex-start;padding:20px;gap:16px;transform:translateY(-140%);transition:transform .3s;border-bottom:1px solid var(--hairline)}
   .nav-links.open{transform:translateY(0)}
   .dropdown>button{padding:0}
-  .menu{position:static;transform:none;opacity:1;visibility:visible;width:100%;display:none;box-shadow:none;margin-top:10px}
-  .dropdown.open .menu{display:block}
+  .menu{position:absolute;top:calc(100% - 4px);left:0;background:rgba(17,26,51,.98);backdrop-filter:blur(18px);border:1px solid var(--hairline);border-radius:12px;padding:8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;transform:translateY(6px);box-shadow:var(--shadow)}
+  .dropdown.open .menu{position:absolute;top:calc(100% - 4px);left:0;background:rgba(17,26,51,.98);backdrop-filter:blur(18px);border:1px solid var(--hairline);border-radius:12px;padding:8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;transform:translateY(6px);box-shadow:var(--shadow)}
   .burger{display:block}
   .nav-cta .btn-ghost{display:none}
   .banner-in{max-width:100%}

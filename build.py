@@ -59,25 +59,40 @@ REWARD_BAR = [
     ("/giveaways", "Giveaways"),
 ]
 
+CHEV = ('<svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">'
+        '<path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+REWARD_LINKS = [
+    ("/leaderboard", "$50K Wager Leaderboard"),
+    ("/wager-milestones", "Wager Milestones"),
+    ("/free-spins", "Free Spins Bonus"),
+    ("/max-win-merch", "Max Win Merch"),
+    ("/vip-transfer", "VIP Transfer"),
+    ("/elite-points", "ELITE Points"),
+    ("/slot-challenges", "Slot Challenges"),
+    ("/giveaways", "$5K Giveaways"),
+    ("/roobet-rewards", "Roobet Rewards System"),
+]
+
 def nav(active=""):
-    items = [
-        ("/watch", "Watch Live"),
-        ("/leaderboard", "$50K Leaderboard"),
-        ("/wager-milestones", "Wager Milestones"),
-        ("/free-spins", "Free Spins"),
-        ("/max-win-merch", "Max Win Merch"),
-        ("/vip-transfer", "VIP Transfer"),
-        ("/giveaways", "Giveaways"),
-        ("/youtube", "YouTube"),
-        ("/blog", "Blog"),
-    ]
-    links = "".join(
-        '<a href="%s"%s>%s</a>' % (u, ' class="active"' if u.lstrip("/") == active else "", t)
-        for u, t in items)
+    reward_slugs = {u.lstrip("/") for u, _ in REWARD_LINKS}
+    menu = "".join('<a href="%s">%s</a>' % (u, t) for u, t in REWARD_LINKS)
+    def link(u, t):
+        cls = ' class="active"' if u.lstrip("/") == active else ""
+        return '<a href="%s"%s>%s</a>' % (u, cls, t)
+    rewards_cls = ' class="active"' if active in reward_slugs else ""
     return f"""<nav aria-label="Main">
   <div class="nav-inner">
     <a class="brand" href="/"><img src="/assets/roobet-logo.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
-    <div class="nav-links">{links}</div>
+    <div class="nav-links">
+      <div class="dropdown">
+        <button aria-haspopup="true"{rewards_cls}>Rewards {CHEV}</button>
+        <div class="menu">{menu}</div>
+      </div>
+      {link("/watch", "Watch Live")}
+      {link("/youtube", "YouTube")}
+      {link("/blog", "Blog")}
+    </div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
       <a class="btn btn-ghost" href="/contact">Contact</a>
