@@ -421,3 +421,33 @@ document.querySelectorAll('.flip').forEach(c => {
   }, 1000);
   setInterval(paintUptime, 1000);
 })();
+
+// ===== recent clips (Kick, falling back to YouTube) =====
+(function () {
+  const grid = document.getElementById('clip-grid');
+  if (!grid) return;
+  const esc = s => String(s).replace(/[<>&"]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]));
+  const dur = s => (typeof s === 'number' ? Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0') : null);
+  const ago = iso => {
+    const d = Math.floor((Date.now() - new Date(iso)) / 86400000);
+    if (isNaN(d)) return '';
+    return d <= 0 ? 'today' : d === 1 ? '1d' : d < 7 ? d + 'd' : d < 30 ? Math.floor(d / 7) + 'w' : Math.floor(d / 30) + 'mo';
+  };
+  fetch('/api/clips?limit=4')
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => {
+      if (!d || !d.clips || !d.clips.length) throw new Error('none');
+      grid.innerHTML = d.clips.map((c, i) => {
+        const meta = [c.views ? (c.views > 999 ? (c.views / 1000).toFixed(1) + 'K views' : c.views + ' views') : null,
+                      c.created ? ago(c.created) : null].filter(Boolean).join(' · ');
+        const d2 = dur(c.duration);
+        return `<a class="vid-card" style="animation-delay:${i * 60}ms" href="${esc(c.url)}" target="_blank" rel="noopener">
+          <div class="vid-thumb">${c.thumbnail ? `<img src="${esc(c.thumbnail)}" alt="${esc(c.title)}" loading="lazy">` : ''}
+          ${d2 ? `<span class="vid-dur">${d2}</span>` : ''}</div>
+          <div class="meta"><h3>${esc(c.title)}</h3>${meta ? `<p class="sub">${meta}</p>` : ''}</div></a>`;
+      }).join('');
+    })
+    .catch(() => {
+      grid.innerHTML = '<a class="card" href="https://kick.com/dailygambling/clips" target="_blank" rel="noopener" style="grid-column:1/-1;text-align:center"><div class="ic" style="margin:0 auto 12px">🎬</div><h3>Clips live on Kick</h3><p>Browse every max win, bonus buy and giveaway moment on the Kick channel.</p></a>';
+    });
+})();

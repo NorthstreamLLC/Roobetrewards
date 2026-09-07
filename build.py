@@ -295,6 +295,14 @@ def schedule_block():
       <div class="days">%s</div>
     </div>
   </div>
+</div></section>
+
+<section style="padding-top:8px"><div class="wrap">
+  <div class="sec-head rv">
+    <div><span class="eyebrow">From the Stream</span><h2>Recent clips</h2></div>
+    <a class="btn btn-ghost" href="https://kick.com/dailygambling/clips" target="_blank" rel="noopener">All clips on Kick</a>
+  </div>
+  <div class="vid-grid" id="clip-grid"><p style="color:var(--text-dim);font-size:14px;grid-column:1/-1">Loading recent clips&hellip;</p></div>
 </div></section>""" % days
 
 def crumb(name):
