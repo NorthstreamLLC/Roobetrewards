@@ -641,3 +641,12 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 /* Anubis behind the Free Spins card */
 .detail-art.spins{height:70%;align-items:flex-end;justify-content:center}
 .detail-art.spins img{height:96%;opacity:.24;transform:none;filter:drop-shadow(0 12px 30px rgba(0,0,0,.5))}
+
+/* character art on the reward cards (v2) */
+.detail-art.spins{height:74%;align-items:flex-end;justify-content:center;gap:0}
+.detail-art.spins img{height:auto;max-height:100%;width:auto;opacity:.3;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
+.detail-art.spins img:nth-child(1){max-height:78%;transform:translateX(38%) rotate(-4deg);z-index:1}
+.detail-art.spins img:nth-child(2){max-height:70%;opacity:.34;z-index:3}
+.detail-art.spins img:nth-child(3){max-height:76%;transform:translateX(-38%) rotate(4deg);z-index:2}
+.detail-art.vip{height:78%;align-items:flex-end;justify-content:center}
+.detail-art.vip img{height:auto;max-height:100%;width:auto;opacity:.32;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
