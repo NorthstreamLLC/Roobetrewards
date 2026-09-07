@@ -281,7 +281,7 @@ faq_items = [
     ("Can I transfer my VIP status to Roobet?",
      "Yes. If you hold VIP status at any other casino, you can transfer it directly to Roobet when you join under code ELITE or DAILY — keeping your level, rakeback rate and bonuses without starting over."),
     ("I have a question — how do I reach the VIP team?",
-     f"Message our VIP team directly on Telegram at <a href='{TELEGRAM}' target='_blank' rel='noopener'>t.me/slotessentialsVIP</a> or join the <a href='{DISCORD}' target='_blank' rel='noopener'>SlotEssentials Discord</a> and open a ticket. The VIP team handles reward claims, VIP transfers, merch shipping and any questions about your account."),
+     f"Message our VIP team directly on Telegram at <a href='{TELEGRAM}' target='_blank' rel='noopener'>t.me/slotessentialsVIP</a> or join the <a href='{DISCORD}' target='_blank' rel='noopener'>DailyGambling Discord</a> and open a ticket. The VIP team handles reward claims, VIP transfers, merch shipping and any questions about your account."),
 ]
 def linkify(t):
     """Hyperlink codes and channels inside plain-text answers."""
@@ -369,7 +369,7 @@ PAGES["index.html"] = dict(
     </div>
 
     <div class="banner rv d1">
-      <div class="banner-art"><img src="/assets/medals.svg" alt="Monthly wager milestones" width="320" height="210" loading="lazy"></div>
+      <div class="banner-art"><img src="/assets/medals.png" alt="Monthly wager milestones" width="760" height="459" loading="lazy"></div>
       <div class="banner-veil"></div>
       <div class="banner-in">
         <div>
@@ -439,7 +439,7 @@ PAGES["index.html"] = dict(
     <div class="col">
       <a class="btn btn-gold btn-lg" href="{DISCORD}" target="_blank" rel="noopener">Transfer via Discord</a>
       <a class="btn btn-ghost btn-lg" href="{TELEGRAM}" target="_blank" rel="noopener">Message the VIP team on Telegram</a>
-      <p class="cap">Open a ticket in the SlotEssentials Discord &mdash; the VIP team verifies your current status and matches it. <a href="/vip-transfer" style="color:var(--gold)">How it works</a></p>
+      <p class="cap">Open a ticket in the DailyGambling Discord &mdash; the VIP team verifies your current status and matches it. <a href="/vip-transfer" style="color:var(--gold)">How it works</a></p>
     </div>
   </div>
 </div></section>
@@ -452,10 +452,22 @@ PAGES["index.html"] = dict(
   <div class="steps-split">
     <div>
       <div class="steps">
-        <div class="step rv"><span class="step-label">Step 1</span><h3>Join with DAILY or ELITE</h3><p>Create your Roobet account with code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:600">DAILY</a> &mdash; it takes under a minute and starts your +10% welcome rakeboost.</p></div>
-        <div class="step rv d1"><span class="step-label">Step 2</span><h3>Verify your account</h3><p>Complete KYC early so withdrawals are never held up. Our guide at <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">HowToKYC.com</a> walks you through it.</p></div>
-        <div class="step rv d2"><span class="step-label">Step 3</span><h3>Deposit &amp; grab your free spins</h3><p>Your all-time deposit and wager totals unlock up to <a href="/free-spins" style="color:var(--gold);font-weight:600">125 free spins</a> at $1.00 each.</p></div>
-        <div class="step rv d3"><span class="step-label">Step 4</span><h3>Climb the $50K leaderboard</h3><p>Every wager counts toward the <a href="/leaderboard" style="color:var(--gold);font-weight:600">leaderboard</a> and your <a href="/wager-milestones" style="color:var(--gold);font-weight:600">milestones</a> at the same time.</p></div>
+        <div class="step rv"><span class="step-label">Step 1</span><div class="step-body">
+          <h3>Join with DAILY or ELITE</h3>
+          <p>Head to <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:600">Roobet with the code applied</a> and create your account &mdash; takes under a minute.</p>
+        </div></div>
+        <div class="step rv d1"><span class="step-label">Step 2</span><div class="step-body">
+          <h3>Verify your account</h3>
+          <p>New to KYC? Our <a href="/how-to-kyc-on-roobet" style="color:var(--gold);font-weight:600">step-by-step guide</a> walks you through it &mdash; or message the <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">VIP team on Telegram</a>.</p>
+        </div></div>
+        <div class="step rv d2"><span class="step-label">Step 3</span><div class="step-body">
+          <h3>Deposit &amp; grab your free spins</h3>
+          <p>Pick your <a href="/free-spins" style="color:var(--gold);font-weight:600">free spins tier</a> &mdash; your rakeback and rakeboost start running straight away.</p>
+        </div></div>
+        <div class="step rv d3"><span class="step-label">Step 4</span><div class="step-body">
+          <h3>Climb the $50K leaderboard</h3>
+          <p>Already VIP elsewhere? <a href="/vip-transfer" style="color:var(--gold);font-weight:600">Transfer your status</a>, then start claiming <a href="/wager-milestones" style="color:var(--gold);font-weight:600">milestones</a> up to $11,350 a month.</p>
+        </div></div>
       </div>
       <div class="hero-cta rv" style="justify-content:flex-start;margin-top:16px">
         <a class="btn btn-gold btn-lg" href="{DAILY}" rel="nofollow sponsored" target="_blank">Create my account</a>
@@ -883,7 +895,7 @@ PAGES["elite-points.html"] = dict(
   <div class="center rv"><span class="eyebrow">📋 How to Claim</span><h2>Claiming Is Simple</h2></div>
   <div class="steps" style="margin-top:36px">
     <div class="step rv"><h3>Press Claim</h3><p>Find the item you want in the shop and press Claim, then fill in the required information.</p></div>
-    <div class="step rv d1"><h3>Open a Discord Ticket</h3><p>You'll be prompted to join the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">SlotEssentials Discord</a> and open a ticket.</p></div>
+    <div class="step rv d1"><h3>Open a Discord Ticket</h3><p>You'll be prompted to join the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">DailyGambling Discord</a> and open a ticket.</p></div>
     <div class="step rv d2"><h3>Points Deducted</h3><p>Your ELITE Points are automatically deducted from your account.</p></div>
     <div class="step rv d3"><h3>Protected Refunds</h3><p>If the wager requirement isn't met or any issue arises, your points are automatically returned.</p></div>
   </div>
