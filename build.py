@@ -1759,11 +1759,7 @@ PAGES["watch.html"] = dict(
   <div class="stream-grid rv">
     <div>
       <div class="stream-frame" id="stream-frame">
-        <div class="stream-badges">
-          <span class="badge-live" id="badge-live"><span class="live-dot"></span>LIVE</span>
-          <span class="badge-viewers" id="badge-viewers" hidden></span>
-        </div>
-        <iframe src="https://player.kick.com/dailygambling?autoplay=false&amp;muted=true"
+        <iframe src="https://player.kick.com/dailygambling?autoplay=true&amp;muted=true"
                 title="DailyGambling live stream" allowfullscreen loading="lazy"
                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe>
         <span class="stream-rule"></span>
