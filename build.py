@@ -456,8 +456,7 @@ PAGES["index.html"] = dict(
   <div class="cards c3" style="margin-top:14px">
     <div class="detail rv">
       <span class="detail-art spins" aria-hidden="true">
-        <img src="/assets/sweet-bonanza-pragmatic.png" alt="" width="300" height="300" loading="lazy">
-        <img src="/assets/sugar-rush-pragmatic.png" alt="" width="300" height="300" loading="lazy">
+        <img src="/assets/anubis.png" alt="" width="620" height="537" loading="lazy">
       </span>
       <div class="head"><h3>Exclusive Free Spins<br>&ldquo;Sign Up Bonus&rdquo;</h3></div>
       <p class="statement">Claim <b style="color:var(--text)">ONE</b> exclusive free spin offer:</p>

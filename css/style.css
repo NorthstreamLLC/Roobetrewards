@@ -638,3 +638,6 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .detail-art.merch img:nth-child(1){transform:rotate(-11deg) translateX(46%);z-index:1}
 .detail-art.merch img:nth-child(2){transform:translateY(-4%) scale(1.04);opacity:.26;z-index:3}
 .detail-art.merch img:nth-child(3){transform:rotate(11deg) translateX(-46%);z-index:2}
+/* Anubis behind the Free Spins card */
+.detail-art.spins{height:70%;align-items:flex-end;justify-content:center}
+.detail-art.spins img{height:96%;opacity:.24;transform:none;filter:drop-shadow(0 12px 30px rgba(0,0,0,.5))}
