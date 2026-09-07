@@ -91,7 +91,6 @@ def nav(active=""):
       </div>
       {link("/watch", "Watch Live")}
       {link("/youtube", "YouTube")}
-      {link("/blog", "Blog")}
     </div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
