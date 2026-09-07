@@ -12,6 +12,11 @@ TELEGRAM = "https://t.me/slotessentialsVIP"
 DISCORD = "https://discord.gg/dailygamba"
 SLOTS_MILES = "https://slotessentials.com/rewards/wager-milestones"
 SLOTS_HOME = "https://slotessentials.com"
+YOUTUBE = "https://www.youtube.com/@dailygamba"
+
+# Weekly stream schedule — fill with real times and the /watch schedule block appears.
+# Format: (day label, time label or None if off)
+SCHEDULE = []
 
 WEIGHTED = """<div style="margin-top:50px" class="rv"><h2 style="text-align:center">How Weighted Wagering Works</h2>
 <p class="lead" style="margin:10px auto 26px;text-align:center">Different game types contribute at different rates — slots and similar gameplay count at the full rate and ensure full payout eligibility.</p>
@@ -46,6 +51,7 @@ REWARD_BAR = [
     ("/vip-transfer", "VIP Transfer"),
     ("/giveaways", "Giveaways"),
     ("/watch", "Watch Live"),
+    ("/youtube", "YouTube"),
 ]
 
 def nav(active=""):
@@ -67,6 +73,7 @@ def nav(active=""):
       </div>
       <a href="/leaderboard">Leaderboard</a>
       <a href="/watch">Watch</a>
+      <a href="/youtube">YouTube</a>
       <a href="/blog">Blog</a>
     </div>
     <div class="nav-cta">
@@ -100,6 +107,7 @@ def footer():
         <a href="{KYC}" target="_blank" rel="noopener">How to KYC on Roobet</a>
         <a href="{SLOTS}" target="_blank" rel="noopener">Slotessentials Rewards</a>
         <a href="{KICK}" target="_blank" rel="noopener">Watch DailyGambling on Kick</a>
+        <a href="{YOUTUBE}" target="_blank" rel="noopener">DailyGamba on YouTube</a>
       </div>
     </div>
     <div class="foot-note">
@@ -256,6 +264,28 @@ def cta_banner(h, p, extra="", funnel=None):
     {btns}
   </div>{extra}
 </div></div></section>"""
+
+
+def schedule_block():
+    if not SCHEDULE:
+        return ""
+    days = "".join(
+        '<div class="day%s"><b>%s</b>%s</div>' % (
+            " on" if t and str(t).lower() == "live" else ("" if t else " off"),
+            d, (t if t else "Off"))
+        for d, t in SCHEDULE)
+    return """<section style="padding-top:8px"><div class="wrap">
+  <div class="sched rv">
+    <div class="card" style="display:flex;flex-direction:column;justify-content:center">
+      <span class="earn-label">Next stream in</span>
+      <p class="hero-meta" style="font-size:22px;margin:8px 0 0"><b data-deadline="nextstream" aria-live="off">&mdash;</b></p>
+    </div>
+    <div class="card">
+      <span class="earn-label">Weekly schedule</span>
+      <div class="days" style="margin-top:12px">%s</div>
+    </div>
+  </div>
+</div></section>""" % days
 
 def crumb(name):
     return f'<p class="breadcrumb rv"><a href="/">Home</a> / <a href="/#rewards">Rewards</a> / {name}</p>'
@@ -1718,6 +1748,8 @@ PAGES["watch.html"] = dict(
   </div>
 </div></section>
 
+{schedule_block()}
+
 <section style="padding-top:8px"><div class="wrap">
   <div class="earn-panel rv">
     <div class="earn-copy">
@@ -1748,7 +1780,7 @@ PAGES["watch.html"] = dict(
     <a class="card rv" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
     <a class="card rv d1" href="/slot-challenges"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges {ARR}</span></a>
     <a class="card rv d2" href="/leaderboard"><div class="ic">&#127942;</div><h3>Play the leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings {ARR}</span></a>
-    <a class="card rv d3" href="/max-win-merch"><div class="ic">&#128085;</div><h3>Max win merch</h3><p>Hit a max win on stream under our code and the shirt is yours &mdash; shipped free.</p><span class="more">View merch {ARR}</span></a>
+    <a class="card rv d3" href="/youtube"><div class="ic">&#127909;</div><h3>Missed the stream?</h3><p>Recent uploads and full sessions land on the DailyGamba YouTube channel.</p><span class="more">Watch recent videos {ARR}</span></a>
   </div>
 </div></section>
 
@@ -1769,6 +1801,64 @@ PAGES["watch.html"] = dict(
 {TICKER}
 
 {cta_banner("Playing along beats just watching","Join Roobet with code DAILY and every spin during stream counts toward the $50K leaderboard and your milestones.")}
+""")
+
+
+# ================= YOUTUBE =================
+yt_faq = [
+    ("Where can I watch DailyGamba's videos?",
+     "Full sessions, bonus hunts and highlights are uploaded to the DailyGamba YouTube channel. Live streams run on Kick \u2014 the two are separate, so subscribe on YouTube for the uploads and follow on Kick to catch streams live."),
+    ("Do YouTube views earn ELITE Points?",
+     "ELITE Points are earned for watch time on the live Kick stream \u2014 50 points per 15 minutes \u2014 along with the Slotessentials daily case, leaderboard finishes and record win submissions. YouTube uploads are for catching up on sessions you missed."),
+]
+yt_faq_html = "".join('<details class="rv"><summary>%s</summary><div class="a">%s</div></details>' % (q, a) for q, a in yt_faq)
+
+PAGES["youtube.html"] = dict(
+    title="DailyGamba on YouTube \u2014 Latest Slot Sessions & Bonus Hunts | Roobet Casino Rewards",
+    desc="Watch DailyGamba's latest YouTube uploads \u2014 full slot sessions, bonus hunts and max win highlights. Play along on Roobet with code DAILY and claim the $100,000 monthly rewards.",
+    kw="dailygamba youtube, dailygambling youtube, slot session videos, bonus hunt videos, roobet slots youtube",
+    body=f"""
+<section class="page-hero">{HERO_BD_SHORT}<div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / YouTube</p>
+  <span class="eyebrow rv">Uploads &middot; Full Sessions</span>
+  <h1 class="rv d1">DailyGamba on <span class="grad">YouTube</span></h1>
+  <p class="lead rv d2">Full slot sessions, bonus hunts and max win highlights. Live streams run on <a href="/watch" style="color:var(--gold);font-weight:600">Kick</a> &mdash; the uploads live here.</p>
+  <div class="hero-cta rv d3">
+    <a class="btn btn-gold btn-lg pulse" href="{YOUTUBE}" target="_blank" rel="noopener">Subscribe on YouTube</a>
+    <a class="btn btn-ghost btn-lg" href="/watch">Watch live on Kick</a>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="sec-head rv">
+    <div><span class="eyebrow">Latest Uploads</span><h2>Recent videos</h2></div>
+    <p class="lead">Straight from the channel &mdash; refreshed automatically.</p>
+  </div>
+  <div class="vid-grid" id="yt-grid">
+    <p style="color:var(--text-dim);font-size:14px">Loading latest videos&hellip;</p>
+  </div>
+</div></section>
+
+<section style="padding-top:8px"><div class="wrap">
+  <div class="cards c3">
+    <a class="card rv" href="/watch"><div class="ic">&#128250;</div><h3>Catch it live</h3><p>Streams run on Kick with live giveaways and ELITE Points for watch time.</p><span class="more">Watch live {ARR}</span></a>
+    <a class="card rv d1" href="/leaderboard"><div class="ic">&#127942;</div><h3>Play along</h3><p>Wager under code DAILY and climb the $50,000 monthly leaderboard.</p><span class="more">Standings {ARR}</span></a>
+    <a class="card rv d2" href="/max-win-merch"><div class="ic">&#128085;</div><h3>Max win merch</h3><p>Land a max win on a featured slot under our code and the shirt ships free.</p><span class="more">View merch {ARR}</span></a>
+  </div>
+</div></section>
+
+<section style="padding-top:8px"><div class="wrap">
+  <div class="faq-split">
+    <div class="rv">
+      <span class="eyebrow">FAQ</span>
+      <h2>YouTube &amp; Kick</h2>
+      <p class="lead" style="font-size:14px">Where to watch what.</p>
+    </div>
+    <div class="faq rv d1">{yt_faq_html}</div>
+  </div>
+</div></section>
+
+{cta_banner("Play the Same Slots", "Join Roobet with code DAILY and every spin counts toward the $50K leaderboard and your milestones.")}
 """)
 
 # ================= WRITE FILES =================

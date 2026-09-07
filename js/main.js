@@ -312,3 +312,28 @@ document.querySelectorAll('.flip').forEach(c => {
   }
   load();
 })();
+
+// ===== latest YouTube uploads =====
+(function () {
+  const grid = document.getElementById('yt-grid');
+  if (!grid) return;
+  const esc = s => String(s).replace(/[<>&"]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]));
+  const ago = iso => {
+    const d = Math.floor((Date.now() - new Date(iso)) / 86400000);
+    if (isNaN(d)) return '';
+    return d <= 0 ? 'today' : d === 1 ? '1 day ago' : d < 30 ? d + ' days ago' : Math.floor(d / 30) + ' mo ago';
+  };
+  fetch('/api/youtube?limit=8')
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => {
+      if (!d || !d.videos || !d.videos.length) throw new Error('none');
+      grid.innerHTML = d.videos.map((v, i) =>
+        `<a class="vid-card" style="animation-delay:${i * 60}ms" href="${esc(v.url)}" target="_blank" rel="noopener">
+           <div class="vid-thumb"><img src="${esc(v.thumbnail)}" alt="${esc(v.title)}" loading="lazy"></div>
+           <div class="meta"><h3>${esc(v.title)}</h3><p class="sub">${ago(v.published)}${v.views ? ' · ' + v.views.toLocaleString('en-US') + ' views' : ''}</p></div>
+         </a>`).join('');
+    })
+    .catch(() => {
+      grid.innerHTML = '<a class="card" href="https://www.youtube.com/@dailygamba" target="_blank" rel="noopener" style="grid-column:1/-1;text-align:center"><div class="ic" style="margin:0 auto 12px">▶</div><h3>Watch on YouTube</h3><p>Head to the channel for the latest full sessions and bonus hunts.</p></a>';
+    });
+})();
