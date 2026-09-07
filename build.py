@@ -12,7 +12,7 @@ TELEGRAM = "https://t.me/slotessentialsVIP"
 DISCORD = "https://discord.gg/dailygamba"
 SLOTS_MILES = "https://slotessentials.com/rewards/wager-milestones"
 SLOTS_HOME = "https://slotessentials.com"
-YOUTUBE = "https://www.youtube.com/@dailygamba"
+YOUTUBE = "https://www.youtube.com/@DAILYGambling"
 
 # Weekly stream schedule (America/New_York). (day index 0=Sun, label, time or None, note)
 SCHEDULE = [
@@ -57,8 +57,6 @@ REWARD_BAR = [
     ("/max-win-merch", "Max Win Merch"),
     ("/vip-transfer", "VIP Transfer"),
     ("/giveaways", "Giveaways"),
-    ("/watch", "Watch Live"),
-    ("/youtube", "YouTube"),
 ]
 
 def nav(active=""):
@@ -74,18 +72,13 @@ def nav(active=""):
   <div class="nav-inner">
     <a class="brand" href="/"><img src="/assets/roobet-logo.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
     <div class="nav-links">
-      <div class="dropdown">
-        <button aria-haspopup="true">Rewards {CHEV}</button>
-        <div class="menu">{menu}</div>
-      </div>
-      <a href="/leaderboard">Leaderboard</a>
-      <a href="/watch">Watch</a>
+      <a href="/watch">Watch Live</a>
       <a href="/youtube">YouTube</a>
       <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
     </div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
-      <a class="btn btn-ghost" href="/contact">Contact</a>
       <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with DAILY</a>
       <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
