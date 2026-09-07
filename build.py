@@ -374,7 +374,6 @@ reward_cards = "".join(f"""<a class="card rv d{i%3+1}" href="/{f[:-5]}"><div cla
 
 HERO_BD = """<div class="hero-bd" aria-hidden="true">
   <i class="bd-wash"></i><i class="bd-cone"></i>
-  <img class="bd-chip" src="/assets/roobet-chip.png" alt="" width="820" height="820" aria-hidden="true">
   <i class="bd-orb-a"></i><i class="bd-orb-b"></i><i class="bd-grid"></i><i class="bd-fade"></i>
 </div>"""
 
