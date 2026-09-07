@@ -65,7 +65,7 @@ p{text-wrap:pretty}
 
 /* ---------- nav ---------- */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--hairline)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1340px;margin:0 auto;height:var(--nav-h);padding:0 clamp(16px,4vw,32px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1720px;margin:0 auto;height:var(--nav-h);padding:0 clamp(16px,2.2vw,32px)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-.01em}
 .brand img{width:28px;height:28px;border-radius:8px}
 .brand svg{width:28px;height:28px;border-radius:8px}
@@ -91,7 +91,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 
 /* reward sub-bar (row 2) — a required internal-linking surface */
 .nav-sub{border-top:1px solid var(--hairline);background:rgba(10,15,31,.55)}
-.nav-sub-inner{max-width:1340px;margin:0 auto;padding:0 clamp(16px,4vw,32px);display:flex;gap:26px;overflow-x:auto;scrollbar-width:none}
+.nav-sub-inner{max-width:1720px;margin:0 auto;padding:0 clamp(16px,2.2vw,32px);display:flex;gap:26px;overflow-x:auto;scrollbar-width:none}
 .nav-sub-inner::-webkit-scrollbar{display:none}
 .nav-sub a{display:flex;align-items:center;padding:9px 0;font-size:13px;font-weight:500;color:var(--text-dim);white-space:nowrap;transition:color .18s}
 .nav-sub a:hover{color:var(--text)}
@@ -109,7 +109,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 
 /* ---------- layout ---------- */
 main{padding-top:calc(var(--nav-h) + 37px)}
-.wrap{max-width:1340px;margin:0 auto;padding:0 clamp(16px,4vw,36px)}
+.wrap{max-width:1720px;margin:0 auto;padding:0 clamp(16px,2.2vw,32px)}
 section{padding:clamp(22px,3vw,32px) 0}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1px solid rgba(245,165,36,.25);background:rgba(245,165,36,.07);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .sec-head .eyebrow{padding:0;border:0;background:none;letter-spacing:.18em;margin-bottom:8px}
@@ -578,7 +578,7 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 }
 
 /* ---------- watch: bigger player, chat matches its height ---------- */
-.wrap.wide{max-width:1640px}
+.wrap.wide{max-width:1720px}
 .stream-grid{align-items:stretch}
 .chat-card{height:100%}
 .chat-card .stream-frame{flex:1;min-height:0}
@@ -602,7 +602,7 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 @media(max-width:680px){.ready-band{flex-direction:column;align-items:flex-start}.rb-cta{width:100%}.rb-cta .btn{flex:1}}
 
 /* ---------- watch page: one shell width + even rhythm so it reads as one flow ---------- */
-.wrap.watch-wrap{max-width:1460px}
+.wrap.watch-wrap{max-width:1720px}
 .watch-sec{padding:14px 0}
 .watch-sec.first{padding:16px 0 0}
 .page-hero.watch-hero{padding:16px 0 10px}
