@@ -1725,7 +1725,19 @@ PAGES["watch.html"] = dict(
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in watch_faq]},
     ],
     body=f"""
-<section class="page-hero watch-hero" style="padding-bottom:14px">{HERO_BD_SHORT}<div class="wrap">
+<section style="padding:14px 0 0"><div class="wrap">
+  <a class="promo-banner rv" href="{DAILY}" rel="nofollow sponsored" target="_blank">
+    <span class="pb-art" aria-hidden="true"><img src="/assets/roobet-chip.png" alt="" width="220" height="220" loading="lazy"></span>
+    <span class="pb-copy">
+      <span class="pb-eyebrow">Roobet Casino Rewards</span>
+      <span class="pb-title"><b>$100,000</b> in monthly rewards</span>
+      <span class="pb-sub">$50K leaderboard &middot; up to 125 free spins &middot; max win merch &mdash; all on code DAILY</span>
+    </span>
+    <span class="pb-cta">Join with DAILY</span>
+  </a>
+</div></section>
+
+<section class="page-hero watch-hero" style="padding:18px 0 14px">{HERO_BD_SHORT}<div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Watch Live</p>
   <div class="watch-top">
    <div class="watch-copy">
@@ -1743,7 +1755,7 @@ PAGES["watch.html"] = dict(
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
+<section style="padding-top:0"><div class="wrap wide">
   <div class="stream-grid rv">
     <div>
       <div class="stream-frame" id="stream-frame">
