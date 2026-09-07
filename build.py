@@ -1844,7 +1844,18 @@ PAGES["watch.html"] = dict(
 
 {TICKER}
 
-{cta_banner("Ready to start earning?","$100,000 in monthly rewards, unlocked by one code. Watch, play along, and claim.")}
+<section style="padding-top:8px"><div class="wrap">
+  <div class="ready-band rv">
+    <div class="rb-copy">
+      <h2>Ready to start earning?</h2>
+      <p>$100,000 in monthly rewards, unlocked by one code at sign-up.</p>
+    </div>
+    <div class="rb-cta">
+      <a class="btn btn-gold btn-lg" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY</a>
+      <a class="btn btn-ghost btn-lg" href="{ELITE}" rel="nofollow sponsored" target="_blank">Sign up with ELITE</a>
+    </div>
+  </div>
+</div></section>
 """)
 
 

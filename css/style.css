@@ -591,3 +591,12 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
   background:rgba(10,15,31,.78);backdrop-filter:blur(8px);border:1px solid rgba(245,165,36,.45);
   color:var(--gold);font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.08em}
 .stream-open:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+/* ---------- bottom "ready to start earning" band ---------- */
+.ready-band{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
+  padding:24px 28px;border-radius:14px;background:linear-gradient(180deg,#16203c,var(--surface-2));
+  border:1px solid var(--hairline)}
+.rb-copy h2{font-size:21px;margin:0 0 4px;letter-spacing:-.02em}
+.rb-copy p{font-size:13.5px;color:var(--text-dim);margin:0}
+.rb-cta{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:680px){.ready-band{flex-direction:column;align-items:flex-start}.rb-cta{width:100%}.rb-cta .btn{flex:1}}
