@@ -60,30 +60,31 @@ REWARD_BAR = [
 ]
 
 def nav(active=""):
-    menu = "".join(
-        f'<a href="/{f[:-5]}"><span class="ic">{ic}</span><span><b>{t}</b><span>{d}</span></span></a>'
-        for f, ic, t, d in MENU_ITEMS)
-    bar_items = []
-    for u, t in REWARD_BAR:
-        cls = ' class="active"' if u.lstrip("/") == active else ""
-        bar_items.append('<a href="%s"%s>%s</a>' % (u, cls, t))
-    bar = "".join(bar_items)
+    items = [
+        ("/watch", "Watch Live"),
+        ("/leaderboard", "$50K Leaderboard"),
+        ("/wager-milestones", "Wager Milestones"),
+        ("/free-spins", "Free Spins"),
+        ("/max-win-merch", "Max Win Merch"),
+        ("/vip-transfer", "VIP Transfer"),
+        ("/giveaways", "Giveaways"),
+        ("/youtube", "YouTube"),
+        ("/blog", "Blog"),
+    ]
+    links = "".join(
+        '<a href="%s"%s>%s</a>' % (u, ' class="active"' if u.lstrip("/") == active else "", t)
+        for u, t in items)
     return f"""<nav aria-label="Main">
   <div class="nav-inner">
     <a class="brand" href="/"><img src="/assets/roobet-logo.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
-    <div class="nav-links">
-      <a href="/watch">Watch Live</a>
-      <a href="/youtube">YouTube</a>
-      <a href="/blog">Blog</a>
-      <a href="/contact">Contact</a>
-    </div>
+    <div class="nav-links">{links}</div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
+      <a class="btn btn-ghost" href="/contact">Contact</a>
       <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with DAILY</a>
       <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
-  <div class="nav-sub"><div class="nav-sub-inner">{bar}</div></div>
 </nav>"""
 
 def footer():
