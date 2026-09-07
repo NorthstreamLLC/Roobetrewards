@@ -236,6 +236,7 @@ document.querySelectorAll('.flip').forEach(c => {
       status.classList.toggle('is-live', live === true);
     }
     if (live === true) showToast();
+    window.dispatchEvent(new CustomEvent('rrLiveData', { detail: d || { live: live } }));
   }
 
   function check() {
@@ -336,4 +337,58 @@ document.querySelectorAll('.flip').forEach(c => {
     .catch(() => {
       grid.innerHTML = '<a class="card" href="https://www.youtube.com/@dailygamba" target="_blank" rel="noopener" style="grid-column:1/-1;text-align:center"><div class="ic" style="margin:0 auto 12px">▶</div><h3>Watch on YouTube</h3><p>Head to the channel for the latest full sessions and bonus hunts.</p></a>';
     });
+})();
+
+// ===== watch page: live stats + honest session tracker =====
+(function () {
+  if (!document.getElementById('stream-frame')) return;
+  const $ = id => document.getElementById(id);
+  const RATE_PTS = 50, RATE_MIN = 15;          // 50 ELITE Points per 15 minutes
+  let liveNow = false, startedAt = null, secs = 0;
+
+  try { secs = parseInt(sessionStorage.getItem('watchSecs') || '0', 10) || 0; } catch (e) {}
+
+  function paintSession() {
+    const box = $('sess-box'), bar = $('sess-barwrap');
+    if (!box) return;
+    const mins = Math.floor(secs / 60);
+    const show = liveNow && secs > 0;
+    box.hidden = !show; if (bar) bar.hidden = !show;
+    if (!show) return;
+    $('sess-min').textContent = mins;
+    $('sess-pts').textContent = (Math.floor(mins / RATE_MIN) * RATE_PTS).toLocaleString('en-US');
+    const pct = ((mins % RATE_MIN) / RATE_MIN) * 100;
+    const fill = $('sess-bar'); if (fill) fill.style.width = pct + '%';
+  }
+
+  function paintUptime() {
+    const el = $('ls-uptime');
+    if (!el) return;
+    if (!liveNow || !startedAt) { el.hidden = true; return; }
+    let s = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+    const h = Math.floor(s / 3600); s %= 3600;
+    const m = Math.floor(s / 60); s %= 60;
+    el.querySelector('b').textContent = `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    el.hidden = false;
+  }
+
+  window.addEventListener('rrLiveData', e => {
+    const d = e.detail || {};
+    liveNow = d.live === true;
+    startedAt = d.started ? new Date(d.started).getTime() : null;
+    const w = $('ls-watching');
+    if (w) {
+      if (liveNow && typeof d.viewers === 'number') { w.querySelector('b').textContent = d.viewers.toLocaleString('en-US'); w.hidden = false; }
+      else w.hidden = true;
+    }
+    paintUptime(); paintSession();
+  });
+
+  setInterval(() => {
+    if (!liveNow || document.hidden) return;
+    secs += 1;
+    try { sessionStorage.setItem('watchSecs', String(secs)); } catch (e) {}
+    if (secs % 10 === 0) paintSession();
+  }, 1000);
+  setInterval(paintUptime, 1000);
 })();

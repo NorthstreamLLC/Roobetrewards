@@ -21,7 +21,7 @@ async function appToken(id, secret) {
 
 function parseStream(obj) {
   // tolerate both official and unofficial response shapes
-  const empty = { live: false, viewers: null, title: null, category: null };
+  const empty = { live: false, viewers: null, title: null, category: null, started: null };
   if (!obj) return empty;
   const ch = Array.isArray(obj.data) ? obj.data[0] : obj.data || obj;
   if (!ch) return empty;
@@ -38,7 +38,9 @@ function parseStream(obj) {
     (ls.category && (ls.category.name || ls.category)) ||
     (Array.isArray(ch.categories) && ch.categories[0] && ch.categories[0].name) ||
     null;
-  return { live, viewers: live ? viewers : null, title: live ? title : null, category: live ? cat : null };
+  const started = ls.start_time || ls.started_at || ls.created_at || ch.start_time || null;
+  return { live, viewers: live ? viewers : null, title: live ? title : null,
+           category: live ? cat : null, started: live ? started : null };
 }
 
 module.exports = async (req, res) => {

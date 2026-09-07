@@ -1712,6 +1712,13 @@ PAGES["watch.html"] = dict(
   <span class="eyebrow rv" id="watch-status">Checking stream status&hellip;</span>
   <h1 class="rv d1">Watch <span class="grad">DailyGambling</span> live on Kick</h1>
   <p class="lead rv d2">Watch time earns <b style="color:var(--gold)">ELITE Points</b> &mdash; 50 points every 15 minutes &mdash; redeemable for free balance and bonus buys. Live giveaways drop during stream.</p>
+  <div class="live-stats rv d3">
+    <div class="ls-item" id="ls-watching" hidden><span>Watching</span><b>&mdash;</b></div>
+    <div class="ls-item" id="ls-uptime" hidden><span>Uptime</span><b>&mdash;</b></div>
+    <div class="ls-item"><span>Giveaways</span><b>$5,000+ / mo</b></div>
+    <div class="ls-item"><span>Code</span><b class="gold">DAILY</b></div>
+    <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Follow on Kick</a>
+  </div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
@@ -1755,7 +1762,7 @@ PAGES["watch.html"] = dict(
     <div class="earn-copy">
       <span class="eyebrow">Watch-time &middot; ELITE Points</span>
       <h2>Every minute watched is points in the shop</h2>
-      <p class="lead">Watch DailyGambling live on Kick under code DAILY and rack up ELITE Points &mdash; redeemable for real prizes via Slotessentials. Points are tracked on your Slotessentials account, not here.</p>
+      <p class="lead">Watch DailyGambling live on Kick under code DAILY and rack up ELITE Points &mdash; redeemable for real prizes via Slotessentials. Type <b style="color:var(--gold)">!points</b> in the stream chat to check your balance instantly.</p>
       <div class="hero-cta" style="justify-content:flex-start;margin-top:16px">
         <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Watch &amp; earn</a>
         <a class="btn btn-ghost" href="/elite-points">Points shop</a>
@@ -1764,13 +1771,18 @@ PAGES["watch.html"] = dict(
     <div class="earn-rate">
       <p class="earn-label">Earn rate</p>
       <p class="earn-fig"><b>50</b> pts <span>/ 15 min</span></p>
+      <div class="earn-head" id="sess-box" hidden>
+        <div><p class="earn-label">This session</p><p class="earn-sub"><b id="sess-min">0</b> min</p></div>
+        <div style="text-align:right"><p class="earn-label">Earned (est.)</p><p class="earn-sub"><b id="sess-pts">0</b> pts</p></div>
+      </div>
+      <div class="earn-bar" id="sess-barwrap" hidden><i id="sess-bar"></i></div>
       <div class="earn-tiers">
         <div><b>30 min</b><span>100 pts</span></div>
         <div><b>1 hr</b><span>200 pts</span></div>
         <div><b>2 hrs</b><span>400 pts</span></div>
         <div><b>4 hrs</b><span>800 pts</span></div>
       </div>
-      <p class="earn-note">Totals shown are the standard rate. Activity is verified on your Slotessentials account.</p>
+      <p class="earn-note">Check your real balance any time: type <b style="color:var(--gold)">!points</b> in the Kick chat, or <b style="color:var(--gold)">!redeem</b> for redemption info. Session figures here are an estimate at the standard rate &mdash; points are credited and verified on your Slotessentials account.</p>
     </div>
   </div>
 </div></section>
@@ -1800,7 +1812,7 @@ PAGES["watch.html"] = dict(
 
 {TICKER}
 
-{cta_banner("Playing along beats just watching","Join Roobet with code DAILY and every spin during stream counts toward the $50K leaderboard and your milestones.")}
+{cta_banner("Ready to start earning?","$100,000 in monthly rewards, unlocked by one code. Watch, play along, and claim.")}
 """)
 
 
