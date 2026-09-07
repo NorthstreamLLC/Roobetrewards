@@ -297,7 +297,7 @@ def schedule_block():
   </div>
 </div></section>
 
-<section style="padding-top:8px"><div class="wrap">
+<section class="watch-sec"><div class="wrap watch-wrap">
   <div class="sec-head rv">
     <div><span class="eyebrow">From the Stream</span><h2>Recent clips</h2></div>
     <a class="btn btn-ghost" href="https://kick.com/dailygambling/clips" target="_blank" rel="noopener">All clips on Kick</a>
@@ -1725,7 +1725,7 @@ PAGES["watch.html"] = dict(
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in watch_faq]},
     ],
     body=f"""
-<section style="padding:14px 0 0"><div class="wrap">
+<section class="watch-sec first"><div class="wrap watch-wrap">
   <a class="promo-banner rv" href="{DAILY}" rel="nofollow sponsored" target="_blank">
     <span class="pb-art" aria-hidden="true"><img src="/assets/roobet-chip.png" alt="" width="220" height="220" loading="lazy"></span>
     <span class="pb-copy">
@@ -1737,7 +1737,7 @@ PAGES["watch.html"] = dict(
   </a>
 </div></section>
 
-<section class="page-hero watch-hero" style="padding:18px 0 14px">{HERO_BD_SHORT}<div class="wrap">
+<section class="page-hero watch-hero" style="padding:18px 0 14px">{HERO_BD_SHORT}<div class="wrap watch-wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Watch Live</p>
   <div class="watch-top">
    <div class="watch-copy">
@@ -1755,7 +1755,7 @@ PAGES["watch.html"] = dict(
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap wide">
+<section class="watch-sec"><div class="wrap watch-wrap">
   <div class="stream-grid rv">
     <div>
       <div class="stream-frame" id="stream-frame">
@@ -1790,7 +1790,7 @@ PAGES["watch.html"] = dict(
   </div>
 </div></section>
 
-<section style="padding-top:8px"><div class="wrap">
+<section class="watch-sec"><div class="wrap watch-wrap">
   <div class="earn-panel rv">
     <div class="earn-copy">
       <span class="eyebrow">Watch-time &middot; ELITE Points</span>
@@ -1819,7 +1819,7 @@ PAGES["watch.html"] = dict(
 
 {schedule_block()}
 
-<section style="padding-top:8px"><div class="wrap">
+<section class="watch-sec"><div class="wrap watch-wrap">
   <div class="cards c4">
     <a class="card rv" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
     <a class="card rv d1" href="/slot-challenges"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges {ARR}</span></a>
@@ -1828,7 +1828,7 @@ PAGES["watch.html"] = dict(
   </div>
 </div></section>
 
-<section style="padding-top:8px"><div class="wrap">
+<section class="watch-sec"><div class="wrap watch-wrap">
   <div class="faq-split">
     <div class="rv">
       <span class="eyebrow">FAQ</span>
@@ -1844,7 +1844,7 @@ PAGES["watch.html"] = dict(
 
 {TICKER}
 
-<section style="padding-top:8px"><div class="wrap">
+<section class="watch-sec"><div class="wrap watch-wrap">
   <div class="ready-band rv">
     <div class="rb-copy">
       <h2>Ready to start earning?</h2>

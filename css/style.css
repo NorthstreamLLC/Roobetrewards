@@ -600,3 +600,10 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .rb-copy p{font-size:13.5px;color:var(--text-dim);margin:0}
 .rb-cta{display:flex;gap:10px;flex-wrap:wrap}
 @media(max-width:680px){.ready-band{flex-direction:column;align-items:flex-start}.rb-cta{width:100%}.rb-cta .btn{flex:1}}
+
+/* ---------- watch page: one shell width + even rhythm so it reads as one flow ---------- */
+.wrap.watch-wrap{max-width:1460px}
+.watch-sec{padding:14px 0}
+.watch-sec.first{padding:16px 0 0}
+.page-hero.watch-hero{padding:16px 0 10px}
+@media(max-width:900px){.watch-sec{padding:10px 0}}
