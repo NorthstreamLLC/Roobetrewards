@@ -283,7 +283,7 @@ def schedule_block():
         extra = ('<em>%s</em>' % note) if note else ''
         tiles.append('<div class="%s" data-day="%s"><b>%s</b>%s%s</div>' % (cls, d, d.upper(), body, extra))
     days = "".join(tiles)
-    return """<section style="padding-top:8px"><div class="wrap">
+    return """<section class="watch-sec"><div class="wrap watch-wrap">
   <div class="sched rv">
     <div class="sched-next">
       <span class="earn-label">Next stream in</span>
