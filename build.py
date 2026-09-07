@@ -107,7 +107,7 @@ def footer():
         <a href="{KYC}" target="_blank" rel="noopener">How to KYC on Roobet</a>
         <a href="{SLOTS}" target="_blank" rel="noopener">Slotessentials Rewards</a>
         <a href="{KICK}" target="_blank" rel="noopener">Watch DailyGambling on Kick</a>
-        <a href="{YOUTUBE}" target="_blank" rel="noopener">DailyGamba on YouTube</a>
+        <a href="{YOUTUBE}" target="_blank" rel="noopener">DailyGambling on YouTube</a>
       </div>
     </div>
     <div class="foot-note">
@@ -1815,7 +1815,7 @@ PAGES["watch.html"] = dict(
     <a class="card rv" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
     <a class="card rv d1" href="/slot-challenges"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges {ARR}</span></a>
     <a class="card rv d2" href="/leaderboard"><div class="ic">&#127942;</div><h3>Play the leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings {ARR}</span></a>
-    <a class="card rv d3" href="/youtube"><div class="ic">&#127909;</div><h3>Missed the stream?</h3><p>Recent uploads and full sessions land on the DailyGamba YouTube channel.</p><span class="more">Watch recent videos {ARR}</span></a>
+    <a class="card rv d3" href="/youtube"><div class="ic">&#127909;</div><h3>Missed the stream?</h3><p>Recent uploads and full sessions land on the DailyGambling YouTube channel.</p><span class="more">Watch recent videos {ARR}</span></a>
   </div>
 </div></section>
 
@@ -1841,21 +1841,21 @@ PAGES["watch.html"] = dict(
 # ================= YOUTUBE =================
 yt_faq = [
     ("Where can I watch DailyGamba's videos?",
-     "Full sessions, bonus hunts and highlights are uploaded to the DailyGamba YouTube channel. Live streams run on Kick \u2014 the two are separate, so subscribe on YouTube for the uploads and follow on Kick to catch streams live."),
+     "Full sessions, bonus hunts and highlights are uploaded to the DailyGambling YouTube channel. Live streams run on Kick \u2014 the two are separate, so subscribe on YouTube for the uploads and follow on Kick to catch streams live."),
     ("Do YouTube views earn ELITE Points?",
      "ELITE Points are earned for watch time on the live Kick stream \u2014 50 points per 15 minutes \u2014 along with the Slotessentials daily case, leaderboard finishes and record win submissions. YouTube uploads are for catching up on sessions you missed."),
 ]
 yt_faq_html = "".join('<details class="rv"><summary>%s</summary><div class="a">%s</div></details>' % (q, a) for q, a in yt_faq)
 
 PAGES["youtube.html"] = dict(
-    title="DailyGamba on YouTube \u2014 Latest Slot Sessions & Bonus Hunts | Roobet Casino Rewards",
-    desc="Watch DailyGamba's latest YouTube uploads \u2014 full slot sessions, bonus hunts and max win highlights. Play along on Roobet with code DAILY and claim the $100,000 monthly rewards.",
-    kw="dailygamba youtube, dailygambling youtube, slot session videos, bonus hunt videos, roobet slots youtube",
+    title="DailyGambling on YouTube \u2014 Latest Slot Sessions & Bonus Hunts | Roobet Casino Rewards",
+    desc="Watch DailyGambling's latest YouTube uploads \u2014 full slot sessions, bonus hunts and max win highlights. Play along on Roobet with code DAILY and claim the $100,000 monthly rewards.",
+    kw="dailygambling youtube, dailygambling youtube, slot session videos, bonus hunt videos, roobet slots youtube",
     body=f"""
 <section class="page-hero">{HERO_BD_SHORT}<div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / YouTube</p>
   <span class="eyebrow rv">Uploads &middot; Full Sessions</span>
-  <h1 class="rv d1">DailyGamba on <span class="grad">YouTube</span></h1>
+  <h1 class="rv d1">DailyGambling on <span class="grad">YouTube</span></h1>
   <p class="lead rv d2">Full slot sessions, bonus hunts and max win highlights. Live streams run on <a href="/watch" style="color:var(--gold);font-weight:600">Kick</a> &mdash; the uploads live here.</p>
   <div class="hero-cta rv d3">
     <a class="btn btn-gold btn-lg pulse" href="{YOUTUBE}" target="_blank" rel="noopener">Subscribe on YouTube</a>

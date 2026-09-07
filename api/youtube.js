@@ -7,8 +7,7 @@ let idCache = { id: null, exp: 0 };
 async function resolveChannelId() {
   const direct = process.env.YOUTUBE_CHANNEL_ID;
   if (direct) return direct;
-  const url = process.env.YOUTUBE_CHANNEL_URL;
-  if (!url) return null;
+  const url = process.env.YOUTUBE_CHANNEL_URL || "https://www.youtube.com/@DAILYGambling";
   if (idCache.id && Date.now() < idCache.exp) return idCache.id;
   const r = await fetch(url, {
     headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" },
