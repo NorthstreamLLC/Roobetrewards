@@ -87,7 +87,7 @@ def footer():
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/">{LOGO}<span><span class="b1">ROOBET</span>REWARDS</span></a>
+        <a class="brand" href="/"><img src="/assets/roobet-logo.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
         <p style="color:var(--muted);font-size:.9rem;margin-top:16px;max-width:280px">The home of the biggest Roobet casino rewards — $100,000 in monthly rewards for players using code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b>.</p>
       </div>
       <div><h4>Rewards</h4>{rew}</div>
@@ -291,7 +291,7 @@ def linkify(t):
     t = t.replace("code DAILY or ELITE",
                   f'code <a href="{DAILY}" rel="nofollow sponsored" {A}>DAILY</a> or <a href="{ELITE}" rel="nofollow sponsored" {A}>ELITE</a>')
     t = t.replace("DailyGambling live on Kick", f'<a href="{KICK}" rel="noopener" {A}>DailyGambling live on Kick</a>')
-    t = t.replace("Slotessentials community", f'<a href="{DISCORD}" rel="noopener" {A}>Slotessentials community</a>')
+    t = t.replace("Slotessentials community", f'<a href="{DISCORD}" rel="noopener" {A}>DailyGambling community</a>')
     return t
 
 faq_items = [(q, linkify(a)) for q, a in faq_items]
