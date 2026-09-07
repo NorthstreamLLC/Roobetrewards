@@ -62,7 +62,7 @@
 </nav>
 <main>
 
-<section class="page-hero"><div class="hero-bd short" aria-hidden="true">
+<section class="page-hero" style="padding-bottom:14px"><div class="hero-bd short" aria-hidden="true">
   <i class="bd-wash"></i><i class="bd-cone"></i>
   <img class="bd-chip" src="assets/roobet-chip.png" alt="" width="820" height="820" aria-hidden="true">
   <i class="bd-orb-a"></i><i class="bd-orb-b"></i><i class="bd-grid"></i><i class="bd-fade"></i>
@@ -70,21 +70,32 @@
   <p class="breadcrumb rv"><a href="index.html">Home</a> / Watch Live</p>
   <span class="eyebrow rv" id="watch-status">Checking stream status&hellip;</span>
   <h1 class="rv d1">Watch <span class="grad">DailyGambling</span> live on Kick</h1>
-  <p class="lead rv d2">Every 15 minutes of watch time earns you <b style="color:var(--gold)">50 ELITE Points</b> &mdash; redeemable for free balance and bonus buys. Live giveaways drop during stream.</p>
+  <p class="lead rv d2">Watch time earns <b style="color:var(--gold)">ELITE Points</b> &mdash; 50 points every 15 minutes &mdash; redeemable for free balance and bonus buys. Live giveaways drop during stream.</p>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
   <div class="stream-grid rv">
     <div>
       <div class="stream-frame" id="stream-frame">
+        <div class="stream-badges">
+          <span class="badge-live" id="badge-live"><span class="live-dot"></span>LIVE</span>
+          <span class="badge-viewers" id="badge-viewers" hidden></span>
+        </div>
         <iframe src="https://player.kick.com/dailygambling?autoplay=false&amp;muted=true"
                 title="DailyGambling live stream" allowfullscreen loading="lazy"
                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe>
+        <span class="stream-rule"></span>
       </div>
-      <div class="stream-actions">
-        <a class="btn btn-gold" href="https://kick.com/dailygambling" target="_blank" rel="noopener">Follow on Kick</a>
-        <a class="btn btn-ghost" href="https://discord.gg/dailygamba" target="_blank" rel="noopener">Join the Discord</a>
-        <a class="btn btn-ghost" href="https://roobet.com/?ref=daily" rel="nofollow sponsored" target="_blank">Play along with DAILY</a>
+      <div class="streamer-row">
+        <img class="streamer-av" src="assets/roobet-logo.png" alt="DailyGambling" width="52" height="52" loading="lazy">
+        <div class="streamer-meta">
+          <b>DailyGambling</b>
+          <span id="stream-title">Bonus buys, $50K leaderboard grind, live giveaways.</span>
+        </div>
+        <div class="streamer-cta">
+          <a class="btn btn-ghost" href="https://kick.com/dailygambling" target="_blank" rel="noopener">Follow on Kick</a>
+          <a class="btn btn-ghost" href="https://discord.gg/dailygamba" target="_blank" rel="noopener">Discord</a>
+        </div>
       </div>
     </div>
     <div>
@@ -96,20 +107,41 @@
   </div>
 </div></section>
 
-<section><div class="wrap">
-  <div class="sec-head rv">
-    <div><span class="eyebrow">Watch Time That Pays</span><h2>Turn watch time into ELITE Points</h2></div>
-    <p class="lead">Points accrue while you watch and stack with everything else you earn on Roobet.</p>
-  </div>
-  <div class="cards c4">
-    <a class="card rv" href="elite-points.html"><div class="ic">&#11088;</div><h3>50 points / 15 min</h3><p>Watch time on the Kick stream converts into ELITE Points, redeemable in the Point Shop for free balance and bonus buys.</p><span class="more">Point Shop <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    <a class="card rv d1" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    <a class="card rv d2" href="slot-challenges.html"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    <a class="card rv d3" href="leaderboard.html"><div class="ic">&#127942;</div><h3>Play the leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+<section style="padding-top:8px"><div class="wrap">
+  <div class="earn-panel rv">
+    <div class="earn-copy">
+      <span class="eyebrow">Watch-time &middot; ELITE Points</span>
+      <h2>Every minute watched is points in the shop</h2>
+      <p class="lead">Watch DailyGambling live on Kick under code DAILY and rack up ELITE Points &mdash; redeemable for real prizes via Slotessentials. Points are tracked on your Slotessentials account, not here.</p>
+      <div class="hero-cta" style="justify-content:flex-start;margin-top:16px">
+        <a class="btn btn-gold" href="https://kick.com/dailygambling" target="_blank" rel="noopener">Watch &amp; earn</a>
+        <a class="btn btn-ghost" href="elite-points.html">Points shop</a>
+      </div>
+    </div>
+    <div class="earn-rate">
+      <p class="earn-label">Earn rate</p>
+      <p class="earn-fig"><b>50</b> pts <span>/ 15 min</span></p>
+      <div class="earn-tiers">
+        <div><b>30 min</b><span>100 pts</span></div>
+        <div><b>1 hr</b><span>200 pts</span></div>
+        <div><b>2 hrs</b><span>400 pts</span></div>
+        <div><b>4 hrs</b><span>800 pts</span></div>
+      </div>
+      <p class="earn-note">Totals shown are the standard rate. Activity is verified on your Slotessentials account.</p>
+    </div>
   </div>
 </div></section>
 
-<section style="padding-top:6px"><div class="wrap">
+<section style="padding-top:8px"><div class="wrap">
+  <div class="cards c4">
+    <a class="card rv" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    <a class="card rv d1" href="slot-challenges.html"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    <a class="card rv d2" href="leaderboard.html"><div class="ic">&#127942;</div><h3>Play the leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    <a class="card rv d3" href="max-win-merch.html"><div class="ic">&#128085;</div><h3>Max win merch</h3><p>Hit a max win on stream under our code and the shirt is yours &mdash; shipped free.</p><span class="more">View merch <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+  </div>
+</div></section>
+
+<section style="padding-top:8px"><div class="wrap">
   <div class="faq-split">
     <div class="rv">
       <span class="eyebrow">FAQ</span>
@@ -122,6 +154,11 @@
     <div class="faq rv d1"><details class="rv"><summary>How do I know when DailyGambling is live?</summary><div class="a">A green LIVE badge appears in the navigation of every page on this site the moment the stream goes live, and this page switches to LIVE NOW with the player ready to watch. You can also follow DailyGambling on Kick to get notified directly.</div></details><details class="rv"><summary>How do I enter the stream giveaways?</summary><div class="a">Giveaways are announced and dropped live on stream, so being present is how you enter. Between streams we also run a raffle on this site — sign in with your Kick account on the giveaways page and you are entered with one click, one entry per account.</div></details><details class="rv"><summary>Do I earn rewards for watching the stream?</summary><div class="a">Yes. Watch time on DailyGambling's Kick stream earns ELITE Points — 50 points for every 15 minutes of activity — which you redeem in the ELITE Points Shop for free balance and bonus buys.</div></details></div>
   </div>
 </div></section>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track">
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; <b>$5,000+</b> monthly giveaways</span><span>&#128176; Rakeback every <b>30 minutes</b></span>
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; <b>$5,000+</b> monthly giveaways</span><span>&#128176; Rakeback every <b>30 minutes</b></span>
+</div></div>
 
 <section><div class="wrap"><div class="cta-banner rv">
   <span class="coins" style="top:14%;left:8%">🪙</span><span class="coins" style="bottom:18%;right:10%;animation-delay:-2s">💰</span>

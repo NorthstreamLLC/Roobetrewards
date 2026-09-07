@@ -654,7 +654,7 @@ for _i, (_w, _r, _plus) in enumerate(miles):
         '<div class="mile rv"><span class="mw">Wager &mdash; %s</span>'
         '<span class="bar"><i data-w="%d"></i></span>'
         '<span class="mr">%s%s</span>%s</div>'
-        % (_w, min(100, int(8 + _i * 9.2)), _r, _perks, _pill))
+        % (_w, max(6, int(96 - _i * 9.4)), _r, _perks, _pill))
 mile_html = "".join(_mile_rows)
 
 PAGES["wager-milestones.html"] = dict(
@@ -675,7 +675,7 @@ PAGES["wager-milestones.html"] = dict(
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:860px">
-  <h2 class="center rv" style="margin-bottom:30px">Monthly Milestone Track</h2>
+  <h2 class="center rv" style="margin:8px 0 22px">Monthly Milestone Track</h2>
   {mile_html}
   <p class="rv" style="color:var(--text-faint);font-size:13px;margin-top:16px;text-align:center">Tiers marked <b style="color:var(--gold)">+ perks</b> can pay more than the cash figure. Milestones stack with the <a href="/leaderboard" style="color:var(--gold)">$50K leaderboard</a> &mdash; the same wagers count toward both.</p>
 </div></section>
@@ -1677,25 +1677,36 @@ PAGES["watch.html"] = dict(
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in watch_faq]},
     ],
     body=f"""
-<section class="page-hero">{HERO_BD_SHORT}<div class="wrap">
+<section class="page-hero" style="padding-bottom:14px">{HERO_BD_SHORT}<div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Watch Live</p>
   <span class="eyebrow rv" id="watch-status">Checking stream status&hellip;</span>
   <h1 class="rv d1">Watch <span class="grad">DailyGambling</span> live on Kick</h1>
-  <p class="lead rv d2">Every 15 minutes of watch time earns you <b style="color:var(--gold)">50 ELITE Points</b> &mdash; redeemable for free balance and bonus buys. Live giveaways drop during stream.</p>
+  <p class="lead rv d2">Watch time earns <b style="color:var(--gold)">ELITE Points</b> &mdash; 50 points every 15 minutes &mdash; redeemable for free balance and bonus buys. Live giveaways drop during stream.</p>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
   <div class="stream-grid rv">
     <div>
       <div class="stream-frame" id="stream-frame">
+        <div class="stream-badges">
+          <span class="badge-live" id="badge-live"><span class="live-dot"></span>LIVE</span>
+          <span class="badge-viewers" id="badge-viewers" hidden></span>
+        </div>
         <iframe src="https://player.kick.com/dailygambling?autoplay=false&amp;muted=true"
                 title="DailyGambling live stream" allowfullscreen loading="lazy"
                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe>
+        <span class="stream-rule"></span>
       </div>
-      <div class="stream-actions">
-        <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Follow on Kick</a>
-        <a class="btn btn-ghost" href="{DISCORD}" target="_blank" rel="noopener">Join the Discord</a>
-        <a class="btn btn-ghost" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play along with DAILY</a>
+      <div class="streamer-row">
+        <img class="streamer-av" src="/assets/roobet-logo.png" alt="DailyGambling" width="52" height="52" loading="lazy">
+        <div class="streamer-meta">
+          <b>DailyGambling</b>
+          <span id="stream-title">Bonus buys, $50K leaderboard grind, live giveaways.</span>
+        </div>
+        <div class="streamer-cta">
+          <a class="btn btn-ghost" href="{KICK}" target="_blank" rel="noopener">Follow on Kick</a>
+          <a class="btn btn-ghost" href="{DISCORD}" target="_blank" rel="noopener">Discord</a>
+        </div>
       </div>
     </div>
     <div>
@@ -1707,20 +1718,41 @@ PAGES["watch.html"] = dict(
   </div>
 </div></section>
 
-<section><div class="wrap">
-  <div class="sec-head rv">
-    <div><span class="eyebrow">Watch Time That Pays</span><h2>Turn watch time into ELITE Points</h2></div>
-    <p class="lead">Points accrue while you watch and stack with everything else you earn on Roobet.</p>
-  </div>
-  <div class="cards c4">
-    <a class="card rv" href="/elite-points"><div class="ic">&#11088;</div><h3>50 points / 15 min</h3><p>Watch time on the Kick stream converts into ELITE Points, redeemable in the Point Shop for free balance and bonus buys.</p><span class="more">Point Shop {ARR}</span></a>
-    <a class="card rv d1" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
-    <a class="card rv d2" href="/slot-challenges"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges {ARR}</span></a>
-    <a class="card rv d3" href="/leaderboard"><div class="ic">&#127942;</div><h3>Play the leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings {ARR}</span></a>
+<section style="padding-top:8px"><div class="wrap">
+  <div class="earn-panel rv">
+    <div class="earn-copy">
+      <span class="eyebrow">Watch-time &middot; ELITE Points</span>
+      <h2>Every minute watched is points in the shop</h2>
+      <p class="lead">Watch DailyGambling live on Kick under code DAILY and rack up ELITE Points &mdash; redeemable for real prizes via Slotessentials. Points are tracked on your Slotessentials account, not here.</p>
+      <div class="hero-cta" style="justify-content:flex-start;margin-top:16px">
+        <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Watch &amp; earn</a>
+        <a class="btn btn-ghost" href="/elite-points">Points shop</a>
+      </div>
+    </div>
+    <div class="earn-rate">
+      <p class="earn-label">Earn rate</p>
+      <p class="earn-fig"><b>50</b> pts <span>/ 15 min</span></p>
+      <div class="earn-tiers">
+        <div><b>30 min</b><span>100 pts</span></div>
+        <div><b>1 hr</b><span>200 pts</span></div>
+        <div><b>2 hrs</b><span>400 pts</span></div>
+        <div><b>4 hrs</b><span>800 pts</span></div>
+      </div>
+      <p class="earn-note">Totals shown are the standard rate. Activity is verified on your Slotessentials account.</p>
+    </div>
   </div>
 </div></section>
 
-<section style="padding-top:6px"><div class="wrap">
+<section style="padding-top:8px"><div class="wrap">
+  <div class="cards c4">
+    <a class="card rv" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
+    <a class="card rv d1" href="/slot-challenges"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges {ARR}</span></a>
+    <a class="card rv d2" href="/leaderboard"><div class="ic">&#127942;</div><h3>Play the leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings {ARR}</span></a>
+    <a class="card rv d3" href="/max-win-merch"><div class="ic">&#128085;</div><h3>Max win merch</h3><p>Hit a max win on stream under our code and the shirt is yours &mdash; shipped free.</p><span class="more">View merch {ARR}</span></a>
+  </div>
+</div></section>
+
+<section style="padding-top:8px"><div class="wrap">
   <div class="faq-split">
     <div class="rv">
       <span class="eyebrow">FAQ</span>
@@ -1733,6 +1765,8 @@ PAGES["watch.html"] = dict(
     <div class="faq rv d1">{watch_faq_html}</div>
   </div>
 </div></section>
+
+{TICKER}
 
 {cta_banner("Playing along beats just watching","Join Roobet with code DAILY and every spin during stream counts toward the $50K leaderboard and your milestones.")}
 """)

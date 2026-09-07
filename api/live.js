@@ -19,15 +19,26 @@ async function appToken(id, secret) {
   return tokenCache.token;
 }
 
-function parseLive(obj) {
+function parseStream(obj) {
   // tolerate both official and unofficial response shapes
-  if (!obj) return false;
+  const empty = { live: false, viewers: null, title: null, category: null };
+  if (!obj) return empty;
   const ch = Array.isArray(obj.data) ? obj.data[0] : obj.data || obj;
-  if (!ch) return false;
-  if (typeof ch.is_live === "boolean") return ch.is_live;
-  if (ch.stream && typeof ch.stream.is_live === "boolean") return ch.stream.is_live;
-  if ("livestream" in ch) return !!ch.livestream;
-  return false;
+  if (!ch) return empty;
+  const ls = ch.stream || ch.livestream || ch.stream_info || {};
+  let live = false;
+  if (typeof ch.is_live === "boolean") live = ch.is_live;
+  else if (typeof ls.is_live === "boolean") live = ls.is_live;
+  else if ("livestream" in ch) live = !!ch.livestream;
+  const num = (v) => (typeof v === "number" && v >= 0 ? v : null);
+  const viewers = num(ls.viewer_count) ?? num(ls.viewers) ?? num(ch.viewer_count) ?? num(ch.viewers);
+  const title = ls.stream_title || ls.session_title || ch.stream_title || ch.slug_title || null;
+  const cat =
+    (ch.category && (ch.category.name || ch.category)) ||
+    (ls.category && (ls.category.name || ls.category)) ||
+    (Array.isArray(ch.categories) && ch.categories[0] && ch.categories[0].name) ||
+    null;
+  return { live, viewers: live ? viewers : null, title: live ? title : null, category: live ? cat : null };
 }
 
 module.exports = async (req, res) => {
@@ -41,7 +52,7 @@ module.exports = async (req, res) => {
         signal: AbortSignal.timeout(6000),
       });
       if (!r.ok) throw new Error(`channels ${r.status}`);
-      return res.status(200).json({ live: parseLive(await r.json()), src: "official" });
+      return res.status(200).json({ ...parseStream(await r.json()), src: "official" });
     }
     // fallback: unofficial endpoint
     const r = await fetch(`https://kick.com/api/v2/channels/${CHANNEL}`, {
@@ -49,7 +60,7 @@ module.exports = async (req, res) => {
       signal: AbortSignal.timeout(6000),
     });
     if (!r.ok) throw new Error(`unofficial ${r.status}`);
-    return res.status(200).json({ live: parseLive(await r.json()), src: "fallback" });
+    return res.status(200).json({ ...parseStream(await r.json()), src: "fallback" });
   } catch (err) {
     return res.status(200).json({ live: null, error: String(err) });
   }

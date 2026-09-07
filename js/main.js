@@ -217,8 +217,18 @@ document.querySelectorAll('.flip').forEach(c => {
     });
   }
 
-  function apply(live) {
+  function apply(live, d) {
     if (pill) pill.classList.toggle('on', live === true);
+    const badge = document.getElementById('badge-live');
+    const vc = document.getElementById('badge-viewers');
+    const st = document.getElementById('stream-title');
+    if (badge) badge.classList.toggle('on', live === true);
+    if (vc) {
+      const n = d && typeof d.viewers === 'number' ? d.viewers : null;
+      if (live === true && n !== null) { vc.textContent = n.toLocaleString('en-US') + ' watching'; vc.hidden = false; }
+      else vc.hidden = true;
+    }
+    if (st && live === true && d && d.title) st.textContent = d.title;
     if (status) {
       status.innerHTML = live === true
         ? '<span class="live-dot"></span> LIVE NOW'
@@ -231,7 +241,7 @@ document.querySelectorAll('.flip').forEach(c => {
   function check() {
     fetch('/api/live')
       .then(r => (r.ok ? r.json() : null))
-      .then(d => apply(d ? d.live : null))
+      .then(d => apply(d ? d.live : null, d))
       .catch(() => apply(null));
   }
   check();
