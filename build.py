@@ -1763,7 +1763,9 @@ PAGES["watch.html"] = dict(
                 title="DailyGambling live stream" allowfullscreen loading="lazy"
                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe>
         <span class="stream-rule"></span>
+        <a class="stream-open" href="{KICK}" target="_blank" rel="noopener">Open on Kick &#8599;</a>
       </div>
+      <p class="chat-note" style="text-align:left;margin-top:8px">Video not playing? Kick&rsquo;s embedded player can fail to start &mdash; <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">watch on Kick</a>. Chat and stats above stay live either way.</p>
       <div class="streamer-row">
         <img class="streamer-av" src="/assets/roobet-logo.png" alt="DailyGambling" width="52" height="52" loading="lazy">
         <div class="streamer-meta">
