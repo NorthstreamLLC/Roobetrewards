@@ -1792,11 +1792,10 @@ PAGES["watch.html"] = dict(
       </div>
     </div>
     <div class="earn-rate">
-      <p class="earn-label">Earn rate</p>
-      <p class="earn-fig"><b>50</b> pts <span>/ 15 min</span></p>
-      <div class="earn-head" id="sess-box" hidden>
-        <div><p class="earn-label">This session</p><p class="earn-sub"><b id="sess-min">0</b> min</p></div>
-        <div style="text-align:right"><p class="earn-label">Earned (est.)</p><p class="earn-sub"><b id="sess-pts">0</b> pts</p></div>
+      <div class="er-row">
+        <div class="er-cell"><span class="earn-label">Earn rate</span><b class="er-fig">50<i>pts / 15 min</i></b></div>
+        <div class="er-cell sess" id="sess-box" hidden><span class="earn-label">This session</span><b class="er-fig" id="sess-min">0<i>min</i></b></div>
+        <div class="er-cell sess" id="sess-box2" hidden><span class="earn-label">Earned (est.)</span><b class="er-fig" id="sess-pts">0<i>pts</i></b></div>
       </div>
       <div class="earn-bar" id="sess-barwrap" hidden><i id="sess-bar"></i></div>
       <div class="earn-tiers">
@@ -1805,7 +1804,7 @@ PAGES["watch.html"] = dict(
         <div><b>2 hrs</b><span>400 pts</span></div>
         <div><b>4 hrs</b><span>800 pts</span></div>
       </div>
-      <p class="earn-note">Check your real balance any time: type <b style="color:var(--gold)">!points</b> in the Kick chat, or <b style="color:var(--gold)">!redeem</b> for redemption info. Session figures here are an estimate at the standard rate &mdash; points are credited and verified on your Slotessentials account.</p>
+      <p class="earn-note">Type <b style="color:var(--gold)">!points</b> in the Kick chat for your real balance, or <b style="color:var(--gold)">!redeem</b> for redemption info. Session figures are an estimate at the standard rate.</p>
     </div>
   </div>
 </div></section>

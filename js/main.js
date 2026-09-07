@@ -375,14 +375,14 @@ document.querySelectorAll('.flip').forEach(c => {
   try { secs = parseInt(sessionStorage.getItem('watchSecs') || '0', 10) || 0; } catch (e) {}
 
   function paintSession() {
-    const box = $('sess-box'), bar = $('sess-barwrap');
+    const box = $('sess-box'), box2 = $('sess-box2'), bar = $('sess-barwrap');
     if (!box) return;
     const mins = Math.floor(secs / 60);
     const show = liveNow && secs > 0;
-    box.hidden = !show; if (bar) bar.hidden = !show;
+    box.hidden = !show; if (box2) box2.hidden = !show; if (bar) bar.hidden = !show;
     if (!show) return;
-    $('sess-min').textContent = mins;
-    $('sess-pts').textContent = (Math.floor(mins / RATE_MIN) * RATE_PTS).toLocaleString('en-US');
+    $('sess-min').innerHTML = mins + '<i>min</i>';
+    $('sess-pts').innerHTML = (Math.floor(mins / RATE_MIN) * RATE_PTS).toLocaleString('en-US') + '<i>pts</i>';
     const pct = ((mins % RATE_MIN) / RATE_MIN) * 100;
     const fill = $('sess-bar'); if (fill) fill.style.width = pct + '%';
   }
