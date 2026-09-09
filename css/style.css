@@ -511,6 +511,11 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 }
 .mile .perks{display:inline-block;margin-left:7px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
 
+/* controls sit under the player now — they used to overlay it */
+.stream-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+.stream-tools .btn{padding:11px 17px;font-size:13px}
+.stream-tip{flex:1;min-width:220px;margin:0;font-size:12px;line-height:1.55;color:var(--text-faint)}
+
 /* ---------- floating mini player ---------- */
 .mini{position:fixed;right:18px;bottom:18px;z-index:150;width:330px;border-radius:14px;
   overflow:hidden;background:var(--bg-sunk);border:1px solid var(--hairline);

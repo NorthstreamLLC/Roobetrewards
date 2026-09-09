@@ -2333,7 +2333,11 @@ PAGES["watch.html"] = dict(
                 title="DailyGambling live stream" allowfullscreen loading="lazy"
                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe>
         <span class="stream-rule"></span>
-        <a class="stream-open" href="{KICK}" target="_blank" rel="noopener">Open on Kick &#8599;</a>
+      </div>
+      <div class="stream-tools">
+        <button class="btn btn-gold" type="button" id="popout-player">Pop out player &#8599;</button>
+        <a class="btn btn-ghost" href="{KICK}" target="_blank" rel="noopener">Open on Kick &#8599;</a>
+        <p class="stream-tip">Pop the player into its own window and it keeps playing &mdash; with sound &mdash; while you browse the rest of the site.</p>
       </div>
       <p class="chat-note" style="text-align:left;margin-top:8px">Video not playing? Kick&rsquo;s embedded player can fail to start &mdash; <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">watch on Kick</a>. Chat and stats above stay live either way.</p>
       <div class="streamer-row">
