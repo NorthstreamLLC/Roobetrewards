@@ -73,6 +73,7 @@ ICON_PATHS = {
     "gem": '<path d="M6 3h12l3 5.5-9 12.5L3 8.5Z"/><path d="M3 8.5h18"/><path d="M9 3 7.6 8.5 12 21"/><path d="M15 3l1.4 5.5L12 21"/>',
     "pad": '<path d="M7 11h4"/><path d="M9 9v4"/><path d="M15.5 10.5h.01"/><path d="M18 13h.01"/><path d="M6.6 7h10.8a4.5 4.5 0 0 1 4.45 3.8l.55 3.9A3.1 3.1 0 0 1 19.4 18c-1 0-1.9-.5-2.5-1.3l-.9-1.2H8l-.9 1.2A3.1 3.1 0 0 1 4.6 18a3.1 3.1 0 0 1-3-3.3l.55-3.9A4.5 4.5 0 0 1 6.6 7Z"/>',
     "coins": '<path d="M4 7c0-1.66 3.58-3 8-3s8 1.34 8 3-3.58 3-8 3-8-1.34-8-3Z"/><path d="M4 7v5c0 1.66 3.58 3 8 3s8-1.34 8-3V7"/><path d="M4 12v5c0 1.66 3.58 3 8 3s8-1.34 8-3v-5"/>',
+    "spark": '<path d="m12 3 2.1 5.4 5.4 2.1-5.4 2.1L12 18l-2.1-5.4L4.5 10.5l5.4-2.1L12 3Z"/><path d="M19 17.5 19.7 19.3 21.5 20 19.7 20.7 19 22.5 18.3 20.7 16.5 20 18.3 19.3Z"/>',
 }
 
 def icon(name, size=20):
@@ -82,29 +83,29 @@ def icon(name, size=20):
 
 REWARD_GROUPS = [
     ("Cash Rewards", [
-        ("/leaderboard", "trophy", "$50K Wager Leaderboard", "Monthly wager race &mdash; $12,500 top prize"),
-        ("/wager-milestones", "target", "Wager Milestones", "$11,350 in guaranteed payouts"),
-        ("/giveaways", "gift", "$5K Giveaways", "Monthly draws for active players"),
+        ("/leaderboard", "trophy", "gold", "$50K Wager Leaderboard", "Monthly wager race &mdash; $12,500 top prize"),
+        ("/wager-milestones", "target", "red", "Wager Milestones", "$11,350 in guaranteed payouts"),
+        ("/giveaways", "gift", "pink", "$5K Giveaways", "Monthly draws for active players"),
     ]),
     ("Perks &amp; Merch", [
-        ("/free-spins", "spin", "Free Spins Bonus", "Up to 125 spins at $1.00 each"),
-        ("/max-win-merch", "shirt", "Max Win Merch", "Free shirts for every max win"),
-        ("/elite-points", "star", "ELITE Points", "Earn daily, redeem in the Point Shop"),
+        ("/free-spins", "spin", "green", "Free Spins Bonus", "Up to 125 spins at $1.00 each"),
+        ("/max-win-merch", "shirt", "cyan", "Max Win Merch", "Free shirts for every max win"),
+        ("/elite-points", "star", "amber", "ELITE Points", "Earn daily, redeem in the Point Shop"),
     ]),
     ("Status &amp; Extras", [
-        ("/vip-transfer", "gem", "VIP Transfer", "Bring your level from any casino"),
-        ("/slot-challenges", "pad", "Slot Challenges", "Extra prizes while you play"),
-        ("/roobet-rewards", "coins", "Roobet Rewards System", "Rakeback, Vault and rakeboosts"),
+        ("/vip-transfer", "gem", "violet", "VIP Transfer", "Bring your level from any casino"),
+        ("/slot-challenges", "pad", "blue", "Slot Challenges", "Extra prizes while you play"),
+        ("/roobet-rewards", "coins", "gold", "Roobet Rewards System", "Rakeback, Vault and rakeboosts"),
     ]),
 ]
-REWARD_LINKS = [(u, ic, t) for _, items in REWARD_GROUPS for u, ic, t, _ in items]
+REWARD_LINKS = [(u, ic, t) for _, items in REWARD_GROUPS for u, ic, _c, t, _d in items]
 
 def nav(active=""):
     reward_slugs = {u.lstrip("/") for u, _, _ in REWARD_LINKS}
 
-    def item(u, ic, t, d):
+    def item(u, ic, c, t, d):
         cls = " is-active" if u.lstrip("/") == active else ""
-        return (f'<a class="mega-item{cls}" href="{u}"><span class="mi">{icon(ic)}</span>'
+        return (f'<a class="mega-item{cls}" data-c="{c}" href="{u}"><span class="mi">{icon(ic)}</span>'
                 f'<span class="mt"><b>{t}</b><i>{d}</i></span></a>')
 
     cols = "".join(
@@ -141,15 +142,16 @@ def nav(active=""):
             <a href="/roobet-rewards">Every reward explained</a>
             <a href="/blog">Guides &amp; Blog</a>
             <a href="{TELEGRAM}" target="_blank" rel="noopener">Connect with our exclusive VIP team</a>
-            <a class="mf-cta" href="/#how-to-sign-up">How To Sign Up {ARR}</a>
+            <a class="mf-cta" href="/exclusive-promotions">Exclusive Promotions {ARR}</a>
           </div>
         </div>
       </div>
       {link("/watch", "Watch Live")}
       {link("/youtube", "YouTube")}
+      <a href="/#how-to-sign-up">How To Sign Up</a>
+      <a class="nav-m-only" href="/exclusive-promotions">Exclusive Promotions</a>
       <a class="nav-m-only" href="/blog">Guides &amp; Blog</a>
       <a class="nav-m-only" href="/contact">Contact</a>
-      <a class="btn btn-gold nav-m-cta" href="/#how-to-sign-up">How To Sign Up</a>
     </div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
@@ -163,7 +165,7 @@ def nav(active=""):
 def footer():
     rew = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[:4])
     rew2 = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[4:])
-    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/blog">Blog</a><a href="/watch">Watch Live</a><a href="/#faq">FAQ</a><a href="/contact">Contact Us</a>'
+    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/exclusive-promotions">Exclusive Promotions</a><a href="/blog">Blog</a><a href="/watch">Watch Live</a><a href="/#faq">FAQ</a><a href="/contact">Contact Us</a>'
     return f"""<footer>
   <div class="wrap">
     <div class="foot-grid">
@@ -1318,6 +1320,81 @@ for slug, name, prov, img in MERCH:
 
 # ================= CONTACT =================
 DISCORD_GAMBA = "https://discord.gg/dailygamba"
+
+# ================= EXCLUSIVE PROMOTIONS =================
+# To publish a promo: add a dict to ACTIVE_PROMOS. When it ends, cut it and paste
+# it into PAST_PROMOS. Nothing else needs touching — the page and the "no active
+# promotion" state handle themselves.
+#   title  : headline
+#   prize  : the payout, shown big
+#   window : dates, however you want them written
+#   terms  : list of bullet lines (HTML allowed, <b> for emphasis)
+ACTIVE_PROMOS = []
+
+PAST_PROMOS = [
+    dict(
+        title="$200 Raw Cash Wager Race",
+        prize="$200 RAW CASH",
+        window="Aug 28 &ndash; Sep 4, 2026",
+        terms=[
+            "Wager <b>$30,000</b> between 8/28 &ndash; 9/4",
+            "Must be playing under code <b>ELITE</b> or <b>DAILY</b>",
+            "Receive <b>$200 RAW CASH</b> &mdash; no wagering requirement",
+        ],
+    ),
+]
+
+def promo_card(p, expired=False):
+    terms = "".join(f"<li>{t}</li>" for t in p["terms"])
+    badge = ('<span class="pr-badge is-done">Expired</span>' if expired else
+             '<span class="pr-badge is-live"><span class="live-dot"></span>Live now</span>')
+    cta = ("" if expired else
+           f'<a class="btn btn-gold pr-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY {ARR}</a>')
+    return f"""<article class="promo{' is-expired' if expired else ''} rv">
+  <div class="pr-head">{badge}<span class="pr-when">{p['window']}</span></div>
+  <h3>{p['title']}</h3>
+  <p class="pr-prize">{p['prize']}</p>
+  <ul class="pr-terms">{terms}</ul>
+  {cta}
+</article>"""
+
+active_html = ("".join(promo_card(p) for p in ACTIVE_PROMOS) if ACTIVE_PROMOS else f"""
+<div class="promo-empty rv">
+  <span class="pe-ic">{icon('spark', 26)}</span>
+  <h3>No active promotion right now</h3>
+  <p>Exclusive promos drop regularly and often run for only a week &mdash; wager races, raw cash drops and bonus buys for players under code <b>DAILY</b> or <b>ELITE</b>. The fastest way to hear about the next one is the VIP Telegram or the stream.</p>
+  <div class="hero-cta" style="justify-content:center">
+    <a class="btn btn-gold" href="{TELEGRAM}" target="_blank" rel="noopener">Get notified on Telegram</a>
+    <a class="btn btn-ghost" href="{KICK}" target="_blank" rel="noopener">Watch on Kick</a>
+  </div>
+</div>""")
+
+past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
+
+PAGES["exclusive-promotions.html"] = dict(
+    title="Exclusive Roobet Promotions — Limited-Time Cash Drops | Code DAILY & ELITE",
+    desc="Exclusive limited-time Roobet promotions for players under code DAILY or ELITE — wager races, raw cash drops and bonus buys. See what's running now and what's already ended.",
+    kw="roobet promotions, exclusive roobet promo, roobet wager race, roobet cash drop, code daily promotion",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / Exclusive Promotions</p>
+  <span class="eyebrow rv">⚡ Limited Time</span>
+  <h1 class="rv d1"><span class="grad">Exclusive Promotions</span></h1>
+  <p class="lead rv d2">Short-run promos on top of everything else we give away &mdash; wager races, raw cash drops and bonus buys, only for players under code <b style="color:var(--text)">DAILY</b> or <b style="color:var(--text)">ELITE</b>. They change often, so check back.</p>
+</div></section>
+
+<section style="padding-top:6px"><div class="wrap">
+  <div class="center rv"><span class="eyebrow">Running Now</span><h2>Active Promotions</h2></div>
+  <div class="promo-grid" style="margin-top:32px">{active_html}</div>
+
+  <div class="center rv" style="margin-top:70px"><span class="eyebrow">The Archive</span><h2>Past Promotions</h2><p class="lead">What we've already paid out &mdash; so you know these are real.</p></div>
+  <div class="promo-grid" style="margin-top:32px">{past_html}</div>
+</div></section>
+
+{cta_banner("Never Miss the Next One","Promos are announced on stream and in the VIP Telegram first. Join with code DAILY so you're eligible the moment one drops.",
+extra=f'<p style="margin-top:22px;color:var(--muted)"><a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP Team on Telegram</a> &nbsp;&middot;&nbsp; <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Join our Discord</a></p>')}
+""")
+
 PAGES["contact.html"] = dict(
     title="Contact Us — VIP Team on Telegram & Discord | Roobet Casino Rewards",
     desc="Questions about our Roobet rewards? Contact our VIP Team on Telegram or join us on Discord — reward claims, VIP transfers, merch shipping and KYC help, handled personally.",

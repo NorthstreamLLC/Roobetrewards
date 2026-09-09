@@ -85,7 +85,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 .dropdown:hover .menu,.dropdown:focus-within .menu,.dropdown.open .menu{opacity:1;visibility:visible;transform:none}
 .menu a{display:block;padding:9px 11px;border-radius:8px;font-size:13.5px;color:var(--text-dim);white-space:nowrap;transition:background .15s,color .15s}
 .menu a:hover{background:rgba(245,165,36,.08);color:var(--text)}
-.nav-m-only,.nav-m-cta{display:none}
+.nav-m-only{display:none}
 
 /* ---------- mega menu ---------- */
 .dropdown.mega{position:static}
@@ -93,8 +93,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 .dropdown.mega .menu{left:0;right:0;top:var(--nav-h);width:min(1080px,calc(100vw - 36px));min-width:0;
   margin:0 auto;padding:0;border-radius:16px;overflow:hidden;background:var(--surface)}
 .mega-in{display:grid;grid-template-columns:296px 1fr;gap:0}
-.mega-feat{display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:24px;
-  white-space:normal;overflow-wrap:anywhere;min-width:0;
+.mega-feat{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:24px;
+  text-align:left;white-space:normal;overflow-wrap:anywhere;min-width:0;
   background:linear-gradient(170deg,rgba(245,165,36,.14),rgba(245,165,36,.03) 58%),var(--surface-2);
   border-right:1px solid var(--hairline);border-radius:0;transition:background .2s}
 .mega-feat:hover{background:linear-gradient(170deg,rgba(245,165,36,.2),rgba(245,165,36,.05) 58%),var(--surface-2)}
@@ -119,10 +119,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 .mega-item:hover{background:rgba(245,165,36,.07)}
 .mega-item.is-active{background:rgba(245,165,36,.1)}
 .mega-item .mi{flex:none;display:flex;align-items:center;justify-content:center;width:34px;height:34px;
-  border-radius:10px;background:var(--surface-3);border:1px solid var(--hairline);
-  color:var(--text-dim);transition:color .16s,border-color .16s,background .16s}
-.mega-item:hover .mi,.mega-item.is-active .mi{border-color:rgba(245,165,36,.38);
-  background:rgba(245,165,36,.1);color:var(--gold)}
+  border-radius:10px;color:var(--ic-c,var(--gold));
+  background:color-mix(in srgb,var(--ic-c,var(--gold)) 13%,transparent);
+  border:1px solid color-mix(in srgb,var(--ic-c,var(--gold)) 26%,transparent);
+  transition:background .16s,border-color .16s,transform .16s}
+.mega-item:hover .mi{background:color-mix(in srgb,var(--ic-c,var(--gold)) 22%,transparent);
+  border-color:color-mix(in srgb,var(--ic-c,var(--gold)) 45%,transparent);transform:translateY(-1px)}
+/* one accent per reward — colourful but from a controlled palette */
+.mega-item[data-c=gold]{--ic-c:#f5a524}
+.mega-item[data-c=green]{--ic-c:#35d39a}
+.mega-item[data-c=pink]{--ic-c:#ff7ab8}
+.mega-item[data-c=violet]{--ic-c:#a78bfa}
+.mega-item[data-c=blue]{--ic-c:#5aa9ff}
+.mega-item[data-c=amber]{--ic-c:#ffcf5c}
+.mega-item[data-c=cyan]{--ic-c:#4fd6e0}
+.mega-item[data-c=red]{--ic-c:#ff7a6b}
 .mega-item .mt{display:flex;flex-direction:column;gap:1px;min-width:0}
 .mega-item b{font-size:13.5px;font-weight:700;color:var(--text);line-height:1.35}
 .mega-item i{font-style:normal;font-size:11.5px;line-height:1.45;color:var(--text-faint)}
@@ -138,12 +149,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 @media(max-width:1180px){
   .mega-in{grid-template-columns:1fr}
   .mega-cols{grid-template-columns:repeat(2,1fr)}
-  .mega-feat{flex-direction:row;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 22px;
-    border-right:0;border-bottom:1px solid var(--hairline)}
-  .mf-amt{font-size:28px}
-  .mf-t,.mf-eyebrow{width:100%}
-  .mf-p{flex:1;min-width:200px}
-  .mf-go{margin:0 0 0 auto}
+  .mega-feat{padding:20px 22px;border-right:0;border-bottom:1px solid var(--hairline)}
+  .mf-amt{font-size:30px}
 }
 .nav-cta{display:flex;align-items:center;gap:9px}
 .burger{display:none;background:none;border:none;cursor:pointer;padding:6px}
@@ -474,7 +481,6 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
     border-bottom:1px solid var(--hairline)}
   .nav-links>a.active{color:var(--gold)}
   .nav-m-only{display:block}
-  .nav-m-cta{display:flex;margin-top:18px;padding:15px;font-size:15px;justify-content:center;border-bottom:0}
 
   /* rewards are simply listed — no dropdown behaviour on mobile */
   .dropdown.mega{position:static;order:-1}
@@ -747,6 +753,38 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .vt-alt{font-size:12.5px;color:var(--text-faint);align-self:center;transition:color .18s}
 a.vt-alt:hover{color:var(--gold)}
 .vt-alt-plain{pointer-events:none}
+/* ---------- exclusive promotions ---------- */
+.promo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+.promo{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:26px;
+  border-radius:var(--radius);background:var(--surface);border:1px solid rgba(245,165,36,.28)}
+.promo.is-expired{background:var(--bg-sunk);border-color:var(--hairline)}
+.pr-head{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+.pr-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.pr-badge.is-live{background:rgba(53,211,154,.12);border:1px solid rgba(53,211,154,.34);color:var(--live)}
+.pr-badge.is-live .live-dot{width:6px;height:6px;border-radius:50%;background:var(--live);animation:dot 1.6s infinite}
+.pr-badge.is-done{background:rgba(255,255,255,.05);border:1px solid var(--hairline);color:var(--text-faint)}
+.pr-when{font-family:var(--mono);font-size:11px;color:var(--text-faint);white-space:nowrap}
+.promo h3{margin:0;font-size:1.15rem;font-weight:800;letter-spacing:-.015em;color:var(--text)}
+.promo.is-expired h3{color:var(--text-mid)}
+.pr-prize{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--gold)}
+.promo.is-expired .pr-prize{color:var(--text-dim)}
+.pr-terms{list-style:none;display:flex;flex-direction:column;gap:7px;margin:4px 0 0;padding:0;width:100%}
+.pr-terms li{position:relative;padding-left:18px;font-size:13.5px;line-height:1.6;color:var(--text-dim)}
+.pr-terms li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;
+  background:var(--gold);opacity:.75}
+.promo.is-expired .pr-terms li::before{background:var(--text-faint)}
+.pr-terms b{color:var(--text);font-weight:700}
+.pr-cta{margin-top:12px;width:100%;justify-content:center}
+.promo-empty{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:12px;
+  text-align:center;padding:52px 30px;border-radius:var(--radius);
+  background:var(--surface);border:1px dashed rgba(245,165,36,.28)}
+.pe-ic{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:16px;
+  background:rgba(245,165,36,.11);border:1px solid rgba(245,165,36,.28);color:var(--gold)}
+.promo-empty h3{margin:0;font-size:1.3rem;font-weight:800}
+.promo-empty p{max-width:560px;font-size:14px;line-height:1.7;color:var(--text-dim)}
+.promo-empty b{color:var(--gold)}
+
 /* ---------- rewards strip ---------- */
 .rwbar-cap{margin:44px 0 14px;text-align:center;font-family:var(--mono);font-size:10.5px;
   letter-spacing:.18em;text-transform:uppercase;color:var(--text-faint)}
