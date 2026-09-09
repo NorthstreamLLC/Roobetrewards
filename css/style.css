@@ -757,7 +757,7 @@ a.vt-alt:hover{color:var(--gold)}
 /* ---------- showcase banner ---------- */
 .bn-wrap{padding:14px 0}
 .bn{--bc:#f5a524;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr;
-  max-width:1120px;margin:0 auto;
+  max-width:960px;margin:0 auto;
   gap:26px;padding:clamp(28px,2.8vw,42px) clamp(22px,2.6vw,40px);border-radius:24px;
   background:
     radial-gradient(90% 130% at 88% 8%,color-mix(in srgb,var(--bc) 20%,transparent),transparent 62%),
@@ -796,16 +796,20 @@ a.vt-alt:hover{color:var(--gold)}
 .bn-timer-l{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint)}
 .bn-timer b{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--bc);font-variant-numeric:tabular-nums}
 
-/* right: composed artwork with a floating proof card over it */
-.bn-right{position:relative;min-height:250px;display:flex;align-items:flex-end;justify-content:center}
-.bn-art{position:absolute;inset:0;pointer-events:none}
-.bn-art img{position:absolute;filter:drop-shadow(0 18px 34px rgba(0,0,0,.55))}
-.bn-art .a-main{left:50%;top:2%;height:62%;width:auto;transform:translateX(-50%);animation:floaty 7s ease-in-out infinite}
-.bn-art .a-left{left:4%;top:6%;height:30%;width:auto;transform:rotate(-14deg);animation:floaty 8s .6s ease-in-out infinite}
-.bn-art .a-right{right:2%;top:20%;height:34%;width:auto;transform:rotate(12deg);animation:floaty 9s 1.2s ease-in-out infinite}
-.bn-stat{position:relative;z-index:2;width:min(100%,420px);margin-bottom:4px;padding:18px 20px;
-  border-radius:16px;background:rgba(12,18,35,.9);backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,.09);box-shadow:0 24px 50px rgba(0,0,0,.5)}
+/* right: a cluster of artwork with the proof card overlapping its lower edge */
+@keyframes fltA{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-8px)}}
+@keyframes fltB{0%,100%{transform:rotate(-12deg) translateY(0)}50%{transform:rotate(-12deg) translateY(-7px)}}
+@keyframes fltC{0%,100%{transform:rotate(11deg) translateY(0)}50%{transform:rotate(11deg) translateY(-9px)}}
+.bn-right{position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+  padding-top:132px}
+.bn-art{position:absolute;left:0;right:0;top:0;height:146px;pointer-events:none}
+.bn-art img{position:absolute;bottom:0;width:auto;filter:drop-shadow(0 16px 30px rgba(0,0,0,.55))}
+.bn-art .a-main{left:50%;height:100%;transform:translateX(-50%);animation:fltA 7s ease-in-out infinite}
+.bn-art .a-left{left:5%;height:62%;transform:rotate(-12deg);animation:fltB 8s .6s ease-in-out infinite}
+.bn-art .a-right{right:5%;height:66%;transform:rotate(11deg);animation:fltC 9s 1.2s ease-in-out infinite}
+.bn-stat{position:relative;z-index:2;width:100%;padding:17px 19px;
+  border-radius:16px;background:rgba(12,18,35,.92);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.09);box-shadow:0 24px 50px rgba(0,0,0,.55)}
 .bs-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .bs-label{font-size:12.5px;font-weight:600;color:var(--text-mid)}
 .bs-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--live)}
@@ -817,11 +821,8 @@ a.vt-alt:hover{color:var(--gold)}
 @media(max-width:900px){
   .bn.has-right{grid-template-columns:1fr}
   .bn-title{max-width:none}
-  .bn-right{min-height:240px;order:2}
-  .bn-stat{width:100%}
-  .bn-art .a-main{height:52%}
-  .bn-art .a-left{left:2%;height:26%}
-  .bn-art .a-right{right:6%;height:28%}
+  .bn-right{order:2;padding-top:118px}
+  .bn-art{height:130px}
 }
 
 /* ---------- exclusive promotions ---------- */
