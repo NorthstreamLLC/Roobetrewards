@@ -149,6 +149,7 @@ Markup may change completely, but **these hooks must survive** or live features 
 | `.burger` + `.nav-links` (`.open`) | mobile menu |
 | `.dropdown > button` (`.open` on parent) | rewards dropdown |
 | `.live-toast` (+ `.toast-x`) | live notification toast (JS-created; style only) |
+| `.mini` (+ `.mini-bar`, `.mini-t`, `.mini-b`, `.mini-x`, `.mini-full`, `.mini-v`) | floating corner stream player — JS-created on non-watch pages once `/watch` has been visited this session; style only |
 
 ### Also preserve
 

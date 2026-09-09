@@ -511,6 +511,32 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 }
 .mile .perks{display:inline-block;margin-left:7px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
 
+/* ---------- floating mini player ---------- */
+.mini{position:fixed;right:18px;bottom:18px;z-index:150;width:330px;border-radius:14px;
+  overflow:hidden;background:var(--bg-sunk);border:1px solid var(--hairline);
+  box-shadow:0 26px 60px rgba(0,0,0,.6);
+  opacity:0;transform:translateY(10px);transition:opacity .22s,transform .22s}
+.mini.on{opacity:1;transform:none}
+.mini.is-drag{transition:none;cursor:grabbing;user-select:none}
+.mini-bar{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 12px;cursor:grab;
+  background:var(--surface);border-bottom:1px solid var(--hairline)}
+.mini.is-drag .mini-bar{cursor:grabbing}
+.mini-t{display:flex;align-items:center;gap:7px;flex:1;min-width:0;
+  font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-mid);white-space:nowrap;overflow:hidden}
+.mini-t .live-dot{flex:none;width:6px;height:6px;border-radius:50%;background:var(--live);
+  animation:dot 1.6s infinite}
+.mini-b{flex:none;display:flex;align-items:center;justify-content:center;width:26px;height:26px;
+  border-radius:7px;border:1px solid transparent;background:none;color:var(--text-dim);
+  font-size:14px;line-height:1;cursor:pointer;text-decoration:none;transition:.16s}
+.mini-b:hover{background:rgba(255,255,255,.07);color:var(--text)}
+.mini-x{font-size:19px}
+.mini-v{position:relative;aspect-ratio:16/9;background:#000}
+.mini-v iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+@media(max-width:560px){
+  .mini{width:min(74vw,270px);right:10px;bottom:10px}
+}
+
 /* ---------- merch product page ---------- */
 .pd{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:clamp(24px,3vw,52px);
   align-items:start;max-width:1180px;margin-inline:auto}

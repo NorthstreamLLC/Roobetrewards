@@ -170,6 +170,102 @@ document.querySelectorAll('.flip').forEach(c => {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 
+// ===== floating mini player — follows you off the watch page =====
+(function () {
+  const onWatch = !!document.getElementById('stream-frame');
+  const KEY = 'rrMini';          // '1' once they've been on /watch this session
+  const OFF = 'rrMiniClosed';    // set when they dismiss it
+  const POS = 'rrMiniPos';
+
+  const get = k => { try { return sessionStorage.getItem(k); } catch (e) { return null; } };
+  const set = (k, v) => { try { sessionStorage.setItem(k, v); } catch (e) {} };
+
+  // being on the watch page arms it for the rest of the session
+  if (onWatch) { set(KEY, '1'); return; }
+  if (get(KEY) !== '1' || get(OFF) === '1') return;
+
+  let el = null;
+
+  function build() {
+    if (el) return;
+    el = document.createElement('div');
+    el.className = 'mini';
+    el.innerHTML =
+      '<div class="mini-bar">' +
+        '<span class="mini-t"><span class="live-dot"></span>DailyGambling</span>' +
+        '<a class="mini-b mini-full" href="/watch" title="Back to the stream">&#10530;</a>' +
+        '<button class="mini-b mini-x" type="button" title="Close">&times;</button>' +
+      '</div>' +
+      '<div class="mini-v"><iframe src="https://player.kick.com/dailygambling?autoplay=true&muted=true" ' +
+        'title="DailyGambling live stream" allowfullscreen ' +
+        'allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe></div>';
+    document.body.appendChild(el);
+
+    // restore position
+    try {
+      const p = JSON.parse(get(POS) || 'null');
+      if (p && typeof p.x === 'number') place(p.x, p.y);
+    } catch (e) {}
+
+    el.querySelector('.mini-x').addEventListener('click', () => {
+      set(OFF, '1');
+      el.remove();
+      el = null;
+    });
+
+    // drag by the title bar
+    const bar = el.querySelector('.mini-bar');
+    let sx = 0, sy = 0, ox = 0, oy = 0, moved = false;
+    const down = (e) => {
+      if (e.target.closest('.mini-b')) return;
+      const t = e.touches ? e.touches[0] : e;
+      const r = el.getBoundingClientRect();
+      sx = t.clientX; sy = t.clientY; ox = r.left; oy = r.top; moved = false;
+      document.addEventListener('mousemove', move);
+      document.addEventListener('touchmove', move, { passive: false });
+      document.addEventListener('mouseup', up);
+      document.addEventListener('touchend', up);
+      el.classList.add('is-drag');
+    };
+    const move = (e) => {
+      const t = e.touches ? e.touches[0] : e;
+      if (e.cancelable) e.preventDefault();
+      moved = true;
+      place(ox + (t.clientX - sx), oy + (t.clientY - sy));
+    };
+    const up = () => {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('touchmove', move);
+      document.removeEventListener('mouseup', up);
+      document.removeEventListener('touchend', up);
+      el.classList.remove('is-drag');
+      if (moved) {
+        const r = el.getBoundingClientRect();
+        set(POS, JSON.stringify({ x: r.left, y: r.top }));
+      }
+    };
+    bar.addEventListener('mousedown', down);
+    bar.addEventListener('touchstart', down, { passive: true });
+  }
+
+  function place(x, y) {
+    const r = el.getBoundingClientRect();
+    const maxX = window.innerWidth - r.width - 8;
+    const maxY = window.innerHeight - r.height - 8;
+    el.style.left = Math.max(8, Math.min(x, maxX)) + 'px';
+    el.style.top = Math.max(8, Math.min(y, maxY)) + 'px';
+    el.style.right = 'auto';
+    el.style.bottom = 'auto';
+  }
+
+  // only float it while the stream is actually live
+  window.addEventListener('rrLiveData', (e) => {
+    const live = e.detail && e.detail.live === true;
+    if (live) { build(); requestAnimationFrame(() => el && el.classList.add('on')); }
+    else if (el) { el.remove(); el = null; }
+  });
+})();
+
 // ===== merch product page: gallery, pickers, claim =====
 (function () {
   const gal = document.querySelector('[data-gallery]');
