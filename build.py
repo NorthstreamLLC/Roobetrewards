@@ -62,21 +62,39 @@ REWARD_BAR = [
 CHEV = ('<svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">'
         '<path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
+# Line icons \u2014 one consistent stroked set, no emoji.
+ICON_PATHS = {
+    "trophy": '<path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4v1a3 3 0 0 0 3 3"/><path d="M17 6h3v1a3 3 0 0 1-3 3"/><path d="M12 14v3"/><path d="M9 20h6"/><path d="M10 20a2 2 0 0 1 4 0"/>',
+    "target": '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
+    "gift": '<rect x="3" y="9.5" width="18" height="11.5" rx="1.6"/><path d="M2.5 13.5h19"/><path d="M12 9.5V21"/><path d="M12 9.5S10.6 5.5 8.6 5.5a2 2 0 0 0 0 4Z"/><path d="M12 9.5s1.4-4 3.4-4a2 2 0 0 1 0 4Z"/>',
+    "spin": '<path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><path d="M20.5 3.5v5h-5"/>',
+    "shirt": '<path d="M8 3 3.5 5.5 5.5 10 8 8.8V21h8V8.8L18.5 10l2-4.5L16 3a4 4 0 0 1-8 0Z"/>',
+    "star": '<path d="m12 3.5 2.6 5.3 5.9.9-4.25 4.1 1 5.8-5.25-2.8-5.25 2.8 1-5.8L3.5 9.7l5.9-.9Z"/>',
+    "gem": '<path d="M6 3h12l3 5.5-9 12.5L3 8.5Z"/><path d="M3 8.5h18"/><path d="M9 3 7.6 8.5 12 21"/><path d="M15 3l1.4 5.5L12 21"/>',
+    "pad": '<path d="M7 11h4"/><path d="M9 9v4"/><path d="M15.5 10.5h.01"/><path d="M18 13h.01"/><path d="M6.6 7h10.8a4.5 4.5 0 0 1 4.45 3.8l.55 3.9A3.1 3.1 0 0 1 19.4 18c-1 0-1.9-.5-2.5-1.3l-.9-1.2H8l-.9 1.2A3.1 3.1 0 0 1 4.6 18a3.1 3.1 0 0 1-3-3.3l.55-3.9A4.5 4.5 0 0 1 6.6 7Z"/>',
+    "coins": '<path d="M4 7c0-1.66 3.58-3 8-3s8 1.34 8 3-3.58 3-8 3-8-1.34-8-3Z"/><path d="M4 7v5c0 1.66 3.58 3 8 3s8-1.34 8-3V7"/><path d="M4 12v5c0 1.66 3.58 3 8 3s8-1.34 8-3v-5"/>',
+}
+
+def icon(name, size=20):
+    return (f'<svg class="ico" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" '
+            f'stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" '
+            f'aria-hidden="true">{ICON_PATHS[name]}</svg>')
+
 REWARD_GROUPS = [
     ("Cash Rewards", [
-        ("/leaderboard", "\U0001F3C6", "$50K Wager Leaderboard", "Monthly wager race &mdash; $12,500 top prize"),
-        ("/wager-milestones", "\U0001F3AF", "Wager Milestones", "$11,350 in guaranteed payouts"),
-        ("/giveaways", "\U0001F381", "$5K Giveaways", "Monthly draws for active players"),
+        ("/leaderboard", "trophy", "$50K Wager Leaderboard", "Monthly wager race &mdash; $12,500 top prize"),
+        ("/wager-milestones", "target", "Wager Milestones", "$11,350 in guaranteed payouts"),
+        ("/giveaways", "gift", "$5K Giveaways", "Monthly draws for active players"),
     ]),
     ("Perks &amp; Merch", [
-        ("/free-spins", "\U0001F3B0", "Free Spins Bonus", "Up to 125 spins at $1.00 each"),
-        ("/max-win-merch", "\U0001F455", "Max Win Merch", "Free shirts for every max win you hit"),
-        ("/elite-points", "\u2B50", "ELITE Points", "Earn daily, redeem in the Point Shop"),
+        ("/free-spins", "spin", "Free Spins Bonus", "Up to 125 spins at $1.00 each"),
+        ("/max-win-merch", "shirt", "Max Win Merch", "Free shirts for every max win"),
+        ("/elite-points", "star", "ELITE Points", "Earn daily, redeem in the Point Shop"),
     ]),
     ("Status &amp; Extras", [
-        ("/vip-transfer", "\U0001F48E", "VIP Transfer", "Bring your level from any casino"),
-        ("/slot-challenges", "\U0001F3AE", "Slot Challenges", "Extra prizes while you play"),
-        ("/roobet-rewards", "\U0001F4B0", "Roobet Rewards System", "Rakeback, the Vault and rakeboosts"),
+        ("/vip-transfer", "gem", "VIP Transfer", "Bring your level from any casino"),
+        ("/slot-challenges", "pad", "Slot Challenges", "Extra prizes while you play"),
+        ("/roobet-rewards", "coins", "Roobet Rewards System", "Rakeback, Vault and rakeboosts"),
     ]),
 ]
 REWARD_LINKS = [(u, ic, t) for _, items in REWARD_GROUPS for u, ic, t, _ in items]
@@ -86,7 +104,7 @@ def nav(active=""):
 
     def item(u, ic, t, d):
         cls = " is-active" if u.lstrip("/") == active else ""
-        return (f'<a class="mega-item{cls}" href="{u}"><span class="mi">{ic}</span>'
+        return (f'<a class="mega-item{cls}" href="{u}"><span class="mi">{icon(ic)}</span>'
                 f'<span class="mt"><b>{t}</b><i>{d}</i></span></a>')
 
     cols = "".join(
@@ -107,10 +125,14 @@ def nav(active=""):
         <div class="menu">
           <div class="mega-in">
             <a class="mega-feat" href="/leaderboard">
-              <span class="mf-eyebrow">Running now</span>
+              <span class="mf-eyebrow"><span class="live-dot"></span>Running now</span>
               <span class="mf-amt">$50,000</span>
               <span class="mf-t">Monthly Wager Leaderboard</span>
               <span class="mf-p">$12,500 for first place. Every wager under code DAILY counts.</span>
+              <span class="mf-timer">
+                <span class="mf-timer-l">Resets in</span>
+                <b data-deadline="period16">&mdash;</b>
+              </span>
               <span class="mf-go">View live standings {ARR}</span>
             </a>
             <div class="mega-cols">{cols}</div>
@@ -118,8 +140,8 @@ def nav(active=""):
           <div class="mega-foot">
             <a href="/roobet-rewards">Every reward explained</a>
             <a href="/blog">Guides &amp; Blog</a>
-            <a href="/contact">Contact the team</a>
-            <a class="mf-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY {ARR}</a>
+            <a href="{TELEGRAM}" target="_blank" rel="noopener">Connect with our exclusive VIP team</a>
+            <a class="mf-cta" href="/#how-to-sign-up">How To Sign Up {ARR}</a>
           </div>
         </div>
       </div>
@@ -127,7 +149,7 @@ def nav(active=""):
       {link("/youtube", "YouTube")}
       <a class="nav-m-only" href="/blog">Guides &amp; Blog</a>
       <a class="nav-m-only" href="/contact">Contact</a>
-      <a class="btn btn-gold nav-m-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY</a>
+      <a class="btn btn-gold nav-m-cta" href="/#how-to-sign-up">How To Sign Up</a>
     </div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>

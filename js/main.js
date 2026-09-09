@@ -20,7 +20,7 @@
     if (e.key === 'Escape' && links && links.classList.contains('open')) setMenu(false);
   });
   // reset when the viewport grows back past the mobile breakpoint
-  const mq = window.matchMedia('(min-width:769px)');
+  const mq = window.matchMedia('(min-width:1025px)');
   const onMq = () => { if (mq.matches) setMenu(false); };
   mq.addEventListener ? mq.addEventListener('change', onMq) : mq.addListener(onMq);
 
