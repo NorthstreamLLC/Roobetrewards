@@ -415,28 +415,46 @@ RAFFLE_NOTE = (f'{RAFFLE["prize"]} {RAFFLE["unit"]} &middot; {RAFFLE["short"]}'.
 #   note      : small line under the buttons
 #   deadline  : a data-deadline key ("period16"/"monthly"/"weekly"/"daily") for a countdown
 #   ghost/ghost_href : optional secondary button
-def banner(title, href, cta="Learn more", eyebrow="", text="", c="gold", ic="spark",
+#   mark      : phrase inside the title to underline in gold
+#   art       : list of (src, css-class) images composed on the right
+#   stat      : dict(label=, value=, badge=, rows=[(emoji, text), …]) floating proof card
+def banner(title, href, cta="Learn more", eyebrow="", text="", c="gold", ic="",
            note="", deadline="", deadline_label="Ends in", ghost="", ghost_href="",
-           external=False):
+           external=False, mark="", art=None, stat=None):
     rel = ' rel="nofollow sponsored" target="_blank"' if external else ""
+    if mark and mark in title:
+        title = title.replace(mark, f'<span class="bn-mark">{mark}</span>', 1)
     timer = (f'<span class="bn-timer"><span class="bn-timer-l">{deadline_label}</span>'
              f'<b data-deadline="{deadline}">&mdash;</b></span>') if deadline else ""
-    ghost_btn = (f'<a class="btn btn-ghost bn-ghost" href="{ghost_href}" target="_blank" rel="noopener">{ghost}</a>'
+    ghost_btn = (f'<a class="btn btn-ghost" href="{ghost_href}" target="_blank" rel="noopener">{ghost}</a>'
                  if ghost and ghost_href else "")
+    art_html = ("".join(f'<img class="{cls}" src="{src}" alt="" loading="lazy" aria-hidden="true">'
+                        for src, cls in art) if art else "")
+    stat_html = ""
+    if stat:
+        rows = "".join(f'<span><i>{e}</i>{t}</span>' for e, t in stat.get("rows", []))
+        badge = (f'<span class="bs-badge">&#10003; {stat["badge"]}</span>' if stat.get("badge") else "")
+        stat_html = f"""<div class="bn-stat">
+        <div class="bs-top"><span class="bs-label">{stat.get('label','')}</span>{badge}</div>
+        <p class="bs-value">{stat.get('value','')}</p>
+        {f'<div class="bs-rows">{rows}</div>' if rows else ''}
+      </div>"""
+    right = (f'<div class="bn-right"><div class="bn-art">{art_html}</div>{stat_html}</div>'
+             if (art or stat) else "")
     return f"""<section class="bn-wrap"><div class="wrap">
-  <div class="bn rv" data-c="{c}">
-    <span class="bn-ic">{icon(ic, 24)}</span>
-    <div class="bn-body">
-      {f'<span class="bn-eyebrow">{eyebrow}</span>' if eyebrow else ''}
+  <div class="bn rv{' has-right' if right else ''}" data-c="{c}">
+    <div class="bn-left">
+      {f'<span class="bn-eyebrow">{icon(ic, 14) if ic else ""}{eyebrow}</span>' if eyebrow else ''}
       <h2 class="bn-title">{title}</h2>
       {f'<p class="bn-text">{text}</p>' if text else ''}
+      {timer}
+      <div class="bn-btns">
+        <a class="btn btn-gold btn-lg" href="{href}"{rel}>{cta} {ARR}</a>
+        {ghost_btn}
+      </div>
       {f'<p class="bn-note">{note}</p>' if note else ''}
     </div>
-    <div class="bn-act">
-      {timer}
-      <a class="btn btn-gold bn-cta" href="{href}"{rel}>{cta} {ARR}</a>
-      {ghost_btn}
-    </div>
+    {right}
   </div>
 </div></section>"""
 
@@ -510,21 +528,33 @@ if ACTIVE_PROMOS:
 </div></section>"""
 else:
     home_promo = banner(
-        title="Exclusive Promotions",
-        eyebrow="&#9889; Limited Time",
-        text="Short-run wager races and raw cash drops for players under code DAILY &amp; ELITE. "
-             "The last one paid out $200 raw cash &mdash; see the archive and catch the next one.",
-        href="/exclusive-promotions", cta="View promotions", ic="spark", c="gold",
-        note="No promotion running right now &mdash; new ones drop regularly")
+        title="Short-Run Promos, Real Cash Payouts",
+        mark="Real Cash",
+        eyebrow="Limited Time", ic="spark", c="gold",
+        text="Wager races and raw cash drops that run for a week at a time &mdash; "
+             "exclusive to players under code DAILY or ELITE.",
+        href="/exclusive-promotions", cta="View promotions",
+        note="No promotion running right now &mdash; new ones drop regularly",
+        art=[("/assets/roobet-chip.png", "a-main"),
+             ("/assets/medals.png", "a-right")],
+        stat=dict(label="Last promotion paid out", value="$200.00", badge="Paid",
+                  rows=[("&#128176;", "Raw cash"), ("&#127942;", "$30,000 wagered"),
+                        ("&#128197;", "Aug 28 &ndash; Sep 4")]))
 
 # Community raffle banner — reads from RAFFLE above
 home_raffle = banner(
-    title=f"{RAFFLE['cadence']} {RAFFLE['name']}",
-    eyebrow="&#127881; Free to Enter",
+    title=f"The {RAFFLE['cadence']} {RAFFLE['name']}",
+    mark=RAFFLE["name"],
+    eyebrow="Free to Enter", ic="gift", c="pink",
     text=RAFFLE["blurb"],
-    href="/giveaways", cta="Enter the raffle", ic="gift", c="pink",
+    href="/giveaways", cta="Enter the raffle",
+    ghost="Watch the draw on Kick", ghost_href=KICK,
     note=RAFFLE_NOTE,
-    ghost="Watch on Kick", ghost_href=KICK)
+    art=[("/assets/fox-vip.png", "a-main"),
+         ("/assets/roobet-chip.png", "a-left")],
+    stat=dict(label="Entry cost", value="Free", badge="Kick verified",
+              rows=[("&#127903;", "One entry per account"), ("&#128250;", "Drawn live on stream"),
+                    ("&#9889;", "Active players only")]))
 
 # ================= HOME =================
 faq_items = [
