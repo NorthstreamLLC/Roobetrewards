@@ -505,9 +505,9 @@ PAGES["index.html"] = dict(
       <p class="lead">Transfer your status straight to Roobet under code DAILY and keep your level, rakeback rate and bonuses &mdash; our in-house VIP team handles the whole thing for you.</p>
     </div>
     <div class="col">
-      <a class="btn btn-gold btn-lg" href="{DISCORD}" target="_blank" rel="noopener">Transfer via Discord</a>
+      <a class="btn btn-gold btn-lg" href="/vip-transfer#transfer">Start My Transfer {ARR}</a>
       <a class="btn btn-ghost btn-lg" href="{TELEGRAM}" target="_blank" rel="noopener">Message the VIP team on Telegram</a>
-      <p class="cap">Open a ticket in the DailyGambling Discord &mdash; the VIP team verifies your current status and matches it. <a href="/vip-transfer" style="color:var(--gold)">How it works</a></p>
+      <p class="cap">Two screenshots and your username &mdash; the VIP team verifies your current status and matches it. <a href="/vip-transfer" style="color:var(--gold)">How it works</a></p>
     </div>
   </div>
 </div></section>
@@ -2041,6 +2041,7 @@ def post(s):
     s = s.replace('href="/css/', 'href="css/').replace('src="/js/', 'src="js/')
     s = s.replace('src="/assets/', 'src="assets/').replace('href="/assets/', 'href="assets/')
     s = re.sub(r'href="/#', 'href="index.html#', s)
+    s = re.sub(r'href="/([a-z-]+)#', r'href="\1.html#', s)
     s = re.sub(r'href="/([a-z-]+)"', r'href="\1.html"', s)
     s = s.replace('href="/"', 'href="index.html"')
     return s
