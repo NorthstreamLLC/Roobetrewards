@@ -948,24 +948,19 @@ PAGES["elite-points.html"] = dict(
   </div>
 </div></section>
 
-<section style="padding-top:10px"><div class="wrap"><div class="cards c4">
-  <div class="card rv"><div class="glow"></div><div class="ic">📺</div><h3>Watch Streams</h3><p>Earn points live during <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Kick.com/DailyGambling</a> streams — activity is all it takes.</p></div>
-  <div class="card rv d1"><div class="glow"></div><div class="ic">🎲</div><h3>Wager on Roobet</h3><p>Active wagering under code ELITE or DAILY earns points automatically.</p></div>
-  <div class="card rv d2"><div class="glow"></div><div class="ic">🏆</div><h3>Place on the Leaderboard</h3><p>Leaderboard finishes come with point bonuses on top of cash prizes.</p></div>
-  <div class="card rv d3"><div class="glow"></div><div class="ic">💬</div><h3>Stay Active</h3><p>Activity across Slotessentials keeps the points flowing.</p></div>
-</div>
-<div style="margin-top:70px" id="point-shop">
+<section style="padding-top:10px"><div class="wrap">
+<div id="point-shop">
   <div class="center rv"><span class="eyebrow">🛍️ ELITE Point Shop</span><h2>Redeem Your Points</h2><p class="lead">Free balance and bonus buys — tap any card to see its claim requirements.</p></div>
   <div class="shop" style="margin-top:36px">{shop_html}</div>
 </div>
 
-<div style="margin-top:70px">
-  <div class="center rv"><span class="eyebrow">📋 How to Claim</span><h2>Claiming Is Simple</h2></div>
-  <div class="steps" style="margin-top:36px">
-    <div class="step rv"><h3>Press Claim</h3><p>Find the item you want in the shop and press Claim, then fill in the required information.</p></div>
-    <div class="step rv d1"><h3>Open a Discord Ticket</h3><p>You'll be prompted to join the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">DailyGambling Discord</a> and open a ticket.</p></div>
-    <div class="step rv d2"><h3>Points Deducted</h3><p>Your ELITE Points are automatically deducted from your account.</p></div>
-    <div class="step rv d3"><h3>Protected Refunds</h3><p>If the wager requirement isn't met or any issue arises, your points are automatically returned.</p></div>
+<div style="margin-top:70px" id="how-to-earn">
+  <div class="center rv"><span class="eyebrow">⭐ Four Ways In</span><h2>How To Earn</h2><p class="lead">Every one of these adds ELITE Points to your balance — stack them all.</p></div>
+  <div class="cards c4" style="margin-top:36px">
+    <div class="card rv"><div class="glow"></div><div class="ic">📺</div><h3>Watch Streams</h3><p>Earn points live during <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Kick.com/DailyGambling</a> streams — activity is all it takes.</p></div>
+    <div class="card rv d1"><div class="glow"></div><div class="ic">🎲</div><h3>Wager on Roobet</h3><p>Active wagering under code ELITE or DAILY earns points automatically.</p></div>
+    <div class="card rv d2"><div class="glow"></div><div class="ic">🏆</div><h3>Place on the Leaderboard</h3><p>Leaderboard finishes come with point bonuses on top of cash prizes.</p></div>
+    <div class="card rv d3"><div class="glow"></div><div class="ic">💬</div><h3>Stay Active</h3><p>Activity across Slotessentials keeps the points flowing.</p></div>
   </div>
 </div>
 
@@ -976,6 +971,16 @@ PAGES["elite-points.html"] = dict(
     <div class="card rv d1"><div class="glow"></div><div class="ic">📺</div><h3>Kick Stream — 50 Points / 15 Min</h3><p>Watch <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">DailyGambling live on Kick</a> every day — every 15 minutes of activity earns you 50 points.</p></div>
     <div class="card rv d2"><div class="glow"></div><div class="ic">🏆</div><h3>Top 100 Leaderboard</h3><p>Place in the top 100 of the <a href="/leaderboard" style="color:var(--gold);font-weight:700">monthly wager leaderboard</a> each month to earn points.</p></div>
     <div class="card rv d3"><div class="glow"></div><div class="ic">📸</div><h3>Record Win Submissions</h3><p>Submit your record wins on Slotessentials for points. One record win entry per day counts toward your balance.</p></div>
+  </div>
+</div>
+
+<div style="margin-top:70px">
+  <div class="center rv"><span class="eyebrow">📋 How to Claim</span><h2>Claiming Is Simple</h2></div>
+  <div class="steps" style="margin-top:36px">
+    <div class="step rv"><h3>Press Claim</h3><p>Find the item you want in the shop and press Claim, then fill in the required information.</p></div>
+    <div class="step rv d1"><h3>Open a Discord Ticket</h3><p>You'll be prompted to join the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">DailyGambling Discord</a> and open a ticket.</p></div>
+    <div class="step rv d2"><h3>Points Deducted</h3><p>Your ELITE Points are automatically deducted from your account.</p></div>
+    <div class="step rv d3"><h3>Protected Refunds</h3><p>If the wager requirement isn't met or any issue arises, your points are automatically returned.</p></div>
   </div>
 </div>
 
