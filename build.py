@@ -229,11 +229,11 @@ RAFFLE_BANNER_PAGES = {
 
 def page_banner(slug):
     if slug in ("", "index"):
-        return ""                                  # homepage carries both inline
-    if slug == "giveaways":
-        return home_promo                          # raffle page -> show promos
+        return ""                      # homepage carries both inline
     if slug == "exclusive-promotions":
-        return home_raffle                         # promos page -> show the raffle
+        return ""                      # its Active Promotions block is already this design
+    if slug == "giveaways":
+        return home_raffle             # the raffle page gets the raffle banner
     return home_raffle if slug in RAFFLE_BANNER_PAGES else home_promo
 
 def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
