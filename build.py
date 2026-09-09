@@ -496,6 +496,18 @@ PAST_PROMOS = [
             "Receive <b>$200 RAW CASH</b> &mdash; no wagering requirement",
         ],
     ),
+    dict(
+        title="Double Monthly Bonus",
+        prize="Double",
+        unit="MONTHLY BONUS",
+        window="August 2026",
+        ic="coins", c="violet",
+        terms=[
+            "An <b>additional monthly bonus</b> on top of your regular Roobet Monthly Bonus",
+            "For playing under code <b>ELITE</b> or <b>DAILY</b> and supporting Slotessentials through the month",
+            "Announced in Discord &mdash; claimed straight from your Roobet account",
+        ],
+    ),
 ]
 
 def promo_card(p, expired=False):
