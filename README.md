@@ -97,7 +97,9 @@ A redesign may replace all of this freely — **as long as the contract in §5 i
 | Kick login | `/api/kick/login` → `/api/kick/callback` | OAuth 2.1 + PKCE, session cookie `rr_sess`, Redis-backed |
 | VIP transfer form | `POST /api/vip-transfer` | Public submit. Rate-limited 5/hr per IP, honeypot field, only accepts image URLs on the Vercel Blob domain. Stored in Redis (`vip:sub:<id>` + `vip:index`) |
 | VIP transfer admin | `GET/PATCH/DELETE /api/vip-transfer` | Requires `VIP_ADMIN_KEY` via `x-admin-key` header or `?key=`. Panel at `/vip-admin.html` |
-| Screenshot upload | `POST /api/vip-upload` | Browser compresses to JPEG → base64 → Vercel Blob REST API (no SDK). Magic-byte sniffed, 4MB cap, 40/hr per IP |
+| Screenshot upload | `POST /api/vip-upload` | Browser compresses to JPEG → base64 → Vercel Blob REST API (no SDK). Magic-byte sniffed, 4MB cap, 40/hr per IP. Shared by the VIP and merch forms |
+| Merch claims | `POST /api/merch-claim` | Public submit from the shirt pages (shirt, size, colorway, username, proof). Rate-limited 8/hr per IP + honeypot |
+| Merch claim admin | `GET/PATCH/DELETE /api/merch-claim` | Same `VIP_ADMIN_KEY`. Panel at `/merch-admin.html` |
 
 **Env vars (set in Vercel, never in code):**
 `LEADERBOARD_API_URL`, `LEADERBOARD_API_KEY_<CODE>` (+ optional `LEADERBOARD_API_URL_<CODE>`),
@@ -129,6 +131,9 @@ Markup may change completely, but **these hooks must survive** or live features 
 | `#vt-modal` + `#vt-form`, `#vt-done`, `#vt-err`, `#vt-submit`, `#vt-ref` | VIP transfer form on `/vip-transfer` |
 | `[data-vt-open]` / `[data-vt-close]` | any element that opens / closes the VIP transfer modal |
 | `[data-vt-drop="proof\|stats"]` + `[data-vt-thumbs="proof\|stats"]` | upload zones and their thumbnail strips (each drop zone must contain a hidden `input[type=file]`) |
+| `[data-gallery]` + `.pg-img`, `.pg-thumb[data-src]`, `.pg-prev`, `.pg-next`, `.pg-zoom` | merch product gallery |
+| `[data-colorways] .pd-swatch[data-name]`, `[data-sizes] .pd-size`, `[data-color-out]` | colorway / size pickers; the chosen values are sent with the claim |
+| `#mc-modal` + `#mc-form`, `#mc-done`, `#mc-err`, `#mc-submit`, `#mc-ref`, `#mc-shirt`, `#mc-size`, `#mc-color`, `[data-mc-open\|close\|drop\|thumbs]` | merch claim modal |
 
 ### Attributes / classes
 

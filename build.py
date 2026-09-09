@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Static site generator for roobetcasinorewards.com"""
-import os, json
+import os, re, json
 
 SITE = "https://www.roobetcasinorewards.com"
 ELITE = "https://roobet.com/?ref=elite"
@@ -1504,6 +1504,112 @@ PAGES["roobet-rewards.html"] = dict(
 """)
 
 # ================= MERCH SHIRT PAGES =================
+# Gallery: the base image, plus any extra shots you drop into assets/ named
+#   <slug>-2.png, <slug>-3.png, …   (jpg / webp work too)
+# They appear in the thumbnail strip automatically — no code change needed.
+ASSET_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
+
+def merch_gallery(slug, img):
+    shots = [img]
+    try:
+        for f in sorted(os.listdir(ASSET_DIR)):
+            if re.match(rf"^{re.escape(slug)}-\d+\.(png|jpe?g|webp)$", f, re.I):
+                shots.append(f)
+    except OSError:
+        pass
+    return shots
+
+MERCH_SIZES = ["XXS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"]
+MERCH_COLORWAYS = [("Black", "#1b1b1f"), ("Sand", "#d9cfba"), ("White", "#f2f2f2")]
+
+MERCH_TRUST = [
+    ("&#128666;", "Free Shipping", "On every Elite drop, worldwide"),
+    ("&#128081;", "Max Win Merch Club", "Members-only exclusive designs"),
+    ("&#11088;", "Verified Drops", "100% authentic, never resold"),
+]
+merch_trust_html = "".join(
+    f'<div class="pd-trust-i"><i>{e}</i><b>{t}</b><span>{d}</span></div>'
+    for e, t, d in MERCH_TRUST)
+
+MERCH_STEPS = [
+    ("Hit a Max Win", "Land a max win on the slot while playing on Roobet under code "
+                      "<b>DAILY</b> or <b>ELITE</b>."),
+    ("Screenshot It", "Capture the win screen showing the multiplier and your username &mdash; "
+                      "that is your proof."),
+    ("Submit the Claim", "Send it through the claim form with your size and colorway. "
+                         "The VIP team verifies and ships it free."),
+]
+merch_steps_html = "".join(
+    f'<div class="pd-step"><span class="ps-n">0{i+1}</span><b>{t}</b><p>{d}</p></div>'
+    for i, (t, d) in enumerate(MERCH_STEPS))
+
+# claim modal — one per merch page, prefilled from the pickers on that page
+merch_modal = f"""
+<div class="vt-back" id="mc-modal" hidden>
+  <div class="vt-card" role="dialog" aria-modal="true" aria-labelledby="mc-title">
+    <button class="vt-x" type="button" data-mc-close aria-label="Close">&times;</button>
+    <h2 id="mc-title">Claim Your Max Win Merch</h2>
+    <p class="vt-sub">Send the proof and we'll ship it free. Your Roobet account must be registered
+      under code <b>DAILY</b> or <b>ELITE</b>.</p>
+
+    <form id="mc-form" novalidate>
+      <div class="mc-pick">
+        <span><i>Shirt</i><b id="mc-shirt">&mdash;</b></span>
+        <span><i>Size</i><b id="mc-size">&mdash;</b></span>
+        <span><i>Colorway</i><b id="mc-color">&mdash;</b></span>
+      </div>
+
+      <div class="vt-field">
+        <label>Roobet Username <i>*</i></label>
+        <input name="roobet" type="text" autocomplete="off" placeholder="Your Roobet username" required>
+      </div>
+
+      <div class="vt-drop-wrap">
+        <label>Max Win Screenshot <i>*</i></label>
+        <div class="vt-drop" data-mc-drop tabindex="0" role="button">
+          <input type="file" accept="image/*" multiple hidden>
+          <b>Drop your win screenshot or click to upload</b>
+          <span>Must clearly show the max win multiplier and your Roobet username</span>
+        </div>
+        <div class="vt-thumbs" data-mc-thumbs></div>
+      </div>
+
+      <div class="vt-row">
+        <div class="vt-field">
+          <label>Discord</label>
+          <input name="discord" type="text" autocomplete="off" placeholder="username">
+        </div>
+        <div class="vt-field">
+          <label>Telegram</label>
+          <input name="telegram" type="text" autocomplete="off" placeholder="@username">
+        </div>
+      </div>
+      <p class="vt-hint">One of the two is enough &mdash; it's how we arrange shipping.</p>
+
+      <div class="vt-field">
+        <label>Shipping Notes</label>
+        <textarea name="notes" rows="2" placeholder="Optional &mdash; country, anything we should know"></textarea>
+      </div>
+
+      <input type="text" name="website" tabindex="-1" autocomplete="off" class="vt-hp" aria-hidden="true">
+
+      <p class="vt-err" id="mc-err" hidden></p>
+      <button class="btn btn-gold btn-lg vt-submit" type="submit" id="mc-submit">Submit Claim</button>
+      <p class="vt-fine">Shipping address is collected privately once your win is verified.</p>
+    </form>
+
+    <div class="vt-done" id="mc-done" hidden>
+      <div class="vt-tick">&#10003;</div>
+      <h3>Claim Received</h3>
+      <p>Your reference is <b id="mc-ref"></b>. The VIP team verifies max wins daily &mdash; we'll reach
+        out on Discord or Telegram to confirm your shirt and shipping details.</p>
+      <div class="hero-cta" style="justify-content:center;margin-top:6px">
+        <a class="btn btn-ghost" href="/max-win-merch">Browse all designs</a>
+      </div>
+    </div>
+  </div>
+</div>"""
+
 for slug, name, prov, img in MERCH:
     PAGES[f"{slug}-max-win-shirt.html"] = dict(
         title=f"{name} Max Win Shirt — Free Exclusive {prov} Merch | Roobet Code DAILY & ELITE",
@@ -1514,29 +1620,66 @@ for slug, name, prov, img in MERCH:
                 "description": f"Exclusive {name} ({prov}) Max Win shirt — earned free by hitting a max win on Roobet under code DAILY or ELITE.",
                 "image": f"{SITE}/assets/{img}",
                 "brand": {"@type": "Brand", "name": "Slotessentials"}},
-        body=f"""
-<section class="page-hero" style="padding-bottom:20px"><div class="wrap">
+        body=(lambda shots: f"""
+<section class="page-hero" style="padding-bottom:12px"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/max-win-merch">Max Win Merch</a> / {name}</p>
 </div></section>
-<section style="padding-top:0"><div class="wrap"><div class="hero-grid">
-  <div class="rv merch-shot"><div class="card"><img src="assets/{img}" alt="{name} Max Win Shirt — exclusive {prov} merch" loading="lazy"></div></div>
-  <div>
-    <span class="eyebrow rv">👕 {prov}</span>
-    <h1 class="rv d1" style="font-size:clamp(1.9rem,3.2vw,2.7rem)">{name}<br><span class="grad">Max Win Shirt</span></h1>
-    <p class="lead rv d2" style="margin:16px 0 24px">You can't buy this shirt — you can only win it. Hit a max win on <b style="color:var(--text)">{name}</b> while playing on Roobet under code <b style="color:var(--gold)">DAILY</b> or <b style="color:var(--gold)">ELITE</b> and we ship it to you free, anywhere.</p>
-    <div class="msteps rv d3">
-      <div class="mstep"><span class="amt">Step 1</span><p>Play {name} on Roobet under code DAILY or ELITE.</p></div>
-      <div class="mstep"><span class="amt">Step 2</span><p>Hit the max win and screenshot it.</p></div>
-      <div class="mstep"><span class="amt">Step 3</span><p>Send proof to the <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> — shirt ships free.</p></div>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="pd">
+    <div class="pd-gallery rv" data-gallery>
+      <div class="pg-main">
+        <img class="pg-img" src="assets/{shots[0]}" alt="{name} Max Win Shirt &mdash; exclusive {prov} merch">
+        <button class="pg-nav pg-prev" type="button" aria-label="Previous image">&#8249;</button>
+        <button class="pg-nav pg-next" type="button" aria-label="Next image">&#8250;</button>
+        <button class="pg-zoom" type="button" aria-label="View full size">&#10530;</button>
+      </div>
+      <div class="pg-thumbs">{"".join(
+        f'<button class="pg-thumb{" is-on" if k == 0 else ""}" type="button" data-src="assets/{s}" aria-label="View image {k+1}"><img src="assets/{s}" alt="" loading="lazy"></button>'
+        for k, s in enumerate(shots))}</div>
     </div>
-    <div class="hero-cta rv d4" style="margin-top:28px">
-      <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play {name} on Roobet {ARR}</a>
-      <a class="btn btn-ghost btn-lg" href="/max-win-merch">All 16 Designs</a>
+
+    <div class="pd-info rv d1">
+      <span class="pd-prov">&#128085; {prov}</span>
+      <h1>{name} <span class="grad">&mdash; Elite Max Win Merch</span></h1>
+      <p class="pd-desc">Hit a Max Win on <b>{name}</b> while playing on Roobet under code
+        <b class="g">DAILY</b> or <b class="g">ELITE</b> and unlock this shirt from the Elite Max Win Merch
+        collection. You can't buy it &mdash; every drop is earned, verified and shipped free.</p>
+
+      <div class="pd-opt">
+        <span class="pd-lbl">Colorways available</span>
+        <div class="pd-sw" data-colorways>{"".join(
+          f'<button class="pd-swatch{" is-on" if k == 0 else ""}" type="button" data-name="{cn}" style="--sw:{hexv}" aria-label="{cn}"><i></i></button>'
+          for k, (cn, hexv) in enumerate(MERCH_COLORWAYS))}</div>
+        <span class="pd-chosen" data-color-out>{MERCH_COLORWAYS[0][0]}</span>
+      </div>
+
+      <div class="pd-opt">
+        <span class="pd-lbl">Select your size</span>
+        <div class="pd-sizes" data-sizes>{"".join(
+          f'<button class="pd-size{" is-on" if s == "L" else ""}" type="button">{s}</button>'
+          for s in MERCH_SIZES)}</div>
+      </div>
+
+      <button class="btn btn-gold pd-claim" type="button" data-mc-open
+              data-shirt="{name} Max Win Shirt">Claim Max Win Merch</button>
+
+      <div class="pd-trust">{merch_trust_html}</div>
     </div>
   </div>
-</div></div></section>
-{cta_banner("One Spin Away From the Rarest Merch", f"Every max win on {name} under DAILY or ELITE earns the shirt. Start hunting.")}
-""")
+
+  <div class="pd-how rv">
+    <h2>How to Claim</h2>
+    <div class="pd-steps">{merch_steps_html}</div>
+  </div>
+
+  <div class="pd-more rv">
+    <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play {name} on Roobet {ARR}</a>
+    <a class="btn btn-ghost btn-lg" href="/max-win-merch">All 16 Designs</a>
+  </div>
+</div></section>
+{merch_modal}
+""")(merch_gallery(slug, img)))
 
 # ================= CONTACT =================
 DISCORD_GAMBA = "https://discord.gg/dailygamba"
@@ -2370,7 +2513,7 @@ open(os.path.join(out, "sitemap.xml"), "w").write(sm)
 
 open(os.path.join(out, "robots.txt"), "w").write(
     "User-agent: *\nAllow: /\n"
-    "Disallow: /raffle-admin.html\nDisallow: /vip-admin.html\nDisallow: /api/\n"
+    "Disallow: /raffle-admin.html\nDisallow: /vip-admin.html\nDisallow: /merch-admin.html\nDisallow: /api/\n"
     f"\nSitemap: {SITE}/sitemap.xml\n")
 
 open(os.path.join(out, "vercel.json"), "w").write(json.dumps({

@@ -511,19 +511,104 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 }
 .mile .perks{display:inline-block;margin-left:7px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
 
-/* ---------- merch shirt page ---------- */
-.merch-shot .card{padding:20px;display:flex;align-items:center;justify-content:center}
-.merch-shot img{width:100%;max-width:400px;border-radius:12px;
-  filter:drop-shadow(0 16px 40px rgba(0,0,0,.5))}
-.msteps{display:flex;flex-direction:column;gap:10px}
-.mstep{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:12px;
-  background:var(--surface);border:1px solid var(--hairline);transition:border-color .2s}
-.mstep:hover{border-color:rgba(245,165,36,.28)}
-.mstep .amt{flex:none;min-width:54px;font-family:var(--mono);font-weight:600;font-size:13.5px;
-  color:var(--gold);padding-top:1px}
-.mstep p{margin:0;flex:1;min-width:0;font-size:13.5px;line-height:1.6;color:var(--text-dim)}
-@media(max-width:1024px){
-  .merch-shot img{max-width:340px}
+/* ---------- merch product page ---------- */
+.pd{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:clamp(24px,3vw,52px);
+  align-items:start;max-width:1180px;margin-inline:auto}
+
+/* gallery */
+.pg-main{position:relative;display:flex;align-items:center;justify-content:center;
+  aspect-ratio:1/1;padding:26px;border-radius:16px;
+  background:var(--surface);border:1px solid var(--hairline);overflow:hidden}
+.pg-img{max-width:100%;max-height:100%;width:auto;object-fit:contain;
+  filter:drop-shadow(0 16px 38px rgba(0,0,0,.5));transition:opacity .18s}
+.pg-nav,.pg-zoom{position:absolute;display:flex;align-items:center;justify-content:center;
+  border-radius:9px;border:1px solid var(--hairline);background:rgba(10,15,31,.72);
+  backdrop-filter:blur(8px);color:var(--text-mid);cursor:pointer;transition:.16s;padding:0}
+.pg-nav{top:50%;width:36px;height:44px;margin-top:-22px;font-size:22px;line-height:1}
+.pg-prev{left:12px}
+.pg-next{right:12px}
+.pg-zoom{top:12px;right:12px;width:34px;height:34px;font-size:15px}
+.pg-nav:hover,.pg-zoom:hover{color:var(--text);border-color:rgba(245,165,36,.45)}
+.pg-single .pg-nav{display:none}
+.pg-thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+.pg-thumbs::-webkit-scrollbar{display:none}
+.pg-thumbs:has(> :only-child){display:none}
+.pg-thumb{flex:none;width:76px;height:76px;padding:7px;border-radius:11px;cursor:pointer;
+  background:var(--surface);border:1px solid var(--hairline);transition:border-color .16s}
+.pg-thumb img{width:100%;height:100%;object-fit:contain}
+.pg-thumb:hover{border-color:rgba(245,165,36,.4)}
+.pg-thumb.is-on{border-color:var(--gold)}
+
+/* info column */
+.pd-info{display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.pd-prov{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);background:rgba(245,165,36,.11);border:1px solid rgba(245,165,36,.28)}
+.pd-info h1{margin:14px 0 0;font-size:clamp(1.7rem,2.6vw,2.35rem);font-weight:800;
+  letter-spacing:-.025em;line-height:1.12}
+.pd-desc{margin:12px 0 0;font-size:14px;line-height:1.7;color:var(--text-dim);max-width:58ch}
+.pd-desc b{color:var(--text);font-weight:700}
+.pd-desc b.g{color:var(--gold)}
+.pd-opt{width:100%;margin-top:24px}
+.pd-lbl{display:block;margin-bottom:10px;font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--text-faint)}
+.pd-sw{display:flex;align-items:center;gap:10px}
+.pd-swatch{width:30px;height:30px;padding:3px;border-radius:50%;cursor:pointer;background:none;
+  border:1.5px solid var(--hairline);transition:border-color .16s,transform .16s}
+.pd-swatch i{display:block;width:100%;height:100%;border-radius:50%;background:var(--sw);
+  border:1px solid rgba(255,255,255,.12)}
+.pd-swatch:hover{transform:translateY(-1px)}
+.pd-swatch.is-on{border-color:var(--gold)}
+.pd-chosen{display:block;margin-top:9px;font-size:12.5px;color:var(--text-mid)}
+.pd-sizes{display:flex;flex-wrap:wrap;gap:8px}
+.pd-size{min-width:48px;padding:9px 12px;border-radius:999px;cursor:pointer;font-family:inherit;
+  font-size:12.5px;font-weight:700;color:var(--text-mid);
+  background:var(--surface-2);border:1px solid var(--hairline);transition:.16s}
+.pd-size:hover{color:var(--text);border-color:rgba(245,165,36,.4)}
+.pd-size.is-on{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+.pd-claim{width:100%;justify-content:center;margin-top:26px;padding:17px;
+  font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.pd-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:12px}
+.pd-trust-i{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;
+  padding:14px 10px;border-radius:12px;background:var(--surface);border:1px solid var(--hairline)}
+.pd-trust-i i{font-style:normal;font-size:17px;line-height:1}
+.pd-trust-i b{font-size:12px;font-weight:700;color:var(--text)}
+.pd-trust-i span{font-size:11px;line-height:1.45;color:var(--text-faint)}
+
+/* how to claim */
+.pd-how{max-width:1180px;margin:clamp(30px,4vw,52px) auto 0;padding:clamp(24px,2.6vw,36px);
+  border-radius:18px;background:var(--surface);border:1px solid var(--hairline)}
+.pd-how h2{position:relative;margin:0 0 26px;padding-bottom:12px;font-size:1.5rem;font-weight:800;
+  letter-spacing:-.02em}
+.pd-how h2::after{content:"";position:absolute;left:0;bottom:0;width:62px;height:3px;
+  border-radius:2px;background:var(--gold)}
+.pd-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,36px)}
+.pd-step{display:flex;flex-direction:column;gap:5px}
+.ps-n{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--gold);line-height:1}
+.pd-step b{font-size:15px;font-weight:700;color:var(--text)}
+.pd-step p{margin:0;font-size:13px;line-height:1.65;color:var(--text-dim)}
+.pd-step b.g,.pd-step p b{color:var(--gold)}
+.pd-more{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;
+  max-width:1180px;margin:26px auto 0}
+
+/* the chosen shirt / size / colorway, echoed in the claim modal */
+.mc-pick{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.mc-pick span{flex:1;min-width:110px;display:flex;flex-direction:column;gap:2px;padding:11px 13px;
+  border-radius:10px;background:var(--bg-sunk);border:1px solid var(--hairline)}
+.mc-pick i{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--text-faint)}
+.mc-pick b{font-size:13.5px;font-weight:700;color:var(--gold)}
+
+/* lightbox */
+.pg-box{position:fixed;inset:0;z-index:250;display:flex;align-items:center;justify-content:center;
+  padding:5vh 5vw;background:rgba(6,10,22,.92);backdrop-filter:blur(8px);cursor:zoom-out}
+.pg-box img{max-width:100%;max-height:100%;object-fit:contain}
+
+@media(max-width:900px){
+  .pd{grid-template-columns:1fr}
+  .pd-trust{grid-template-columns:1fr}
+  .pd-trust-i{flex-direction:row;align-items:center;gap:10px;text-align:left;padding:12px 14px}
+  .pd-steps{grid-template-columns:1fr;gap:20px}
 }
 
 /* ---------- watch page: overlays, streamer row, earn panel ---------- */

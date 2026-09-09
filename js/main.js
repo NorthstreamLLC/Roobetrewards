@@ -170,6 +170,206 @@ document.querySelectorAll('.flip').forEach(c => {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 
+// ===== merch product page: gallery, pickers, claim =====
+(function () {
+  const gal = document.querySelector('[data-gallery]');
+  const modal = document.getElementById('mc-modal');
+  if (!gal && !modal) return;
+
+  const state = { shirt: '', size: '', color: '' };
+
+  // ---- gallery ----
+  if (gal) {
+    const main = gal.querySelector('.pg-img');
+    const thumbs = [...gal.querySelectorAll('.pg-thumb')];
+    const srcs = thumbs.map(t => t.dataset.src);
+    let i = 0;
+    if (srcs.length < 2) gal.querySelector('.pg-main').classList.add('pg-single');
+
+    const show = (n) => {
+      i = (n + srcs.length) % srcs.length;
+      main.style.opacity = '0';
+      setTimeout(() => { main.src = srcs[i]; main.style.opacity = '1'; }, 110);
+      thumbs.forEach((t, k) => t.classList.toggle('is-on', k === i));
+    };
+    thumbs.forEach((t, k) => t.addEventListener('click', () => show(k)));
+    const prev = gal.querySelector('.pg-prev'), next = gal.querySelector('.pg-next');
+    if (prev) prev.addEventListener('click', () => show(i - 1));
+    if (next) next.addEventListener('click', () => show(i + 1));
+
+    const zoom = gal.querySelector('.pg-zoom');
+    if (zoom) zoom.addEventListener('click', () => {
+      const box = document.createElement('div');
+      box.className = 'pg-box';
+      box.innerHTML = '<img alt="">';
+      box.querySelector('img').src = srcs[i];
+      box.addEventListener('click', () => box.remove());
+      document.addEventListener('keydown', function esc(e) {
+        if (e.key === 'Escape') { box.remove(); document.removeEventListener('keydown', esc); }
+      });
+      document.body.appendChild(box);
+    });
+  }
+
+  // ---- colorway + size pickers ----
+  const pickOne = (sel, cls, onPick) => {
+    const wrap = document.querySelector(sel);
+    if (!wrap) return;
+    const btns = [...wrap.querySelectorAll(cls)];
+    btns.forEach(b => b.addEventListener('click', () => {
+      btns.forEach(x => x.classList.toggle('is-on', x === b));
+      onPick(b);
+    }));
+    const on = btns.find(b => b.classList.contains('is-on'));
+    if (on) onPick(on);
+  };
+  const colorOut = document.querySelector('[data-color-out]');
+  pickOne('[data-colorways]', '.pd-swatch', b => {
+    state.color = b.dataset.name || '';
+    if (colorOut) colorOut.textContent = state.color;
+  });
+  pickOne('[data-sizes]', '.pd-size', b => { state.size = b.textContent.trim(); });
+
+  if (!modal) return;
+
+  // ---- claim modal ----
+  const form = document.getElementById('mc-form');
+  const done = document.getElementById('mc-done');
+  const errBox = document.getElementById('mc-err');
+  const submit = document.getElementById('mc-submit');
+  const shots = [];
+  let pending = 0;
+
+  const showErr = (m) => { errBox.textContent = m; errBox.hidden = !m; };
+
+  const open = () => {
+    document.getElementById('mc-shirt').textContent = state.shirt || '—';
+    document.getElementById('mc-size').textContent = state.size || '—';
+    document.getElementById('mc-color').textContent = state.color || '—';
+    modal.hidden = false;
+    document.body.classList.add('vt-lock');
+    requestAnimationFrame(() => modal.classList.add('on'));
+  };
+  const close = () => {
+    modal.classList.remove('on');
+    document.body.classList.remove('vt-lock');
+    setTimeout(() => { modal.hidden = true; }, 200);
+  };
+  document.querySelectorAll('[data-mc-open]').forEach(b => {
+    b.addEventListener('click', () => { state.shirt = b.dataset.shirt || state.shirt; open(); });
+  });
+  modal.querySelectorAll('[data-mc-close]').forEach(b => b.addEventListener('click', close));
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) close(); });
+
+  const compress = (file) => new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onerror = () => rej(new Error('could not read file'));
+    fr.onload = () => {
+      const im = new Image();
+      im.onerror = () => rej(new Error('not a valid image'));
+      im.onload = () => {
+        const max = 1800, s = Math.min(1, max / Math.max(im.width, im.height));
+        const w = Math.round(im.width * s), h = Math.round(im.height * s);
+        const cv = document.createElement('canvas');
+        cv.width = w; cv.height = h;
+        const cx = cv.getContext('2d');
+        cx.fillStyle = '#0a0f1f'; cx.fillRect(0, 0, w, h);
+        cx.drawImage(im, 0, 0, w, h);
+        res({ data: cv.toDataURL('image/jpeg', 0.84).split(',')[1], preview: cv.toDataURL('image/jpeg', 0.5) });
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+
+  const strip = modal.querySelector('[data-mc-thumbs]');
+  const addFile = async (file) => {
+    if (!/^image\//.test(file.type)) return showErr('Only image files can be uploaded.');
+    if (shots.length >= 4) return showErr('Four screenshots is plenty.');
+    showErr('');
+    const el = document.createElement('div');
+    el.className = 'vt-thumb load';
+    el.innerHTML = '<span class="sp">…</span>';
+    strip.appendChild(el);
+    const entry = { url: null };
+    shots.push(entry);
+    pending++; submit.disabled = true;
+    try {
+      const { data, preview } = await compress(file);
+      const im = new Image(); im.src = preview; el.prepend(im);
+      const r = await fetch('/api/vip-upload', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: file.name, data })
+      });
+      const d = await r.json();
+      if (!r.ok || !d.url) throw new Error(d.error || 'upload failed');
+      entry.url = d.url;
+      el.classList.remove('load');
+      el.querySelector('.sp').remove();
+      const rm = document.createElement('button');
+      rm.type = 'button'; rm.className = 'rm'; rm.innerHTML = '&times;';
+      rm.addEventListener('click', () => {
+        const k = shots.indexOf(entry); if (k > -1) shots.splice(k, 1);
+        el.remove();
+      });
+      el.appendChild(rm);
+    } catch (e) {
+      el.classList.add('bad');
+      const k = shots.indexOf(entry); if (k > -1) shots.splice(k, 1);
+      setTimeout(() => el.remove(), 2000);
+      showErr('That screenshot did not upload: ' + (e.message || e));
+    } finally {
+      pending--; if (pending <= 0) submit.disabled = false;
+    }
+  };
+
+  const zone = modal.querySelector('[data-mc-drop]');
+  const input = zone.querySelector('input[type="file"]');
+  zone.addEventListener('click', () => input.click());
+  zone.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); }
+  });
+  input.addEventListener('change', () => { [...input.files].forEach(addFile); input.value = ''; });
+  ['dragenter', 'dragover'].forEach(t => zone.addEventListener(t, e => { e.preventDefault(); zone.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(t => zone.addEventListener(t, e => { e.preventDefault(); zone.classList.remove('over'); }));
+  zone.addEventListener('drop', e => [...(e.dataTransfer ? e.dataTransfer.files : [])].forEach(addFile));
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (pending > 0) return showErr('Hang on — your screenshot is still uploading.');
+    const val = n => (form.elements[n] ? form.elements[n].value.trim() : '');
+    const proof = shots.map(s => s.url).filter(Boolean);
+    if (!val('roobet')) return showErr('Add your Roobet username.');
+    if (!proof.length) return showErr('Upload a screenshot of the max win.');
+    if (!val('discord') && !val('telegram')) return showErr('Add your Discord or Telegram so we can reach you.');
+    if (!state.size) return showErr('Pick a size first.');
+    showErr('');
+    submit.disabled = true;
+    const label = submit.textContent;
+    submit.textContent = 'Submitting…';
+    try {
+      const r = await fetch('/api/merch-claim', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          shirt: state.shirt, size: state.size, color: state.color,
+          roobet: val('roobet'), discord: val('discord'), telegram: val('telegram'),
+          notes: val('notes'), website: val('website'), proof
+        })
+      });
+      const d = await r.json();
+      if (!r.ok || !d.ok) throw new Error(d.error || 'submission failed');
+      document.getElementById('mc-ref').textContent = d.ref || d.id;
+      form.hidden = true; done.hidden = false;
+      if (window.gtag) window.gtag('event', 'merch_claim_submit');
+    } catch (e2) {
+      showErr(e2.message || String(e2));
+      submit.disabled = false;
+      submit.textContent = label;
+    }
+  });
+})();
+
 // ===== VIP transfer form =====
 (function () {
   const modal = document.getElementById('vt-modal');
