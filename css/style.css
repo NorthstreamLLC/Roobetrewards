@@ -386,12 +386,28 @@ h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
 .live-pill{display:none;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;background:rgba(53,211,154,.1);border:1px solid rgba(53,211,154,.4);color:var(--live);font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.14em}
 .live-pill.on{display:inline-flex}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--live);display:inline-block;animation:dot 1.3s infinite}
-.live-toast{position:fixed;bottom:22px;right:22px;z-index:250;background:var(--surface);border:1px solid rgba(53,211,154,.4);border-radius:14px;padding:15px 17px;display:flex;align-items:center;gap:13px;box-shadow:var(--shadow);max-width:340px;transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.7,.3,1)}
-.live-toast.show{transform:none}
-.live-toast b{color:var(--live);font-size:14px}
-.live-toast p{font-size:12.5px;color:var(--text-dim);line-height:1.45}
-.live-toast .btn{padding:9px 15px;font-size:13px}
-.live-toast .toast-x{background:none;border:none;color:var(--text-faint);font-size:18px;cursor:pointer;line-height:1;align-self:flex-start;padding:0}
+/* drops down from under the nav, on the side the LIVE pill sits */
+.live-toast{position:fixed;top:calc(var(--nav-h) + 10px);right:22px;z-index:250;
+  display:flex;align-items:center;gap:13px;max-width:400px;padding:15px 46px 15px 17px;
+  border-radius:14px;background:var(--surface);border:1px solid rgba(53,211,154,.4);
+  box-shadow:0 22px 50px rgba(0,0,0,.55);
+  transform:translateY(calc(-100% - var(--nav-h) - 24px));opacity:0;
+  transition:transform .45s cubic-bezier(.16,1,.3,1),opacity .3s}
+.live-toast.show{transform:none;opacity:1}
+.live-toast>.live-dot{flex:none}
+.live-toast div{flex:1;min-width:0}
+.live-toast b{display:block;color:var(--live);font-size:14px}
+.live-toast p{margin:2px 0 0;font-size:12.5px;color:var(--text-dim);line-height:1.45}
+.live-toast .btn{flex:none;padding:10px 17px;font-size:13px}
+.live-toast .toast-x{position:absolute;top:8px;right:8px;display:flex;align-items:center;
+  justify-content:center;width:28px;height:28px;padding:0;border-radius:8px;cursor:pointer;
+  background:none;border:1px solid transparent;color:var(--text-dim);font-size:19px;line-height:1;
+  transition:.16s}
+.live-toast .toast-x:hover{background:rgba(255,255,255,.07);color:var(--text);
+  border-color:var(--hairline)}
+@media(max-width:560px){
+  .live-toast{left:10px;right:10px;max-width:none;padding-right:44px}
+}
 
 /* ---------- watch page ---------- */
 .stream-grid{display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start}
