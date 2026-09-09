@@ -62,41 +62,78 @@ REWARD_BAR = [
 CHEV = ('<svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">'
         '<path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
-REWARD_LINKS = [
-    ("/leaderboard", "\U0001F3C6", "$50K Wager Leaderboard"),
-    ("/wager-milestones", "\U0001F3AF", "Wager Milestones"),
-    ("/free-spins", "\U0001F3B0", "Free Spins Bonus"),
-    ("/max-win-merch", "\U0001F455", "Max Win Merch"),
-    ("/vip-transfer", "\U0001F48E", "VIP Transfer"),
-    ("/elite-points", "\u2B50", "ELITE Points"),
-    ("/slot-challenges", "\U0001F3AE", "Slot Challenges"),
-    ("/giveaways", "\U0001F381", "$5K Giveaways"),
-    ("/roobet-rewards", "\U0001F4B0", "Roobet Rewards System"),
+REWARD_GROUPS = [
+    ("Cash Rewards", [
+        ("/leaderboard", "\U0001F3C6", "$50K Wager Leaderboard", "Monthly wager race &mdash; $12,500 top prize"),
+        ("/wager-milestones", "\U0001F3AF", "Wager Milestones", "$11,350 in guaranteed payouts"),
+        ("/giveaways", "\U0001F381", "$5K Giveaways", "Monthly draws for active players"),
+    ]),
+    ("Perks &amp; Merch", [
+        ("/free-spins", "\U0001F3B0", "Free Spins Bonus", "Up to 125 spins at $1.00 each"),
+        ("/max-win-merch", "\U0001F455", "Max Win Merch", "Free shirts for every max win you hit"),
+        ("/elite-points", "\u2B50", "ELITE Points", "Earn daily, redeem in the Point Shop"),
+    ]),
+    ("Status &amp; Extras", [
+        ("/vip-transfer", "\U0001F48E", "VIP Transfer", "Bring your level from any casino"),
+        ("/slot-challenges", "\U0001F3AE", "Slot Challenges", "Extra prizes while you play"),
+        ("/roobet-rewards", "\U0001F4B0", "Roobet Rewards System", "Rakeback, the Vault and rakeboosts"),
+    ]),
 ]
+REWARD_LINKS = [(u, ic, t) for _, items in REWARD_GROUPS for u, ic, t, _ in items]
 
 def nav(active=""):
     reward_slugs = {u.lstrip("/") for u, _, _ in REWARD_LINKS}
-    menu = "".join('<a href="%s"><span class="mi">%s</span>%s</a>' % (u, ic, t) for u, ic, t in REWARD_LINKS)
+
+    def item(u, ic, t, d):
+        cls = " is-active" if u.lstrip("/") == active else ""
+        return (f'<a class="mega-item{cls}" href="{u}"><span class="mi">{ic}</span>'
+                f'<span class="mt"><b>{t}</b><i>{d}</i></span></a>')
+
+    cols = "".join(
+        f'<div class="mega-col"><h4>{title}</h4>{"".join(item(*i) for i in items)}</div>'
+        for title, items in REWARD_GROUPS)
+
     def link(u, t):
         cls = ' class="active"' if u.lstrip("/") == active else ""
         return '<a href="%s"%s>%s</a>' % (u, cls, t)
+
     rewards_cls = ' class="active"' if active in reward_slugs else ""
     return f"""<nav aria-label="Main">
   <div class="nav-inner">
     <a class="brand" href="/"><img src="/assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
     <div class="nav-links">
-      <div class="dropdown">
-        <button aria-haspopup="true"{rewards_cls}>Rewards {CHEV}</button>
-        <div class="menu">{menu}</div>
+      <div class="dropdown mega">
+        <button aria-haspopup="true" aria-expanded="false"{rewards_cls}>Rewards {CHEV}</button>
+        <div class="menu">
+          <div class="mega-in">
+            <a class="mega-feat" href="/leaderboard">
+              <span class="mf-eyebrow">Running now</span>
+              <span class="mf-amt">$50,000</span>
+              <span class="mf-t">Monthly Wager Leaderboard</span>
+              <span class="mf-p">$12,500 for first place. Every wager under code DAILY counts.</span>
+              <span class="mf-go">View live standings {ARR}</span>
+            </a>
+            <div class="mega-cols">{cols}</div>
+          </div>
+          <div class="mega-foot">
+            <a href="/roobet-rewards">Every reward explained</a>
+            <a href="/blog">Guides &amp; Blog</a>
+            <a href="/contact">Contact the team</a>
+            <a class="mf-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY {ARR}</a>
+          </div>
+        </div>
       </div>
       {link("/watch", "Watch Live")}
       {link("/youtube", "YouTube")}
+      <a class="nav-m-only" href="/blog">Guides &amp; Blog</a>
+      <a class="nav-m-only" href="/contact">Contact</a>
+      <a class="btn btn-gold nav-m-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY</a>
     </div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
       <a class="btn btn-ghost" href="/contact">Contact</a>
       <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with DAILY</a>
-      <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>"""

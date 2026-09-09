@@ -6,12 +6,39 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // mobile menu
+  // mobile menu — full-screen panel, locks the page behind it
   const burger = document.querySelector('.burger');
   const links = document.querySelector('.nav-links');
-  if (burger) burger.addEventListener('click', () => links.classList.toggle('open'));
+  const setMenu = (on) => {
+    links.classList.toggle('open', on);
+    document.body.classList.toggle('nav-lock', on);
+    if (burger) burger.setAttribute('aria-expanded', on ? 'true' : 'false');
+  };
+  if (burger) burger.addEventListener('click', () => setMenu(!links.classList.contains('open')));
+  if (links) links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && links && links.classList.contains('open')) setMenu(false);
+  });
+  // reset when the viewport grows back past the mobile breakpoint
+  const mq = window.matchMedia('(min-width:769px)');
+  const onMq = () => { if (mq.matches) setMenu(false); };
+  mq.addEventListener ? mq.addEventListener('change', onMq) : mq.addListener(onMq);
+
+  // rewards dropdown (desktop: click toggles as well as hover; mobile: always open)
   document.querySelectorAll('.dropdown > button').forEach(b => {
-    b.addEventListener('click', () => b.parentElement.classList.toggle('open'));
+    b.addEventListener('click', () => {
+      const open = b.parentElement.classList.toggle('open');
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+  document.addEventListener('click', e => {
+    document.querySelectorAll('.dropdown.open').forEach(d => {
+      if (!d.contains(e.target)) {
+        d.classList.remove('open');
+        const btn = d.querySelector('button');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
+    });
   });
 
   // scroll reveal

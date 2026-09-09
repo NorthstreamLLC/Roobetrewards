@@ -85,6 +85,55 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 .dropdown:hover .menu,.dropdown:focus-within .menu,.dropdown.open .menu{opacity:1;visibility:visible;transform:none}
 .menu a{display:block;padding:9px 11px;border-radius:8px;font-size:13.5px;color:var(--text-dim);white-space:nowrap;transition:background .15s,color .15s}
 .menu a:hover{background:rgba(245,165,36,.08);color:var(--text)}
+.nav-m-only,.nav-m-cta{display:none}
+
+/* ---------- mega menu ---------- */
+.dropdown.mega{position:static}
+/* centred with auto margins, so the shared open/close transform still works */
+.dropdown.mega .menu{left:0;right:0;top:var(--nav-h);width:min(1080px,calc(100vw - 36px));min-width:0;
+  margin:0 auto;padding:0;border-radius:16px;overflow:hidden}
+.mega-in{display:grid;grid-template-columns:296px 1fr;gap:0}
+.mega-feat{display:flex;flex-direction:column;gap:5px;padding:26px 24px;white-space:normal;
+  background:linear-gradient(170deg,rgba(245,165,36,.14),rgba(245,165,36,.03) 58%),var(--surface-2);
+  border-right:1px solid var(--hairline);border-radius:0;transition:background .2s}
+.mega-feat:hover{background:linear-gradient(170deg,rgba(245,165,36,.2),rgba(245,165,36,.05) 58%),var(--surface-2)}
+.mf-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.mf-amt{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--text)}
+.mf-t{font-size:14px;font-weight:700;color:var(--text)}
+.mf-p{font-size:12.5px;line-height:1.6;color:var(--text-dim)}
+.mf-go{display:flex;align-items:center;gap:7px;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--gold)}
+.mf-go svg{width:14px;height:14px}
+.mega-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:18px 16px}
+.mega-col h4{margin:0 0 4px;padding:0 10px;font-family:var(--mono);font-size:9.5px;font-weight:600;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--text-faint)}
+.mega-item{display:flex;align-items:flex-start;gap:11px;padding:10px;border-radius:10px;white-space:normal}
+.mega-item:hover{background:rgba(245,165,36,.07)}
+.mega-item.is-active{background:rgba(245,165,36,.1)}
+.mega-item .mi{flex:none;display:flex;align-items:center;justify-content:center;width:32px;height:32px;
+  border-radius:9px;font-size:15px;background:var(--surface-3);border:1px solid var(--hairline)}
+.mega-item:hover .mi{border-color:rgba(245,165,36,.34)}
+.mega-item .mt{display:flex;flex-direction:column;gap:1px;min-width:0}
+.mega-item b{font-size:13.5px;font-weight:700;color:var(--text);line-height:1.35}
+.mega-item i{font-style:normal;font-size:11.5px;line-height:1.45;color:var(--text-faint)}
+.mega-item.is-active b{color:var(--gold)}
+.mega-foot{display:flex;align-items:center;gap:22px;padding:13px 24px;
+  background:var(--bg-sunk);border-top:1px solid var(--hairline)}
+.mega-foot a{padding:0;font-size:12.5px;font-weight:600;color:var(--text-dim);border-radius:0}
+.mega-foot a:hover{background:none;color:var(--gold)}
+.mega-foot .mf-cta{display:flex;align-items:center;gap:7px;margin-left:auto;padding:9px 15px;
+  border-radius:9px;background:var(--gold);color:var(--bg);font-weight:700}
+.mega-foot .mf-cta:hover{background:var(--gold-soft);color:var(--bg)}
+.mega-foot .mf-cta svg{width:14px;height:14px}
+@media(max-width:1180px){
+  .mega-in{grid-template-columns:1fr}
+  .mega-cols{grid-template-columns:repeat(2,1fr)}
+  .mega-feat{flex-direction:row;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 22px;
+    border-right:0;border-bottom:1px solid var(--hairline)}
+  .mf-amt{font-size:28px}
+  .mf-t,.mf-eyebrow{width:100%}
+  .mf-p{flex:1;min-width:200px}
+  .mf-go{margin:0 0 0 auto}
+}
 .nav-cta{display:flex;align-items:center;gap:9px}
 .burger{display:none;background:none;border:none;cursor:pointer;padding:6px}
 .burger span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;border-radius:2px;transition:.3s}
@@ -396,11 +445,39 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
   #lb-search{max-width:none}
   .lb-updated{justify-content:center}
   .foot-grid{grid-template-columns:1fr 1fr}
-  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(10,15,31,.98);backdrop-filter:blur(18px);flex-direction:column;align-items:flex-start;padding:20px;gap:16px;transform:translateY(-140%);transition:transform .3s;border-bottom:1px solid var(--hairline)}
-  .nav-links.open{transform:translateY(0)}
-  .dropdown>button{padding:0}
-  .menu{position:absolute;top:100%;left:0;margin-top:-4px;background:rgba(17,26,51,.98);backdrop-filter:blur(18px);border:1px solid var(--hairline);border-radius:12px;padding:8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;transform:translateY(6px);box-shadow:var(--shadow)}
-  .dropdown.open .menu{position:absolute;top:100%;left:0;margin-top:-4px;background:rgba(17,26,51,.98);backdrop-filter:blur(18px);border:1px solid var(--hairline);border-radius:12px;padding:8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;transform:translateY(6px);box-shadow:var(--shadow)}
+  /* full-screen mobile menu — every reward visible, nothing nested */
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;z-index:99;
+    background:var(--bg);flex-direction:column;align-items:stretch;gap:0;
+    padding:18px 18px calc(28px + env(safe-area-inset-bottom));
+    overflow-y:auto;-webkit-overflow-scrolling:touch;
+    transform:translateY(-100%);visibility:hidden;transition:transform .28s ease,visibility .28s}
+  .nav-links.open{transform:none;visibility:visible}
+  body.nav-lock{overflow:hidden}
+  .nav-links>a{padding:15px 4px;font-size:16px;font-weight:600;color:var(--text);
+    border-bottom:1px solid var(--hairline)}
+  .nav-links>a.active{color:var(--gold)}
+  .nav-m-only{display:block}
+  .nav-m-cta{display:flex;margin-top:18px;padding:15px;font-size:15px;justify-content:center;border-bottom:0}
+
+  /* rewards are simply listed — no dropdown behaviour on mobile */
+  .dropdown.mega{position:static;order:-1}
+  .dropdown.mega>button{display:none}
+  .dropdown.mega .menu{position:static;width:auto;opacity:1;visibility:visible;transform:none;
+    background:none;backdrop-filter:none;border:0;border-radius:0;box-shadow:none;
+    margin:0 0 6px;padding:0;overflow:visible}
+  .mega-in{grid-template-columns:1fr;gap:0}
+  .mega-feat{flex-direction:column;align-items:flex-start;gap:4px;padding:18px;margin-bottom:14px;
+    border:1px solid rgba(245,165,36,.3);border-radius:14px}
+  .mf-amt{font-size:32px}
+  .mf-go{margin-top:6px}
+  .mega-cols{grid-template-columns:1fr;gap:0;padding:0}
+  .mega-col{margin-bottom:8px}
+  .mega-col h4{padding:0 4px;margin-bottom:2px}
+  .mega-item{padding:12px 4px;border-radius:0;border-bottom:1px solid var(--hairline)}
+  .mega-item .mi{width:38px;height:38px;font-size:17px}
+  .mega-item b{font-size:15px}
+  .mega-item i{font-size:12px}
+  .mega-foot{display:none}
   .burger{display:block}
   .nav-cta .btn-ghost{display:none}
   .banner-in{max-width:100%}
