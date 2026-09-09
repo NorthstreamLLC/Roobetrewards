@@ -220,6 +220,22 @@ REL_POOL = [
     ("Watch DailyGambling on Kick", KICK),
 ]
 
+# Which showcase banner each page carries above the footer. The homepage has both
+# inline already, and no page advertises itself.
+RAFFLE_BANNER_PAGES = {
+    "watch", "youtube", "elite-points", "slot-challenges",
+    "contact", "blog", "roobet-rewards", "free-spins",
+}
+
+def page_banner(slug):
+    if slug in ("", "index"):
+        return ""                                  # homepage carries both inline
+    if slug == "giveaways":
+        return home_promo                          # raffle page -> show promos
+    if slug == "exclusive-promotions":
+        return home_raffle                         # promos page -> show the raffle
+    return home_raffle if slug in RAFFLE_BANNER_PAGES else home_promo
+
 def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
     canon = SITE + ("/" if fname == "index.html" else "/" + fname[:-5])
     page_name = title.split(" — ")[0].split(" | ")[0]
@@ -308,6 +324,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
 {nav(active=canon.rsplit('/',1)[-1])}
 <main>
 {body}
+{page_banner(canon.rsplit('/',1)[-1])}
 </main>
 {footer()}
 <div class="modal-back" id="promo-modal" role="dialog" aria-modal="true" aria-label="Free spins offer">
@@ -393,12 +410,10 @@ PAGES = {}
 # ================= COMMUNITY RAFFLE =================
 # Everything about the raffle is set here — change it and it updates sitewide
 # (nav, homepage, the raffle page, the rewards list and the footer).
-#   cadence : "Weekly" / "Monthly" / "Every stream" — however you run it
 #   prize   : headline prize, e.g. "$500" — leave "" to show no figure at all
 #   unit    : small label beside the prize, e.g. "CASH" — "" to hide
 RAFFLE = dict(
     name="Community Raffle",
-    cadence="Weekly",
     prize="",
     unit="",
     short="Free to enter for active players",
@@ -543,8 +558,8 @@ else:
 
 # Community raffle banner — reads from RAFFLE above
 home_raffle = banner(
-    title=f"The {RAFFLE['cadence']} {RAFFLE['name']}",
-    mark=RAFFLE["name"],
+    title=RAFFLE["name"],
+    mark="Raffle",
     eyebrow="Free to Enter", ic="gift", c="pink",
     text=RAFFLE["blurb"],
     href="/giveaways", cta="Enter the raffle",
@@ -1372,7 +1387,7 @@ PAGES["giveaways.html"] = dict(
 <section class="page-hero"><div class="wrap">
   {crumb(RAFFLE["name"])}
   <span class="eyebrow rv">🎁 Earned by Active Players</span>
-  <h1 class="rv d1">The <span class="grad">{RAFFLE["name"]}</span></h1>
+  <h1 class="rv d1"><span class="grad">{RAFFLE["name"]}</span></h1>
   <p class="lead rv d2">{RAFFLE["blurb"]}</p>
   <div class="hero-cta rv d3" style="justify-content:center">
     <a class="btn btn-gold btn-lg pulse" href="#raffle">Enter the Raffle {ARR}</a>
