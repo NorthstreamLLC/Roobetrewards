@@ -1519,15 +1519,15 @@ for slug, name, prov, img in MERCH:
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/max-win-merch">Max Win Merch</a> / {name}</p>
 </div></section>
 <section style="padding-top:0"><div class="wrap"><div class="hero-grid">
-  <div class="rv"><div class="card" style="padding:18px"><img src="assets/{img}" alt="{name} Max Win Shirt — exclusive {prov} merch" style="border-radius:12px;filter:drop-shadow(0 16px 40px rgba(0,0,0,.5))"></div></div>
+  <div class="rv merch-shot"><div class="card"><img src="assets/{img}" alt="{name} Max Win Shirt — exclusive {prov} merch" loading="lazy"></div></div>
   <div>
     <span class="eyebrow rv">👕 {prov}</span>
-    <h1 class="rv d1" style="font-size:clamp(2rem,4vw,3rem)">{name}<br><span class="grad">Max Win Shirt</span></h1>
-    <p class="lead rv d2" style="margin:18px 0 26px">You can't buy this shirt — you can only win it. Hit a max win on <b style="color:var(--text)">{name}</b> while playing on Roobet under code <b style="color:var(--gold)">DAILY</b> or <b style="color:var(--gold)">ELITE</b> and we ship it to you free, anywhere.</p>
-    <div style="display:grid;gap:12px" class="rv d3">
-      <div class="mile"><span class="amt">Step 1</span><p style="flex:1;color:var(--muted)">Play {name} on Roobet under code DAILY or ELITE.</p></div>
-      <div class="mile"><span class="amt">Step 2</span><p style="flex:1;color:var(--muted)">Hit the max win and screenshot it.</p></div>
-      <div class="mile"><span class="amt">Step 3</span><p style="flex:1;color:var(--muted)">Send proof to the <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> — shirt ships free.</p></div>
+    <h1 class="rv d1" style="font-size:clamp(1.9rem,3.2vw,2.7rem)">{name}<br><span class="grad">Max Win Shirt</span></h1>
+    <p class="lead rv d2" style="margin:16px 0 24px">You can't buy this shirt — you can only win it. Hit a max win on <b style="color:var(--text)">{name}</b> while playing on Roobet under code <b style="color:var(--gold)">DAILY</b> or <b style="color:var(--gold)">ELITE</b> and we ship it to you free, anywhere.</p>
+    <div class="msteps rv d3">
+      <div class="mstep"><span class="amt">Step 1</span><p>Play {name} on Roobet under code DAILY or ELITE.</p></div>
+      <div class="mstep"><span class="amt">Step 2</span><p>Hit the max win and screenshot it.</p></div>
+      <div class="mstep"><span class="amt">Step 3</span><p>Send proof to the <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> — shirt ships free.</p></div>
     </div>
     <div class="hero-cta rv d4" style="margin-top:28px">
       <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Play {name} on Roobet {ARR}</a>

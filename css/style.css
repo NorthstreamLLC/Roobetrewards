@@ -454,7 +454,7 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 }
 @media(max-width:768px){
   .cards.c2,.cards.c3,.cards.c4{grid-template-columns:1fr}
-  .step{grid-template-columns:1fr;gap:4px}
+  .step{flex-direction:column;gap:5px}   /* .step is flex — grid-template did nothing */
   .podium{grid-template-columns:1fr}
   .pod.first{order:-1}
   .mile{grid-template-columns:1fr auto;gap:10px}
@@ -510,6 +510,21 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
   .banner-art{inset:0 0 0 62%;opacity:.5}
 }
 .mile .perks{display:inline-block;margin-left:7px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
+
+/* ---------- merch shirt page ---------- */
+.merch-shot .card{padding:20px;display:flex;align-items:center;justify-content:center}
+.merch-shot img{width:100%;max-width:400px;border-radius:12px;
+  filter:drop-shadow(0 16px 40px rgba(0,0,0,.5))}
+.msteps{display:flex;flex-direction:column;gap:10px}
+.mstep{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:12px;
+  background:var(--surface);border:1px solid var(--hairline);transition:border-color .2s}
+.mstep:hover{border-color:rgba(245,165,36,.28)}
+.mstep .amt{flex:none;min-width:54px;font-family:var(--mono);font-weight:600;font-size:13.5px;
+  color:var(--gold);padding-top:1px}
+.mstep p{margin:0;flex:1;min-width:0;font-size:13.5px;line-height:1.6;color:var(--text-dim)}
+@media(max-width:1024px){
+  .merch-shot img{max-width:340px}
+}
 
 /* ---------- watch page: overlays, streamer row, earn panel ---------- */
 .stream-badges{position:absolute;top:12px;left:12px;z-index:3;display:flex;gap:8px}
