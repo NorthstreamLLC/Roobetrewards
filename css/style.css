@@ -288,7 +288,9 @@ h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
 .step-body{display:flex;flex-direction:column;gap:4px}
 .step h3{margin:0;font-size:15px;font-weight:700;color:var(--text)}
 .step p{margin:0;font-size:13px;line-height:1.6;color:var(--text-dim)}
-.steps-split{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start}
+/* capped and centred — at 1720px a 1fr text column leaves a huge void beside it */
+.steps-split{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(28px,4vw,56px);
+  align-items:center;max-width:1080px;margin-inline:auto}
 
 /* ---------- tables ---------- */
 .tbl{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--hairline)}
