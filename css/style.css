@@ -538,6 +538,24 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .mini-x{font-size:19px}
 .mini-v{position:relative;aspect-ratio:16/9;background:#000}
 .mini-v iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+/* ---------- watch page: player docks in from the top on scroll ---------- */
+.stream-spacer{height:0}
+.stream-frame.is-docked{position:fixed;top:calc(var(--nav-h) + 10px);right:18px;z-index:140;
+  width:min(38vw,420px);border-radius:14px;overflow:hidden;
+  box-shadow:0 26px 60px rgba(0,0,0,.62);border:1px solid var(--hairline);
+  transform:translateY(calc(-100% - var(--nav-h) - 20px));
+  transition:transform .34s cubic-bezier(.16,1,.3,1)}
+.stream-frame.is-docked.dock-in{transform:none}
+.stream-frame.is-docked .stream-rule{display:none}
+.dock-x{display:none;position:absolute;top:9px;right:9px;z-index:5;width:30px;height:30px;
+  align-items:center;justify-content:center;border-radius:8px;cursor:pointer;font-size:14px;
+  color:var(--text-mid);background:rgba(10,15,31,.8);backdrop-filter:blur(8px);
+  border:1px solid var(--hairline);transition:.16s}
+.stream-frame.is-docked .dock-x{display:flex}
+.dock-x:hover{color:var(--text);border-color:rgba(245,165,36,.5)}
+@media(max-width:900px){
+  .stream-frame.is-docked{right:10px;left:10px;width:auto;top:calc(var(--nav-h) + 6px)}
+}
 @media(max-width:560px){
   .mini{width:min(74vw,270px);right:10px;bottom:10px}
 }

@@ -170,23 +170,52 @@ document.querySelectorAll('.flip').forEach(c => {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 
-// ===== pop-out player — a real window, so audio survives navigation =====
-window.rrPopOut = function () {
-  const w = 720, h = 405;
-  const x = Math.max(0, (window.screen.availWidth || 1280) - w - 40);
-  const y = Math.max(0, (window.screen.availHeight || 800) - h - 90);
-  const win = window.open(
-    'https://player.kick.com/dailygambling?autoplay=true',
-    'rrPlayer',
-    `width=${w},height=${h},left=${x},top=${y},menubar=no,toolbar=no,location=no,status=no,resizable=yes`
-  );
-  if (win) { win.focus(); try { sessionStorage.setItem('rrPopped', '1'); } catch (e) {} }
-  else alert('Your browser blocked the pop-out window. Allow pop-ups for this site and try again.');
-  return !!win;
-};
+// ===== watch page: player docks to the top when you scroll past it =====
 (function () {
-  const b = document.getElementById('popout-player');
-  if (b) b.addEventListener('click', () => window.rrPopOut());
+  const frame = document.getElementById('stream-frame');
+  if (!frame) return;
+
+  // a spacer holds the layout open while the player is docked, so nothing jumps
+  // stays in flow at zero height so it always reports where the player belongs
+  const spacer = document.createElement('div');
+  spacer.className = 'stream-spacer';
+  frame.parentNode.insertBefore(spacer, frame);
+
+  let docked = false, naturalH = 0;
+
+  const dock = (on) => {
+    if (on === docked) return;
+    if (on) naturalH = frame.offsetHeight;
+    docked = on;
+    spacer.style.height = on ? naturalH + 'px' : '0px';
+    frame.classList.toggle('is-docked', on);
+    // let the fixed position apply before the slide-down transition starts
+    if (on) requestAnimationFrame(() => frame.classList.add('dock-in'));
+    else frame.classList.remove('dock-in');
+  };
+
+  // the iframe is never moved in the DOM — only restyled — so it never reloads
+  const onScroll = () => {
+    const top = spacer.getBoundingClientRect().top;
+    const h = naturalH || frame.offsetHeight;
+    if (!docked && top < -h * 0.6) dock(true);
+    else if (docked && top > -24) dock(false);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  // control to jump back to the full-size player
+  const x = document.createElement('button');
+  x.type = 'button';
+  x.className = 'dock-x';
+  x.title = 'Back to the full player';
+  x.innerHTML = '&#10530;';
+  x.addEventListener('click', () => {
+    dock(false);
+    spacer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  frame.appendChild(x);
 })();
 
 // ===== floating mini player — follows you off the watch page =====
@@ -202,7 +231,7 @@ window.rrPopOut = function () {
   // being on the watch page arms it for the rest of the session
   if (onWatch) { set(KEY, '1'); return; }
   if (get(KEY) !== '1' || get(OFF) === '1') return;
-  if (get('rrPopped') === '1') return;   // they already have the real window open
+
 
   let el = null;
 
@@ -213,7 +242,6 @@ window.rrPopOut = function () {
     el.innerHTML =
       '<div class="mini-bar">' +
         '<span class="mini-t"><span class="live-dot"></span>DailyGambling</span>' +
-        '<button class="mini-b mini-pop" type="button" title="Pop out — keeps sound while you browse">&#8599;</button>' +
         '<a class="mini-b mini-full" href="/watch" title="Back to the stream">&#10530;</a>' +
         '<button class="mini-b mini-x" type="button" title="Close">&times;</button>' +
       '</div>' +
@@ -232,11 +260,6 @@ window.rrPopOut = function () {
       set(OFF, '1');
       el.remove();
       el = null;
-    });
-
-    // hand the stream over to a real window — it then survives every page load
-    el.querySelector('.mini-pop').addEventListener('click', () => {
-      if (window.rrPopOut()) { el.remove(); el = null; }
     });
 
     // drag by the title bar
