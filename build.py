@@ -874,44 +874,132 @@ PAGES["vip-transfer.html"] = dict(
   <p class="breadcrumb rv"><a href="/">Home</a> / VIP Transfer</p>
   <span class="eyebrow rv">💎 Skip the Grind</span>
   <h1 class="rv d1">Transfer Your <span class="grad">VIP Status</span> to Roobet</h1>
-  <p class="lead rv d2">Grinding a VIP level somewhere else? Don't start from zero. Roobet matches your VIP status from any casino — and the moment you transfer, you unlock access to <b style="color:var(--text)">every single reward we offer</b>.</p>
+  <p class="lead rv d2">Grinding a VIP level somewhere else? Don't start from zero. Roobet matches your status from any casino — level, rakeback and bonuses intact. <b style="color:var(--text)">Three steps, about a minute.</b></p>
   <div class="hero-cta rv d3" style="justify-content:center">
-    <a class="btn btn-gold btn-lg pulse" href="{SLOTS}" target="_blank" rel="noopener">Transfer My VIP {ARR}</a>
+    <button class="btn btn-gold btn-lg pulse" type="button" data-vt-open>Start My Transfer {ARR}</button>
     <a class="btn btn-ghost btn-lg" href="{TELEGRAM}" target="_blank" rel="noopener">Message the VIP Team</a>
   </div>
-  <p class="rv d4" style="margin-top:20px;color:var(--muted);font-size:.92rem">Prefer Discord? <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Open a ticket</a> and we'll take it from there.</p>
 </div></section>
 
-<section style="padding-top:10px"><div class="wrap">
-  <div class="steps">
-    <div class="step rv"><h3>Sign Up</h3><p>Create your Roobet account with code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> or <a href="{ELITE}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a>.</p></div>
-    <div class="step rv d1"><h3>Contact Us</h3><p>Message the <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> or open a <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Discord ticket</a>, then fill in the VIP form on Slotessentials.</p></div>
-    <div class="step rv d2"><h3>Get Matched</h3><p>Roobet transfers your status — level, rakeback rate and bonuses intact.</p></div>
-    <div class="step rv d3"><h3>Unlock Everything</h3><p>Your transferred status opens the door to the full $100K monthly rewards package below.</p></div>
+<section style="padding-top:6px"><div class="wrap">
+  <div class="vt-steps">
+    <div class="vt-step rv">
+      <span class="vt-n">1</span>
+      <h3>Sign Up</h3>
+      <p>Create your Roobet account under code <b>DAILY</b> or <b>ELITE</b>. Already have one under our code? Skip straight to step 2.</p>
+      <a class="btn btn-gold vt-act" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign Up with DAILY</a>
+      <a class="vt-alt" href="{ELITE}" rel="nofollow sponsored" target="_blank">or use code ELITE {ARR}</a>
+    </div>
+    <div class="vt-step rv d1 is-main">
+      <span class="vt-n">2</span>
+      <h3>Complete the Form</h3>
+      <p>Two screenshots and your username — that's the whole thing. We handle the rest with Roobet directly.</p>
+      <button class="btn btn-gold vt-act" type="button" data-vt-open>Open the Transfer Form</button>
+      <span class="vt-alt vt-alt-plain">Takes about a minute</span>
+    </div>
+    <div class="vt-step rv d2">
+      <span class="vt-n">3</span>
+      <h3>Any Questions?</h3>
+      <p>That's it — we'll be in touch once your status is matched. Stuck on anything, reach the VIP team directly.</p>
+      <a class="btn btn-ghost vt-act" href="{TELEGRAM}" target="_blank" rel="noopener">VIP Team on Telegram</a>
+      <a class="vt-alt" href="{DISCORD}" target="_blank" rel="noopener">or open a Discord ticket {ARR}</a>
+    </div>
   </div>
+
+  <p class="vt-unlock rv d3">Once you're transferred, everything on this site unlocks:
+    <a href="/leaderboard">$50K Leaderboard</a> ·
+    <a href="/wager-milestones">$11,350 Milestones</a> ·
+    <a href="/free-spins">Free Spins</a> ·
+    <a href="/max-win-merch">Max Win Merch</a> ·
+    <a href="/elite-points">ELITE Points</a> ·
+    <a href="/giveaways">$5K Giveaways</a> ·
+    <a href="/roobet-rewards">Roobet Rewards</a>
+  </p>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <div class="center rv"><span class="eyebrow">🔓 What You Unlock</span><h2>Every Reward. Instantly.</h2><p class="lead">Transferring your VIP status gives you access to all of it — the complete $100,000 monthly rewards package.</p></div>
-  <div class="cards c4" style="margin-top:40px">
-    <a class="card rv" href="/leaderboard"><div class="glow"></div><div class="ic">🏆</div><h3>$50K Leaderboard</h3><p>Monthly wager race with a $12,500 top prize.</p><span class="more">Explore {ARR}</span></a>
-    <a class="card rv d1" href="/wager-milestones"><div class="glow"></div><div class="ic">🎯</div><h3>$11,350 Milestones</h3><p>Guaranteed payouts at every wager tier.</p><span class="more">Explore {ARR}</span></a>
-    <a class="card rv d2" href="/free-spins"><div class="glow"></div><div class="ic">🎰</div><h3>Free Spins Bonus</h3><p>Up to 125 exclusive spins at $1.00 each.</p><span class="more">Explore {ARR}</span></a>
-    <a class="card rv d3" href="/max-win-merch"><div class="glow"></div><div class="ic">👕</div><h3>Max Win Merch</h3><p>Free exclusive shirts for every max win.</p><span class="more">Explore {ARR}</span></a>
-    <a class="card rv" href="/elite-points"><div class="glow"></div><div class="ic">⭐</div><h3>ELITE Points</h3><p>Earn daily, redeem in the Point Shop.</p><span class="more">Explore {ARR}</span></a>
-    <a class="card rv d1" href="/slot-challenges"><div class="glow"></div><div class="ic">🎮</div><h3>Slot Challenges</h3><p>Extra prizes for completing challenges.</p><span class="more">Explore {ARR}</span></a>
-    <a class="card rv d2" href="/giveaways"><div class="glow"></div><div class="ic">🎁</div><h3>$5K Giveaways</h3><p>Monthly community giveaways for active players.</p><span class="more">Explore {ARR}</span></a>
-    <a class="card rv d3" href="/roobet-rewards"><div class="glow"></div><div class="ic">💰</div><h3>Roobet Rewards</h3><p>Rakeback every 30 min, vault &amp; rakeboosts.</p><span class="more">Explore {ARR}</span></a>
-  </div>
-  <div class="cards c3" style="margin-top:40px">
-    <div class="card rv"><div class="glow"></div><div class="ic">📈</div><h3>Higher Level = Bigger Bonuses</h3><p>Daily, weekly and monthly bonus percentages scale with your level — transfer high, earn high from day one.</p></div>
-    <div class="card rv d1"><div class="glow"></div><div class="ic">⚡</div><h3>+10% Rank-Up Boosts</h3><p>Every rank-up after your transfer triggers a +10% rakeboost for 60 minutes.</p></div>
-    <div class="card rv d2"><div class="glow"></div><div class="ic">🤝</div><h3>Exclusive VIP Team</h3><p>Your transfer is handled personally — plus extra rewards and promos our regular players never see.</p></div>
-  </div>
-</div></section>
+<div class="vt-back" id="vt-modal" hidden>
+  <div class="vt-card" role="dialog" aria-modal="true" aria-labelledby="vt-title">
+    <button class="vt-x" type="button" data-vt-close aria-label="Close">&times;</button>
+    <h2 id="vt-title">Complete Your VIP Transfer</h2>
+    <p class="vt-sub">Upload the proof below and we'll match your status. Your Roobet account must be registered under code <b>DAILY</b> or <b>ELITE</b>.</p>
 
-{cta_banner("Your Status Travels With You","Transfer your VIP level and every reward on this site unlocks with it. Questions? The VIP team is one message away.",funnel="Start My VIP Transfer",
-extra=f'<p style="margin-top:22px;color:var(--muted)"><a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP Team on Telegram</a> &nbsp;·&nbsp; <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Open a Discord Ticket</a></p>')}
+    <form id="vt-form" novalidate>
+      <div class="vt-field">
+        <label>Roobet Username <i>*</i></label>
+        <input name="roobet" type="text" autocomplete="off" placeholder="Your Roobet username" required>
+      </div>
+
+      <div class="vt-field">
+        <label>Previous Casino <i>*</i></label>
+        <input name="prevCasino" type="text" autocomplete="off" placeholder="Stake, BetFury, Duelbits…" required>
+      </div>
+
+      <div class="vt-drop-wrap">
+        <label>Roobet Account &amp; Code Proof <i>*</i></label>
+        <div class="vt-drop" data-vt-drop="proof" tabindex="0" role="button">
+          <input type="file" accept="image/*" multiple hidden>
+          <b>Drop screenshots or click to upload</b>
+          <span>Your Roobet username + the DAILY or ELITE code on your account</span>
+        </div>
+        <div class="vt-thumbs" data-vt-thumbs="proof"></div>
+      </div>
+
+      <div class="vt-drop-wrap">
+        <label>Previous Casino Stats <i>*</i></label>
+        <div class="vt-drop" data-vt-drop="stats" tabindex="0" role="button">
+          <input type="file" accept="image/*" multiple hidden>
+          <b>Drop screenshots or click to upload</b>
+          <span>Lifetime wager and 30-day stats from your old account</span>
+        </div>
+        <div class="vt-thumbs" data-vt-thumbs="stats"></div>
+      </div>
+
+      <div class="vt-row">
+        <div class="vt-field">
+          <label>Discord</label>
+          <input name="discord" type="text" autocomplete="off" placeholder="username">
+        </div>
+        <div class="vt-field">
+          <label>Telegram</label>
+          <input name="telegram" type="text" autocomplete="off" placeholder="@username">
+        </div>
+      </div>
+      <p class="vt-hint">One of the two is enough — it's how we reach you.</p>
+
+      <div class="vt-field">
+        <label>Anything Else?</label>
+        <textarea name="notes" rows="2" placeholder="Optional — VIP level, rakeback rate, anything useful"></textarea>
+      </div>
+
+      <input type="text" name="website" tabindex="-1" autocomplete="off" class="vt-hp" aria-hidden="true">
+
+      <p class="vt-err" id="vt-err" hidden></p>
+      <button class="btn btn-gold btn-lg vt-submit" type="submit" id="vt-submit">Submit Transfer Request</button>
+      <p class="vt-fine">By submitting you confirm the screenshots are from your own accounts. We only use them to verify your transfer.</p>
+    </form>
+
+    <div class="vt-done" id="vt-done" hidden>
+      <div class="vt-tick">✓</div>
+      <h3>Request Received</h3>
+      <p>Your reference is <b id="vt-ref"></b>. The VIP team reviews transfers daily — we'll reach out on Discord or Telegram once Roobet has matched your status.</p>
+      <div class="hero-cta" style="justify-content:center;margin-top:6px">
+        <a class="btn btn-gold" href="{TELEGRAM}" target="_blank" rel="noopener">Message the VIP Team</a>
+        <a class="btn btn-ghost" href="{DISCORD}" target="_blank" rel="noopener">Open a Discord Ticket</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap"><div class="cta-banner rv">
+  <span class="coins" style="top:14%;left:8%">🪙</span><span class="coins" style="bottom:18%;right:10%;animation-delay:-2s">💰</span>
+  <h2>Your Status Travels With You</h2>
+  <p class="lead">Transfer your VIP level and every reward on this site unlocks with it. Two screenshots is all we need.</p>
+  <div class="hero-cta" style="justify-content:center">
+    <button class="btn btn-gold btn-lg pulse" type="button" data-vt-open>Start My Transfer {ARR}</button>
+    <a class="btn btn-ghost btn-lg" href="{DAILY}" rel="nofollow sponsored" target="_blank">Or join Roobet with DAILY</a>
+  </div>
+  <p style="margin-top:22px;color:var(--muted)"><a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP Team on Telegram</a> &nbsp;·&nbsp; <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Open a Discord Ticket</a></p>
+</div></div></section>
 """)
 
 # ================= ELITE POINTS =================
@@ -1953,7 +2041,10 @@ sm += "".join(f"  <url><loc>{u}</loc><changefreq>weekly</changefreq><priority>{'
 sm += "</urlset>\n"
 open(os.path.join(out, "sitemap.xml"), "w").write(sm)
 
-open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
+open(os.path.join(out, "robots.txt"), "w").write(
+    "User-agent: *\nAllow: /\n"
+    "Disallow: /raffle-admin.html\nDisallow: /vip-admin.html\nDisallow: /api/\n"
+    f"\nSitemap: {SITE}/sitemap.xml\n")
 
 open(os.path.join(out, "vercel.json"), "w").write(json.dumps({
     "cleanUrls": True, "trailingSlash": False,

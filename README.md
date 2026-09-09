@@ -95,10 +95,14 @@ A redesign may replace all of this freely — **as long as the contract in §5 i
 | Live stream status | `GET /api/live` | Official Kick API via app credentials. Returns `{live:true|false|null}` |
 | Raffle | `GET/POST /api/raffle` | View/enter (player) + create/draw (admin key) |
 | Kick login | `/api/kick/login` → `/api/kick/callback` | OAuth 2.1 + PKCE, session cookie `rr_sess`, Redis-backed |
+| VIP transfer form | `POST /api/vip-transfer` | Public submit. Rate-limited 5/hr per IP, honeypot field, only accepts image URLs on the Vercel Blob domain. Stored in Redis (`vip:sub:<id>` + `vip:index`) |
+| VIP transfer admin | `GET/PATCH/DELETE /api/vip-transfer` | Requires `VIP_ADMIN_KEY` via `x-admin-key` header or `?key=`. Panel at `/vip-admin.html` |
+| Screenshot upload | `POST /api/vip-upload` | Browser compresses to JPEG → base64 → Vercel Blob REST API (no SDK). Magic-byte sniffed, 4MB cap, 40/hr per IP |
 
 **Env vars (set in Vercel, never in code):**
 `LEADERBOARD_API_URL`, `LEADERBOARD_API_KEY_<CODE>` (+ optional `LEADERBOARD_API_URL_<CODE>`),
-`KICK_CLIENT_ID`, `KICK_CLIENT_SECRET`, `RAFFLE_ADMIN_KEY`, `KV_REST_API_URL`, `KV_REST_API_TOKEN`.
+`KICK_CLIENT_ID`, `KICK_CLIENT_SECRET`, `RAFFLE_ADMIN_KEY`, `KV_REST_API_URL`, `KV_REST_API_TOKEN`,
+`VIP_ADMIN_KEY`, `BLOB_READ_WRITE_TOKEN`.
 
 ---
 
@@ -122,6 +126,9 @@ Markup may change completely, but **these hooks must survive** or live features 
 | `#stream-frame` | stream embed container (its presence = "this is the watch page") |
 | `#promo-modal` | entry pop-up (needs a `.modal-x` close button inside) |
 | `#raffle-widget` + `#rf-title`, `#rf-info`, `#rf-actions`, `#rf-meta` | raffle card on `/giveaways` |
+| `#vt-modal` + `#vt-form`, `#vt-done`, `#vt-err`, `#vt-submit`, `#vt-ref` | VIP transfer form on `/vip-transfer` |
+| `[data-vt-open]` / `[data-vt-close]` | any element that opens / closes the VIP transfer modal |
+| `[data-vt-drop="proof\|stats"]` + `[data-vt-thumbs="proof\|stats"]` | upload zones and their thumbnail strips (each drop zone must contain a hidden `input[type=file]`) |
 
 ### Attributes / classes
 

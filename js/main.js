@@ -143,6 +143,182 @@ document.querySelectorAll('.flip').forEach(c => {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 
+// ===== VIP transfer form =====
+(function () {
+  const modal = document.getElementById('vt-modal');
+  if (!modal) return;
+
+  const form = document.getElementById('vt-form');
+  const done = document.getElementById('vt-done');
+  const errBox = document.getElementById('vt-err');
+  const submit = document.getElementById('vt-submit');
+  const files = { proof: [], stats: [] };   // [{url, el}]
+  let pending = 0;
+
+  // ---- open / close ----
+  const open = () => {
+    modal.hidden = false;
+    document.body.classList.add('vt-lock');
+    requestAnimationFrame(() => modal.classList.add('on'));
+    const f = modal.querySelector('input[name="roobet"]');
+    if (f) setTimeout(() => f.focus(), 220);
+  };
+  const close = () => {
+    modal.classList.remove('on');
+    document.body.classList.remove('vt-lock');
+    setTimeout(() => { modal.hidden = true; }, 200);
+  };
+  document.querySelectorAll('[data-vt-open]').forEach(b => b.addEventListener('click', open));
+  modal.querySelectorAll('[data-vt-close]').forEach(b => b.addEventListener('click', close));
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) close(); });
+  if (location.hash === '#transfer') open();
+
+  const showErr = (msg) => {
+    errBox.textContent = msg;
+    errBox.hidden = !msg;
+    if (msg) errBox.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  };
+
+  // ---- shrink images in the browser so uploads are fast and never hit the size cap ----
+  const compress = (file) => new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onerror = () => reject(new Error('could not read file'));
+    fr.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('not a valid image'));
+      img.onload = () => {
+        const max = 1800;
+        const scale = Math.min(1, max / Math.max(img.width, img.height));
+        const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+        const cv = document.createElement('canvas');
+        cv.width = w; cv.height = h;
+        const cx = cv.getContext('2d');
+        cx.fillStyle = '#0a0f1f'; cx.fillRect(0, 0, w, h);
+        cx.drawImage(img, 0, 0, w, h);
+        resolve({ data: cv.toDataURL('image/jpeg', 0.84).split(',')[1], preview: cv.toDataURL('image/jpeg', 0.5) });
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+
+  const addFile = async (kind, file) => {
+    if (!/^image\//.test(file.type)) return showErr('Only image files can be uploaded.');
+    if (files[kind].length >= 6) return showErr('Six screenshots per section is plenty.');
+    if (file.size > 15 * 1024 * 1024) return showErr('That image is very large — please use one under 15MB.');
+    showErr('');
+
+    const thumbs = modal.querySelector('[data-vt-thumbs="' + kind + '"]');
+    const el = document.createElement('div');
+    el.className = 'vt-thumb load';
+    el.innerHTML = '<span class="sp">…</span>';
+    thumbs.appendChild(el);
+
+    const entry = { url: null, el };
+    files[kind].push(entry);
+    pending++; submit.disabled = true;
+
+    try {
+      const { data, preview } = await compress(file);
+      const im = new Image(); im.src = preview; el.prepend(im);
+      const r = await fetch('/api/vip-upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: file.name, data })
+      });
+      const d = await r.json();
+      if (!r.ok || !d.url) throw new Error(d.error || 'upload failed');
+      entry.url = d.url;
+      el.classList.remove('load');
+      el.querySelector('.sp').remove();
+      const rm = document.createElement('button');
+      rm.type = 'button'; rm.className = 'rm'; rm.innerHTML = '&times;';
+      rm.setAttribute('aria-label', 'Remove screenshot');
+      rm.addEventListener('click', () => {
+        files[kind] = files[kind].filter(x => x !== entry);
+        el.remove();
+      });
+      el.appendChild(rm);
+    } catch (e) {
+      el.classList.add('bad');
+      el.querySelector('.sp').textContent = '!';
+      files[kind] = files[kind].filter(x => x !== entry);
+      setTimeout(() => el.remove(), 2200);
+      showErr('That screenshot did not upload: ' + (e.message || e));
+    } finally {
+      pending--;
+      if (pending <= 0) submit.disabled = false;
+    }
+  };
+
+  // ---- drop zones ----
+  modal.querySelectorAll('[data-vt-drop]').forEach(zone => {
+    const kind = zone.getAttribute('data-vt-drop');
+    const input = zone.querySelector('input[type="file"]');
+    zone.addEventListener('click', () => input.click());
+    zone.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); }
+    });
+    input.addEventListener('change', () => {
+      [...input.files].forEach(f => addFile(kind, f));
+      input.value = '';
+    });
+    ['dragenter', 'dragover'].forEach(t => zone.addEventListener(t, e => {
+      e.preventDefault(); zone.classList.add('over');
+    }));
+    ['dragleave', 'drop'].forEach(t => zone.addEventListener(t, e => {
+      e.preventDefault(); zone.classList.remove('over');
+    }));
+    zone.addEventListener('drop', e => {
+      [...(e.dataTransfer ? e.dataTransfer.files : [])].forEach(f => addFile(kind, f));
+    });
+  });
+
+  // ---- submit ----
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (pending > 0) return showErr('Hang on — your screenshots are still uploading.');
+
+    const val = (n) => (form.elements[n] ? form.elements[n].value.trim() : '');
+    const proof = files.proof.map(f => f.url).filter(Boolean);
+    const stats = files.stats.map(f => f.url).filter(Boolean);
+
+    if (!val('roobet')) return showErr('Add your Roobet username.');
+    if (!val('prevCasino')) return showErr('Tell us which casino you are transferring from.');
+    if (!proof.length) return showErr('Upload a screenshot of your Roobet account showing the DAILY or ELITE code.');
+    if (!stats.length) return showErr('Upload your stats from the casino you are transferring from.');
+    if (!val('discord') && !val('telegram')) return showErr('Add your Discord or Telegram so we can reach you.');
+    showErr('');
+
+    submit.disabled = true;
+    const label = submit.textContent;
+    submit.textContent = 'Submitting…';
+    try {
+      const r = await fetch('/api/vip-transfer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          roobet: val('roobet'), prevCasino: val('prevCasino'),
+          discord: val('discord'), telegram: val('telegram'),
+          notes: val('notes'), website: val('website'),
+          proof, stats
+        })
+      });
+      const d = await r.json();
+      if (!r.ok || !d.ok) throw new Error(d.error || 'submission failed');
+      document.getElementById('vt-ref').textContent = d.ref || d.id;
+      form.hidden = true;
+      done.hidden = false;
+      if (window.gtag) window.gtag('event', 'vip_transfer_submit');
+    } catch (e2) {
+      showErr(e2.message || String(e2));
+      submit.disabled = false;
+      submit.textContent = label;
+    }
+  });
+})();
+
 // ===== live leaderboard =====
 (function () {
   const tbl = document.getElementById('lb-table');

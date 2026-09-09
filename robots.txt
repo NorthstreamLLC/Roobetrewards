@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /raffle-admin.html
+Disallow: /vip-admin.html
+Disallow: /api/
 
 Sitemap: https://www.roobetcasinorewards.com/sitemap.xml
