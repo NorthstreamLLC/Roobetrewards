@@ -230,10 +230,10 @@ RAFFLE_BANNER_PAGES = {
 def page_banner(slug):
     if slug in ("", "index"):
         return ""                      # homepage carries both inline
-    if slug == "exclusive-promotions":
-        return ""                      # its Active Promotions block is already this design
-    if slug == "giveaways":
-        return home_raffle             # the raffle page gets the raffle banner
+    # both of these pages now render the banner design inline as their main block
+    # (the live raffle widget / the active-promotions slot), so no extra one
+    if slug in ("exclusive-promotions", "giveaways"):
+        return ""
     return home_raffle if slug in RAFFLE_BANNER_PAGES else home_promo
 
 def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
@@ -1407,13 +1407,30 @@ PAGES["giveaways.html"] = dict(
   </div>
 </div></section>
 
-<section id="raffle" style="padding-top:10px"><div class="wrap">
-  <div class="cta-banner rv" id="raffle-widget">
-    <span class="eyebrow">🎟️ Live Raffle</span>
-    <h2 id="rf-title">Checking for a live raffle…</h2>
-    <p class="lead" id="rf-info">One moment.</p>
-    <div class="hero-cta" style="justify-content:center;margin-top:22px" id="rf-actions"></div>
-    <p style="margin-top:16px;color:var(--muted);font-size:.88rem" id="rf-meta"></p>
+<section class="bn-wrap" id="raffle"><div class="wrap">
+  <div class="bn has-right rv" data-c="pink" id="raffle-widget">
+    <div class="bn-left">
+      <span class="bn-eyebrow">{icon('gift', 14)}Live Raffle</span>
+      <h2 class="bn-title" id="rf-title">Checking for a live raffle&hellip;</h2>
+      <p class="bn-text" id="rf-info">One moment.</p>
+      <div class="bn-btns" id="rf-actions"></div>
+      <p class="bn-note" id="rf-meta"></p>
+    </div>
+    <div class="bn-right">
+      <div class="bn-art" aria-hidden="true">
+        <img class="a-main" src="/assets/fox-vip.png" alt="" width="458" height="700" loading="lazy">
+        <img class="a-left" src="/assets/roobet-chip.png" alt="" width="512" height="511" loading="lazy">
+      </div>
+      <div class="bn-stat">
+        <div class="bs-top"><span class="bs-label">Entry cost</span><span class="bs-badge">&#10003; Kick verified</span></div>
+        <p class="bs-value">Free</p>
+        <div class="bs-rows">
+          <span><i>&#127903;</i>One entry per account</span>
+          <span><i>&#128250;</i>Drawn live on stream</span>
+          <span><i>&#9889;</i>Active players only</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div></section>
 

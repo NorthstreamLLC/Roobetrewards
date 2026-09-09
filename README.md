@@ -125,7 +125,7 @@ Markup may change completely, but **these hooks must survive** or live features 
 | `#watch-status` | watch page status line; gets `.is-live` |
 | `#stream-frame` | stream embed container (its presence = "this is the watch page") |
 | `#promo-modal` | entry pop-up (needs a `.modal-x` close button inside) |
-| `#raffle-widget` + `#rf-title`, `#rf-info`, `#rf-actions`, `#rf-meta` | raffle card on `/giveaways` |
+| `#raffle-widget` + `#rf-title`, `#rf-info`, `#rf-actions`, `#rf-meta` | live raffle block on `/giveaways` — now rendered as a showcase banner (`.bn`), but the JS only writes into these four IDs so the markup around them is free to change |
 | `#vt-modal` + `#vt-form`, `#vt-done`, `#vt-err`, `#vt-submit`, `#vt-ref` | VIP transfer form on `/vip-transfer` |
 | `[data-vt-open]` / `[data-vt-close]` | any element that opens / closes the VIP transfer modal |
 | `[data-vt-drop="proof\|stats"]` + `[data-vt-thumbs="proof\|stats"]` | upload zones and their thumbnail strips (each drop zone must contain a hidden `input[type=file]`) |
