@@ -229,7 +229,7 @@ RAFFLE_BANNER_PAGES = {
 
 def page_banner(slug):
     if slug in ("", "index"):
-        return ""                      # homepage carries both inline
+        return ""                      # homepage carries the promo banner inline
     # both of these pages now render the banner design inline as their main block
     # (the live raffle widget / the active-promotions slot), so no extra one
     if slug in ("exclusive-promotions", "giveaways"):
@@ -561,12 +561,9 @@ else:
         text="Wager races and raw cash drops that run for a week at a time &mdash; "
              "exclusive to players under code DAILY or ELITE.",
         href="/exclusive-promotions", cta="View promotions",
-        note="No promotion running right now &mdash; new ones drop regularly",
-        art=[("/assets/roobet-chip.png", "a-main"),
-             ("/assets/medals.png", "a-right")],
+        art=PROMO_ART,
         stat=dict(label="Last promotion paid out", value="$200.00", badge="Paid",
-                  rows=[("&#128176;", "Raw cash"), ("&#127942;", "$30,000 wagered"),
-                        ("&#128197;", "Aug 28 &ndash; Sep 4")]))
+                  rows=[("&#128176;", "Raw cash"), ("&#127942;", "$30,000 wagered")]))
 
 # Community raffle banner — reads from RAFFLE above
 home_raffle = banner(
@@ -575,13 +572,10 @@ home_raffle = banner(
     eyebrow="Free to Enter", ic="gift", c="pink",
     text=RAFFLE["blurb"],
     href="/giveaways", cta="Enter the raffle",
-    ghost="Watch the draw on Kick", ghost_href=KICK,
-    note=RAFFLE_NOTE,
     art=[("/assets/fox-vip.png", "a-main"),
          ("/assets/roobet-chip.png", "a-left")],
     stat=dict(label="Entry cost", value="Free", badge="Kick verified",
-              rows=[("&#127903;", "One entry per account"), ("&#128250;", "Drawn live on stream"),
-                    ("&#9889;", "Active players only")]))
+              rows=[("&#127903;", "One entry per account"), ("&#128250;", "Drawn live on stream")]))
 
 # ================= HOME =================
 faq_items = [
@@ -752,7 +746,6 @@ PAGES["index.html"] = dict(
 </div></section>
 
 {home_promo}
-{home_raffle}
 
 <section style="padding-top:6px"><div class="wrap">
   <div class="vip-band rv">
