@@ -516,16 +516,28 @@ def promo_card(p, expired=False):
   <div class="pr-foot"><span class="pr-when">{p['window']}</span>{cta}</div>
 </article>"""
 
-active_html = ("".join(promo_card(p) for p in ACTIVE_PROMOS) if ACTIVE_PROMOS else f"""
-<div class="promo-empty rv">
-  <span class="pe-ic">{icon('spark', 26)}</span>
-  <h3>No active promotion right now</h3>
-  <p>Exclusive promos drop regularly and often run for only a week &mdash; wager races, raw cash drops and bonus buys for players under code <b>DAILY</b> or <b>ELITE</b>. The fastest way to hear about the next one is the VIP Telegram or the stream.</p>
-  <div class="hero-cta" style="justify-content:center">
-    <a class="btn btn-gold" href="{TELEGRAM}" target="_blank" rel="noopener">Get notified on Telegram</a>
-    <a class="btn btn-ghost" href="{KICK}" target="_blank" rel="noopener">Watch on Kick</a>
-  </div>
-</div>""")
+PROMO_ART = [("/assets/roobet-chip.png", "a-main"), ("/assets/medals.png", "a-right")]
+PROMO_STAT = dict(label="Last promotion paid out", value="$200.00", badge="Paid",
+                  rows=[("&#128176;", "Raw cash"), ("&#127942;", "$30,000 wagered"),
+                        ("&#128197;", "Aug 28 &ndash; Sep 4")])
+
+# The "Active Promotions" block: real cards when something is running, otherwise the
+# showcase banner carrying the same message.
+if ACTIVE_PROMOS:
+    active_block = ('<section><div class="wrap"><div class="promo-grid">'
+                    + "".join(promo_card(p) for p in ACTIVE_PROMOS)
+                    + "</div></div></section>")
+else:
+    active_block = banner(
+        title="No Promotion Running Right Now",
+        mark="Right Now",
+        eyebrow="Check Back Soon", ic="spark", c="gold",
+        text="Exclusive promos drop regularly and usually run for a week at a time &mdash; "
+             "wager races, raw cash drops and bonus buys for players under code DAILY or ELITE. "
+             "The fastest way to hear about the next one is the VIP Telegram or the stream.",
+        href=TELEGRAM, cta="Get notified on Telegram", external=True,
+        ghost="Watch on Kick", ghost_href=KICK,
+        art=PROMO_ART, stat=PROMO_STAT)
 
 past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
 
@@ -1520,15 +1532,15 @@ PAGES["exclusive-promotions.html"] = dict(
 
 <section><div class="wrap">
   <div class="center rv promo-head"><span class="eyebrow">Running Now</span><h2>Active Promotions</h2></div>
-  <div class="promo-grid">{active_html}</div>
+</div></section>
+{active_block}
 
-  <div class="center rv promo-head" style="margin-top:52px"><span class="eyebrow">The Archive</span><h2>Past Promotions</h2><p class="lead">What we've already paid out &mdash; so you know these are real.</p></div>
+<section><div class="wrap">
+  <div class="center rv promo-head"><span class="eyebrow">The Archive</span><h2>Past Promotions</h2><p class="lead">What we've already paid out &mdash; so you know these are real.</p></div>
   <div class="promo-grid">{past_html}</div>
 </div></section>
 </div>
 
-{cta_banner("Never Miss the Next One","Promos are announced on stream and in the VIP Telegram first. Join with code DAILY so you're eligible the moment one drops.",
-extra=f'<p style="margin-top:22px;color:var(--muted)"><a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP Team on Telegram</a> &nbsp;&middot;&nbsp; <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Join our Discord</a></p>')}
 """)
 
 PAGES["contact.html"] = dict(
