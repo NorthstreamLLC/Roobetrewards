@@ -797,15 +797,19 @@ a.vt-alt:hover{color:var(--gold)}
 
 /* right: a cluster of artwork with the proof card overlapping its lower edge */
 @keyframes fltA{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-8px)}}
-@keyframes fltB{0%,100%{transform:rotate(-12deg) translateY(0)}50%{transform:rotate(-12deg) translateY(-7px)}}
-@keyframes fltC{0%,100%{transform:rotate(11deg) translateY(0)}50%{transform:rotate(11deg) translateY(-9px)}}
+@keyframes fltB{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(-6deg) translateY(-6px)}}
+@keyframes fltC{0%,100%{transform:rotate(6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-8px)}}
 /* art sits beside the card, not above it — keeps the banner short */
 .bn-right{position:relative;display:flex;flex-direction:row;align-items:center;gap:clamp(12px,1.4vw,22px)}
-.bn-art{position:relative;flex:0 0 clamp(120px,11vw,180px);height:118px;pointer-events:none}
+.bn-art{position:relative;flex:0 0 clamp(140px,13vw,190px);height:136px;pointer-events:none}
 .bn-art img{position:absolute;bottom:0;width:auto;filter:drop-shadow(0 14px 26px rgba(0,0,0,.55))}
-.bn-art .a-main{left:50%;height:100%;transform:translateX(-50%);animation:fltA 7s ease-in-out infinite}
-.bn-art .a-left{left:-6%;height:56%;transform:rotate(-12deg);animation:fltB 8s .6s ease-in-out infinite}
-.bn-art .a-right{right:-6%;height:60%;transform:rotate(11deg);animation:fltC 9s 1.2s ease-in-out infinite}
+/* a-main is the anchor behind (the chip); a-left/a-right are characters in front */
+.bn-art .a-main{left:22%;height:66%;transform:translateX(-50%);opacity:.85;
+  animation:fltA 7s ease-in-out infinite}
+.bn-art .a-left{left:0;height:100%;transform:rotate(-6deg);z-index:2;
+  animation:fltB 8s .6s ease-in-out infinite}
+.bn-art .a-right{right:0;height:104%;transform:rotate(6deg);z-index:2;
+  animation:fltC 9s 1.2s ease-in-out infinite}
 .bn-stat{position:relative;z-index:2;flex:1;min-width:0;padding:15px 17px;
   border-radius:14px;background:rgba(12,18,35,.92);backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,.09);box-shadow:0 20px 42px rgba(0,0,0,.5)}

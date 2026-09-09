@@ -528,7 +528,9 @@ def promo_card(p, expired=False):
   <div class="pr-foot"><span class="pr-when">{p['window']}</span>{cta}</div>
 </article>"""
 
-PROMO_ART = [("/assets/roobet-chip.png", "a-main"), ("/assets/medals.png", "a-right")]
+# chip anchors behind, one character in front — more than one reads as clutter
+PROMO_ART = [("/assets/roobet-chip.png", "a-main"),
+             ("/assets/zeus.png", "a-right")]
 PROMO_STAT = dict(label="Last promotion paid out", value="$200.00", badge="Paid",
                   rows=[("&#128176;", "Raw cash"), ("&#127942;", "$30,000 wagered"),
                         ("&#128197;", "Aug 28 &ndash; Sep 4")])
