@@ -655,6 +655,7 @@ a.vt-alt:hover{color:var(--gold)}
 .vt-back{position:fixed;inset:0;z-index:200;background:rgba(6,10,22,.82);backdrop-filter:blur(6px);
   display:flex;align-items:flex-start;justify-content:center;padding:5vh 16px;overflow-y:auto;
   opacity:0;transition:opacity .2s}
+.vt-back[hidden]{display:none}
 .vt-back.on{opacity:1}
 .vt-card{position:relative;width:100%;max-width:620px;background:var(--surface);border:1px solid var(--hairline);
   border-radius:var(--radius);padding:34px clamp(20px,3.4vw,38px) 32px;box-shadow:var(--shadow);
