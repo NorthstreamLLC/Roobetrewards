@@ -83,7 +83,7 @@ def nav(active=""):
     rewards_cls = ' class="active"' if active in reward_slugs else ""
     return f"""<nav aria-label="Main">
   <div class="nav-inner">
-    <a class="brand" href="/"><img src="/assets/roobet-logo.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+    <a class="brand" href="/"><img src="/assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
     <div class="nav-links">
       <div class="dropdown">
         <button aria-haspopup="true"{rewards_cls}>Rewards {CHEV}</button>
@@ -109,7 +109,7 @@ def footer():
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><img src="/assets/roobet-logo.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+        <a class="brand" href="/"><img src="/assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
         <p style="color:var(--muted);font-size:.9rem;margin-top:16px;max-width:280px">The home of the biggest Roobet casino rewards — $100,000 in monthly rewards for players using code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b>.</p>
       </div>
       <div><h4>Rewards</h4>{rew}</div>
@@ -906,15 +906,33 @@ PAGES["vip-transfer.html"] = dict(
     </div>
   </div>
 
-  <p class="vt-unlock rv d3">Once you're transferred, everything on this site unlocks:
-    <a href="/leaderboard">$50K Leaderboard</a> ·
-    <a href="/wager-milestones">$11,350 Milestones</a> ·
-    <a href="/free-spins">Free Spins</a> ·
-    <a href="/max-win-merch">Max Win Merch</a> ·
-    <a href="/elite-points">ELITE Points</a> ·
-    <a href="/giveaways">$5K Giveaways</a> ·
-    <a href="/roobet-rewards">Roobet Rewards</a>
-  </p>
+  <p class="rwbar-cap rv d3">Everything your transferred status unlocks</p>
+  <div class="rwbar rv d3">
+    <a class="rwb" href="/leaderboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4v1a3 3 0 0 0 3 3"/><path d="M17 6h3v1a3 3 0 0 1-3 3"/><path d="M12 14v3"/><path d="M9 20h6"/><path d="M10 20a2 2 0 0 1 4 0"/></svg>
+      <span><b>$50,000</b>Leaderboard</span>
+    </a>
+    <a class="rwb" href="/wager-milestones">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+      <span><b>Wager</b>Milestones</span>
+    </a>
+    <a class="rwb" href="/free-spins">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><path d="M20.5 3.5v5h-5"/></svg>
+      <span><b>Exclusive</b>Free Spins</span>
+    </a>
+    <a class="rwb" href="/max-win-merch">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 3.5 5.5 5.5 10 8 8.8V21h8V8.8L18.5 10l2-4.5L16 3a4 4 0 0 1-8 0Z"/></svg>
+      <span><b>Max Win</b>Merch</span>
+    </a>
+    <a class="rwb" href="/giveaways">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9.5" width="18" height="11.5" rx="1.6"/><path d="M2.5 13.5h19"/><path d="M12 9.5V21"/><path d="M12 9.5S10.6 5.5 8.6 5.5a2 2 0 0 0 0 4Z"/><path d="M12 9.5s1.4-4 3.4-4a2 2 0 0 1 0 4Z"/></svg>
+      <span><b>$5,000</b>Giveaways</span>
+    </a>
+    <a class="rwb" href="/roobet-rewards">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.1 5.4 5.4 2.1-5.4 2.1L12 18l-2.1-5.4L4.5 10.5l5.4-2.1L12 3Z"/><path d="M19 17.5 19.7 19.3 21.5 20 19.7 20.7 19 22.5 18.3 20.7 16.5 20 18.3 19.3Z"/></svg>
+      <span><b>Exclusive</b>Promos</span>
+    </a>
+  </div>
 </div></section>
 
 <div class="vt-back" id="vt-modal" hidden>

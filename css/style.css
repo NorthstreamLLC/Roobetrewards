@@ -65,7 +65,7 @@ p{text-wrap:pretty}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--hairline)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1720px;margin:0 auto;height:var(--nav-h);padding:0 clamp(16px,2.2vw,32px)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-.01em}
-.brand img{width:28px;height:28px;border-radius:8px}
+.brand img{width:28px;height:28px;object-fit:contain;background:none}
 .brand svg{width:28px;height:28px;border-radius:8px}
 .brand .b1{color:var(--gold)}
 .nav-links{display:flex;align-items:center;gap:26px;font-size:14px;font-weight:500}
@@ -647,9 +647,32 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .vt-alt{font-size:12.5px;color:var(--text-faint);align-self:center;transition:color .18s}
 a.vt-alt:hover{color:var(--gold)}
 .vt-alt-plain{pointer-events:none}
-.vt-unlock{margin:34px auto 0;max-width:900px;text-align:center;font-size:13.5px;line-height:2.1;color:var(--text-faint)}
-.vt-unlock a{color:var(--text-mid);font-weight:600;transition:color .18s}
-.vt-unlock a:hover{color:var(--gold)}
+/* ---------- rewards strip ---------- */
+.rwbar-cap{margin:44px 0 14px;text-align:center;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--text-faint)}
+.rwbar{display:flex;flex-wrap:wrap;justify-content:center;
+  padding:6px clamp(8px,1.4vw,18px);border-radius:18px;
+  background:var(--surface);border:1px solid var(--hairline)}
+.rwb{display:flex;align-items:center;gap:13px;padding:18px clamp(14px,1.7vw,26px);
+  position:relative;transition:background .18s}
+.rwb+.rwb::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--hairline)}
+.rwb:hover{background:rgba(255,255,255,.025);border-radius:12px}
+.rwb svg{flex:none;width:26px;height:26px;color:var(--gold)}
+.rwb span{display:flex;flex-direction:column;font-size:13.5px;line-height:1.35;
+  font-weight:600;color:var(--text-mid);white-space:nowrap}
+.rwb b{font-weight:700;color:var(--text)}
+.rwb:hover span,.rwb:hover b{color:var(--text)}
+@media(max-width:1080px){
+  .rwbar{gap:2px}
+  .rwb{padding:15px 16px}
+  .rwb+.rwb::before{display:none}
+}
+@media(max-width:560px){
+  .rwbar{border-radius:14px}
+  .rwb{flex:1 1 44%;padding:14px 10px;gap:10px}
+  .rwb svg{width:22px;height:22px}
+  .rwb span{font-size:12.5px;white-space:normal}
+}
 
 /* ---------- VIP transfer: form ---------- */
 .vt-back{position:fixed;inset:0;z-index:200;background:rgba(6,10,22,.82);backdrop-filter:blur(6px);
