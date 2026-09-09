@@ -1333,12 +1333,14 @@ ACTIVE_PROMOS = []
 
 PAST_PROMOS = [
     dict(
-        title="$200 Raw Cash Wager Race",
-        prize="$200 RAW CASH",
+        title="Raw Cash Wager Race",
+        prize="$200",
+        unit="RAW CASH",
         window="Aug 28 &ndash; Sep 4, 2026",
+        ic="coins", c="green",
         terms=[
             "Wager <b>$30,000</b> between 8/28 &ndash; 9/4",
-            "Must be playing under code <b>ELITE</b> or <b>DAILY</b>",
+            "Playing under code <b>ELITE</b> or <b>DAILY</b>",
             "Receive <b>$200 RAW CASH</b> &mdash; no wagering requirement",
         ],
     ),
@@ -1346,16 +1348,20 @@ PAST_PROMOS = [
 
 def promo_card(p, expired=False):
     terms = "".join(f"<li>{t}</li>" for t in p["terms"])
-    badge = ('<span class="pr-badge is-done">Expired</span>' if expired else
+    badge = ('<span class="pr-badge is-done">&#10003; Paid out</span>' if expired else
              '<span class="pr-badge is-live"><span class="live-dot"></span>Live now</span>')
     cta = ("" if expired else
            f'<a class="btn btn-gold pr-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY {ARR}</a>')
-    return f"""<article class="promo{' is-expired' if expired else ''} rv">
-  <div class="pr-head">{badge}<span class="pr-when">{p['window']}</span></div>
+    unit = f'<span class="pr-unit">{p["unit"]}</span>' if p.get("unit") else ""
+    return f"""<article class="promo{' is-expired' if expired else ''} rv" data-c="{p.get('c', 'gold')}">
+  <div class="pr-head">
+    <span class="pr-ic">{icon(p.get('ic', 'coins'), 22)}</span>
+    {badge}
+  </div>
+  <p class="pr-prize">{p['prize']}{unit}</p>
   <h3>{p['title']}</h3>
-  <p class="pr-prize">{p['prize']}</p>
   <ul class="pr-terms">{terms}</ul>
-  {cta}
+  <div class="pr-foot"><span class="pr-when">{p['window']}</span>{cta}</div>
 </article>"""
 
 active_html = ("".join(promo_card(p) for p in ACTIVE_PROMOS) if ACTIVE_PROMOS else f"""
@@ -1376,20 +1382,22 @@ PAGES["exclusive-promotions.html"] = dict(
     desc="Exclusive limited-time Roobet promotions for players under code DAILY or ELITE — wager races, raw cash drops and bonus buys. See what's running now and what's already ended.",
     kw="roobet promotions, exclusive roobet promo, roobet wager race, roobet cash drop, code daily promotion",
     body=f"""
+<div class="promo-page">
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Exclusive Promotions</p>
   <span class="eyebrow rv">⚡ Limited Time</span>
   <h1 class="rv d1"><span class="grad">Exclusive Promotions</span></h1>
-  <p class="lead rv d2">Short-run promos on top of everything else we give away &mdash; wager races, raw cash drops and bonus buys, only for players under code <b style="color:var(--text)">DAILY</b> or <b style="color:var(--text)">ELITE</b>. They change often, so check back.</p>
+  <p class="lead rv d2">Short-run promos on top of everything else we give away &mdash; wager races, raw cash drops and bonus buys, only for players under code <b style="color:var(--text)">DAILY</b> or <b style="color:var(--text)">ELITE</b>.</p>
 </div></section>
 
-<section style="padding-top:6px"><div class="wrap">
-  <div class="center rv"><span class="eyebrow">Running Now</span><h2>Active Promotions</h2></div>
-  <div class="promo-grid" style="margin-top:32px">{active_html}</div>
+<section><div class="wrap">
+  <div class="center rv promo-head"><span class="eyebrow">Running Now</span><h2>Active Promotions</h2></div>
+  <div class="promo-grid">{active_html}</div>
 
-  <div class="center rv" style="margin-top:70px"><span class="eyebrow">The Archive</span><h2>Past Promotions</h2><p class="lead">What we've already paid out &mdash; so you know these are real.</p></div>
-  <div class="promo-grid" style="margin-top:32px">{past_html}</div>
+  <div class="center rv promo-head" style="margin-top:52px"><span class="eyebrow">The Archive</span><h2>Past Promotions</h2><p class="lead">What we've already paid out &mdash; so you know these are real.</p></div>
+  <div class="promo-grid">{past_html}</div>
 </div></section>
+</div>
 
 {cta_banner("Never Miss the Next One","Promos are announced on stream and in the VIP Telegram first. Join with code DAILY so you're eligible the moment one drops.",
 extra=f'<p style="margin-top:22px;color:var(--muted)"><a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP Team on Telegram</a> &nbsp;&middot;&nbsp; <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Join our Discord</a></p>')}

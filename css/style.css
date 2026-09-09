@@ -83,8 +83,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-glass);
 .dropdown>button.active{color:var(--gold)}
 .menu{position:absolute;top:100%;left:0;margin-top:-4px;background:rgba(17,26,51,.98);backdrop-filter:blur(18px);border:1px solid var(--hairline);border-radius:12px;padding:8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;transform:translateY(6px);box-shadow:var(--shadow)}
 .dropdown:hover .menu,.dropdown:focus-within .menu,.dropdown.open .menu{opacity:1;visibility:visible;transform:none}
-.menu a{display:block;padding:9px 11px;border-radius:8px;font-size:13.5px;color:var(--text-dim);white-space:nowrap;transition:background .15s,color .15s}
-.menu a:hover{background:rgba(245,165,36,.08);color:var(--text)}
+/* plain list dropdowns only — the mega panel styles its own links */
+.dropdown:not(.mega) .menu a{display:block;padding:9px 11px;border-radius:8px;font-size:13.5px;color:var(--text-dim);white-space:nowrap;transition:background .15s,color .15s}
+.dropdown:not(.mega) .menu a:hover{background:rgba(245,165,36,.08);color:var(--text)}
 .nav-m-only{display:none}
 
 /* ---------- mega menu ---------- */
@@ -754,36 +755,57 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 a.vt-alt:hover{color:var(--gold)}
 .vt-alt-plain{pointer-events:none}
 /* ---------- exclusive promotions ---------- */
-.promo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
-.promo{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:26px;
-  border-radius:var(--radius);background:var(--surface);border:1px solid rgba(245,165,36,.28)}
-.promo.is-expired{background:var(--bg-sunk);border-color:var(--hairline)}
-.pr-head{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
-.pr-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;
-  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-.pr-badge.is-live{background:rgba(53,211,154,.12);border:1px solid rgba(53,211,154,.34);color:var(--live)}
-.pr-badge.is-live .live-dot{width:6px;height:6px;border-radius:50%;background:var(--live);animation:dot 1.6s infinite}
-.pr-badge.is-done{background:rgba(255,255,255,.05);border:1px solid var(--hairline);color:var(--text-faint)}
-.pr-when{font-family:var(--mono);font-size:11px;color:var(--text-faint);white-space:nowrap}
-.promo h3{margin:0;font-size:1.15rem;font-weight:800;letter-spacing:-.015em;color:var(--text)}
-.promo.is-expired h3{color:var(--text-mid)}
-.pr-prize{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--gold)}
-.promo.is-expired .pr-prize{color:var(--text-dim)}
-.pr-terms{list-style:none;display:flex;flex-direction:column;gap:7px;margin:4px 0 0;padding:0;width:100%}
-.pr-terms li{position:relative;padding-left:18px;font-size:13.5px;line-height:1.6;color:var(--text-dim)}
-.pr-terms li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;
-  background:var(--gold);opacity:.75}
-.promo.is-expired .pr-terms li::before{background:var(--text-faint)}
+.promo-page section{padding:14px 0 0}
+.promo-page .page-hero{padding:clamp(28px,3.6vw,44px) 0 4px}
+.promo-page .page-hero .lead{max-width:660px;margin-left:auto;margin-right:auto}
+.promo-head{margin-bottom:18px}
+.promo-head h2{margin:0}
+.promo-head .lead{margin-top:6px;font-size:14px}
+.promo-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.promo{--pc:var(--gold);position:relative;overflow:hidden;flex:0 1 360px;max-width:420px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:22px;
+  border-radius:var(--radius);background:var(--surface);
+  border:1px solid color-mix(in srgb,var(--pc) 30%,transparent);transition:border-color .2s,transform .2s}
+.promo::before{content:"";position:absolute;inset:0 0 auto;height:150px;pointer-events:none;
+  background:radial-gradient(120% 100% at 100% 0,color-mix(in srgb,var(--pc) 16%,transparent),transparent 65%)}
+.promo>*{position:relative;z-index:1}
+.promo:hover{border-color:color-mix(in srgb,var(--pc) 52%,transparent);transform:translateY(-2px)}
+.promo[data-c=green]{--pc:#35d39a}
+.promo[data-c=gold]{--pc:#f5a524}
+.promo[data-c=violet]{--pc:#a78bfa}
+.promo[data-c=cyan]{--pc:#4fd6e0}
+.promo[data-c=pink]{--pc:#ff7ab8}
+.promo.is-expired{opacity:.92}
+.pr-head{display:flex;align-items:center;gap:11px;width:100%;margin-bottom:2px}
+.pr-ic{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;
+  color:var(--pc);background:color-mix(in srgb,var(--pc) 14%,transparent);
+  border:1px solid color-mix(in srgb,var(--pc) 30%,transparent)}
+.pr-badge{display:inline-flex;align-items:center;gap:7px;margin-left:auto;padding:5px 11px;border-radius:999px;
+  font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--pc);background:color-mix(in srgb,var(--pc) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--pc) 32%,transparent)}
+.pr-badge.is-live .live-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:dot 1.6s infinite}
+.pr-prize{display:flex;align-items:baseline;gap:9px;margin:0;font-size:40px;font-weight:800;
+  letter-spacing:-.03em;line-height:1.05;color:var(--pc)}
+.pr-unit{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--text-mid)}
+.promo h3{margin:0;font-size:1.02rem;font-weight:700;letter-spacing:-.01em;color:var(--text)}
+.pr-terms{list-style:none;display:flex;flex-direction:column;gap:6px;margin:8px 0 0;padding:0;width:100%}
+.pr-terms li{position:relative;padding-left:17px;font-size:13px;line-height:1.55;color:var(--text-dim)}
+.pr-terms li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--pc)}
 .pr-terms b{color:var(--text);font-weight:700}
-.pr-cta{margin-top:12px;width:100%;justify-content:center}
-.promo-empty{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:12px;
-  text-align:center;padding:52px 30px;border-radius:var(--radius);
-  background:var(--surface);border:1px dashed rgba(245,165,36,.28)}
-.pe-ic{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:16px;
+.pr-foot{display:flex;align-items:center;gap:12px;flex-wrap:wrap;width:100%;margin-top:14px;
+  padding-top:13px;border-top:1px solid var(--hairline)}
+.pr-when{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--text-faint);white-space:nowrap}
+.pr-cta{margin-left:auto;padding:10px 16px;font-size:13px}
+.promo-empty{flex:1 1 100%;display:flex;flex-direction:column;align-items:center;gap:10px;
+  text-align:center;padding:38px 30px;border-radius:var(--radius);
+  background:var(--surface);border:1px dashed rgba(245,165,36,.26)}
+.pe-ic{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:15px;
   background:rgba(245,165,36,.11);border:1px solid rgba(245,165,36,.28);color:var(--gold)}
-.promo-empty h3{margin:0;font-size:1.3rem;font-weight:800}
-.promo-empty p{max-width:560px;font-size:14px;line-height:1.7;color:var(--text-dim)}
+.promo-empty h3{margin:2px 0 0;font-size:1.2rem;font-weight:800}
+.promo-empty p{max-width:540px;font-size:13.5px;line-height:1.65;color:var(--text-dim)}
 .promo-empty b{color:var(--gold)}
+.promo-empty .hero-cta{margin-top:6px}
 
 /* ---------- rewards strip ---------- */
 .rwbar-cap{margin:44px 0 14px;text-align:center;font-family:var(--mono);font-size:10.5px;
