@@ -547,6 +547,7 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
   text-transform:uppercase;color:var(--text-mid);white-space:nowrap;overflow:hidden}
 .mini-t .live-dot{flex:none;width:6px;height:6px;border-radius:50%;background:var(--live);
   animation:dot 1.6s infinite}
+.mini-t i{font-style:normal;font-size:9.5px;letter-spacing:.12em;color:var(--text-faint)}
 .mini-b{flex:none;display:flex;align-items:center;justify-content:center;width:26px;height:26px;
   border-radius:7px;border:1px solid transparent;background:none;color:var(--text-dim);
   font-size:14px;line-height:1;cursor:pointer;text-decoration:none;transition:.16s}

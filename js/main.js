@@ -241,13 +241,15 @@ document.querySelectorAll('.flip').forEach(c => {
     el.className = 'mini';
     el.innerHTML =
       '<div class="mini-bar">' +
-        '<span class="mini-t"><span class="live-dot"></span>DailyGambling</span>' +
+        '<span class="mini-t"><span class="live-dot"></span>DailyGambling <i>muted</i></span>' +
         '<a class="mini-b mini-full" href="/watch" title="Back to the stream">&#10530;</a>' +
         '<button class="mini-b mini-x" type="button" title="Close">&times;</button>' +
       '</div>' +
-      '<div class="mini-v"><iframe src="https://player.kick.com/dailygambling?autoplay=true&muted=true" ' +
+      // no autoplay: the stream restarting with sound on every page load is horrible.
+      // It loads paused and muted — one click inside plays it.
+      '<div class="mini-v"><iframe src="https://player.kick.com/dailygambling?autoplay=false&muted=true" ' +
         'title="DailyGambling live stream" allowfullscreen ' +
-        'allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe></div>';
+        'allow="fullscreen; picture-in-picture; encrypted-media"></iframe></div>';
     document.body.appendChild(el);
 
     // restore position
