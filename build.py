@@ -45,7 +45,7 @@ MENU_ITEMS = [
     ("free-spins.html", "🎰", "Free Spins Bonus", "Up to 125 exclusive free spins"),
     ("elite-points.html", "⭐", "ELITE Points", "Redeem points for real prizes"),
     ("slot-challenges.html", "🎮", "Slot Challenges", "Complete challenges, win prizes"),
-    ("giveaways.html", "🎁", "$5K Giveaways", "Monthly community giveaways"),
+    ("giveaways.html", "🎁", "Community Raffle", "Free to enter for active players"),
     ("roobet-rewards.html", "💰", "Roobet Rewards", "Rakeback, vault & bonuses"),
 ]
 
@@ -56,7 +56,7 @@ REWARD_BAR = [
     ("/free-spins", "Free Spins"),
     ("/max-win-merch", "Max Win Merch"),
     ("/vip-transfer", "VIP Transfer"),
-    ("/giveaways", "Giveaways"),
+    ("/giveaways", "Community Raffle"),
 ]
 
 CHEV = ('<svg class="chev" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">'
@@ -85,7 +85,7 @@ REWARD_GROUPS = [
     ("Cash Rewards", [
         ("/leaderboard", "trophy", "gold", "$50K Wager Leaderboard", "Monthly wager race &mdash; $12,500 top prize"),
         ("/wager-milestones", "target", "red", "Wager Milestones", "$11,350 in guaranteed payouts"),
-        ("/giveaways", "gift", "pink", "$5K Giveaways", "Monthly draws for active players"),
+        ("/giveaways", "gift", "pink", "Community Raffle", "Free to enter, drawn live on stream"),
     ]),
     ("Perks &amp; Merch", [
         ("/free-spins", "spin", "green", "Free Spins Bonus", "Up to 125 spins at $1.00 each"),
@@ -210,7 +210,7 @@ REL_POOL = [
     ("Roobet Max Win Merch", SITE + "/max-win-merch"),
     ("ELITE Points Shop", SITE + "/elite-points"),
     ("Roobet Slot Challenges", SITE + "/slot-challenges"),
-    ("$5,000 Monthly Giveaways", SITE + "/giveaways"),
+    ("Community Raffle", SITE + "/giveaways"),
     ("Roobet Rewards Explained", SITE + "/roobet-rewards"),
     ("Transfer Your VIP Status to Roobet", SITE + "/vip-transfer"),
     ("Roobet Guides & Blog", SITE + "/blog"),
@@ -390,18 +390,154 @@ def crumb(name):
 
 PAGES = {}
 
+# ================= COMMUNITY RAFFLE =================
+# Everything about the raffle is set here — change it and it updates sitewide
+# (nav, homepage, the raffle page, the rewards list and the footer).
+#   cadence : "Weekly" / "Monthly" / "Every stream" — however you run it
+#   prize   : headline prize, e.g. "$500" — leave "" to show no figure at all
+#   unit    : small label beside the prize, e.g. "CASH" — "" to hide
+RAFFLE = dict(
+    name="Community Raffle",
+    cadence="Weekly",
+    prize="",
+    unit="",
+    short="Free to enter for active players",
+    blurb="Sign in with Kick and you're entered in one click. One entry per account, "
+          "drawn live on stream. No deposit, no catch &mdash; being an active player is the only requirement.",
+)
+RAFFLE_NOTE = (f'{RAFFLE["prize"]} {RAFFLE["unit"]} &middot; {RAFFLE["short"]}'.strip()
+               if RAFFLE["prize"] else RAFFLE["short"])
+
+# ================= BANNERS =================
+# One clean banner component used across the site. Everything is optional except
+# the title and the primary link, so it stays tidy however much you fill in.
+#   eyebrow / title / text / cta / href / c (accent) / ic (icon key)
+#   note      : small line under the buttons
+#   deadline  : a data-deadline key ("period16"/"monthly"/"weekly"/"daily") for a countdown
+#   ghost/ghost_href : optional secondary button
+def banner(title, href, cta="Learn more", eyebrow="", text="", c="gold", ic="spark",
+           note="", deadline="", deadline_label="Ends in", ghost="", ghost_href="",
+           external=False):
+    rel = ' rel="nofollow sponsored" target="_blank"' if external else ""
+    timer = (f'<span class="bn-timer"><span class="bn-timer-l">{deadline_label}</span>'
+             f'<b data-deadline="{deadline}">&mdash;</b></span>') if deadline else ""
+    ghost_btn = (f'<a class="btn btn-ghost bn-ghost" href="{ghost_href}" target="_blank" rel="noopener">{ghost}</a>'
+                 if ghost and ghost_href else "")
+    return f"""<section class="bn-wrap"><div class="wrap">
+  <div class="bn rv" data-c="{c}">
+    <span class="bn-ic">{icon(ic, 24)}</span>
+    <div class="bn-body">
+      {f'<span class="bn-eyebrow">{eyebrow}</span>' if eyebrow else ''}
+      <h2 class="bn-title">{title}</h2>
+      {f'<p class="bn-text">{text}</p>' if text else ''}
+      {f'<p class="bn-note">{note}</p>' if note else ''}
+    </div>
+    <div class="bn-act">
+      {timer}
+      <a class="btn btn-gold bn-cta" href="{href}"{rel}>{cta} {ARR}</a>
+      {ghost_btn}
+    </div>
+  </div>
+</div></section>"""
+
+# ================= EXCLUSIVE PROMOTIONS =================
+# To publish a promo: add a dict to ACTIVE_PROMOS. When it ends, cut it and paste
+# it into PAST_PROMOS. Nothing else needs touching — the promotions page AND the
+# homepage block both read from here, and both handle the empty state themselves.
+#   title  : headline                     prize : the payout, shown big
+#   unit   : small label beside the prize  window: dates, however you write them
+#   ic     : icon key from ICON_PATHS      c     : accent (gold/green/violet/cyan/pink)
+#   terms  : list of bullet lines (HTML allowed, <b> for emphasis)
+ACTIVE_PROMOS = []
+
+PAST_PROMOS = [
+    dict(
+        title="Raw Cash Wager Race",
+        prize="$200",
+        unit="RAW CASH",
+        window="Aug 28 &ndash; Sep 4, 2026",
+        ic="coins", c="green",
+        terms=[
+            "Wager <b>$30,000</b> between 8/28 &ndash; 9/4",
+            "Playing under code <b>ELITE</b> or <b>DAILY</b>",
+            "Receive <b>$200 RAW CASH</b> &mdash; no wagering requirement",
+        ],
+    ),
+]
+
+def promo_card(p, expired=False):
+    terms = "".join(f"<li>{t}</li>" for t in p["terms"])
+    badge = ('<span class="pr-badge is-done">&#10003; Paid out</span>' if expired else
+             '<span class="pr-badge is-live"><span class="live-dot"></span>Live now</span>')
+    cta = ("" if expired else
+           f'<a class="btn btn-gold pr-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY {ARR}</a>')
+    unit = f'<span class="pr-unit">{p["unit"]}</span>' if p.get("unit") else ""
+    return f"""<article class="promo{' is-expired' if expired else ''} rv" data-c="{p.get('c', 'gold')}">
+  <div class="pr-head">
+    <span class="pr-ic">{icon(p.get('ic', 'coins'), 22)}</span>
+    {badge}
+  </div>
+  <p class="pr-prize">{p['prize']}{unit}</p>
+  <h3>{p['title']}</h3>
+  <ul class="pr-terms">{terms}</ul>
+  <div class="pr-foot"><span class="pr-when">{p['window']}</span>{cta}</div>
+</article>"""
+
+active_html = ("".join(promo_card(p) for p in ACTIVE_PROMOS) if ACTIVE_PROMOS else f"""
+<div class="promo-empty rv">
+  <span class="pe-ic">{icon('spark', 26)}</span>
+  <h3>No active promotion right now</h3>
+  <p>Exclusive promos drop regularly and often run for only a week &mdash; wager races, raw cash drops and bonus buys for players under code <b>DAILY</b> or <b>ELITE</b>. The fastest way to hear about the next one is the VIP Telegram or the stream.</p>
+  <div class="hero-cta" style="justify-content:center">
+    <a class="btn btn-gold" href="{TELEGRAM}" target="_blank" rel="noopener">Get notified on Telegram</a>
+    <a class="btn btn-ghost" href="{KICK}" target="_blank" rel="noopener">Watch on Kick</a>
+  </div>
+</div>""")
+
+past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
+
+# Homepage block — the live promo when there is one, a teaser when there isn't.
+if ACTIVE_PROMOS:
+    home_promo = f"""
+<section id="promo"><div class="wrap">
+  <div class="center rv promo-head">
+    <span class="eyebrow">&#9889; Limited Time</span>
+    <h2>Exclusive Promotion{'s' if len(ACTIVE_PROMOS) > 1 else ''}</h2>
+    <p class="lead">Running right now on top of everything else &mdash; only for players under code DAILY or ELITE.</p>
+  </div>
+  <div class="promo-grid">{"".join(promo_card(p) for p in ACTIVE_PROMOS)}</div>
+  <p class="center rv" style="margin-top:18px"><a href="/exclusive-promotions" style="color:var(--gold);font-weight:700;font-size:13.5px">See all promotions {ARR}</a></p>
+</div></section>"""
+else:
+    home_promo = banner(
+        title="Exclusive Promotions",
+        eyebrow="&#9889; Limited Time",
+        text="Short-run wager races and raw cash drops for players under code DAILY &amp; ELITE. "
+             "The last one paid out $200 raw cash &mdash; see the archive and catch the next one.",
+        href="/exclusive-promotions", cta="View promotions", ic="spark", c="gold",
+        note="No promotion running right now &mdash; new ones drop regularly")
+
+# Community raffle banner — reads from RAFFLE above
+home_raffle = banner(
+    title=f"{RAFFLE['cadence']} {RAFFLE['name']}",
+    eyebrow="&#127881; Free to Enter",
+    text=RAFFLE["blurb"],
+    href="/giveaways", cta="Enter the raffle", ic="gift", c="pink",
+    note=RAFFLE_NOTE,
+    ghost="Watch on Kick", ghost_href=KICK)
+
 # ================= HOME =================
 faq_items = [
     ("What are the best Roobet casino rewards?",
-     "Players using code ELITE or DAILY on Roobet unlock the full $100,000 monthly rewards package: the $50,000 Wager Leaderboard, up to $11,350 in Wager Milestones, exclusive Free Spins sign-up bonuses, Max Win Merch, ELITE Points, slot challenges, $5,000 in community giveaways, and VIP status transfer — all stacked on top of Roobet's own rakeback, daily, weekly and monthly bonuses."),
+     "Players using code ELITE or DAILY on Roobet unlock the full $100,000 monthly rewards package: the $50,000 Wager Leaderboard, up to $11,350 in Wager Milestones, exclusive Free Spins sign-up bonuses, Max Win Merch, ELITE Points, slot challenges, the free-to-enter Community Raffle, and VIP status transfer — all stacked on top of Roobet's own rakeback, daily, weekly and monthly bonuses."),
     ("How do I claim Roobet free spins?",
      "Sign up at Roobet with code ELITE or DAILY — your all-time deposit and wager totals unlock the exclusive free spins bonus (not a single deposit): $500 deposited and $5,000 wagered all-time earns 75 free spins at $0.60, $1,000 and $10,000 earns 100 free spins at $0.80, and $2,000 and $20,000 earns 125 free spins at $1.00 each."),
     ("How does the $50,000 Wager Leaderboard work?",
      "Every dollar you wager on Roobet under code ELITE or DAILY earns you a spot on the monthly leaderboard. The top wagerers split $50,000 in prizes each month — climb the ranks for cash prizes, free spins and redeemable points."),
     ("Is there a Roobet sign-up bonus?",
      "Yes — new players joining with code ELITE or DAILY get a +10% welcome rakeboost for 24 hours, access to exclusive free spins packages, and instant entry into all monthly reward programs, on top of Roobet's instant rakeback claimable every 30 minutes."),
-    ("How do I earn the $5,000 monthly giveaways?",
-     "Giveaways are earned, not raffled to strangers — only active players qualify. Stay active by watching DailyGambling live on Kick, wagering under code DAILY or ELITE on Roobet, and participating in the Slotessentials community, and you'll share in $5,000 of giveaways every month plus ELITE Points redeemable for real prizes."),
+    ("How does the Community Raffle work?",
+     "The Community Raffle is free to enter for active players — sign in with your Kick account on the raffle page and you're entered in one click, one entry per account, and winners are drawn live on stream. Stay active by watching DailyGambling on Kick, wagering under code DAILY or ELITE on Roobet, and taking part in the community, and you'll also earn ELITE Points redeemable for real prizes."),
     ("What is Roobet rakeback and how often can I claim it?",
      "Instant Rakeback is a percentage of your wagered amount, claimable every 30 minutes — and it never expires. Part is added instantly to your balance and part goes to your vault, which unlocks 3 claims per day. Rakeboosts of up to +20% multiply it further."),
     ("How do I get free Max Win Merch?",
@@ -437,7 +573,7 @@ reward_cards = "".join(f"""<a class="card rv d{i%3+1}" href="/{f[:-5]}"><div cla
         ("vip-transfer.html", "💎", "VIP Status Transfer", "Already VIP somewhere else? Transfer your status straight to Roobet and keep everything you've earned."),
         ("elite-points.html", "⭐", "ELITE Points", "Earn points by watching streams, wagering and staying active — then redeem them for real prizes via Slotessentials."),
         ("slot-challenges.html", "🎮", "Slot Challenges", "Complete casino challenges while you play and stack extra prizes on top of your regular rewards."),
-        ("giveaways.html", "🎁", "$5,000 Monthly Giveaways", "We give $5,000 back to the community every month. No catch — only active players earn giveaways."),
+        ("giveaways.html", "🎁", "Community Raffle", "Free to enter for active players. Sign in with Kick, enter in one click, winners drawn live on stream."),
         ("roobet-rewards.html", "💰", "Roobet Rewards System", "Instant rakeback every 30 minutes, daily/weekly/monthly bonuses, the Vault and rakeboosts up to +20% — fully explained."),
     ]))
 
@@ -451,8 +587,8 @@ import re as _re
 HERO_BD_SHORT = _re.sub(r'\s*<img class="bd-chip"[^>]*>', '', HERO_BD).replace('class="hero-bd"', 'class="hero-bd short"')
 
 TICKER = """<div class="ticker" aria-hidden="true"><div class="ticker-track">
-  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; <b>$5,000+</b> monthly giveaways</span><span>&#128176; Rakeback every <b>30 minutes</b></span>
-  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; <b>$5,000+</b> monthly giveaways</span><span>&#128176; Rakeback every <b>30 minutes</b></span>
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; Free-to-enter <b>Community Raffle</b></span><span>&#128176; Rakeback every <b>30 minutes</b></span>
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; Free-to-enter <b>Community Raffle</b></span><span>&#128176; Rakeback every <b>30 minutes</b></span>
 </div></div>"""
 
 PAGES["index.html"] = dict(
@@ -551,12 +687,15 @@ PAGES["index.html"] = dict(
   </div>
 
   <p class="also rv">Also included:
-    <a href="/giveaways">$5,000+ Monthly Giveaways</a> &middot;
+    <a href="/giveaways">Community Raffle</a> &middot;
     <a href="/slot-challenges">Slot Challenges</a> &middot;
     <a href="/elite-points">ELITE Points</a> &middot;
     <a href="/roobet-rewards">Roobet Rewards System</a> &mdash; rakeback every 30 minutes, the Vault, and rakeboosts up to +20%.
   </p>
 </div></section>
+
+{home_promo}
+{home_raffle}
 
 <section style="padding-top:6px"><div class="wrap">
   <div class="vip-band rv">
@@ -848,7 +987,7 @@ PAGES["free-spins.html"] = dict(
     kw="roobet free spins, free spins roobet, sign-up bonus, no deposit free spins, roobet sign up bonus, exclusive free spins",
     schema={"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
         {"@type":"Question","name":"How do I get Roobet free spins?","acceptedAnswer":{"@type":"Answer","text":"Sign up at Roobet with code ELITE or DAILY — your all-time deposit and wager totals unlock up to 125 exclusive free spins worth up to $1.00 per spin. It's cumulative, not a single deposit."}},
-        {"@type":"Question","name":"Are there no deposit free spins on Roobet?","acceptedAnswer":{"@type":"Answer","text":"Our exclusive free spins packages require a deposit and wager. Active players can also win free spins and prizes through our $5,000 monthly community giveaways and by redeeming ELITE Points — giveaways are earned through activity, not luck."}}]},
+        {"@type":"Question","name":"Are there no deposit free spins on Roobet?","acceptedAnswer":{"@type":"Answer","text":"Our exclusive free spins packages require a deposit and wager. Active players can also win free spins and prizes through our free-to-enter Community Raffle and by redeeming ELITE Points — entries are earned through activity, not luck."}}]},
     body=f"""
 <section class="page-hero"><div class="wrap">
   {crumb("Free Spins Bonus")}
@@ -868,7 +1007,7 @@ PAGES["free-spins.html"] = dict(
 
 <section style="padding-top:0"><div class="wrap">
   <div class="cards c2">
-    <div class="card rv"><div class="glow"></div><div class="ic">🎁</div><h3>More Ways to Win Spins</h3><p>Active players earn entries in our <a href="/giveaways" style="color:var(--gold);font-weight:700">$5,000 monthly giveaways</a> and collect <a href="/elite-points" style="color:var(--gold);font-weight:700">ELITE Points</a> by watching DailyGambling live on Kick — redeemable for prizes including spins.</p></div>
+    <div class="card rv"><div class="glow"></div><div class="ic">🎁</div><h3>More Ways to Win Spins</h3><p>Active players earn entries in our <a href="/giveaways" style="color:var(--gold);font-weight:700">free Community Raffle</a> and collect <a href="/elite-points" style="color:var(--gold);font-weight:700">ELITE Points</a> by watching DailyGambling live on Kick — redeemable for prizes including spins.</p></div>
     <div class="card rv d1"><div class="glow"></div><div class="ic">⚡</div><h3>Stack Your Welcome Boost</h3><p>New sign-ups get a +10% welcome rakeboost for 24 hours. Your qualifying wagers also count toward the <a href="/leaderboard" style="color:var(--gold);font-weight:700">$50K Leaderboard</a> and <a href="/wager-milestones" style="color:var(--gold);font-weight:700">Wager Milestones</a> at the same time.</p></div>
   </div>
 </div></section>
@@ -987,7 +1126,7 @@ PAGES["vip-transfer.html"] = dict(
     </a>
     <a class="rwb" href="/giveaways">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9.5" width="18" height="11.5" rx="1.6"/><path d="M2.5 13.5h19"/><path d="M12 9.5V21"/><path d="M12 9.5S10.6 5.5 8.6 5.5a2 2 0 0 0 0 4Z"/><path d="M12 9.5s1.4-4 3.4-4a2 2 0 0 1 0 4Z"/></svg>
-      <span><b>$5,000</b>Giveaways</span>
+      <span><b>Community</b>Raffle</span>
     </a>
     <a class="rwb" href="/roobet-rewards">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.1 5.4 5.4 2.1-5.4 2.1L12 18l-2.1-5.4L4.5 10.5l5.4-2.1L12 3Z"/><path d="M19 17.5 19.7 19.3 21.5 20 19.7 20.7 19 22.5 18.3 20.7 16.5 20 18.3 19.3Z"/></svg>
@@ -1196,18 +1335,18 @@ PAGES["slot-challenges.html"] = dict(
 
 # ================= GIVEAWAYS =================
 PAGES["giveaways.html"] = dict(
-    title="$5,000 Monthly Giveaways — Community Prizes for Active Players | Roobet Casino Rewards",
-    desc="We give $5,000 back to our community every month. No catch — only active players earn giveaways. Watch DailyGambling on Kick, wager under code DAILY or ELITE, and win prizes.",
-    kw="casino giveaways, roobet giveaway, slotessentials giveaway, community giveaways",
+    title="Community Raffle — Free to Enter for Active Players | Roobet Casino Rewards",
+    desc="Our Community Raffle is free to enter for active players. Sign in with Kick, enter in one click, and winners are drawn live on stream. Plus giveaways and drops for players under code DAILY or ELITE.",
+    kw="community raffle, casino raffle, roobet giveaway, slotessentials giveaway, kick raffle",
     body=f"""
 <section class="page-hero"><div class="wrap">
-  {crumb("$5K Giveaways")}
+  {crumb(RAFFLE["name"])}
   <span class="eyebrow rv">🎁 Earned by Active Players</span>
-  <h1 class="rv d1"><span class="grad" data-count="5000" data-prefix="$">$0</span> in Giveaways.<br>Every Single Month.</h1>
-  <p class="lead rv d2">No catch — only active players earn giveaways. We give $5,000 back to the community every month in cash, free spins and prizes for the players who show up.</p>
+  <h1 class="rv d1">The <span class="grad">{RAFFLE["name"]}</span></h1>
+  <p class="lead rv d2">{RAFFLE["blurb"]}</p>
   <div class="hero-cta rv d3" style="justify-content:center">
-    <a class="btn btn-gold btn-lg pulse" href="{KICK}" target="_blank" rel="noopener">Watch &amp; Enter Live {ARR}</a>
-    <a class="btn btn-ghost btn-lg" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join Roobet with DAILY</a>
+    <a class="btn btn-gold btn-lg pulse" href="#raffle">Enter the Raffle {ARR}</a>
+    <a class="btn btn-ghost btn-lg" href="{KICK}" target="_blank" rel="noopener">Watch the Draw on Kick</a>
   </div>
 </div></section>
 
@@ -1227,7 +1366,7 @@ PAGES["giveaways.html"] = dict(
   <div class="card rv d2"><div class="glow"></div><div class="ic">🚀</div><h3>Bigger for Members</h3><p>Players under code ELITE or DAILY get access to boosted, members-only giveaways.</p></div>
 </div></div></section>
 
-{cta_banner("Show Up. Stay Active. Get Paid.","Giveaways are earned by the players who are present — be active and take your share of $5,000 every month.")}
+{cta_banner("Show Up. Stay Active. Get Paid.","The raffle and every drop are earned by the players who are present — be active and you're in.")}
 """)
 
 # ================= ROOBET REWARDS (native) =================
@@ -1320,62 +1459,6 @@ for slug, name, prov, img in MERCH:
 
 # ================= CONTACT =================
 DISCORD_GAMBA = "https://discord.gg/dailygamba"
-
-# ================= EXCLUSIVE PROMOTIONS =================
-# To publish a promo: add a dict to ACTIVE_PROMOS. When it ends, cut it and paste
-# it into PAST_PROMOS. Nothing else needs touching — the page and the "no active
-# promotion" state handle themselves.
-#   title  : headline
-#   prize  : the payout, shown big
-#   window : dates, however you want them written
-#   terms  : list of bullet lines (HTML allowed, <b> for emphasis)
-ACTIVE_PROMOS = []
-
-PAST_PROMOS = [
-    dict(
-        title="Raw Cash Wager Race",
-        prize="$200",
-        unit="RAW CASH",
-        window="Aug 28 &ndash; Sep 4, 2026",
-        ic="coins", c="green",
-        terms=[
-            "Wager <b>$30,000</b> between 8/28 &ndash; 9/4",
-            "Playing under code <b>ELITE</b> or <b>DAILY</b>",
-            "Receive <b>$200 RAW CASH</b> &mdash; no wagering requirement",
-        ],
-    ),
-]
-
-def promo_card(p, expired=False):
-    terms = "".join(f"<li>{t}</li>" for t in p["terms"])
-    badge = ('<span class="pr-badge is-done">&#10003; Paid out</span>' if expired else
-             '<span class="pr-badge is-live"><span class="live-dot"></span>Live now</span>')
-    cta = ("" if expired else
-           f'<a class="btn btn-gold pr-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY {ARR}</a>')
-    unit = f'<span class="pr-unit">{p["unit"]}</span>' if p.get("unit") else ""
-    return f"""<article class="promo{' is-expired' if expired else ''} rv" data-c="{p.get('c', 'gold')}">
-  <div class="pr-head">
-    <span class="pr-ic">{icon(p.get('ic', 'coins'), 22)}</span>
-    {badge}
-  </div>
-  <p class="pr-prize">{p['prize']}{unit}</p>
-  <h3>{p['title']}</h3>
-  <ul class="pr-terms">{terms}</ul>
-  <div class="pr-foot"><span class="pr-when">{p['window']}</span>{cta}</div>
-</article>"""
-
-active_html = ("".join(promo_card(p) for p in ACTIVE_PROMOS) if ACTIVE_PROMOS else f"""
-<div class="promo-empty rv">
-  <span class="pe-ic">{icon('spark', 26)}</span>
-  <h3>No active promotion right now</h3>
-  <p>Exclusive promos drop regularly and often run for only a week &mdash; wager races, raw cash drops and bonus buys for players under code <b>DAILY</b> or <b>ELITE</b>. The fastest way to hear about the next one is the VIP Telegram or the stream.</p>
-  <div class="hero-cta" style="justify-content:center">
-    <a class="btn btn-gold" href="{TELEGRAM}" target="_blank" rel="noopener">Get notified on Telegram</a>
-    <a class="btn btn-ghost" href="{KICK}" target="_blank" rel="noopener">Watch on Kick</a>
-  </div>
-</div>""")
-
-past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
 
 PAGES["exclusive-promotions.html"] = dict(
     title="Exclusive Roobet Promotions — Limited-Time Cash Drops | Code DAILY & ELITE",
@@ -1613,7 +1696,7 @@ rw_faq = [
     ("Does Roobet have cashback?", "Yes — Roobet's cashback is called Instant Rakeback: a percentage of every wager comes back to you, claimable every 30 minutes, and it never expires. Part credits instantly and part flows to your Vault, which unlocks 3 claims per day. Rakeboosts of up to +20% multiply it."),
     ("When does Roobet release the monthly bonus?", "The monthly bonus is released on the 1st of every month at midnight UTC. The weekly bonus drops every Saturday at 7 PM EST / midnight UTC, and the daily bonus can be claimed every 24 hours at midnight UTC."),
     ("How does the Roobet VIP program and rank system work?", "Wagering levels up your account, and every rank-up pays a level-up bonus plus a +10% rakeboost for 60 minutes — the higher your level, the bigger your daily, weekly and monthly bonus percentages. Already VIP at another casino? You can transfer your status directly to Roobet under code DAILY or ELITE."),
-    ("What extra rewards do DAILY and ELITE players get?", "On top of Roobet's own system: the $50,000 monthly wager leaderboard, up to $11,350 in wager milestones, exclusive free spins, Max Win Merch, ELITE Points redeemable for real prizes, slot challenges and $5,000 in monthly community giveaways — about $100,000 in total monthly rewards."),
+    ("What extra rewards do DAILY and ELITE players get?", "On top of Roobet's own system: the $50,000 monthly wager leaderboard, up to $11,350 in wager milestones, exclusive free spins, Max Win Merch, ELITE Points redeemable for real prizes, slot challenges and the free-to-enter Community Raffle — about $100,000 in total monthly rewards."),
 ]
 rw_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in rw_faq)
 
@@ -2011,7 +2094,7 @@ PAGES["watch.html"] = dict(
    <div class="live-stats rv d3">
     <div class="ls-item" id="ls-watching" hidden><span>Watching</span><b>&mdash;</b></div>
     <div class="ls-item" id="ls-uptime" hidden><span>Uptime</span><b>&mdash;</b></div>
-    <div class="ls-item"><span>Giveaways</span><b>$5,000+ / mo</b></div>
+    <div class="ls-item"><span>Community Raffle</span><b>Free entry</b></div>
     <div class="ls-item"><span>Code</span><b class="gold">DAILY</b></div>
     <a class="btn btn-gold" href="{KICK}" target="_blank" rel="noopener">Follow on Kick</a>
    </div>
