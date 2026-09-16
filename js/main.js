@@ -426,34 +426,21 @@ document.querySelectorAll('.flip').forEach(c => {
   const wrap = document.getElementById('tr-stats');
   if (!wrap) return;
   const $ = id => document.getElementById(id);
-  const money = n => '$' + Math.round(n).toLocaleString('en-US');
+  const stamp = t => 'Figures refreshed ' +
+    new Date(t || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
+    ' · verified payouts only';
 
   fetch('/api/stats')
     .then(r => (r.ok ? r.json() : null))
     .then(d => {
       if (!d) throw new Error('no data');
-      const lb = d.leaderboard;
-      if (lb) {
-        $('tr-wagered').textContent = money(lb.wagered);
-        $('tr-players').textContent = lb.players.toLocaleString('en-US');
-      } else {
-        $('tr-wagered').textContent = 'Unavailable';
-        $('tr-players').textContent = 'Unavailable';
-      }
-      // only count what has actually completed
-      const vip = d.vipTransfers, merch = d.merchClaims;
-      $('tr-vip').textContent = vip ? String(vip.completed || 0) : 'Unavailable';
-      $('tr-merch').textContent = merch ? String(merch.shipped || 0) : 'Unavailable';
-
-      const p = d.period || {};
-      const fmt = s => s ? new Date(s).toLocaleDateString('en-US', { day: 'numeric', month: 'short' }) : '?';
-      $('tr-updated').innerHTML =
-        'Period <b>' + fmt(p.start) + ' &ndash; ' + fmt(p.end) + '</b> &middot; figures refreshed ' +
-        new Date(d.generated || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
-        ' &middot; source: Roobet affiliate API';
+      const merch = d.merchClaims;
+      $('tr-merch').textContent = merch ? String(merch.shipped || 0) : '—';
+      $('tr-updated').textContent = stamp(d.generated);
     })
     .catch(() => {
-      $('tr-updated').textContent = 'Live figures are temporarily unavailable — the fixed pools below are unaffected.';
+      $('tr-merch').textContent = '—';
+      $('tr-updated').textContent = 'Live figures are temporarily unavailable — the fixed pools are unaffected.';
     });
 })();
 

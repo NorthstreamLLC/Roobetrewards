@@ -1089,6 +1089,17 @@ a.vt-alt:hover{color:var(--gold)}
 .hero-free a{color:var(--gold);font-weight:700}
 
 /* ---------- transparency report ---------- */
+.tr-hero{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;
+  gap:6px;text-align:center;max-width:1080px;margin:0 auto 12px;padding:clamp(28px,3.4vw,44px) 24px;
+  border-radius:18px;background:
+    radial-gradient(90% 130% at 50% 0,rgba(245,165,36,.16),transparent 62%),
+    linear-gradient(150deg,var(--surface-2),var(--bg-sunk) 72%);
+  border:1px solid rgba(245,165,36,.3)}
+.trh-l{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold)}
+.trh-v{font-size:clamp(42px,7vw,76px);font-weight:800;letter-spacing:-.04em;line-height:1;
+  color:var(--text)}
+.trh-n{font-size:13px;color:var(--text-dim)}
 .tr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;
   max-width:1080px;margin:0 auto}
 .tr-stat{display:flex;flex-direction:column;gap:5px;padding:20px;border-radius:14px;
