@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — Roobet Casino Rewards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0f1f;--sunk:#0c1223;--surface:#111a33;--s2:#141e3a;--s3:#182444;
+ --gold:#f5a524;--text:#eef1f7;--mid:#c3cad8;--dim:#8b93a7;--faint:#6b7488;
+ --line:rgba(255,255,255,.07);--mono:'JetBrains Mono',ui-monospace,monospace;
+ --green:#35d39a;--blue:#7b8cff;--red:#ff6b6b;--violet:#a78bfa}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--gold)}
+.wrap{max-width:1500px;margin:0 auto;padding:22px clamp(14px,2vw,28px) 80px}
+
+/* gate */
+.gate{max-width:380px;margin:14vh auto;background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:30px}
+.gate h2{font-size:1.2rem;font-weight:800;margin-bottom:6px}
+.gate p{font-size:13px;color:var(--dim);margin-bottom:18px}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:1.45rem;font-weight:800;letter-spacing:-.02em}
+h1 span{color:var(--gold)}
+.sub{font-size:12px;color:var(--faint)}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.tab{font-family:inherit;font-size:13.5px;font-weight:600;padding:10px 16px;border-radius:10px;cursor:pointer;
+ background:none;border:1px solid transparent;color:var(--dim);transition:.16s}
+.tab:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.tab.on{background:rgba(245,165,36,.12);border-color:rgba(245,165,36,.36);color:var(--gold)}
+.tab b{font-family:var(--mono);font-weight:500;opacity:.7;margin-left:6px}
+.panel{display:none}
+.panel.on{display:block}
+
+/* forms */
+label{display:block;font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+input,select,textarea{width:100%;font-family:inherit;font-size:13.5px;color:var(--text);background:var(--sunk);
+ border:1px solid var(--line);border-radius:9px;padding:10px 12px;outline:none;transition:border-color .16s}
+input:focus,select:focus,textarea:focus{border-color:rgba(245,165,36,.5)}
+input::placeholder,textarea::placeholder{color:var(--faint)}
+textarea{resize:vertical;min-height:72px;line-height:1.55}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+.field{min-width:0}
+.hint{font-size:11.5px;color:var(--faint);margin-top:5px;line-height:1.5}
+
+button{font-family:inherit;font-size:13px;font-weight:600;border-radius:9px;cursor:pointer;
+ padding:10px 16px;border:1px solid var(--line);background:var(--s2);color:var(--text);transition:.16s}
+button:hover{border-color:rgba(245,165,36,.4)}
+button.gold{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:700}
+button.gold:hover{background:#ffc46b}
+button.danger{color:var(--red)}
+button.danger:hover{border-color:var(--red)}
+button.sm{padding:7px 11px;font-size:12px}
+button[disabled]{opacity:.5;cursor:not-allowed}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px}
+.card h3{font-size:1.02rem;font-weight:700;margin-bottom:4px}
+.card .cd{font-size:12.5px;color:var(--dim);margin-bottom:18px;line-height:1.6}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;align-items:start}
+
+/* promo editor */
+.pro{background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+.pro-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pro-top b{flex:1;font-size:13.5px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-family:var(--mono);
+ font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.chip.live{background:rgba(53,211,154,.13);border:1px solid rgba(53,211,154,.35);color:var(--green)}
+.chip.past{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--faint)}
+
+/* tables */
+.tbl-wrap{border:1px solid var(--line);border-radius:14px;overflow-x:auto;background:var(--surface)}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{background:var(--sunk);padding:12px 13px;text-align:left;white-space:nowrap;font-family:var(--mono);
+ font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600}
+td{padding:13px;border-top:1px solid var(--line);font-size:13px;color:var(--mid);vertical-align:top}
+tr:hover td{background:rgba(255,255,255,.014)}
+.mono{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+.shots{display:flex;flex-wrap:wrap;gap:5px;max-width:170px}
+.shots a{width:54px;height:54px;border-radius:6px;overflow:hidden;border:1px solid var(--line);display:block}
+.shots img{width:100%;height:100%;object-fit:cover;display:block}
+select.st{padding:6px 9px;font-size:12px;font-weight:700;border-radius:7px;width:auto}
+
+.msg{padding:11px 14px;border-radius:9px;font-size:13px;margin-bottom:14px;display:none}
+.msg.ok{display:block;background:rgba(53,211,154,.1);border:1px solid rgba(53,211,154,.34);color:#93f0cd}
+.msg.err{display:block;background:rgba(255,90,90,.1);border:1px solid rgba(255,110,110,.34);color:#ffb3b3}
+.empty{padding:40px 20px;text-align:center;color:var(--faint);font-size:13.5px}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <h2>Roobet Rewards Admin</h2>
+  <p>One key controls everything.</p>
+  <input id="key" type="password" placeholder="VIP_ADMIN_KEY" autocomplete="current-password">
+  <button class="gold" id="go" style="width:100%;margin-top:14px">Unlock</button>
+  <div class="msg" id="gate-msg"></div>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <header>
+    <div>
+      <h1>Roobet Rewards <span>Admin</span></h1>
+      <p class="sub" id="stamp">—</p>
+    </div>
+    <div class="bar" style="margin:0">
+      <a href="/" target="_blank"><button>View site ↗</button></a>
+      <button id="logout">Lock</button>
+    </div>
+  </header>
+
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-p="promos">Promotions</button>
+    <button class="tab" data-p="raffle">Raffle</button>
+    <button class="tab" data-p="trans">Transparency</button>
+    <button class="tab" data-p="vip">VIP Transfers<b id="c-vip"></b></button>
+    <button class="tab" data-p="merch">Merch Claims<b id="c-merch"></b></button>
+  </div>
+
+  <div class="msg" id="msg"></div>
+
+  <!-- ============ PROMOTIONS ============ -->
+  <section class="panel on" data-panel="promos">
+    <div class="card">
+      <h3>Live promotions</h3>
+      <p class="cd">Shows on the homepage banner, the promotions page, the entry pop-up and the nav pill.
+        Leave this empty and the site falls back to the “no promotion running” state automatically.</p>
+      <div id="active-list"></div>
+      <button class="sm" id="add-active">+ Add live promotion</button>
+    </div>
+
+    <div class="card">
+      <h3>Past promotions</h3>
+      <p class="cd">The archive. Move a promo here when it ends — it re-renders as a “Paid out” card.</p>
+      <div id="past-list"></div>
+      <button class="sm" id="add-past">+ Add past promotion</button>
+    </div>
+
+    <div class="bar">
+      <button class="gold" id="save-promos">Save promotions</button>
+      <button id="reset-promos" class="danger">Reset to built-in defaults</button>
+      <span class="hint" style="margin:0">Changes are live within a minute — no rebuild.</span>
+    </div>
+  </section>
+
+  <!-- ============ RAFFLE ============ -->
+  <section class="panel" data-panel="raffle">
+    <div class="split">
+      <div class="card">
+        <h3>Current raffle</h3>
+        <p class="cd" id="rf-state">Loading…</p>
+        <div class="bar">
+          <button class="gold" id="rf-draw">Draw winners</button>
+          <input id="rf-winners" type="number" min="1" value="5" style="width:110px" title="How many winners">
+        </div>
+        <p class="hint">Drawing closes the raffle and publishes masked winner names on the giveaways page.
+          The draw uses a cryptographically secure random source.</p>
+      </div>
+
+      <div class="card">
+        <h3>Create / replace raffle</h3>
+        <p class="cd">Replacing discards the current raffle’s entries — draw the old one first if it matters.</p>
+        <div class="field" style="margin-bottom:12px">
+          <label>Title</label>
+          <input id="rf-title" placeholder="September Community Raffle">
+        </div>
+        <div class="field" style="margin-bottom:12px">
+          <label>Prize (shown exactly as written)</label>
+          <input id="rf-prize" placeholder="$500 split across 5 winners">
+        </div>
+        <div class="field" style="margin-bottom:14px">
+          <label>Ends at (your local time)</label>
+          <input id="rf-ends" type="datetime-local">
+        </div>
+        <button class="gold" id="rf-create">Create raffle</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRANSPARENCY ============ -->
+  <section class="panel" data-panel="trans">
+    <div class="card">
+      <h3>Headline figures</h3>
+      <p class="cd">These drive the tiles on the transparency page.</p>
+      <div class="row">
+        <div class="field"><label>Given away</label><input id="t-given" placeholder="$3M+"></div>
+        <div class="field"><label>Given away note</label><input id="t-given-note" placeholder="Cumulative across every reward program since launch"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Milestones paid (tile)</label><input id="t-ms" placeholder="$131,640"></div>
+        <div class="field"><label>Milestones exact (methodology)</label><input id="t-ms-exact" placeholder="$131,640.50"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Milestones note</label><input id="t-ms-note" placeholder="Paid out in milestone bonuses"></div>
+        <div class="field"><label>Milestones period</label><input id="t-ms-period" placeholder="the last 8 months"></div>
+        <div class="field"><label>Merch shipped baseline</label><input id="t-merch" type="number" min="0" placeholder="51"></div>
+      </div>
+      <p class="hint">Verified claims from the site’s own form are added on top of the merch baseline automatically.</p>
+    </div>
+
+    <div class="card">
+      <h3>Payout ledger</h3>
+      <p class="cd">One row per payout, newest first. Shows on the transparency page and the homepage.</p>
+      <div id="pay-list"></div>
+      <button class="sm" id="add-pay">+ Add payout</button>
+    </div>
+
+    <div class="bar">
+      <button class="gold" id="save-trans">Save transparency</button>
+      <button id="reset-trans" class="danger">Reset to built-in defaults</button>
+    </div>
+  </section>
+
+  <!-- ============ VIP ============ -->
+  <section class="panel" data-panel="vip">
+    <div class="bar">
+      <input id="vip-q" type="search" placeholder="Search username, casino, Discord…" style="max-width:280px">
+      <button id="vip-refresh">Refresh</button>
+    </div>
+    <div class="tbl-wrap">
+      <table><thead><tr>
+        <th>Roobet</th><th>Previous casino</th><th>Discord</th><th>Telegram</th>
+        <th>Proof</th><th>Status</th><th>Created</th>
+      </tr></thead><tbody id="vip-rows"></tbody></table>
+      <div class="empty" id="vip-empty" hidden>No VIP transfer requests yet.</div>
+    </div>
+  </section>
+
+  <!-- ============ MERCH ============ -->
+  <section class="panel" data-panel="merch">
+    <div class="bar">
+      <input id="merch-q" type="search" placeholder="Search username, shirt…" style="max-width:280px">
+      <button id="merch-refresh">Refresh</button>
+    </div>
+    <div class="tbl-wrap">
+      <table><thead><tr>
+        <th>Roobet</th><th>Shirt</th><th>Size</th><th>Colour</th>
+        <th>Discord</th><th>Telegram</th><th>Proof</th><th>Status</th><th>Created</th>
+      </tr></thead><tbody id="merch-rows"></tbody></table>
+      <div class="empty" id="merch-empty" hidden>No merch claims yet.</div>
+    </div>
+  </section>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let KEY = '';
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+  ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const when = ms => { const d=new Date(ms),p=n=>String(n).padStart(2,'0');
+  return p(d.getDate())+'.'+p(d.getMonth()+1)+'.'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes()); };
+const flash = (t, ok=true) => { const m=$('msg'); m.textContent=t; m.className='msg '+(ok?'ok':'err');
+  setTimeout(()=>{m.className='msg';}, 4000); };
+const hdr = () => ({ 'Content-Type':'application/json', 'x-admin-key': KEY });
+
+/* ---------- auth ---------- */
+$('go').addEventListener('click', unlock);
+$('key').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
+$('logout').addEventListener('click', () => { try{sessionStorage.removeItem('vipKey')}catch(e){} location.reload(); });
+try { const s=sessionStorage.getItem('vipKey'); if(s){ $('key').value=s; unlock(); } } catch(e){}
+
+async function unlock(){
+  KEY = $('key').value.trim(); if(!KEY) return;
+  $('go').textContent='Checking…';
+  const r = await fetch('/api/vip-transfer?key='+encodeURIComponent(KEY), { headers:{'x-admin-key':KEY} });
+  $('go').textContent='Unlock';
+  if (!r.ok) { const m=$('gate-msg'); m.textContent='Wrong admin key.'; m.className='msg err'; return; }
+  try{ sessionStorage.setItem('vipKey', KEY); }catch(e){}
+  $('gate').hidden=true; $('app').hidden=false;
+  loadAll();
+}
+
+/* ---------- tabs ---------- */
+$('tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if(!b) return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.dataset.panel===b.dataset.p));
+});
+
+/* ---------- content (promos + transparency) ---------- */
+const COLORS=['gold','green','violet','cyan','pink','red','blue','amber'];
+const ICONS=['coins','gift','spark','trophy','star','gem','spin','shirt','pad','target'];
+
+function promoRow(p={}, kind='active'){
+  const d = document.createElement('div');
+  d.className='pro'; d.dataset.kind=kind;
+  d.innerHTML =
+    '<div class="pro-top"><span class="chip '+(kind==='active'?'live">● Live':'past">Archived')+'</span>'+
+    '<b></b><button class="sm danger" data-del>Remove</button></div>'+
+    '<div class="row">'+
+      '<div class="field"><label>Title</label><input data-f="title" value="'+esc(p.title||'')+'"></div>'+
+      '<div class="field"><label>Prize</label><input data-f="prize" value="'+esc(p.prize||'')+'" placeholder="$10,000"></div>'+
+      '<div class="field"><label>Unit</label><input data-f="unit" value="'+esc(p.unit||'')+'" placeholder="CURRENT POOL"></div>'+
+      '<div class="field"><label>Dates</label><input data-f="window" value="'+esc(p.window||'')+'" placeholder="Sep 16 – Oct 31, 2026"></div>'+
+    '</div>'+
+    '<div class="row">'+
+      '<div class="field"><label>Accent</label><select data-f="c">'+COLORS.map(c=>'<option'+(p.c===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>'+
+      '<div class="field"><label>Icon</label><select data-f="ic">'+ICONS.map(c=>'<option'+(p.ic===c?' selected':'')+'>'+c+'</option>').join('')+'</select></div>'+
+      '<div class="field"><label>Ladder (comma separated)</label><input data-f="ladder" value="'+esc((p.ladder||[]).join(', '))+'" placeholder="$10K, $20K, $30K"></div>'+
+      '<div class="field"><label>Ladder step reached</label><input data-f="at" type="number" min="0" value="'+(p.at||0)+'"></div>'+
+    '</div>'+
+    '<div class="row" style="grid-template-columns:1fr">'+
+      '<div class="field"><label>Terms — one per line</label><textarea data-f="terms" placeholder="Wager &lt;b&gt;$30,000&lt;/b&gt; during the window">'+esc((p.terms||[]).join('\\n'))+'</textarea></div>'+
+    '</div>'+
+    '<div class="row">'+
+      '<div class="field"><label>Footer line</label><input data-f="foot" value="'+esc(p.foot||'')+'" placeholder="🎃 Paid out on Halloween"></div>'+
+      '<div class="field"><label>Countdown deadline (ISO, optional)</label><input data-f="deadline" value="'+esc(p.deadline||'')+'" placeholder="2026-10-31T23:59:59Z"></div>'+
+    '</div>';
+  const title = d.querySelector('.pro-top b');
+  const sync = () => { title.textContent = d.querySelector('[data-f=title]').value || 'Untitled'; };
+  d.querySelector('[data-f=title]').addEventListener('input', sync); sync();
+  d.querySelector('[data-del]').addEventListener('click', () => d.remove());
+  return d;
+}
+const readPromo = d => {
+  const g = f => { const el=d.querySelector('[data-f='+f+']'); return el ? el.value.trim() : ''; };
+  return { title:g('title'), prize:g('prize'), unit:g('unit'), window:g('window'),
+    c:g('c'), ic:g('ic'), foot:g('foot'), deadline:g('deadline'),
+    at:parseInt(g('at'),10)||0,
+    ladder:g('ladder').split(',').map(s=>s.trim()).filter(Boolean),
+    terms:g('terms').split('\n').map(s=>s.trim()).filter(Boolean) };
+};
+
+$('add-active').addEventListener('click', ()=> $('active-list').appendChild(promoRow({},'active')));
+$('add-past').addEventListener('click', ()=> $('past-list').appendChild(promoRow({},'past')));
+
+$('save-promos').addEventListener('click', async () => {
+  const active=[...$('active-list').children].map(readPromo).filter(p=>p.title);
+  const past=[...$('past-list').children].map(readPromo).filter(p=>p.title);
+  const r = await fetch('/api/content?key='+encodeURIComponent(KEY),
+    { method:'PUT', headers:hdr(), body:JSON.stringify({section:'promos', active, past}) });
+  flash(r.ok ? 'Promotions saved — live within a minute.' : 'Save failed.', r.ok);
+});
+$('reset-promos').addEventListener('click', async () => {
+  if(!confirm('Drop your overrides and fall back to the values built into the site?')) return;
+  const r = await fetch('/api/content?key='+encodeURIComponent(KEY)+'&section=promos',
+    { method:'DELETE', headers:hdr() });
+  if(r.ok){ $('active-list').innerHTML=''; $('past-list').innerHTML=''; }
+  flash(r.ok ? 'Reset to built-in defaults.' : 'Reset failed.', r.ok);
+});
+
+function payRow(p=[]){
+  const d=document.createElement('div'); d.className='pro';
+  d.innerHTML='<div class="row" style="margin:0">'+
+    '<div class="field"><label>Who</label><input data-f="0" value="'+esc(p[0]||'')+'" placeholder="Mrt****"></div>'+
+    '<div class="field"><label>What</label><input data-f="1" value="'+esc(p[1]||'')+'" placeholder="1st place, monthly leaderboard"></div>'+
+    '<div class="field"><label>Amount</label><input data-f="2" value="'+esc(p[2]||'')+'" placeholder="$12,500"></div>'+
+    '<div class="field"><label>When</label><input data-f="3" value="'+esc(p[3]||'')+'" placeholder="Sep 2026"></div>'+
+    '<div class="field"><label>Type</label><select data-f="4">'+['cash','merch','spins','bonus']
+      .map(k=>'<option'+(p[4]===k?' selected':'')+'>'+k+'</option>').join('')+'</select></div>'+
+    '<div class="field" style="display:flex;align-items:flex-end"><button class="sm danger" data-del>Remove</button></div>'+
+  '</div>';
+  d.querySelector('[data-del]').addEventListener('click',()=>d.remove());
+  return d;
+}
+$('add-pay').addEventListener('click', ()=> $('pay-list').appendChild(payRow()));
+
+$('save-trans').addEventListener('click', async () => {
+  const payouts=[...$('pay-list').children].map(d=>
+    [0,1,2,3,4].map(i=>d.querySelector('[data-f="'+i+'"]').value.trim()))
+    .filter(r=>r[0]||r[1]);
+  const t={ given_away:$('t-given').value.trim(), given_away_note:$('t-given-note').value.trim(),
+    milestones_paid:$('t-ms').value.trim(), milestones_exact:$('t-ms-exact').value.trim(),
+    milestones_note:$('t-ms-note').value.trim(), milestones_period:$('t-ms-period').value.trim(),
+    merch_baseline:parseInt($('t-merch').value,10)||0, payouts };
+  const r = await fetch('/api/content?key='+encodeURIComponent(KEY),
+    { method:'PUT', headers:hdr(), body:JSON.stringify({section:'transparency', transparency:t}) });
+  flash(r.ok ? 'Transparency figures saved.' : 'Save failed.', r.ok);
+});
+$('reset-trans').addEventListener('click', async () => {
+  if(!confirm('Drop your overrides and fall back to the values built into the site?')) return;
+  const r=await fetch('/api/content?key='+encodeURIComponent(KEY)+'&section=transparency',
+    { method:'DELETE', headers:hdr() });
+  flash(r.ok ? 'Reset to built-in defaults.' : 'Reset failed.', r.ok);
+});
+
+/* ---------- raffle ---------- */
+async function loadRaffle(){
+  const d = await (await fetch('/api/raffle')).json();
+  const r = d && d.raffle;
+  if(!r){ $('rf-state').textContent='No raffle exists yet. Create one on the right.'; return; }
+  const ended = Date.now() > r.endsAt;
+  $('rf-state').innerHTML =
+    '<b style="color:var(--text)">'+esc(r.title)+'</b><br>'+
+    'Prize: '+(esc(r.prize)||'<i>not set</i>')+' · <b>'+d.count+'</b> entries<br>'+
+    'Ends '+when(r.endsAt)+' — '+
+    (r.drawn ? '<span style="color:var(--green)">drawn</span>'
+      : ended ? '<span style="color:var(--red)">closed, not yet drawn</span>'
+      : '<span style="color:var(--green)">open</span>')+
+    (r.winners && r.winners.length ? '<br>Winners: '+r.winners.map(esc).join(', ') : '');
+}
+$('rf-create').addEventListener('click', async () => {
+  const raw=$('rf-ends').value;
+  if(!raw) return flash('Set an end date and time first.', false);
+  const r = await fetch('/api/raffle', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'create', key:KEY, title:$('rf-title').value.trim()||'Community Raffle',
+      prize:$('rf-prize').value.trim(), endsAt:new Date(raw).toISOString() }) });
+  const d = await r.json();
+  flash(d.ok ? 'Raffle created and live.' : (d.error||'Create failed.'), !!d.ok);
+  loadRaffle();
+});
+$('rf-draw').addEventListener('click', async () => {
+  if(!confirm('Draw winners now? This closes the raffle.')) return;
+  const r = await fetch('/api/raffle', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'draw', key:KEY, winners:parseInt($('rf-winners').value,10)||1 }) });
+  const d = await r.json();
+  flash(d.ok ? 'Winners drawn: '+(d.winners||[]).join(', ') : (d.error||'Draw failed.'), !!d.ok);
+  loadRaffle();
+});
+
+/* ---------- claim queues ---------- */
+function queue(cfg){
+  let DATA=[];
+  async function load(){
+    const r = await fetch(cfg.api+'?key='+encodeURIComponent(KEY), { headers:{'x-admin-key':KEY} });
+    const d = await r.json();
+    DATA = d[cfg.listKey] || [];
+    $(cfg.count).textContent = DATA.length ? DATA.length : '';
+    render();
+  }
+  function render(){
+    const q=$(cfg.q).value.trim().toLowerCase();
+    const rows = DATA.filter(x => !q || JSON.stringify(x).toLowerCase().includes(q));
+    $(cfg.empty).hidden = rows.length>0;
+    $(cfg.rows).innerHTML = rows.map(r => '<tr data-id="'+esc(r.id)+'">'+cfg.cells(r)+
+      '<td><select class="st">'+cfg.statuses.map(([v,l])=>
+        '<option value="'+v+'"'+(r.status===v?' selected':'')+'>'+l+'</option>').join('')+'</select></td>'+
+      '<td class="mono">'+when(r.created)+'</td></tr>').join('');
+    $(cfg.rows).querySelectorAll('tr').forEach(tr=>{
+      tr.querySelector('select.st').addEventListener('change', async e=>{
+        const res = await fetch(cfg.api+'?key='+encodeURIComponent(KEY),
+          { method:'PATCH', headers:hdr(), body:JSON.stringify({ id:tr.dataset.id, status:e.target.value }) });
+        flash(res.ok?'Status updated.':'Update failed.', res.ok);
+        const rec=DATA.find(x=>x.id===tr.dataset.id); if(rec) rec.status=e.target.value;
+      });
+    });
+  }
+  $(cfg.q).addEventListener('input', render);
+  $(cfg.refresh).addEventListener('click', load);
+  return { load };
+}
+const shots = a => '<div class="shots">'+(a||[]).map(u=>
+  '<a href="'+esc(u)+'" target="_blank" rel="noopener"><img loading="lazy" src="'+esc(u)+'" alt=""></a>').join('')+'</div>';
+
+const vipQ = queue({ api:'/api/vip-transfer', listKey:'requests', rows:'vip-rows', empty:'vip-empty',
+  q:'vip-q', refresh:'vip-refresh', count:'c-vip',
+  statuses:[['pending','Pending'],['in_review','In review'],['completed','Completed'],['rejected','Rejected']],
+  cells:r=>'<td><b>'+esc(r.roobet)+'</b></td><td>'+esc(r.prevCasino)+'</td><td>'+esc(r.discord||'—')+
+    '</td><td>'+(r.telegram?'@'+esc(r.telegram):'—')+'</td><td>'+shots([].concat(r.proof||[],r.stats||[]))+'</td>' });
+
+const merchQ = queue({ api:'/api/merch-claim', listKey:'claims', rows:'merch-rows', empty:'merch-empty',
+  q:'merch-q', refresh:'merch-refresh', count:'c-merch',
+  statuses:[['pending','Pending'],['verified','Verified'],['shipped','Shipped'],['rejected','Rejected']],
+  cells:r=>'<td><b>'+esc(r.roobet)+'</b></td><td>'+esc(r.shirt)+'</td><td>'+esc(r.size)+
+    '</td><td>'+esc(r.color||'—')+'</td><td>'+esc(r.discord||'—')+'</td><td>'+
+    (r.telegram?'@'+esc(r.telegram):'—')+'</td><td>'+shots(r.proof)+'</td>' });
+
+/* ---------- boot ---------- */
+async function loadAll(){
+  $('stamp').textContent = 'Loaded '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  loadRaffle(); vipQ.load(); merchQ.load();
+  try{
+    const c = await (await fetch('/api/content')).json();
+    if(c.promos){
+      ($('active-list').innerHTML=''), ($('past-list').innerHTML='');
+      (c.promos.active||[]).forEach(p=>$('active-list').appendChild(promoRow(p,'active')));
+      (c.promos.past||[]).forEach(p=>$('past-list').appendChild(promoRow(p,'past')));
+    }
+    const t=c.transparency;
+    if(t){
+      $('t-given').value=t.given_away||''; $('t-given-note').value=t.given_away_note||'';
+      $('t-ms').value=t.milestones_paid||''; $('t-ms-exact').value=t.milestones_exact||'';
+      $('t-ms-note').value=t.milestones_note||''; $('t-ms-period').value=t.milestones_period||'';
+      $('t-merch').value=t.merch_baseline||'';
+      $('pay-list').innerHTML='';
+      (t.payouts||[]).forEach(p=>$('pay-list').appendChild(payRow(p)));
+    }
+  }catch(e){}
+}
+</script>
+</body>
+</html>

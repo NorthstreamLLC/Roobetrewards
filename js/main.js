@@ -421,6 +421,111 @@ document.querySelectorAll('.flip').forEach(c => {
   });
 })();
 
+// ===== live content overrides from the admin panel =====
+// The HTML already contains the build-time values, so this only *replaces* things
+// the admin has changed. If the fetch fails, the page is still correct.
+(function () {
+  const needsPromo = document.querySelector('[data-promo-slot]');
+  const needsTrans = document.getElementById('tr-stats');
+  if (!needsPromo && !needsTrans) return;
+
+  const esc = s => String(s == null ? '' : s)
+    .replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // admin text may contain <b> for emphasis; allow only that
+  const light = s => esc(s).replace(/&lt;(\/?b)&gt;/g, '<$1>');
+
+  const ladderHtml = (p) => {
+    if (!p.ladder || !p.ladder.length) return '';
+    const at = Math.max(0, Math.min(p.at | 0, p.ladder.length - 1));
+    const pct = p.ladder.length < 2 ? 0 : Math.round(at / (p.ladder.length - 1) * 100);
+    const steps = p.ladder.map((s, k) =>
+      '<span class="pl-step' + (k <= at ? ' is-on' : '') + (k === at ? ' is-now' : '') +
+      '"><i></i><b>' + esc(s) + '</b></span>').join('');
+    return '<div class="pladder"><div class="pl-track"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="pl-steps">' + steps + '</div>' +
+      (p.foot ? '<span class="pl-foot">' + esc(p.foot) + '</span>' : '') + '</div>';
+  };
+
+  fetch('/api/content')
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => {
+      if (!d) return;
+
+      // ---- transparency figures ----
+      const t = d.transparency;
+      if (t && needsTrans) {
+        const setTile = (sel, val) => {
+          const el = document.querySelector(sel);
+          if (el && val) el.textContent = val;
+        };
+        setTile('.trh-v', t.given_away);
+        setTile('.trh-n', t.given_away_note);
+        if (t.milestones_paid) {
+          setTile('[data-tile="milestones"] .trs-v', t.milestones_paid);
+          setTile('[data-tile="milestones"] .trs-n', t.milestones_note);
+        }
+        const merch = document.getElementById('tr-merch');
+        if (merch && typeof t.merch_baseline === 'number') merch.dataset.base = t.merch_baseline;
+
+        if (Array.isArray(t.payouts) && t.payouts.length) {
+          const list = document.querySelector('.pay-list');
+          if (list) {
+            const ICON = { cash: 'coins', merch: 'shirt', spins: 'spin', bonus: 'star' };
+            const COLOR = { cash: 'gold', merch: 'cyan', spins: 'green', bonus: 'violet' };
+            list.innerHTML = t.payouts.map(([who, what, amt, when, kind]) =>
+              '<div class="pay-row" data-c="' + (COLOR[kind] || 'gold') + '">' +
+              '<span class="pay-ic" data-i="' + (ICON[kind] || 'coins') + '"></span>' +
+              '<span class="pay-who">' + esc(who) + '</span>' +
+              '<span class="pay-what">' + esc(what) + '</span>' +
+              '<b class="pay-amt">' + esc(amt) + '</b>' +
+              '<span class="pay-when">' + esc(when) + '</span></div>').join('');
+            // reuse an icon already on the page rather than shipping a second copy of the set
+            const src = {};
+            document.querySelectorAll('.mega-item .mi svg').forEach(s => {
+              const k = s.closest('.mega-item')?.getAttribute('href') || '';
+              if (/leaderboard/.test(k)) src.coins = s.outerHTML;
+              if (/merch/.test(k)) src.shirt = s.outerHTML;
+              if (/free-spins/.test(k)) src.spin = s.outerHTML;
+              if (/elite-points/.test(k)) src.star = s.outerHTML;
+            });
+            list.querySelectorAll('.pay-ic').forEach(el => {
+              el.innerHTML = src[el.dataset.i] || src.coins || '';
+            });
+          }
+        }
+      }
+
+      // ---- promotions ----
+      const promos = d.promos;
+      if (promos && needsPromo) {
+        document.querySelectorAll('[data-promo-slot]').forEach(slot => {
+          const kind = slot.getAttribute('data-promo-slot');
+          const list = kind === 'past' ? promos.past : promos.active;
+          if (!Array.isArray(list)) return;
+
+          if (kind === 'past' || kind === 'active') {
+            if (kind === 'active' && !list.length) return;  // keep the built empty state
+            slot.innerHTML = list.map(p =>
+              '<article class="promo' + (kind === 'past' ? ' is-expired' : '') + ' rv on" data-c="' + esc(p.c) + '">' +
+              '<div class="pr-head"><span class="pr-ic"></span>' +
+              (kind === 'past'
+                ? '<span class="pr-badge is-done">&#10003; Paid out</span>'
+                : '<span class="pr-badge is-live"><span class="live-dot"></span>Live now</span>') +
+              '</div>' +
+              '<p class="pr-prize">' + esc(p.prize) +
+              (p.unit ? '<span class="pr-unit">' + esc(p.unit) + '</span>' : '') + '</p>' +
+              '<h3>' + esc(p.title) + '</h3>' +
+              '<ul class="pr-terms">' + (p.terms || []).map(x => '<li>' + light(x) + '</li>').join('') + '</ul>' +
+              ladderHtml(p) +
+              '<div class="pr-foot"><span class="pr-when">' + esc(p.window) + '</span></div>' +
+              '</article>').join('');
+          }
+        });
+      }
+    })
+    .catch(() => { /* built-in values stand */ });
+})();
+
 // ===== transparency report: live aggregate figures =====
 (function () {
   const wrap = document.getElementById('tr-stats');

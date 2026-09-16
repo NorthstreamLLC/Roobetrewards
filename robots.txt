@@ -3,6 +3,7 @@ Allow: /
 Disallow: /raffle-admin.html
 Disallow: /vip-admin.html
 Disallow: /merch-admin.html
+Disallow: /admin.html
 Disallow: /api/
 
 Sitemap: https://www.roobetcasinorewards.com/sitemap.xml

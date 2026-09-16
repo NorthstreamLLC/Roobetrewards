@@ -608,7 +608,7 @@ PROMO_STAT = dict(label="Last promotion paid out", value="$200.00", badge="Paid"
 # The "Active Promotions" block: real cards when something is running, otherwise the
 # showcase banner carrying the same message.
 if ACTIVE_PROMOS:
-    active_block = ('<section><div class="wrap"><div class="promo-grid">'
+    active_block = ('<section><div class="wrap"><div class="promo-grid" data-promo-slot="active">'
                     + "".join(promo_card(p) for p in ACTIVE_PROMOS)
                     + "</div></div></section>")
 else:
@@ -1836,7 +1836,7 @@ PAGES["exclusive-promotions.html"] = dict(
 
 <section><div class="wrap">
   <div class="center rv promo-head"><span class="eyebrow">The Archive</span><h2>Past Promotions</h2><p class="lead">What we've already paid out &mdash; so you know these are real.</p></div>
-  <div class="promo-grid">{past_html}</div>
+  <div class="promo-grid" data-promo-slot="past">{past_html}</div>
 </div></section>
 </div>
 
@@ -1862,9 +1862,9 @@ TRANSPARENCY = dict(
 payout_ledger = "".join(payout_row(p) for p in PAYOUTS)
 
 _tr_milestone_tile = (f"""
-    <div class="tr-stat"><span class="trs-l">Milestones paid</span><b class="trs-v">{TRANSPARENCY['milestones_paid']}</b><span class="trs-n">{TRANSPARENCY['milestones_note']}</span></div>"""
+    <div class="tr-stat" data-tile="milestones"><span class="trs-l">Milestones paid</span><b class="trs-v">{TRANSPARENCY['milestones_paid']}</b><span class="trs-n">{TRANSPARENCY['milestones_note']}</span></div>"""
     if TRANSPARENCY["milestones_paid"] else f"""
-    <div class="tr-stat"><span class="trs-l">Milestone pool</span><b class="trs-v">$11,350</b><span class="trs-n">Guaranteed, claimable every month</span></div>""")
+    <div class="tr-stat" data-tile="milestones"><span class="trs-l">Milestone pool</span><b class="trs-v">$11,350</b><span class="trs-n">Guaranteed, claimable every month</span></div>""")
 
 PAGES["transparency.html"] = dict(
     title="Roobet Rewards Transparency Report — Live Payout Data",
@@ -2870,7 +2870,7 @@ open(os.path.join(out, "sitemap.xml"), "w").write(sm)
 
 open(os.path.join(out, "robots.txt"), "w").write(
     "User-agent: *\nAllow: /\n"
-    "Disallow: /raffle-admin.html\nDisallow: /vip-admin.html\nDisallow: /merch-admin.html\nDisallow: /api/\n"
+    "Disallow: /raffle-admin.html\nDisallow: /vip-admin.html\nDisallow: /merch-admin.html\nDisallow: /admin.html\nDisallow: /api/\n"
     f"\nSitemap: {SITE}/sitemap.xml\n")
 
 open(os.path.join(out, "vercel.json"), "w").write(json.dumps({
