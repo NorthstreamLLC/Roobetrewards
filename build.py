@@ -168,7 +168,7 @@ def nav(active=""):
 def footer():
     rew = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[:4])
     rew2 = "".join(f'<a href="/{f[:-5]}">{t}</a>' for f, _, t, _ in MENU_ITEMS[4:])
-    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/exclusive-promotions">Exclusive Promotions</a><a href="/blog">Blog</a><a href="/watch">Watch Live</a><a href="/#faq">FAQ</a><a href="/contact">Contact Us</a>'
+    rew2 += '<a href="/vip-transfer">VIP Transfer</a><a href="/exclusive-promotions">Exclusive Promotions</a><a href="/transparency">Transparency Report</a><a href="/blog">Blog</a><a href="/watch">Watch Live</a><a href="/#faq">FAQ</a><a href="/contact">Contact Us</a>'
     return f"""<footer>
   <div class="wrap">
     <div class="foot-grid">
@@ -648,7 +648,8 @@ proof_block = f"""
   </div>
   <div class="pay-list rv">{payout_rows}</div>
   <p class="pay-note rv">Usernames are masked the same way they appear on the
-    <a href="/leaderboard">live leaderboard</a>. Winners are contacted by the VIP team directly.</p>
+    <a href="/leaderboard">live leaderboard</a>. Winners are contacted by the VIP team directly &mdash;
+    see the full <a href="/transparency">transparency report</a> for live wager and payout data.</p>
 </div></section>"""
 
 # Homepage block — the live promo in the showcase banner, or a teaser when there isn't one.
@@ -1829,6 +1830,68 @@ PAGES["exclusive-promotions.html"] = dict(
 
 """)
 
+# ================= TRANSPARENCY REPORT =================
+# A linkable asset: aggregate data nobody else publishes, pulled live from the
+# same affiliate API the leaderboard uses. Methodology is stated openly because
+# that is the entire point — numbers without a method are just marketing.
+payout_ledger = "".join(payout_row(p) for p in PAYOUTS)
+
+PAGES["transparency.html"] = dict(
+    title="Roobet Rewards Transparency Report — Live Payout Data",
+    desc="Live transparency report for Roobet rewards under codes DAILY and ELITE: community wager totals, payouts made, VIP transfers completed and merch shipped, with the methodology stated in full.",
+    kw="roobet rewards transparency, roobet payout proof, roobet affiliate data, roobet community wager, roobet rewards paid out",
+    schema={"@context": "https://schema.org", "@type": "Dataset",
+            "name": "Roobet Casino Rewards — Payout and Wager Transparency Report",
+            "description": "Aggregate community wager totals and reward payouts for players using Roobet affiliate codes DAILY and ELITE, refreshed from the Roobet affiliate API.",
+            "url": SITE + "/transparency",
+            "license": "https://creativecommons.org/licenses/by/4.0/",
+            "creator": {"@type": "Organization", "name": "Roobet Casino Rewards"},
+            "isAccessibleForFree": True,
+            "keywords": ["Roobet", "casino rewards", "affiliate data", "payouts", "wager leaderboard"]},
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  {crumb("Transparency Report")}
+  <span class="eyebrow rv">&#128202; Open Data</span>
+  <h1 class="rv d1">Roobet Rewards <span class="grad">Transparency Report</span></h1>
+  <p class="lead rv d2">Every rewards site claims big numbers. This page publishes ours &mdash; community
+    wager totals, what has actually been paid out, and exactly how each figure is calculated.
+    Live from the Roobet affiliate API, not a screenshot.</p>
+</div></section>
+
+<section style="padding-top:6px"><div class="wrap">
+  <div class="tr-grid rv" id="tr-stats">
+    <div class="tr-stat"><span class="trs-l">Community wagered</span><b class="trs-v" id="tr-wagered">&mdash;</b><span class="trs-n">Current period, top 100 tracked players</span></div>
+    <div class="tr-stat"><span class="trs-l">Players tracked</span><b class="trs-v" id="tr-players">&mdash;</b><span class="trs-n">On codes DAILY and ELITE</span></div>
+    <div class="tr-stat"><span class="trs-l">Leaderboard pool</span><b class="trs-v">$50,000</b><span class="trs-n">Paid every period, fixed</span></div>
+    <div class="tr-stat"><span class="trs-l">Milestone pool</span><b class="trs-v">$11,350</b><span class="trs-n">Guaranteed, claimable monthly</span></div>
+    <div class="tr-stat"><span class="trs-l">VIP transfers</span><b class="trs-v" id="tr-vip">&mdash;</b><span class="trs-n">Completed to date</span></div>
+    <div class="tr-stat"><span class="trs-l">Merch claims</span><b class="trs-v" id="tr-merch">&mdash;</b><span class="trs-n">Verified and shipped</span></div>
+  </div>
+  <p class="tr-updated rv" id="tr-updated">Loading live figures&hellip;</p>
+</div></section>
+
+<section style="padding-top:20px"><div class="wrap">
+  <div class="center rv promo-head">
+    <span class="eyebrow">&#10003; The Ledger</span>
+    <h2>What We've Actually Paid</h2>
+    <p class="lead">Named payouts, newest first. Usernames are masked the same way they appear on the live leaderboard.</p>
+  </div>
+  <div class="pay-list rv">{payout_ledger}</div>
+</div></section>
+
+<section style="padding-top:26px"><div class="wrap">
+  <div class="center rv promo-head"><span class="eyebrow">&#128300; Methodology</span><h2>How These Numbers Are Calculated</h2></div>
+  <div class="cards c2" style="margin-top:6px">
+    <div class="card rv"><div class="glow"></div><div class="ic">&#128202;</div><h3>Community wagered</h3><p>Summed from the Roobet affiliate API across both codes, DAILY and ELITE, for the current leaderboard period (16th 00:00 UTC to the 15th). It covers the <b>top 100 tracked players only</b> &mdash; total wager across all players is higher, and we do not publish a number we cannot verify.</p></div>
+    <div class="card rv d1"><div class="glow"></div><div class="ic">&#127942;</div><h3>Prize pools</h3><p>The $50,000 leaderboard and $11,350 milestone figures are fixed commitments, not estimates. The leaderboard ladder pays 1st through 100th place; the milestone track pays at every tier reached. Both are published in full on their own pages.</p></div>
+    <div class="card rv d2"><div class="glow"></div><div class="ic">&#128142;</div><h3>VIP transfers and merch</h3><p>Counts come from our own claim system. A VIP transfer counts once Roobet has matched the status; a merch claim counts once the win is verified and the shirt has shipped. Pending and rejected claims are excluded.</p></div>
+    <div class="card rv d3"><div class="glow"></div><div class="ic">&#9888;&#65039;</div><h3>What this does not include</h3><p>Roobet's own rakeback, daily, weekly and monthly bonuses are paid by Roobet directly and are not counted here &mdash; they sit on top. Nor do we count the free-to-enter raffle or ELITE Points, which are settled through Slotessentials.</p></div>
+  </div>
+  <p class="tr-note rv">Figures refresh every 10 minutes. If a number looks wrong,
+    <a href="/contact">tell us</a> &mdash; we would rather correct it than defend it.</p>
+</div></section>
+""")
+
 PAGES["contact.html"] = dict(
     title="Contact Us — VIP Team on Telegram & Discord",
     desc="Questions about our Roobet rewards? Contact our VIP Team on Telegram or join us on Discord — reward claims, VIP transfers, merch shipping and KYC help, handled personally.",
@@ -2707,6 +2770,14 @@ PAGE_FAQS = {
   "Yes. Guides are reviewed as Roobet changes its payment methods, verification requirements and rewards structure, so the steps match what you will actually see."),
  ("Which Roobet guide should I read first?",
   "If you are new, start with how to deposit on Roobet, then how to KYC on Roobet — verification is required before your first withdrawal, so doing it early saves time later."),
+],
+"transparency.html": [
+ ("Where does the community wager figure come from?",
+  "It is summed live from the Roobet affiliate API across codes DAILY and ELITE for the current leaderboard period, covering the top 100 tracked players. It is not an estimate and it is not a screenshot."),
+ ("Why is the wager total only the top 100 players?",
+  "The affiliate API returns the top 100 by wager for the period. Total wager across every player is higher, but we only publish figures we can verify, so the number shown is deliberately conservative."),
+ ("Does the transparency report include Roobet's own bonuses?",
+  "No. Roobet's rakeback, daily, weekly and monthly bonuses are paid by Roobet directly and sit on top of everything counted here. The report covers only rewards paid through codes DAILY and ELITE."),
 ],
 "contact.html": [
  ("How fast does the VIP team reply?",
