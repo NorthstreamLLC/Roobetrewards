@@ -983,6 +983,18 @@ document.querySelectorAll('.flip').forEach(c => {
       $('rf-meta').textContent = '';
       return;
     }
+    // closed but not yet drawn — don't render an expired raffle as if it's live
+    if (!r.drawn && Date.now() > r.endsAt) {
+      $('rf-title').textContent = 'Entries are closed';
+      $('rf-info').innerHTML = esc(r.title) + ' has ended &mdash; winners are being drawn and will be ' +
+        'announced live on <a href="https://kick.com/dailygambling" target="_blank" rel="noopener" ' +
+        'style="color:var(--gold);font-weight:700">stream</a>. The next raffle opens shortly.';
+      $('rf-actions').innerHTML =
+        '<a class="btn btn-gold" href="https://kick.com/dailygambling" target="_blank" rel="noopener">Watch the draw on Kick</a>' +
+        '<a class="btn btn-ghost" href="https://discord.gg/dailygamba" target="_blank" rel="noopener">Get notified in Discord</a>';
+      $('rf-meta').textContent = 'Free to enter · one entry per Kick account · active players only.';
+      return;
+    }
     if (r.drawn) {
       $('rf-title').textContent = `🏁 ${r.title} — Winners`;
       $('rf-info').innerHTML = (r.prize ? `<b style="color:var(--gold)">${esc(r.prize)}</b> — ` : '') + 'congratulations to:';
