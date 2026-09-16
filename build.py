@@ -1837,8 +1837,8 @@ PAGES["exclusive-promotions.html"] = dict(
 #   given_away        : headline all-time figure
 #   milestones_monthly: set once you have the number, e.g. "$8,400" ("" hides the tile)
 TRANSPARENCY = dict(
-    given_away="$3,000,000",
-    given_away_note="Across every reward program since launch",
+    given_away="$3M+",
+    given_away_note="Cumulative across every reward program since launch",
     milestones_monthly="",
     milestones_note="Claimed by players each month",
 )
@@ -1851,7 +1851,7 @@ _tr_milestone_tile = (f"""
 
 PAGES["transparency.html"] = dict(
     title="Roobet Rewards Transparency Report — Live Payout Data",
-    desc="Transparency report for Roobet rewards under codes DAILY and ELITE: $3,000,000 given away, the payout ledger, fixed prize pools and verified merch claims — with the methodology stated in full.",
+    desc="Transparency report for Roobet rewards under codes DAILY and ELITE: $3M+ given away, the payout ledger, fixed prize pools and verified merch claims — with the methodology stated in full.",
     kw="roobet rewards transparency, roobet payout proof, roobet rewards paid out, roobet casino rewards proof, roobet affiliate payouts",
     schema={"@context": "https://schema.org", "@type": "Dataset",
             "name": "Roobet Casino Rewards — Payout and Wager Transparency Report",
@@ -1896,7 +1896,7 @@ PAGES["transparency.html"] = dict(
 <section style="padding-top:26px"><div class="wrap">
   <div class="center rv promo-head"><span class="eyebrow">&#128300; Methodology</span><h2>How These Numbers Are Calculated</h2></div>
   <div class="cards c2" style="margin-top:6px">
-    <div class="card rv"><div class="glow"></div><div class="ic">&#128176;</div><h3>The headline figure</h3><p>{TRANSPARENCY['given_away']} is the running total paid out to players across every reward program we run &mdash; leaderboard cash, wager milestones, free spins, promo payouts, merch and VIP perks &mdash; since launch. It counts rewards delivered, not rewards advertised.</p></div>
+    <div class="card rv"><div class="glow"></div><div class="ic">&#128176;</div><h3>The headline figure</h3><p>A cumulative estimate of what has gone back to players across every reward program we run since launch &mdash; leaderboard cash, wager milestones, free spins, promo payouts, merch and VIP perks. It is added up across programs rather than audited as one figure, so we state it as an approximation rather than an exact total.</p></div>
     <div class="card rv d1"><div class="glow"></div><div class="ic">&#127942;</div><h3>Prize pools</h3><p>The $50,000 leaderboard and $11,350 milestone figures are fixed commitments, not estimates. The leaderboard ladder pays 1st through 100th place; the milestone track pays at every tier reached. Both are published in full on their own pages.</p></div>
     <div class="card rv d2"><div class="glow"></div><div class="ic">&#128085;</div><h3>Merch claims</h3><p>Counted from our own claim system, and only once the max win has been verified against the player's Roobet account and the shirt has actually shipped. Pending and rejected claims are excluded from the number.</p></div>
     <div class="card rv d3"><div class="glow"></div><div class="ic">&#9888;&#65039;</div><h3>What this does not include</h3><p>Roobet's own rakeback, daily, weekly and monthly bonuses are paid by Roobet directly and are not counted here &mdash; they sit on top. We also don't publish community wager totals or player counts, for competitive reasons.</p></div>
@@ -2786,8 +2786,8 @@ PAGE_FAQS = {
   "If you are new, start with how to deposit on Roobet, then how to KYC on Roobet — verification is required before your first withdrawal, so doing it early saves time later."),
 ],
 "transparency.html": [
- ("What does the $3,000,000 given away figure cover?",
-  "It is the running total paid out to players across every reward program since launch: leaderboard cash, wager milestones, free spins, promo payouts, Max Win Merch and VIP perks. It counts rewards actually delivered, not rewards advertised."),
+ ("What does the $3M+ given away figure cover?",
+  "It is a cumulative estimate of rewards delivered to players across every program since launch: leaderboard cash, wager milestones, free spins, promo payouts, Max Win Merch and VIP perks. It is summed across programs rather than audited as one figure, which is why it is stated as an approximation."),
  ("Why don't you publish community wager totals?",
   "Wager volume and player counts would tell competing affiliates the size of our Roobet deal, so we keep them private. Everything shown on this page is either a fixed commitment or something already paid out."),
  ("Does the transparency report include Roobet's own bonuses?",
