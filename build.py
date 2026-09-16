@@ -152,6 +152,7 @@ def nav(active=""):
       {link("/watch", "Watch Live")}
       {link("/youtube", "YouTube")}
       <a href="/#how-to-sign-up">How To Sign Up</a>
+      {link("/transparency", "Transparency")}
       <a class="nav-m-only" href="/exclusive-promotions">Exclusive Promotions</a>
       <a class="nav-m-only" href="/blog">Guides &amp; Blog</a>
       <a class="nav-m-only" href="/contact">Contact</a>
