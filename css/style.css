@@ -1051,6 +1051,11 @@ a.vt-alt:hover{color:var(--gold)}
   padding-top:13px;border-top:1px solid var(--hairline)}
 .pr-when{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--text-faint);white-space:nowrap}
 .pr-cta{margin-left:auto;padding:10px 16px;font-size:13px}
+.pr-ask{padding:10px 14px;font-size:12.5px;white-space:nowrap}
+@media(max-width:460px){
+  .pr-foot{flex-direction:column;align-items:stretch}
+  .pr-ask,.pr-cta{margin-left:0;justify-content:center}
+}
 .promo-empty{flex:1 1 100%;display:flex;flex-direction:column;align-items:center;gap:10px;
   text-align:center;padding:38px 30px;border-radius:var(--radius);
   background:var(--surface);border:1px dashed rgba(245,165,36,.26)}

@@ -583,6 +583,7 @@ def promo_card(p, expired=False):
     badge = ('<span class="pr-badge is-done">&#10003; Paid out</span>' if expired else
              '<span class="pr-badge is-live"><span class="live-dot"></span>Live now</span>')
     cta = ("" if expired else
+           f'<a class="btn btn-ghost pr-ask" href="{DISCORD}" target="_blank" rel="noopener">Questions? Ask in Discord</a>'
            f'<a class="btn btn-gold pr-cta" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY {ARR}</a>')
     unit = f'<span class="pr-unit">{p["unit"]}</span>' if p.get("unit") else ""
     return f"""<article class="promo{' is-expired' if expired else ''} rv" data-c="{p.get('c', 'gold')}">
