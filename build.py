@@ -151,6 +151,7 @@ def nav(active=""):
             <a href="/roobet-rewards">Every reward explained</a>
             <a href="/blog">Guides &amp; Blog</a>
             <a href="{TELEGRAM}" target="_blank" rel="noopener">Connect with our exclusive VIP team</a>
+            <a href="/transparency">Transparency</a>
             <a class="mf-cta{' is-live' if ACTIVE_PROMOS else ''}" href="/exclusive-promotions">{
               f'<span class="live-dot"></span>{ACTIVE_PROMOS[0]["title"]} is live' if ACTIVE_PROMOS
               else 'Exclusive Promotions'} {ARR}</a>
