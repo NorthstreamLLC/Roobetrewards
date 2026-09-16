@@ -199,8 +199,8 @@ regenerate at github.com/settings/personal-access-tokens when pushes start faili
 
 ## 8. Open items
 
-- Domain currently redirects apex → `www`, while canonicals/sitemap use the apex. Pick one as
-  primary in Vercel → Domains (apex recommended) so the signals match.
+- ~~Apex/www mismatch~~ — resolved. Apex 301s to `www`, and `SITE`, canonicals, `og:url` and the
+  sitemap all use `www`. Keep `SITE` in `build.py` as the single source of truth if the domain moves.
 - 8 more Max Win shirt designs to add (16 total planned; 8 live).
 - Watch-time → ELITE Points is described on `/watch` but tracked manually; could be automated
   later with Kick session tracking.

@@ -121,6 +121,7 @@ def nav(active=""):
   <div class="nav-inner">
     <a class="brand" href="/"><img src="/assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
     <div class="nav-links">
+      {link("/", "Home")}
       <div class="dropdown mega">
         <button aria-haspopup="true" aria-expanded="false"{rewards_cls}>Rewards {CHEV}</button>
         <div class="menu">
@@ -142,7 +143,9 @@ def nav(active=""):
             <a href="/roobet-rewards">Every reward explained</a>
             <a href="/blog">Guides &amp; Blog</a>
             <a href="{TELEGRAM}" target="_blank" rel="noopener">Connect with our exclusive VIP team</a>
-            <a class="mf-cta" href="/exclusive-promotions">Exclusive Promotions {ARR}</a>
+            <a class="mf-cta{' is-live' if ACTIVE_PROMOS else ''}" href="/exclusive-promotions">{
+              f'<span class="live-dot"></span>{ACTIVE_PROMOS[0]["title"]} is live' if ACTIVE_PROMOS
+              else 'Exclusive Promotions'} {ARR}</a>
           </div>
         </div>
       </div>
@@ -236,6 +239,37 @@ def page_banner(slug):
         return ""
     return home_raffle if slug in RAFFLE_BANNER_PAGES else home_promo
 
+def promo_modal_html():
+    """Entry pop-up: the live promo while one is running, the free-spins offer otherwise."""
+    if ACTIVE_PROMOS:
+        p = ACTIVE_PROMOS[0]
+        return f"""<div class="modal-back" id="promo-modal" role="dialog" aria-modal="true" aria-label="{p['title']}">
+  <div class="modal is-promo">
+    <button class="modal-x" aria-label="Close">&times;</button>
+    <span class="eyebrow"><span class="live-dot"></span> Live Now</span>
+    <h2>{p['title']}</h2>
+    <p class="modal-fig">{p['prize']}<span>{p.get('unit', '')}</span></p>
+    <p class="lead" style="margin:10px auto 18px;max-width:440px">{p['terms'][0]}</p>
+    {promo_ladder(p)}
+    <div class="hero-cta" style="justify-content:center;margin-top:20px">
+      <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with code DAILY {ARR}</a>
+      <a class="btn btn-ghost btn-lg" href="/exclusive-promotions">Full details</a>
+    </div>
+  </div>
+</div>"""
+    return f"""<div class="modal-back" id="promo-modal" role="dialog" aria-modal="true" aria-label="Free spins offer">
+  <div class="modal">
+    <button class="modal-x" aria-label="Close">&times;</button>
+    <span class="eyebrow">&#127873; Exclusive Offer</span>
+    <h2>Join Roobet on code <span class="grad">DAILY</span></h2>
+    <p class="lead" style="margin:12px auto 24px">&hellip;and receive <b style="color:var(--gold)">Free Spins</b> &mdash; up to 125 spins at $1.00 each.</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Claim with code DAILY {ARR}</a>
+      <a class="btn btn-ghost btn-lg" href="/free-spins">See Free Spins Tiers</a>
+    </div>
+  </div>
+</div>"""
+
 def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
     canon = SITE + ("/" if fname == "index.html" else "/" + fname[:-5])
     page_name = title.split(" — ")[0].split(" | ")[0]
@@ -327,18 +361,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
 {page_banner(canon.rsplit('/',1)[-1])}
 </main>
 {footer()}
-<div class="modal-back" id="promo-modal" role="dialog" aria-modal="true" aria-label="Free spins offer">
-  <div class="modal">
-    <button class="modal-x" aria-label="Close">&times;</button>
-    <span class="eyebrow">🎁 Exclusive Offer</span>
-    <h2>Join Roobet on code <span class="grad">DAILY</span></h2>
-    <p class="lead" style="margin:12px auto 24px">…and receive <b style="color:var(--gold)">Free Spins</b> — up to 125 spins at $1.00 each.</p>
-    <div class="hero-cta" style="justify-content:center">
-      <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Claim with code DAILY {ARR}</a>
-      <a class="btn btn-ghost btn-lg" href="/free-spins">See Free Spins Tiers</a>
-    </div>
-  </div>
-</div>
+{promo_modal_html()}
 <script src="/js/main.js" defer></script>
 </body>
 </html>"""
@@ -435,7 +458,7 @@ RAFFLE_NOTE = (f'{RAFFLE["prize"]} {RAFFLE["unit"]} &middot; {RAFFLE["short"]}'.
 #   stat      : dict(label=, value=, badge=, rows=[(emoji, text), …]) floating proof card
 def banner(title, href, cta="Learn more", eyebrow="", text="", c="gold", ic="",
            note="", deadline="", deadline_label="Ends in", ghost="", ghost_href="",
-           external=False, mark="", art=None, stat=None):
+           external=False, mark="", art=None, stat=None, ladder=""):
     rel = ' rel="nofollow sponsored" target="_blank"' if external else ""
     if mark and mark in title:
         title = title.replace(mark, f'<span class="bn-mark">{mark}</span>', 1)
@@ -462,6 +485,7 @@ def banner(title, href, cta="Learn more", eyebrow="", text="", c="gold", ic="",
       {f'<span class="bn-eyebrow">{icon(ic, 14) if ic else ""}{eyebrow}</span>' if eyebrow else ''}
       <h2 class="bn-title">{title}</h2>
       {f'<p class="bn-text">{text}</p>' if text else ''}
+      {ladder}
       {timer}
       <div class="bn-btns">
         <a class="btn btn-gold btn-lg" href="{href}"{rel}>{cta} {ARR}</a>
@@ -481,7 +505,26 @@ def banner(title, href, cta="Learn more", eyebrow="", text="", c="gold", ic="",
 #   unit   : small label beside the prize  window: dates, however you write them
 #   ic     : icon key from ICON_PATHS      c     : accent (gold/green/violet/cyan/pink)
 #   terms  : list of bullet lines (HTML allowed, <b> for emphasis)
-ACTIVE_PROMOS = []
+#   ladder : optional list of pool steps, e.g. ["$10K","$20K",…]
+#   at     : index of the step currently reached (0 = first)
+#   foot   : optional line under the ladder
+ACTIVE_PROMOS = [
+    dict(
+        title="Roobet Airdrop V4",
+        prize="$10,000",
+        unit="CURRENT POOL",
+        window="Sep 16 &ndash; Oct 31, 2026",
+        ic="gift", c="gold",
+        ladder=["$10K", "$20K", "$30K", "$40K", "$50K"],
+        at=0,
+        foot="&#127875; Paid out on Halloween",
+        terms=[
+            "Every dollar the community wagers on code <b>DAILY</b> grows the airdrop",
+            "Starts at <b>$10,000</b> and climbs toward <b>$50,000</b>",
+            "Counts from <b>9/16</b> to <b>10/31</b> &mdash; paid out on Halloween",
+        ],
+    ),
+]
 
 PAST_PROMOS = [
     dict(
@@ -510,6 +553,20 @@ PAST_PROMOS = [
     ),
 ]
 
+def promo_ladder(p):
+    """The $10K -> $50K pool ladder, with everything up to `at` marked reached."""
+    if not p.get("ladder"):
+        return ""
+    at = p.get("at", 0)
+    steps = "".join(
+        f'<span class="pl-step{" is-on" if k <= at else ""}{" is-now" if k == at else ""}">'
+        f'<i></i><b>{s}</b></span>'
+        for k, s in enumerate(p["ladder"]))
+    pct = 0 if len(p["ladder"]) < 2 else round(at / (len(p["ladder"]) - 1) * 100)
+    foot = f'<span class="pl-foot">{p["foot"]}</span>' if p.get("foot") else ""
+    return (f'<div class="pladder"><div class="pl-track"><i style="width:{pct}%"></i></div>'
+            f'<div class="pl-steps">{steps}</div>{foot}</div>')
+
 def promo_card(p, expired=False):
     terms = "".join(f"<li>{t}</li>" for t in p["terms"])
     badge = ('<span class="pr-badge is-done">&#10003; Paid out</span>' if expired else
@@ -525,6 +582,7 @@ def promo_card(p, expired=False):
   <p class="pr-prize">{p['prize']}{unit}</p>
   <h3>{p['title']}</h3>
   <ul class="pr-terms">{terms}</ul>
+  {promo_ladder(p)}
   <div class="pr-foot"><span class="pr-when">{p['window']}</span>{cta}</div>
 </article>"""
 
@@ -555,18 +613,57 @@ else:
 
 past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
 
-# Homepage block — the live promo when there is one, a teaser when there isn't.
-if ACTIVE_PROMOS:
-    home_promo = f"""
-<section id="promo"><div class="wrap">
+# ================= PROOF OF PAYMENT =================
+# Real payouts, newest first. This is the most persuasive content on the site —
+# keep it current. (who, what, amount, when, kind)
+#   kind: cash | merch | spins | bonus   — only changes the icon and accent
+PAYOUTS = [
+    ("Mrt****", "1st place, monthly leaderboard", "$12,500", "Sep 2026", "cash"),
+    ("Spi****", "2nd place, monthly leaderboard", "$7,000", "Sep 2026", "cash"),
+    ("Mar****", "3rd place, monthly leaderboard", "$5,000", "Sep 2026", "cash"),
+    ("kek****", "VIP status matched from BetFury", "VIP transfer", "Aug 2026", "bonus"),
+    ("she****", "VIP status matched from Stake", "VIP transfer", "Jun 2026", "bonus"),
+    ("Community", "Raw Cash Wager Race payout", "$200", "Sep 2026", "cash"),
+    ("Community", "Double Monthly Bonus", "2x bonus", "Aug 2026", "bonus"),
+]
+PAYOUT_ICONS = {"cash": ("coins", "gold"), "merch": ("shirt", "cyan"),
+                "spins": ("spin", "green"), "bonus": ("star", "violet")}
+
+def payout_row(p):
+    who, what, amt, when, kind = p
+    ic, c = PAYOUT_ICONS.get(kind, ("coins", "gold"))
+    return (f'<div class="pay-row" data-c="{c}"><span class="pay-ic">{icon(ic, 17)}</span>'
+            f'<span class="pay-who">{who}</span><span class="pay-what">{what}</span>'
+            f'<b class="pay-amt">{amt}</b><span class="pay-when">{when}</span></div>')
+
+payout_rows = "".join(payout_row(p) for p in PAYOUTS)
+
+proof_block = f"""
+<section id="paid"><div class="wrap">
   <div class="center rv promo-head">
-    <span class="eyebrow">&#9889; Limited Time</span>
-    <h2>Exclusive Promotion{'s' if len(ACTIVE_PROMOS) > 1 else ''}</h2>
-    <p class="lead">Running right now on top of everything else &mdash; only for players under code DAILY or ELITE.</p>
+    <span class="eyebrow">&#10003; Receipts</span>
+    <h2>Recently Paid Out</h2>
+    <p class="lead">Everyone promises six figures. These actually went out &mdash; leaderboard cash,
+      VIP transfers, promo payouts and merch, to players under code DAILY and ELITE.</p>
   </div>
-  <div class="promo-grid">{"".join(promo_card(p) for p in ACTIVE_PROMOS)}</div>
-  <p class="center rv" style="margin-top:18px"><a href="/exclusive-promotions" style="color:var(--gold);font-weight:700;font-size:13.5px">See all promotions {ARR}</a></p>
+  <div class="pay-list rv">{payout_rows}</div>
+  <p class="pay-note rv">Usernames are masked the same way they appear on the
+    <a href="/leaderboard">live leaderboard</a>. Winners are contacted by the VIP team directly.</p>
 </div></section>"""
+
+# Homepage block — the live promo in the showcase banner, or a teaser when there isn't one.
+if ACTIVE_PROMOS:
+    _p = ACTIVE_PROMOS[0]
+    home_promo = banner(
+        title=_p["title"],
+        mark=_p["title"].split()[-1],
+        eyebrow="Live Now", ic=_p.get("ic", "spark"), c=_p.get("c", "gold"),
+        text=_p["terms"][0].replace("<b>", "<b style='color:var(--text)'>"),
+        href="/exclusive-promotions", cta="See the promo",
+        art=PROMO_ART,
+        stat=dict(label=_p.get("unit", "Current pool").title(), value=_p["prize"], badge="Live",
+                  rows=[("&#128197;", _p["window"]), ("&#128200;", "Grows with community wager")]),
+        ladder=promo_ladder(_p))
 else:
     home_promo = banner(
         title="Short-Run Promos, Real Cash Payouts",
@@ -642,6 +739,16 @@ reward_cards = "".join(f"""<a class="card rv d{i%3+1}" href="/{f[:-5]}"><div cla
         ("roobet-rewards.html", "💰", "Roobet Rewards System", "Instant rakeback every 30 minutes, daily/weekly/monthly bonuses, the Vault and rakeboosts up to +20% — fully explained."),
     ]))
 
+# Urgency strip in the hero — only while a promo is running.
+# PROMO_DEADLINE is an ISO date the countdown ticks toward.
+PROMO_DEADLINE = "2026-10-31T23:59:59Z"
+hero_urgency = (f"""
+    <a class="hero-urg rv d2" href="/exclusive-promotions">
+      <span class="hu-dot"></span>
+      <span class="hu-t"><b>{ACTIVE_PROMOS[0]['title']}</b> &mdash; pool at {ACTIVE_PROMOS[0]['prize']} and climbing</span>
+      <span class="hu-cd">Ends in <b data-deadline-iso="{PROMO_DEADLINE}">&mdash;</b></span>
+    </a>""" if ACTIVE_PROMOS else "")
+
 HERO_BD = """<div class="hero-bd" aria-hidden="true">
   <i class="bd-wash"></i><i class="bd-cone"></i>
   <img class="bd-chip" src="/assets/roobet-chip.png" alt="" width="820" height="820" aria-hidden="true">
@@ -666,12 +773,18 @@ PAGES["index.html"] = dict(
   {HERO_BD}
   <div class="hero-inner">
     <span class="eyebrow rv">The #1 Roobet Rewards Hub</span>
-    <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$" aria-live="off">$100,000</span> in Monthly Rewards.<br>Every Single Month.</h1>
+    <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Monthly Rewards.<br>Every Single Month.</h1>
     <p class="lead rv d2">The best Roobet casino rewards on the planet &mdash; a $50,000 wager leaderboard, exclusive free spins, wager milestones, max win merch, giveaways and more. All unlocked with code <b style="color:var(--gold)">DAILY</b> or <b style="color:var(--gold)">ELITE</b>.</p>
+    {hero_urgency}
     <div class="hero-cta rv d3">
       <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY</a>
       <a class="btn btn-ghost btn-lg" href="{KYC}" target="_blank" rel="noopener">How to KYC on Roobet</a>
     </div>
+    <p class="hero-free rv d4">
+      <span class="hf-tag">No deposit needed</span>
+      Not ready to deposit? The <a href="/giveaways">Community Raffle</a> is free to enter &mdash;
+      sign in with Kick, one click, winners drawn live on stream.
+    </p>
   </div>
 </section>
 
@@ -760,6 +873,7 @@ PAGES["index.html"] = dict(
 </div></section>
 
 {home_promo}
+{proof_block}
 
 <section style="padding-top:6px"><div class="wrap">
   <div class="vip-band rv">

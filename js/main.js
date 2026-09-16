@@ -1,4 +1,60 @@
 /* roobetcasinorewards.com — motion + interactions */
+
+// ===== conversion tracking =====
+// Every affiliate click is an event, tagged with where on the page it came from,
+// so GA4 can tell you which section actually drives sign-ups.
+(function () {
+  const ev = (name, params) => {
+    if (window.gtag) window.gtag('event', name, params);
+  };
+  window.rrTrack = ev;
+
+  // a readable name for the block the link sits in
+  const whereFrom = (el) => {
+    const sec = el.closest('[id]');
+    if (sec && sec.id) return sec.id;
+    const named = el.closest('.bn,.promo,.vip-band,.hero,.modal,.mega-menu,.menu,nav,footer,' +
+      '.cta-banner,.pd-info,.banner,.card,.detail,.rwbar');
+    if (!named) return 'page';
+    return (named.className || named.tagName).toString().split(' ')[0].replace(/^\./, '') || 'page';
+  };
+
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    const label = (a.textContent || '').trim().slice(0, 60);
+    const from = whereFrom(a);
+
+    if (/roobet\.com/i.test(href)) {
+      const code = /ref=elite/i.test(href) ? 'ELITE' : (/ref=daily/i.test(href) ? 'DAILY' : 'none');
+      ev('affiliate_click', { code: code, link_text: label, section: from, page_path: location.pathname });
+      return;
+    }
+    const outbound = [
+      [/t\.me\//i, 'telegram'], [/discord\.(gg|com)/i, 'discord'],
+      [/kick\.com/i, 'kick'], [/youtube\.com|youtu\.be/i, 'youtube'],
+      [/slotessentials\./i, 'slotessentials'], [/howtokyc\.com/i, 'kyc_guide'],
+    ];
+    for (const [re, name] of outbound) {
+      if (re.test(href)) {
+        ev('outbound_click', { destination: name, link_text: label, section: from, page_path: location.pathname });
+        return;
+      }
+    }
+  }, { capture: true });
+
+  // on-site actions worth counting as micro-conversions
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-vt-open],[data-mc-open],#rf-enter,[data-mc-drop]');
+    if (!b) return;
+    const kind = b.hasAttribute('data-vt-open') ? 'vip_transfer_open'
+      : b.hasAttribute('data-mc-open') ? 'merch_claim_open'
+      : b.id === 'rf-enter' ? 'raffle_enter_click' : 'merch_upload_click';
+    ev(kind, { page_path: location.pathname });
+  }, { capture: true });
+})();
+
 (function () {
   // sticky nav
   const nav = document.querySelector('nav');
@@ -134,6 +190,20 @@
     }
     return new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth() + 1, 1)); // monthly
   }
+  // fixed-date countdowns, e.g. the promo deadline
+  document.querySelectorAll('[data-deadline-iso]').forEach(el => {
+    const target = new Date(el.dataset.deadlineIso).getTime();
+    if (isNaN(target)) return;
+    const upd = () => {
+      let s = Math.max(0, (target - Date.now()) / 1000 | 0);
+      const d = s / 86400 | 0; s %= 86400;
+      const h = s / 3600 | 0; s %= 3600;
+      const m = s / 60 | 0; s %= 60;
+      el.textContent = d > 0 ? `${d}d ${h}h ${m}m` : `${h}h ${m}m ${s}s`;
+    };
+    upd(); setInterval(upd, 1000);
+  });
+
   document.querySelectorAll('[data-deadline]').forEach(el => {
     const target = next(el.dataset.deadline);
     const upd = () => {
@@ -159,12 +229,46 @@ document.querySelectorAll('.flip').forEach(c => {
 (function () {
   const m = document.getElementById('promo-modal');
   if (!m) return;
-  try {
-    if (sessionStorage.getItem('promoShown')) return;
-    sessionStorage.setItem('promoShown', '1');
-  } catch (e) { /* private mode: still show once */ }
-  setTimeout(() => m.classList.add('show'), 1200);
+  try { if (sessionStorage.getItem('promoShown')) return; } catch (e) {}
+
+  let done = false, engaged = false, lastY = 0, idle = null;
   const close = () => m.classList.remove('show');
+
+  function teardown() {
+    document.removeEventListener('mouseout', onLeave);
+    window.removeEventListener('blur', onBlur);
+    window.removeEventListener('scroll', onScroll);
+    clearTimeout(idle);
+  }
+  const open = () => {
+    if (done) return;
+    done = true;
+    try { sessionStorage.setItem('promoShown', '1'); } catch (e) {}
+    m.classList.add('show');
+    if (window.rrTrack) window.rrTrack('promo_modal_shown', { page_path: location.pathname });
+    teardown();
+  };
+
+  // desktop: the pointer leaves through the top of the window
+  function onLeave(e) { if (e.clientY <= 4 && !e.relatedTarget) open(); }
+  // desktop fallback: they tab away after engaging
+  function onBlur() { if (engaged) open(); }
+  // mobile has no exit intent, so use engagement: a fast upward flick back toward
+  // the top (reaching for Back), or a long dwell after reading a fair way down
+  function onScroll() {
+    const y = window.scrollY;
+    const depth = (y + window.innerHeight) / document.documentElement.scrollHeight;
+    if (depth > 0.45) engaged = true;
+    if (engaged && y < lastY - 90 && y < 500) open();
+    lastY = y;
+    clearTimeout(idle);
+    if (engaged) idle = setTimeout(open, 45000);
+  }
+
+  document.addEventListener('mouseout', onLeave);
+  window.addEventListener('blur', onBlur);
+  window.addEventListener('scroll', onScroll, { passive: true });
+
   m.querySelector('.modal-x').addEventListener('click', close);
   m.addEventListener('click', e => { if (e.target === m) close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
