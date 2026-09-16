@@ -102,6 +102,14 @@ REWARD_LINKS = [(u, ic, t) for _, items in REWARD_GROUPS for u, ic, _c, t, _d in
 
 def nav(active=""):
     reward_slugs = {u.lstrip("/") for u, _, _ in REWARD_LINKS}
+    # live-promo pill, sits beside the DailyGambling LIVE pill. Disappears on its
+    # own the moment ACTIVE_PROMOS is emptied.
+    promo_pill = ""
+    if ACTIVE_PROMOS:
+        _short = ACTIVE_PROMOS[0]["title"].replace("Roobet ", "")
+        promo_pill = (f'<a class="promo-pill" href="/exclusive-promotions" '
+                      f'title="{ACTIVE_PROMOS[0]["title"]} is live">'
+                      f'<span class="live-dot"></span>{_short}</a>')
 
     def item(u, ic, c, t, d):
         cls = " is-active" if u.lstrip("/") == active else ""
@@ -159,6 +167,7 @@ def nav(active=""):
     </div>
     <div class="nav-cta">
       <a class="live-pill" id="live-pill" href="/watch" title="DailyGambling is live"><span class="live-dot"></span>LIVE</a>
+      {promo_pill}
       <a class="btn btn-ghost" href="/contact">Contact</a>
       <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Join with DAILY</a>
       <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -1844,6 +1853,9 @@ TRANSPARENCY = dict(
     milestones_exact="$131,640.50",
     milestones_note="Paid out in milestone bonuses",
     milestones_period="the last 8 months",   # stated in the methodology, not on the tile
+    # shirts shipped before the on-site claim system existed. Claims verified
+    # through the new form are added on top of this automatically.
+    merch_baseline=51,
 )
 payout_ledger = "".join(payout_row(p) for p in PAYOUTS)
 
@@ -1882,7 +1894,7 @@ PAGES["transparency.html"] = dict(
   </div>
   <div class="tr-grid rv" id="tr-stats">
     <div class="tr-stat"><span class="trs-l">Leaderboard pool</span><b class="trs-v">$50,000</b><span class="trs-n">Paid every period, fixed commitment</span></div>{_tr_milestone_tile}
-    <div class="tr-stat"><span class="trs-l">Merch claims</span><b class="trs-v" id="tr-merch">&mdash;</b><span class="trs-n">Verified wins, shipped free</span></div>
+    <div class="tr-stat"><span class="trs-l">Merch shipped</span><b class="trs-v" id="tr-merch" data-base="{TRANSPARENCY['merch_baseline']}">{TRANSPARENCY['merch_baseline']}</b><span class="trs-n">Verified max wins, shipped free</span></div>
   </div>
   <p class="tr-updated rv" id="tr-updated">Loading live figures&hellip;</p>
 </div></section>
@@ -1901,7 +1913,7 @@ PAGES["transparency.html"] = dict(
   <div class="cards c2" style="margin-top:6px">
     <div class="card rv"><div class="glow"></div><div class="ic">&#128176;</div><h3>The headline figure</h3><p>A cumulative estimate of what has gone back to players across every reward program we run since launch &mdash; leaderboard cash, wager milestones, free spins, promo payouts, merch and VIP perks. It is added up across programs rather than audited as one figure, so we state it as an approximation rather than an exact total.</p></div>
     <div class="card rv d1"><div class="glow"></div><div class="ic">&#127942;</div><h3>Prize pools and milestones</h3><p>The $50,000 leaderboard and $11,350 milestone pools are fixed commitments, not estimates &mdash; the ladder pays 1st through 100th place, and the milestone track pays at every tier reached. Both are published in full on their own pages. The <b>{TRANSPARENCY['milestones_exact']}</b> figure is what players have actually claimed in milestone bonuses over {TRANSPARENCY['milestones_period']}.</p></div>
-    <div class="card rv d2"><div class="glow"></div><div class="ic">&#128085;</div><h3>Merch claims</h3><p>Counted from our own claim system, and only once the max win has been verified against the player's Roobet account and the shirt has actually shipped. Pending and rejected claims are excluded from the number.</p></div>
+    <div class="card rv d2"><div class="glow"></div><div class="ic">&#128085;</div><h3>Merch shipped</h3><p>{TRANSPARENCY['merch_baseline']} shirts have gone out to players who hit a max win, counted only once the win was verified against their Roobet account and the shirt actually shipped. Claims submitted through the form on this site are added on top automatically; pending and rejected claims are excluded.</p></div>
     <div class="card rv d3"><div class="glow"></div><div class="ic">&#9888;&#65039;</div><h3>What this does not include</h3><p>Roobet's own rakeback, daily, weekly and monthly bonuses are paid by Roobet directly and are not counted here &mdash; they sit on top. We also don't publish community wager totals or player counts, for competitive reasons.</p></div>
   </div>
   <p class="tr-note rv">Figures refresh every 10 minutes. If a number looks wrong,

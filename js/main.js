@@ -430,17 +430,20 @@ document.querySelectorAll('.flip').forEach(c => {
     new Date(t || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
     ' · verified payouts only';
 
+  // the tile is already rendered with the historical baseline; live claims add on top
+  const el = $('tr-merch');
+  const base = parseInt(el.dataset.base, 10) || 0;
+
   fetch('/api/stats')
     .then(r => (r.ok ? r.json() : null))
     .then(d => {
       if (!d) throw new Error('no data');
-      const merch = d.merchClaims;
-      $('tr-merch').textContent = merch ? String(merch.shipped || 0) : '—';
+      const live = d.merchClaims ? (d.merchClaims.shipped || 0) : 0;
+      el.textContent = String(base + live);
       $('tr-updated').textContent = stamp(d.generated);
     })
     .catch(() => {
-      $('tr-merch').textContent = '—';
-      $('tr-updated').textContent = 'Live figures are temporarily unavailable — the fixed pools are unaffected.';
+      $('tr-updated').textContent = 'Live figures are temporarily unavailable — the totals shown are unaffected.';
     });
 })();
 

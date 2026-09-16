@@ -386,6 +386,14 @@ h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
 .live-pill{display:none;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;background:rgba(53,211,154,.1);border:1px solid rgba(53,211,154,.4);color:var(--live);font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.14em}
 .live-pill.on{display:inline-flex}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--live);display:inline-block;animation:dot 1.3s infinite}
+/* live promotion pill — sits next to the stream LIVE pill */
+.promo-pill{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;
+  white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--live);
+  background:rgba(53,211,154,.1);border:1px solid rgba(53,211,154,.4);transition:.16s}
+.promo-pill:hover{background:rgba(53,211,154,.18);border-color:rgba(53,211,154,.7);color:#7ff0c6}
+.promo-pill .live-dot{width:6px;height:6px}
+@media(max-width:1180px){.promo-pill{display:none}}
 /* drops down from under the nav, on the side the LIVE pill sits */
 .live-toast{position:fixed;top:calc(var(--nav-h) + 10px);right:22px;z-index:250;
   display:flex;align-items:center;gap:13px;max-width:400px;padding:15px 46px 15px 17px;
