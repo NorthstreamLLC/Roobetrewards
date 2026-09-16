@@ -764,17 +764,19 @@ TICKER = """<div class="ticker" aria-hidden="true"><div class="ticker-track">
 </div></div>"""
 
 PAGES["index.html"] = dict(
-    title="Best Roobet Casino Rewards \u2014 $100,000 in Monthly Rewards | Code DAILY & ELITE",
-    desc="The best Roobet casino rewards: $100,000 in monthly rewards including a $50,000 wager leaderboard, Roobet free spins, wager milestones, max win merch and more. Join with code DAILY or ELITE.",
-    kw="best casino rewards, best roobet casino rewards, roobet free spins, free spins roobet, sign-up bonus, roobet rewards, $100,000 in monthly rewards",
+    # Targets "roobet casino rewards" (exact-match domain, winnable) rather than the
+    # bare head term "roobet rewards", which roobet.com/rewards owns outright.
+    title="Roobet Casino Rewards \u2014 $100,000+ Monthly | Code DAILY",
+    desc="Roobet casino rewards worth $100,000+ every month with code DAILY: a $50,000 wager leaderboard, $11,350 in wager milestones, exclusive free spins, free max win merch and VIP transfer.",
+    kw="roobet casino rewards, roobet rewards, roobet code daily, roobet wager leaderboard, roobet max win merch, roobet vip transfer, roobet free spins",
     schema=faq_schema,
     body=f"""
 <section class="hero">
   {HERO_BD}
   <div class="hero-inner">
     <span class="eyebrow rv">The #1 Roobet Rewards Hub</span>
-    <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Monthly Rewards.<br>Every Single Month.</h1>
-    <p class="lead rv d2">The best Roobet casino rewards on the planet &mdash; a $50,000 wager leaderboard, exclusive free spins, wager milestones, max win merch, giveaways and more. All unlocked with code <b style="color:var(--gold)">DAILY</b> or <b style="color:var(--gold)">ELITE</b>.</p>
+    <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Roobet Casino Rewards.<br>Every Single Month.</h1>
+    <p class="lead rv d2">Roobet casino rewards on code <b style="color:var(--gold)">DAILY</b> stack on top of everything Roobet already gives you: a $50,000 wager leaderboard, $11,350 in wager milestones, exclusive free spins, free max win merch, VIP status transfer and a free-to-enter community raffle &mdash; over $100,000 paid out every month.</p>
     {hero_urgency}
     <div class="hero-cta rv d3">
       <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY</a>
@@ -1037,7 +1039,7 @@ LB_TABLE = f"""
 <script>window.LB_TIERS = {json.dumps(LB_TIERS)}; window.LB_DATA = {LB_DATA};</script>"""
 
 PAGES["leaderboard.html"] = dict(
-    title="$50,000 Roobet Wager Leaderboard — Monthly Cash Prizes | Code ELITE & DAILY",
+    title="$50,000 Roobet Wager Leaderboard — Monthly Cash Prizes",
     desc="Compete on the $50,000 monthly Roobet wager leaderboard. Wager under code ELITE or DAILY, climb the ranks and win cash prizes, free spins and redeemable points every month.",
     kw="roobet wager leaderboard, $50,000 leaderboard, roobet leaderboard, best roobet casino rewards, wager race",
     body=f"""
@@ -1104,7 +1106,7 @@ for _i, (_w, _r, _plus) in enumerate(miles):
 mile_html = "".join(_mile_rows)
 
 PAGES["wager-milestones.html"] = dict(
-    title="Roobet Wager Milestones — Claim Up to $11,350 Extra Monthly | Code ELITE & DAILY",
+    title="Roobet Wager Milestones — Claim Up to $11,350 Extra Monthly",
     desc="Claim up to $11,350 in extra monthly rewards with Roobet wager milestones. Hit wager targets under code ELITE or DAILY and every milestone pays out — guaranteed, no luck needed.",
     kw="roobet wager milestones, wager rewards, roobet bonus, best casino rewards, $11,350 milestones",
     body=f"""
@@ -1160,7 +1162,7 @@ PAGES["wager-milestones.html"] = dict(
 
 # ================= FREE SPINS =================
 PAGES["free-spins.html"] = dict(
-    title="Roobet Free Spins — Exclusive Sign-Up Bonus up to 125 Free Spins | Code ELITE & DAILY",
+    title="Roobet Free Spins — Up to 125 Spins on Code DAILY",
     desc="Get exclusive Roobet free spins with our sign-up bonus: up to 125 free spins at $1.00 per spin. Deposit, wager, and claim the biggest Roobet free spins package with code ELITE or DAILY.",
     kw="roobet free spins, free spins roobet, sign-up bonus, no deposit free spins, roobet sign up bonus, exclusive free spins",
     schema={"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -1215,7 +1217,7 @@ MERCH = [
 shirt_cards = "".join(f"""<a class="card rv d{i%3+1}" href="{slug}-max-win-shirt.html"><div class="glow"></div><img src="assets/{img}" alt="{name} Max Win Shirt — exclusive {prov} merch" loading="lazy" style="border-radius:12px;margin-bottom:16px;filter:drop-shadow(0 12px 30px rgba(0,0,0,.45))"><h3>{name} Max Win Shirt</h3><p>{prov}</p><span class="more">View shirt {ARR}</span></a>""" for i, (slug, name, prov, img) in enumerate(MERCH))
 shirt_cards += f"""<div class="card rv center" style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:280px"><div class="ic">🔒</div><h3>8 More Designs</h3><p>Revealed as they drop — keep hitting max wins.</p></div>"""
 PAGES["max-win-merch.html"] = dict(
-    title="Roobet Max Win Merch — Free Exclusive Shirts for Every Max Win | Code ELITE & DAILY",
+    title="Roobet Max Win Merch — Free Shirts for Every Max Win",
     desc="Hit a max win on Pragmatic Play, Hacksaw or Nolimit City slots under code ELITE or DAILY and get exclusive Max Win Merch shipped free. 16 exclusive shirt designs to collect.",
     kw="roobet max win merch, max win shirt, pragmatic play max win, hacksaw max win, nolimit max win, free merch casino",
     body=f"""
@@ -1244,7 +1246,7 @@ PAGES["max-win-merch.html"] = dict(
 
 # ================= VIP TRANSFER =================
 PAGES["vip-transfer.html"] = dict(
-    title="Transfer Your VIP Status to Roobet — Keep Your Level & Rewards | Code ELITE & DAILY",
+    title="Roobet VIP Transfer — Keep Your Level & Rakeback",
     desc="Transfer your VIP status from any casino directly to Roobet. Keep your level, rakeback and bonuses — no starting over. Join with code ELITE or DAILY for the full rewards package.",
     kw="roobet vip transfer, transfer vip status, roobet vip, casino vip transfer, roobet rewards",
     body=f"""
@@ -1417,7 +1419,7 @@ shop_html = "".join(f"""<div class="flip rv d{i%3+1}"><div class="flip-inner">
 </div></div>""" for i, (name, amt, wag, pts, req) in enumerate(SHOP))
 
 PAGES["elite-points.html"] = dict(
-    title="ELITE Points — Earn & Redeem for Real Prizes | Slotessentials x Roobet",
+    title="ELITE Points — Earn & Redeem for Real Prizes",
     desc="Earn ELITE Points by watching DailyGambling on Kick, wagering under code ELITE or DAILY on Roobet, placing on the leaderboard and staying active on Slotessentials. Redeem for real prizes.",
     kw="elite points, slotessentials points, roobet points, redeem points prizes, dailygambling kick",
     body=f"""
@@ -1488,7 +1490,7 @@ PAGES["elite-points.html"] = dict(
 
 # ================= SLOT CHALLENGES =================
 PAGES["slot-challenges.html"] = dict(
-    title="Roobet Slot Challenges — Complete Challenges, Claim Extra Prizes | Code ELITE & DAILY",
+    title="Roobet Slot Challenges — Extra Prizes While You Play",
     desc="Complete Roobet slot challenges while you play and claim extra prizes on top of your regular rewards. Active challenges for players under code ELITE or DAILY.",
     kw="roobet slot challenges, casino challenges, slot challenge prizes, roobet rewards",
     body=f"""
@@ -1513,7 +1515,7 @@ PAGES["slot-challenges.html"] = dict(
 
 # ================= GIVEAWAYS =================
 PAGES["giveaways.html"] = dict(
-    title="Community Raffle — Free to Enter for Active Players | Roobet Casino Rewards",
+    title="Community Raffle — Free to Enter for Active Players",
     desc="Our Community Raffle is free to enter for active players. Sign in with Kick, enter in one click, and winners are drawn live on stream. Plus giveaways and drops for players under code DAILY or ELITE.",
     kw="community raffle, casino raffle, roobet giveaway, slotessentials giveaway, kick raffle",
     body=f"""
@@ -1576,7 +1578,7 @@ boosts = [
 ]
 boost_rows = "".join(f'<tr><td>{n}</td><td class="gold-td">{b}</td><td>{d}</td><td style="color:var(--muted)">{note}</td></tr>' for n, b, d, note in boosts)
 PAGES["roobet-rewards.html"] = dict(
-    title="Roobet Rewards Explained — Rakeback, Vault, Daily/Weekly/Monthly Bonuses & Rakeboosts",
+    title="Roobet Rewards Explained — Rakeback, Vault & Bonuses",
     desc="The complete guide to Roobet rewards: instant rakeback every 30 minutes, daily, weekly and monthly bonuses, the Vault system, level-up bonuses and rakeboosts up to +20%.",
     kw="roobet rewards, roobet rakeback, roobet vault, roobet daily bonus, roobet weekly bonus, roobet monthly bonus, rakeboost",
     schema={"@context":"https://schema.org","@type":"Article","headline":"Roobet Rewards Explained — Rakeback, Vault & Bonuses","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
@@ -1726,7 +1728,10 @@ merch_modal = f"""
 
 for slug, name, prov, img in MERCH:
     PAGES[f"{slug}-max-win-shirt.html"] = dict(
-        title=f"{name} Max Win Shirt — Free Exclusive {prov} Merch | Roobet Code DAILY & ELITE",
+        # kept under ~60 chars; the two longest slot names get the shorter form
+        title=(f"{name} Max Win Shirt — Free Roobet Merch"
+               if len(name) > 13 else
+               f"{name} Max Win Shirt — Free Roobet Merch | Code DAILY"),
         desc=f"Hit a max win on {name} by {prov} while playing on Roobet under code DAILY or ELITE and get this exclusive {name} Max Win shirt shipped to you free. One of 16 designs to collect.",
         kw=f"{name.lower()} max win shirt, {name.lower()} max win, {prov.lower()} max win merch, roobet max win merch, free casino merch",
         schema={"@context": "https://schema.org", "@type": "Product",
@@ -1799,7 +1804,7 @@ for slug, name, prov, img in MERCH:
 DISCORD_GAMBA = "https://discord.gg/dailygamba"
 
 PAGES["exclusive-promotions.html"] = dict(
-    title="Exclusive Roobet Promotions — Limited-Time Cash Drops | Code DAILY & ELITE",
+    title="Exclusive Roobet Promotions — Limited-Time Cash Drops",
     desc="Exclusive limited-time Roobet promotions for players under code DAILY or ELITE — wager races, raw cash drops and bonus buys. See what's running now and what's already ended.",
     kw="roobet promotions, exclusive roobet promo, roobet wager race, roobet cash drop, code daily promotion",
     body=f"""
@@ -1825,7 +1830,7 @@ PAGES["exclusive-promotions.html"] = dict(
 """)
 
 PAGES["contact.html"] = dict(
-    title="Contact Us — VIP Team on Telegram & Discord | Roobet Casino Rewards",
+    title="Contact Us — VIP Team on Telegram & Discord",
     desc="Questions about our Roobet rewards? Contact our VIP Team on Telegram or join us on Discord — reward claims, VIP transfers, merch shipping and KYC help, handled personally.",
     kw="contact roobet casino rewards, slotessentials vip team, roobet rewards support, telegram vip, discord",
     schema={"@context": "https://schema.org", "@type": "ContactPage", "name": "Contact Roobet Casino Rewards", "url": SITE + "/contact"},
@@ -1879,7 +1884,7 @@ BLOG_POSTS = [
 blog_cards = "".join(f"""<a class="card rv d{i%3+1}" href="{slug}.html"><div class="glow"></div><div class="ic">{ic}</div><p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">{date} · {read}</p><h3>{t}</h3><p>{d}</p><span class="more">Read guide {ARR}</span></a>""" for i, (slug, t, d, date, read, ic) in enumerate(BLOG_POSTS))
 
 PAGES["blog.html"] = dict(
-    title="Roobet Guides & Blog — Deposits, Rewards, Free Spins | Roobet Casino Rewards",
+    title="Roobet Guides & Blog — Deposits, Rewards, Free Spins",
     desc="Guides for getting the most out of Roobet: how to deposit, claim rewards, earn free spins and climb the $50K leaderboard. By the team behind the $100,000 monthly rewards.",
     kw="roobet guides, roobet blog, how to deposit on roobet, roobet tutorials, roobet rewards guide",
     body=f"""
@@ -1906,7 +1911,7 @@ deposit_faq = [
 deposit_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in deposit_faq)
 
 PAGES["how-to-deposit-on-roobet.html"] = dict(
-    title="How to Deposit on Roobet — Step-by-Step Guide (2026) | Roobet Casino Rewards",
+    title="How to Deposit on Roobet — Step-by-Step Guide (2026)",
     desc="How to deposit on Roobet in 2026: create your account with code DAILY, pick a crypto or buy with card, send your deposit and unlock up to 125 free spins. Full step-by-step guide.",
     kw="how to deposit on roobet, roobet deposit, roobet deposit methods, roobet crypto deposit, roobet minimum deposit, roobet buy crypto with card",
     schema=[
@@ -1975,7 +1980,7 @@ kyc_faq = [
 kyc_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in kyc_faq)
 
 PAGES["how-to-kyc-on-roobet.html"] = dict(
-    title="How to KYC on Roobet — Verification Guide (2026) | Roobet Casino Rewards",
+    title="How to KYC on Roobet — Verification Guide (2026)",
     desc="How to KYC on Roobet in 2026: which documents you need, how to pass verification first try, how long it takes, and what to do if it's rejected. Full walkthrough at HowToKYC.com.",
     kw="how to kyc on roobet, roobet kyc, roobet verification, roobet identity verification, roobet documents, roobet kyc rejected",
     schema=[
@@ -2039,7 +2044,7 @@ rw_faq = [
 rw_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in rw_faq)
 
 PAGES["roobet-rewards-guide.html"] = dict(
-    title="Roobet Rewards: The Complete 2026 Guide — Rakeback, Cashback, VIP Program & Bonuses",
+    title="Roobet Rewards Guide 2026 — Rakeback, Cashback & VIP",
     desc="Every Roobet reward explained: rakeback and cashback every 30 minutes, the deposit bonus, daily/weekly/monthly bonus release times, the VIP program and rank system, and $100,000 in extra monthly rewards with code DAILY or ELITE.",
     kw="roobet rewards, roobet deposit bonus, roobet cashback, roobet rakeback, roobet vip program, roobet vip, roobet rank system, when does roobet release monthly bonus",
     schema=[
@@ -2121,7 +2126,7 @@ sl_faq = [
 sl_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in sl_faq)
 
 PAGES["best-roobet-slots.html"] = dict(
-    title="Best Roobet Slots in 2026 — Top Picks by Max Win, RTP & Bonus Rounds",
+    title="Best Roobet Slots 2026 — Top Picks by Max Win & RTP",
     desc="The best slots on Roobet in 2026: Gates of Olympus, Sweet Bonanza, Sugar Rush, Le Bandit, Mental and more — RTP, max win potential, and which slots earn free Max Win Merch under code DAILY or ELITE.",
     kw="best roobet slots, roobet best slots, roobet slots, best slots on roobet, roobet slot picks, roobet max win slots",
     schema=[
@@ -2169,13 +2174,13 @@ wd_faq = [
     ("How long do Roobet withdrawals take?", "Withdrawals are typically processed quickly — often within minutes once approved. Total time depends on the blockchain: Litecoin and Solana are near-instant, Bitcoin can take longer during network congestion."),
     ("Why can't I withdraw from Roobet?", "The most common reasons: your account isn't verified yet (KYC is required for withdrawals), active bonus funds carry wagering conditions, or the withdrawal amount is below the minimum for that coin. If none of those apply, message our VIP team on Telegram and we'll help you sort it."),
     ("Do I need KYC to withdraw on Roobet?", "Yes — identity verification is required before your first withdrawal. Complete it early so your winnings are never stuck waiting. Our guide at HowToKYC.com walks through every step."),
-    ("When can you receive tips on Roobet?", "Roobet's tipping feature lets players send balance to each other, but it unlocks with account standing — typically a verified (KYC'd) account with real wagering history, as an anti-abuse measure. If tipping isn't available on your account yet, keep playing and verify, or ask Roobet support for your account's specific requirements."),
+    ("Can I withdraw a tip someone sent me on Roobet?", "Tips land in your normal Roobet balance, so they withdraw like any other funds once your account is verified. Tipping itself unlocks with account standing — typically a verified (KYC'd) account with real wagering history, as an anti-abuse measure. If tipping isn't available on your account yet, keep playing and verify, or ask Roobet support for your account's specific requirements."),
     ("Are there withdrawal fees on Roobet?", "You pay the blockchain network fee for the coin you withdraw. Choosing a faster, cheaper chain like Litecoin usually costs a fraction of a Bitcoin transaction."),
 ]
 wd_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in wd_faq)
 
 PAGES["how-to-withdraw-on-roobet.html"] = dict(
-    title="How to Withdraw on Roobet — Step-by-Step Guide (2026) | Roobet Casino Rewards",
+    title="How to Withdraw on Roobet — Step-by-Step Guide (2026)",
     desc="How to withdraw on Roobet in 2026: complete KYC, pick your crypto, avoid network mistakes and get paid fast. Plus withdrawal times, fees, common blockers and how Roobet tips work.",
     kw="how to withdraw on roobet, roobet withdrawal, roobet withdraw, roobet withdrawal time, roobet tips, when can you receive tips roobet",
     schema=[
@@ -2270,7 +2275,7 @@ PAGES["roobet-vip-program-rank-system.html"] = dict(
 
 # ================= BLOG: RAKEBACK / CASHBACK / BONUS SCHEDULE =================
 bonus_faq = [
-    ("When does Roobet release the monthly bonus?", "The monthly bonus is currently released on the first day of each month at 00:00 UTC. A portion may be credited immediately and a portion placed into the Vault calendar, subject to level and current terms."),
+    ("Is part of my Roobet monthly bonus held in the Vault?", "The monthly bonus is currently released on the first day of each month at 00:00 UTC. A portion may be credited immediately and a portion placed into the Vault calendar, subject to level and current terms."),
     ("When does Roobet release the weekly bonus?", "The weekly bonus is currently released every Saturday at 00:00 UTC, equivalent to 7:00 PM EST during standard time."),
     ("How often can I claim Roobet rakeback?", "Instant Rakeback can currently be claimed every 30 minutes. Part may go directly to your balance and part to the Vault."),
     ("Is Roobet cashback the same as rakeback?", "Players often use cashback as a general term for money returned from wagering. Roobet's named recurring feature is Instant Rakeback, alongside daily, weekly, monthly and Vault rewards."),
@@ -2362,7 +2367,7 @@ tips_faq = [
     ("Can the VIP team send or recover Roobet tips?", "Our VIP team can help you understand reward claims, but it cannot access Roobet accounts or override platform restrictions. Account-specific tip issues should be handled by official Roobet support."),
 ]
 PAGES["when-can-you-receive-tips-roobet.html"] = dict(
-    title="When Can You Receive Tips on Roobet? Eligibility Guide (2026)",
+    title="When Can You Receive Tips on Roobet? (2026 Guide)",
     desc="When can you receive tips on Roobet? Learn about account eligibility, verification, common restrictions, missing tips and the safest steps to troubleshoot.",
     kw="when can you receive tips roobet, roobet tips, receive tips on roobet, roobet tip eligibility",
     schema=[
@@ -2406,7 +2411,7 @@ watch_faq = [
 watch_faq_html = "".join('<details class="rv"><summary>%s</summary><div class="a">%s</div></details>' % (q, a) for q, a in watch_faq)
 
 PAGES["watch.html"] = dict(
-    title="Watch DailyGambling Live on Kick \u2014 Roobet Code DAILY | Roobet Casino Rewards",
+    title="Watch DailyGambling Live on Kick \u2014 Roobet Code DAILY",
     desc="Watch DailyGambling live on Kick right here. Earn ELITE Points for your watch time, catch live giveaways and slot challenges, and play along on Roobet with code DAILY.",
     kw="dailygambling live, watch dailygambling, dailygambling kick, roobet live stream, live slots stream, kick gambling stream",
     schema=[
@@ -2544,7 +2549,7 @@ yt_faq = [
 yt_faq_html = "".join('<details class="rv"><summary>%s</summary><div class="a">%s</div></details>' % (q, a) for q, a in yt_faq)
 
 PAGES["youtube.html"] = dict(
-    title="DailyGambling on YouTube \u2014 Latest Slot Sessions & Bonus Hunts | Roobet Casino Rewards",
+    title="DailyGambling on YouTube — Slot Sessions & Bonus Hunts",
     desc="Watch DailyGambling's latest YouTube uploads \u2014 full slot sessions, bonus hunts and max win highlights. Play along on Roobet with code DAILY and claim the $100,000 monthly rewards.",
     kw="dailygambling youtube, dailygambling youtube, slot session videos, bonus hunt videos, roobet slots youtube",
     body=f"""
@@ -2605,14 +2610,147 @@ def post(s):
                   f'<a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a>')
     s = s.replace('<b style="color:var(--gold)">ELITE</b>',
                   f'<a href="{ELITE}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a>')
-    # relative paths so pages work from disk and on Vercel
+    # Static assets stay relative so they resolve from disk too.
     s = s.replace('href="/css/', 'href="css/').replace('src="/js/', 'src="js/')
     s = s.replace('src="/assets/', 'src="assets/').replace('href="/assets/', 'href="assets/')
-    s = re.sub(r'href="/#', 'href="index.html#', s)
-    s = re.sub(r'href="/([a-z-]+)#', r'href="\1.html#', s)
-    s = re.sub(r'href="/([a-z-]+)"', r'href="\1.html"', s)
-    s = s.replace('href="/"', 'href="index.html"')
+    # Page links stay EXTENSIONLESS and root-relative, matching the canonical tags
+    # and sitemap. Rewriting them to "foo.html" (as this used to) made every internal
+    # link route through Vercel's cleanUrls 308, which split indexing between
+    # /foo and /foo.html in Search Console and diluted link equity.
+    # Trade-off: opening the files straight from disk no longer navigates. Preview
+    # with `python3 -m http.server` or on the deployed site instead.
     return s
+
+# ================= PAGE FAQ SCHEMA =================
+# Every page carries FAQPage structured data. Questions must be UNIQUE sitewide —
+# Google discounts repeats — so nothing here may duplicate a question already used
+# in faq_schema, the guides, or another page below.
+PAGE_FAQS = {
+"leaderboard.html": [
+ ("How is the Roobet wager leaderboard calculated?",
+  "Every wager you place on Roobet under code DAILY or ELITE counts toward your total for the period, which runs from the 16th of one month to the 15th of the next at midnight UTC. Standings are pulled live from the Roobet affiliate API and refresh every few minutes."),
+ ("When do leaderboard prizes get paid out?",
+  "Prizes are paid after the period closes on the 15th at midnight UTC. The VIP team contacts winners directly on Telegram or Discord to arrange payment, and cash prizes land in your Roobet balance."),
+ ("Why is my username masked on the leaderboard?",
+  "Usernames are partially masked so players cannot be identified or targeted from public standings. You can still find your own position using the search box on the leaderboard page."),
+],
+"wager-milestones.html": [
+ ("Do wager milestones reset every month?",
+  "Yes. The milestone track resets at the start of each month, so you begin fresh and climb the tiers again. Claims can be made at any point during the month once you hit a tier."),
+ ("Can I claim wager milestones and the leaderboard at the same time?",
+  "Yes. The same wagers count toward both, so hitting a milestone tier does not reduce your leaderboard total. They stack on top of each other."),
+ ("What are the gameplay perks on higher milestone tiers?",
+  "From $250,000 wagered upward, each tier adds gameplay bonuses on top of the cash: free spins, bonus buys and personal offers negotiated by the VIP team."),
+],
+"max-win-merch.html": [
+ ("How do I prove I hit a max win?",
+  "Take a screenshot of the win screen showing the multiplier and your Roobet username, then submit it through the claim form on the shirt page. The VIP team verifies it against your account."),
+ ("Does Max Win Merch cost anything to ship?",
+  "No. Shipping is free worldwide on every verified Max Win Merch drop. You cannot buy these shirts anywhere — they are only earned."),
+ ("How many Max Win Merch designs are there?",
+  "There are 16 exclusive designs planned across Pragmatic Play, Hacksaw Gaming and Nolimit City titles, released as they drop."),
+],
+"vip-transfer.html": [
+ ("What do I need to transfer my VIP status to Roobet?",
+  "Two screenshots: one showing your Roobet username with code DAILY or ELITE on the account, and one showing your lifetime wager and 30-day stats from the casino you are transferring from. Submit both through the transfer form."),
+ ("How long does a Roobet VIP transfer take?",
+  "The VIP team reviews transfer requests daily. Once your previous status is verified, Roobet matches your level, rakeback rate and bonuses, and the team confirms on Discord or Telegram."),
+ ("Which casinos can I transfer VIP status from?",
+  "Any casino. Stake, BetFury, Duelbits, Roobet competitors and smaller sites all qualify as long as you can evidence your level and wager history."),
+],
+"elite-points.html": [
+ ("How many ELITE Points do I earn for watching the stream?",
+  "Every 15 minutes of activity while DailyGambling is live on Kick earns 50 points. Points also come from wagering under code DAILY or ELITE, leaderboard finishes, the daily case and record win submissions."),
+ ("What can I redeem ELITE Points for?",
+  "Free balance from $10 to $500 and bonus buys from $100 to $1,000, redeemed through the Point Shop. Each item has a minimum wager requirement shown on the card."),
+ ("What happens if my ELITE Points redemption is rejected?",
+  "If the wager requirement is not met or any issue arises, your points are automatically returned to your balance — nothing is lost."),
+],
+"slot-challenges.html": [
+ ("How do Roobet slot challenges work?",
+  "Challenges are set targets on specific slots — hit the target while playing under code DAILY or ELITE and claim the prize on top of your regular rewards. They run alongside the leaderboard and milestones."),
+ ("Do slot challenges cost anything to enter?",
+  "No. Challenges are free for any player using code DAILY or ELITE. You only need to be playing the featured slot when the challenge is live."),
+ ("Where are new slot challenges announced?",
+  "New challenges are announced live on the Kick stream and in the DailyGambling Discord, usually with the target and prize posted before the session starts."),
+],
+"giveaways.html": [
+ ("Is the Community Raffle really free to enter?",
+  "Yes. There is no deposit and no purchase. Sign in with your Kick account on the raffle page and you are entered in one click, one entry per account."),
+ ("How are Community Raffle winners chosen?",
+  "Winners are drawn at random from all valid entries using a cryptographically secure draw, and the draw happens live on stream so everyone can see it."),
+ ("Why do I need to sign in with Kick to enter the raffle?",
+  "Kick sign-in is how we enforce one entry per person and confirm you are an active member of the community rather than a duplicate account."),
+],
+"roobet-rewards.html": [
+ ("How often can you claim rakeback on Roobet?",
+  "Instant rakeback is claimable every 30 minutes and never expires. Part is credited to your balance immediately and part goes to your vault, which unlocks three claims per day."),
+ ("What is the Roobet Vault?",
+  "The Vault is where a portion of your instant rakeback accumulates instead of going straight to your balance. It unlocks three claims per day, so checking in regularly is worth more than letting it build."),
+ ("Do Roobet rakeboosts stack with each other?",
+  "Rakeboosts multiply the rakeback you earn while active — up to +20% from redeeming an affiliate code, plus +10% on signup, rank-ups, and daily and weekly claims. Running several at once is how players maximise what comes back."),
+ ("How does the Roobet rank system work?",
+  "Ranks rise with your total wagered amount, and each rank-up increases your rakeback percentage and bonus sizes. Every rank-up also triggers a +10% rakeboost for 60 minutes."),
+],
+"exclusive-promotions.html": [
+ ("How often do exclusive Roobet promotions run?",
+  "Short-run promos drop regularly and usually last about a week — wager races, raw cash drops and bonus buys for players under code DAILY or ELITE. They are announced on stream and in the VIP Telegram first."),
+ ("How do I qualify for an exclusive promotion?",
+  "Your Roobet account has to be registered under code DAILY or ELITE, and you need to meet whatever wager requirement that specific promotion sets during its window."),
+ ("What was the last exclusive promotion paid out?",
+  "A $200 raw cash wager race that ran from 28 August to 4 September, requiring $30,000 wagered, paid with no wagering requirement on the reward."),
+],
+"blog.html": [
+ ("What do the Roobet guides cover?",
+  "Step-by-step walkthroughs for depositing, verifying your account, withdrawing, claiming rewards and choosing slots on Roobet, all written for players using code DAILY or ELITE."),
+ ("Are the Roobet guides kept up to date?",
+  "Yes. Guides are reviewed as Roobet changes its payment methods, verification requirements and rewards structure, so the steps match what you will actually see."),
+ ("Which Roobet guide should I read first?",
+  "If you are new, start with how to deposit on Roobet, then how to KYC on Roobet — verification is required before your first withdrawal, so doing it early saves time later."),
+],
+"contact.html": [
+ ("How fast does the VIP team reply?",
+  "Messages on Telegram and Discord tickets are handled personally by the VIP team, usually the same day. Reward claims, VIP transfers and merch shipping all go through the same channels."),
+ ("What can the VIP team help with?",
+  "Reward claims, VIP status transfers, Max Win Merch shipping, KYC questions, leaderboard payouts and anything about your account under code DAILY or ELITE."),
+ ("Should I use Telegram or Discord to reach the team?",
+  "Either works. Telegram is fastest for quick questions; Discord tickets are better when you need to attach screenshots or track a claim over several days."),
+],
+"youtube.html": [
+ ("What does DailyGambling post on YouTube?",
+  "Full slot sessions, bonus hunts and highlight uploads from the Kick streams, so you can catch what you missed without watching live."),
+ ("Is the YouTube channel different from the Kick stream?",
+  "Yes. Live streaming happens on Kick, while YouTube carries the uploads and edited sessions. Watch time for ELITE Points is earned on the Kick stream only."),
+ ("Do YouTube uploads count toward ELITE Points?",
+  "No. ELITE Points for watch time are earned during live Kick streams, where activity can be verified through your Kick account."),
+],
+}
+
+# One FAQ set per merch shirt, unique because each names its own slot and provider
+for _slug, _name, _prov, _img in MERCH:
+    PAGE_FAQS[f"{_slug}-max-win-shirt.html"] = [
+        (f"How do I earn the {_name} Max Win Shirt?",
+         f"Hit the max win on {_name} by {_prov} while playing on Roobet under code DAILY or ELITE, screenshot the win showing the multiplier and your username, then submit it through the claim form. The shirt ships free."),
+        (f"Can I buy the {_name} Max Win Shirt instead?",
+         f"No. The {_name} shirt is not for sale anywhere — it is only released to players who actually hit the max win on the slot under code DAILY or ELITE."),
+        (f"What counts as a max win on {_name}?",
+         f"The maximum payout multiplier {_prov} publishes for {_name}. The win screen showing that multiplier on your own account is what the VIP team verifies against."),
+    ]
+
+def faq_page(pairs):
+    return {"@context": "https://schema.org", "@type": "FAQPage",
+            "mainEntity": [{"@type": "Question", "name": q,
+                            "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pairs]}
+
+for _fn, _pairs in PAGE_FAQS.items():
+    if _fn not in PAGES:
+        continue
+    _existing = PAGES[_fn].get("schema")
+    _list = ([] if _existing is None else
+             (list(_existing) if isinstance(_existing, list) else [_existing]))
+    if not any((s or {}).get("@type") == "FAQPage" for s in _list):
+        _list.append(faq_page(_pairs))
+        PAGES[_fn]["schema"] = _list
 
 out = os.path.dirname(os.path.abspath(__file__))
 for fname, p in PAGES.items():
