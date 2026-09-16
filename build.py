@@ -1851,8 +1851,8 @@ _tr_milestone_tile = (f"""
 
 PAGES["transparency.html"] = dict(
     title="Roobet Rewards Transparency Report — Live Payout Data",
-    desc="Live transparency report for Roobet rewards under codes DAILY and ELITE: community wager totals, payouts made, VIP transfers completed and merch shipped, with the methodology stated in full.",
-    kw="roobet rewards transparency, roobet payout proof, roobet affiliate data, roobet community wager, roobet rewards paid out",
+    desc="Transparency report for Roobet rewards under codes DAILY and ELITE: $3,000,000 given away, the payout ledger, fixed prize pools and verified merch claims — with the methodology stated in full.",
+    kw="roobet rewards transparency, roobet payout proof, roobet rewards paid out, roobet casino rewards proof, roobet affiliate payouts",
     schema={"@context": "https://schema.org", "@type": "Dataset",
             "name": "Roobet Casino Rewards — Payout and Wager Transparency Report",
             "description": "Aggregate community wager totals and reward payouts for players using Roobet affiliate codes DAILY and ELITE, refreshed from the Roobet affiliate API.",
