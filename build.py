@@ -1840,14 +1840,16 @@ PAGES["exclusive-promotions.html"] = dict(
 TRANSPARENCY = dict(
     given_away="$3M+",
     given_away_note="Cumulative across every reward program since launch",
-    milestones_monthly="",
-    milestones_note="Claimed by players each month",
+    milestones_paid="$131,640",          # "" falls back to showing the fixed pool
+    milestones_exact="$131,640.50",
+    milestones_note="Paid out in milestone bonuses",
+    milestones_period="the last 8 months",   # stated in the methodology, not on the tile
 )
 payout_ledger = "".join(payout_row(p) for p in PAYOUTS)
 
 _tr_milestone_tile = (f"""
-    <div class="tr-stat"><span class="trs-l">Milestones claimed</span><b class="trs-v">{TRANSPARENCY['milestones_monthly']}</b><span class="trs-n">{TRANSPARENCY['milestones_note']}</span></div>"""
-    if TRANSPARENCY["milestones_monthly"] else f"""
+    <div class="tr-stat"><span class="trs-l">Milestones paid</span><b class="trs-v">{TRANSPARENCY['milestones_paid']}</b><span class="trs-n">{TRANSPARENCY['milestones_note']}</span></div>"""
+    if TRANSPARENCY["milestones_paid"] else f"""
     <div class="tr-stat"><span class="trs-l">Milestone pool</span><b class="trs-v">$11,350</b><span class="trs-n">Guaranteed, claimable every month</span></div>""")
 
 PAGES["transparency.html"] = dict(
@@ -1898,7 +1900,7 @@ PAGES["transparency.html"] = dict(
   <div class="center rv promo-head"><span class="eyebrow">&#128300; Methodology</span><h2>How These Numbers Are Calculated</h2></div>
   <div class="cards c2" style="margin-top:6px">
     <div class="card rv"><div class="glow"></div><div class="ic">&#128176;</div><h3>The headline figure</h3><p>A cumulative estimate of what has gone back to players across every reward program we run since launch &mdash; leaderboard cash, wager milestones, free spins, promo payouts, merch and VIP perks. It is added up across programs rather than audited as one figure, so we state it as an approximation rather than an exact total.</p></div>
-    <div class="card rv d1"><div class="glow"></div><div class="ic">&#127942;</div><h3>Prize pools</h3><p>The $50,000 leaderboard and $11,350 milestone figures are fixed commitments, not estimates. The leaderboard ladder pays 1st through 100th place; the milestone track pays at every tier reached. Both are published in full on their own pages.</p></div>
+    <div class="card rv d1"><div class="glow"></div><div class="ic">&#127942;</div><h3>Prize pools and milestones</h3><p>The $50,000 leaderboard and $11,350 milestone pools are fixed commitments, not estimates &mdash; the ladder pays 1st through 100th place, and the milestone track pays at every tier reached. Both are published in full on their own pages. The <b>{TRANSPARENCY['milestones_exact']}</b> figure is what players have actually claimed in milestone bonuses over {TRANSPARENCY['milestones_period']}.</p></div>
     <div class="card rv d2"><div class="glow"></div><div class="ic">&#128085;</div><h3>Merch claims</h3><p>Counted from our own claim system, and only once the max win has been verified against the player's Roobet account and the shirt has actually shipped. Pending and rejected claims are excluded from the number.</p></div>
     <div class="card rv d3"><div class="glow"></div><div class="ic">&#9888;&#65039;</div><h3>What this does not include</h3><p>Roobet's own rakeback, daily, weekly and monthly bonuses are paid by Roobet directly and are not counted here &mdash; they sit on top. We also don't publish community wager totals or player counts, for competitive reasons.</p></div>
   </div>
