@@ -2423,13 +2423,13 @@ PAGES["roobet-deposit-bonus-free-spins.html"] = dict(
     desc="Roobet deposit bonus and free spins guide: cumulative all-time deposit and wager tiers for 75, 100 or 125 spins when joining with code DAILY.",
     kw="roobet deposit bonus, roobet welcome bonus, roobet free spins, free spins roobet, roobet bonus code daily",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Deposit Bonus & Free Spins Guide","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Deposit Bonus & Free Spins Guide","datePublished":"2026-08-18","dateModified":"2026-09-17","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in deposit_bonus_faq]},
     ],
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Deposit Bonus</p>
-  <span class="eyebrow rv">🎁 Code DAILY Offer · Updated August 2026</span>
+  <span class="eyebrow rv">🎁 DAILY &amp; ELITE Offer · Updated 17 September 2026</span>
   <h1 class="rv d1">Roobet Deposit Bonus &amp; <span class="grad">Free Spins</span></h1>
   <p class="lead rv d2">The key detail: these thresholds are cumulative all-time totals—not one giant deposit. Every eligible deposit and wager moves you toward the next tier.</p>
 </div></section>
@@ -2439,6 +2439,11 @@ PAGES["roobet-deposit-bonus-free-spins.html"] = dict(
     <div class="card center"><span class="eyebrow">Tier 2</span><h2>100 Spins</h2><p><b>$1,000</b> cumulative deposits<br><b>$10,000</b> cumulative wager<br>$0.80 per spin</p></div>
     <div class="card center"><span class="eyebrow">Tier 3</span><h2>125 Spins</h2><p><b>$2,000</b> cumulative deposits<br><b>$20,000</b> cumulative wager<br>$1.00 per spin</p></div>
   </div>
+  <h2 class="rv" style="margin-top:48px">Codes, Claim Limits &amp; Withdrawal Rules</h2>
+  <p class="rv" style="color:var(--muted)">DAILY and ELITE are both our affiliate codes and qualify for the same free-spin tiers and community leaderboard benefits. This equivalence was confirmed by our team on 17 September 2026; it is not a separate Roobet-wide promotion. Existing players should not create another account or assume they can switch referral codes.</p>
+  <p class="rv" style="color:var(--muted)"><b>Claim one exclusive free-spin bonus.</b> The 75, 100 and 125-spin options are alternative qualification tiers, not three rewards to add together. Confirm your account's eligibility, qualifying totals and the available tier with the team before claiming. A displayed spin value is not a guaranteed cash payout.</p>
+  <p class="rv" style="color:var(--muted)">The offer's deposit and weighted-wager targets are separate from Roobet's withdrawal requirements. Roobet's <a href="https://help.roobet.com/en/articles/13239839-wagering-requirements" target="_blank" rel="noopener" style="color:var(--gold)">official wagering guidance</a> requires wagering the full deposit amount before withdrawal. Meeting that requirement does not by itself qualify you for this offer, and meeting an offer tier does not guarantee a withdrawal will be approved.</p>
+  <p class="rv" style="color:var(--muted)">Read the <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">verification guide</a> and <a href="/how-to-withdraw-on-roobet" style="color:var(--gold)">withdrawal guide</a>, or our <a href="/roobet-rakeback-cashback-bonus-schedule" style="color:var(--gold)">recurring reward schedule</a> for a different type of reward. Do not deposit or increase wagering just to chase a bonus; only play where legal and within a limit you can afford to lose.</p>
   <h2 class="rv" style="margin-top:48px">How to Qualify</h2>
   <div style="display:grid;gap:12px;margin:20px 0 38px">
     <div class="mile rv"><span class="amt">1</span><p style="flex:1;color:var(--muted)">Create your Roobet account using code <a href="{DAILY}" target="_blank" rel="nofollow sponsored" style="color:var(--gold);font-weight:700">DAILY</a>.</p></div>
@@ -2864,7 +2869,9 @@ for fname, p in PAGES.items():
 # sitemap
 urls = [SITE + "/"] + [SITE + "/" + f[:-5] for f in PAGES if f != "index.html"]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-sm += "".join(f"  <url><loc>{u}</loc><changefreq>weekly</changefreq><priority>{'1.0' if u.endswith('.com/') else '0.8'}</priority></url>\n" for u in urls)
+for u in urls:
+    lastmod = "<lastmod>2026-09-17</lastmod>" if u == f"{SITE}/roobet-deposit-bonus-free-spins" else ""
+    sm += f"  <url><loc>{u}</loc>{lastmod}<changefreq>weekly</changefreq><priority>{'1.0' if u.endswith('.com/') else '0.8'}</priority></url>\n"
 sm += "</urlset>\n"
 open(os.path.join(out, "sitemap.xml"), "w").write(sm)
 
