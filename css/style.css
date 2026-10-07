@@ -47,6 +47,7 @@ p{text-wrap:pretty}
 @keyframes blink{50%{opacity:.25}}
 @keyframes spinslow{from{transform:translateX(-50%) rotate(0)}to{transform:translateX(-50%) rotate(360deg)}}
 @keyframes bokeh{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,26px) scale(1.08)}}
+@keyframes hero-settle{from{opacity:.78;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
 
 /* ---------- hero backdrop layers ---------- */
 .hero-bd{position:absolute;top:0;left:0;right:0;height:680px;overflow:hidden;pointer-events:none;z-index:-1}
@@ -199,11 +200,14 @@ h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
 .home nav{background:rgba(10,15,31,.97);backdrop-filter:none;-webkit-backdrop-filter:none}
 .home .rv{opacity:1;transform:none;transition:none}
 .home .btn-gold::after{display:none}
-.home .pulse,.home .live-dot,.home .hu-dot,.home .ticker-track,
+.home .pulse,
 .home .vip-band::before,.home .bn-art img,.home .pl-step.is-now i{animation:none!important}
-.home .ticker-track{will-change:auto}
+.home .ticker-track{animation:ticker 32s linear infinite;will-change:transform}
 .home .vip-band::before{filter:none;opacity:.55}
 .home .pl-track i,.home .earn-bar i{transition:none}
+.home .hero-visual{animation:hero-settle .7s cubic-bezier(.16,1,.3,1) both}
+.home [data-count]{font-variant-numeric:tabular-nums}
+.home h1 [data-count]{display:inline-block;min-width:6.8ch;text-align:right}
 .hero-inner{position:relative;z-index:2;margin:0 auto}
 .hero-split{display:grid;grid-template-columns:minmax(440px,.9fr) minmax(520px,1.1fr);align-items:center;gap:clamp(38px,5vw,88px);max-width:1440px;padding:clamp(58px,6vw,92px) clamp(24px,3vw,44px) clamp(48px,5vw,76px)}
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-width:0}
@@ -477,7 +481,7 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
 .rv.d1{transition-delay:.07s}.rv.d2{transition-delay:.14s}.rv.d3{transition-delay:.21s}.rv.d4{transition-delay:.28s}
 
 @media (prefers-reduced-motion:reduce){
-  .bd-chip,.bd-orb-a,.bd-orb-b,.ticker-track,.pod,.pod.first,.btn-gold::after,.pulse,.vip-band::before{animation:none!important}
+  .bd-chip,.bd-orb-a,.bd-orb-b,.ticker-track,.pod,.pod.first,.btn-gold::after,.pulse,.vip-band::before,.home .hero-visual{animation:none!important}
   *,*::before,*::after{transition-duration:.01ms!important}
   .rv{opacity:1;transform:none}
   .lb-tbl tbody tr{animation:none}

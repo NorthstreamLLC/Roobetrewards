@@ -112,13 +112,14 @@
 
   // animated counters  <span data-count="100000" data-prefix="$">
   const fmt = n => n.toLocaleString('en-US');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cio = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
       cio.unobserve(e.target);
       const el = e.target, target = +el.dataset.count,
         pre = el.dataset.prefix || '', suf = el.dataset.suffix || '',
-        t0 = performance.now(), dur = 1600;
+        t0 = performance.now(), dur = isHome ? 950 : 1600;
       const tick = now => {
         const p = Math.min((now - t0) / dur, 1),
           ease = 1 - Math.pow(1 - p, 3);
@@ -128,7 +129,7 @@
       requestAnimationFrame(tick);
     });
   }, { threshold: 0.4 });
-  if (!isHome) document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+  if (!reduceMotion) document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 
   // milestone progress bars
   const mio = new IntersectionObserver(entries => {
