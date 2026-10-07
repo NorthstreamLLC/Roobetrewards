@@ -281,9 +281,10 @@ def promo_modal_html():
   </div>
 </div>"""
 
-def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
+def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image=None):
     canon = SITE + ("/" if fname == "index.html" else "/" + fname[:-5])
     page_name = title.split(" — ")[0].split(" | ")[0]
+    image_url = SITE + (og_image or "/assets/og-image.png")
 
     graph = [
         {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/",
@@ -294,7 +295,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
         "@type": "WebPage", "@id": canon + "#webpage", "url": canon,
         "name": title, "description": desc,
         "isPartOf": {"@id": SITE + "/#website"},
-        "primaryImageOfPage": {"@type": "ImageObject", "url": SITE + "/assets/og-image.png"},
+        "primaryImageOfPage": {"@type": "ImageObject", "url": image_url},
         "inLanguage": "en",
         "isRelatedTo": [{"@type": "WebPage", "name": n, "url": u} for n, u in REL_POOL if u.rstrip("/") != canon.rstrip("/")][:12],
     }
@@ -348,11 +349,11 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website"):
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canon}">
 <meta property="og:site_name" content="Roobet Casino Rewards">
-<meta property="og:image" content="{SITE}/assets/og-image.png">
+<meta property="og:image" content="{image_url}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{SITE}/assets/og-image.png">
+<meta name="twitter:image" content="{image_url}">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -1965,6 +1966,9 @@ PAGES["contact.html"] = dict(
 
 # ================= BLOG =================
 BLOG_POSTS = [
+    ("roobet-wagering-requirements", "Roobet Wagering Requirements Explained", "Understand deposit wagering, withdrawal eligibility, sportsbook settlement, tips and instant-raffle access under Roobet's current AML rules.", "2026-10-07", "8 min read", "📊", "/assets/roobet-wagering-requirements.webp"),
+    ("how-to-enable-roobet-2fa", "How to Enable Roobet 2FA", "Set up an authenticator app, protect the recovery key, troubleshoot changing codes and understand the separate Roobet chat requirements.", "2026-10-07", "7 min read", "🔐", "/assets/roobet-2fa-guide.webp"),
+    ("roobet-restricted-countries", "Roobet Restricted Countries & Provider Rules", "The difference between Roobet account restrictions and game-provider availability, with a current eligibility checklist and safe next steps.", "2026-10-07", "9 min read", "🌍", "/assets/roobet-restricted-countries.webp"),
     ("roobet-vip-program-rank-system", "Roobet VIP Program & Rank System Explained", "How Roobet VIP ranks work, how players level up, what rewards unlock, and how to transfer VIP status from another casino.", "2026-08-18", "6 min read", "💎"),
     ("roobet-rakeback-cashback-bonus-schedule", "Roobet Rakeback, Cashback & Bonus Schedule", "When Roobet rakeback, daily, weekly and monthly bonuses become available — plus Vault timing, expiry rules and rakeboosts.", "2026-08-18", "7 min read", "💰"),
     ("roobet-deposit-bonus-free-spins", "Roobet Deposit Bonus & Free Spins Guide", "How the Roobet free-spins offer works under code DAILY, including cumulative all-time deposit and wager requirements for every tier.", "2026-08-18", "5 min read", "🎁"),
@@ -1975,7 +1979,14 @@ BLOG_POSTS = [
     ("best-roobet-slots", "Best Roobet Slots to Play", "The best slots on Roobet right now — RTP, max win potential, and which ones earn you free Max Win Merch under code DAILY or ELITE.", "2026-08-07", "6 min read", "🎰"),
     ("how-to-withdraw-on-roobet", "How to Withdraw on Roobet", "Step-by-step Roobet withdrawal guide — KYC, crypto payouts, timing, fees, why a withdrawal might be blocked, and how tips work.", "2026-08-07", "5 min read", "💸"),
 ]
-blog_cards = "".join(f"""<a class="card rv d{i%3+1}" href="{slug}.html"><div class="glow"></div><div class="ic">{ic}</div><p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">{date} · {read}</p><h3>{t}</h3><p>{d}</p><span class="more">Read guide {ARR}</span></a>""" for i, (slug, t, d, date, read, ic) in enumerate(BLOG_POSTS))
+def blog_card(post, i):
+    slug, title, description, date, read, ic = post[:6]
+    image = post[6] if len(post) > 6 else None
+    thumbnail = (f'<img src="{image}" alt="{title}" width="1200" height="630" loading="lazy" '
+                 f'style="width:100%;height:auto;aspect-ratio:1200/630;object-fit:cover;border-radius:12px;margin-bottom:18px">') if image else ""
+    return f"""<a class="card rv d{i%3+1}" href="/{slug}"><div class="glow"></div>{thumbnail}<div class="ic">{ic}</div><p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">{date} · {read}</p><h3>{title}</h3><p>{description}</p><span class="more">Read guide {ARR}</span></a>"""
+
+blog_cards = "".join(blog_card(post, i) for i, post in enumerate(BLOG_POSTS))
 
 PAGES["blog.html"] = dict(
     title="Roobet Guides & Blog — Deposits, Rewards, Free Spins",
@@ -2497,6 +2508,179 @@ PAGES["when-can-you-receive-tips-roobet.html"] = dict(
 {cta_banner("Questions About Our Rewards?","Contact the VIP team for help with DAILY rewards, claims and promotions.")}
 """)
 
+# ================= BLOG: WAGERING REQUIREMENTS =================
+wagering_faq = [
+    ("How much of a crypto deposit must be wagered before withdrawal?", "Roobet's current Help Center says 100% of a cryptocurrency deposit must be wagered before the funds can be withdrawn, used for tips or used for instant raffles."),
+    ("Do sportsbook bets count toward Roobet wagering requirements?", "Only settled sportsbook bets count. Open, pending, voided or cancelled wagers should not be treated as completed wagering."),
+    ("How much of a received tip must be wagered?", "Roobet's current AML guidance says a received tip must be wagered at 30% of the tip amount before withdrawal."),
+    ("Does completing KYC remove the wagering requirement?", "No. Identity verification and wagering eligibility are separate checks. Completing KYC does not erase a deposit or tip wagering requirement."),
+]
+PAGES["roobet-wagering-requirements.html"] = dict(
+    title="Roobet Wagering Requirements: Deposits, Withdrawals & Tips",
+    desc="Roobet wagering requirements explained for crypto deposits, cash deposits, withdrawals, tips, sportsbook bets and instant raffles using current official guidance.",
+    kw="roobet wagering requirements, roobet withdrawal wagering, roobet deposit wagering, roobet tip wagering requirement",
+    og_image="/assets/roobet-wagering-requirements.webp",
+    og_type="article",
+    schema=[
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Wagering Requirements: Deposits, Withdrawals and Tips","description":"A current guide to Roobet deposit, withdrawal and tip wagering requirements.","image":SITE + "/assets/roobet-wagering-requirements.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"Roobet Casino Rewards Editorial Team"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards","url":SITE + "/"}},
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in wagering_faq]},
+    ],
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Wagering Requirements</p>
+  <span class="eyebrow rv">📊 Account Guide · Published 7 October 2026</span>
+  <h1 class="rv d1">Roobet Wagering <span class="grad">Requirements Explained</span></h1>
+  <p class="lead rv d2">Depositing, completing KYC and becoming eligible to withdraw are separate steps. This guide explains the current wagering rules for deposits, tips, sportsbook bets and instant raffles.</p>
+</div></section>
+<section style="padding-top:10px"><article class="wrap" style="max-width:880px">
+  <img class="rv" src="/assets/roobet-wagering-requirements.webp" alt="Roobet wagering requirements for deposits, withdrawals and tips" width="1200" height="630" style="width:100%;height:auto;border-radius:18px;border:1px solid var(--border);margin-bottom:34px">
+  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">Roobet Casino Rewards Editorial Team</a> · Reviewed 7 October 2026 · 8 min read</p>
+  <div class="card rv" style="border-color:rgba(255,199,0,.38);margin-top:24px"><h2 style="font-size:1.25rem">The short answer</h2><p>Roobet's current AML guidance says cryptocurrency and cash deposits must be wagered at <b>100% of the deposited amount</b> before withdrawal. Received tips carry a separate <b>30% wagering requirement</b>. Only settled sportsbook bets count.</p></div>
+
+  <h2 class="rv" style="margin-top:48px">Current Roobet Wagering Rules</h2>
+  <div class="cards c2 rv" style="margin-top:20px">
+    <div class="card"><div class="ic">₿</div><h3>Cryptocurrency deposits</h3><p>Wager 100% of the deposit before withdrawing, sending tips or using instant raffles.</p></div>
+    <div class="card"><div class="ic">💵</div><h3>Cash deposits</h3><p>Wager 100% before withdrawal. Roobet's guidance says tipping is not available from cash deposits.</p></div>
+    <div class="card"><div class="ic">⚽</div><h3>Sportsbook wagers</h3><p>Only settled bets count toward the requirement. A pending bet has not completed the wagering step.</p></div>
+    <div class="card"><div class="ic">💸</div><h3>Received tips</h3><p>Wager 30% of the received tip amount before it becomes eligible for withdrawal.</p></div>
+  </div>
+
+  <h2 class="rv" style="margin-top:48px">What “Wager 100%” Means</h2>
+  <p class="rv" style="color:var(--muted)">If you deposit the equivalent of $100 in cryptocurrency, the published rule requires $100 in qualifying wagers before withdrawal eligibility. It does not mean you must lose $100, and it does not promise that every type of wager contributes identically. Check the progress and account messages shown by Roobet rather than estimating from your balance alone.</p>
+  <p class="rv" style="color:var(--muted)">A wagering requirement is an anti-money-laundering control, not a bonus multiplier. It is also different from the qualification terms for our <a href="/roobet-deposit-bonus-free-spins" style="color:var(--gold)">free-spins offer</a>, leaderboard or wager milestones.</p>
+
+  <h2 class="rv" style="margin-top:48px">KYC and Wagering Are Different Checks</h2>
+  <p class="rv" style="color:var(--muted)">Completing identity verification does not automatically clear a deposit or tip wagering requirement. Likewise, finishing the wagering amount does not guarantee that an account with an unresolved verification or compliance request can withdraw. Complete the <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">KYC process</a>, check the exact account status and follow any official request shown in your account.</p>
+  <div class="card rv" style="border-color:rgba(255,90,90,.3)"><h3>Avoid workarounds</h3><p>Do not open another account, send funds through another person, use offsetting bets or attempt to disguise fund movement. Those actions can create additional compliance problems. If the displayed progress looks wrong, contact official support.</p></div>
+
+  <h2 class="rv" style="margin-top:48px">Why a Withdrawal May Still Be Unavailable</h2>
+  <ul class="rv" style="color:var(--muted);line-height:1.9;padding-left:24px"><li>The deposit wagering meter has not reached the required amount.</li><li>A sportsbook wager is still open and therefore does not count as settled.</li><li>A received tip still has part of its 30% requirement outstanding.</li><li>Identity verification or another compliance review is incomplete.</li><li>The selected asset, network or withdrawal details need correction.</li></ul>
+  <p class="rv" style="color:var(--muted)">Work through the account message first, then use our <a href="/how-to-withdraw-on-roobet" style="color:var(--gold)">Roobet withdrawal guide</a>. Never post wallet credentials, authentication codes or identity documents in community chat.</p>
+
+  <h2 class="rv" style="margin-top:48px">Primary Source and Review Method</h2>
+  <p class="rv" style="color:var(--muted)">The percentages and eligibility statements above were checked against Roobet's official <a href="https://help.roobet.com/en/articles/13239839-wagering-requirements" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Wagering Requirements</a> article on 7 October 2026. Requirements can change, so the authenticated account screen and official Help Center take priority over this independent guide.</p>
+
+  <h2 class="rv" style="margin-top:48px">Wagering Requirements FAQ</h2>
+  <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in wagering_faq)}</div>
+</article></section>
+{cta_banner("Understand the Rules Before You Play","Complete verification early, set a firm budget and read the current account terms before depositing.")}
+""")
+
+# ================= BLOG: TWO-FACTOR AUTHENTICATION =================
+twofa_faq = [
+    ("What app can I use for Roobet 2FA?", "Roobet's current guide recommends Authy and also describes using Google Authenticator. A compatible time-based authenticator app can generate the required rotating code."),
+    ("How often does a Roobet 2FA code change?", "The official guide says a new authenticator code is generated every 30 seconds."),
+    ("Should I share my Roobet 2FA recovery key with support?", "No. Roobet warns that the recovery key can be used to remove 2FA. Store it privately and never send it through chat, email, Telegram or Discord."),
+    ("Is 2FA enough to use Roobet chat?", "No. Roobet's current chat requirements also say the account must have wagered at least $500. These requirements can change."),
+]
+PAGES["how-to-enable-roobet-2fa.html"] = dict(
+    title="How to Enable Roobet 2FA: Setup & Recovery Key Safety",
+    desc="Set up Roobet two-factor authentication safely, store the recovery key, understand rotating codes and troubleshoot common authenticator problems.",
+    kw="roobet 2fa, how to enable roobet 2fa, roobet authenticator, roobet recovery key, roobet security",
+    og_image="/assets/roobet-2fa-guide.webp",
+    og_type="article",
+    schema=[
+        {"@context":"https://schema.org","@type":"Article","headline":"How to Enable Roobet 2FA","description":"A step-by-step guide to Roobet authenticator setup and recovery-key safety.","image":SITE + "/assets/roobet-2fa-guide.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"Roobet Casino Rewards Editorial Team"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards","url":SITE + "/"}},
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in twofa_faq]},
+    ],
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Account Security</p>
+  <span class="eyebrow rv">🔐 Security Guide · Published 7 October 2026</span>
+  <h1 class="rv d1">How to Enable <span class="grad">Roobet 2FA</span></h1>
+  <p class="lead rv d2">Two-factor authentication adds a rotating code to the login process. The setup is quick, but the recovery key must be treated like a password.</p>
+</div></section>
+<section style="padding-top:10px"><article class="wrap" style="max-width:880px">
+  <img class="rv" src="/assets/roobet-2fa-guide.webp" alt="How to enable Roobet two-factor authentication safely" width="1200" height="630" style="width:100%;height:auto;border-radius:18px;border:1px solid var(--border);margin-bottom:34px">
+  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">Roobet Casino Rewards Editorial Team</a> · Reviewed 7 October 2026 · 7 min read</p>
+  <div class="card rv" style="border-color:rgba(255,199,0,.38);margin-top:24px"><h2 style="font-size:1.25rem">Before you start</h2><p>Install a reputable authenticator app, open Roobet's Account Security page and prepare a private place to store the recovery key. Never save the key in a public screenshot or send it to someone offering account help.</p></div>
+
+  <h2 class="rv" style="margin-top:48px">Roobet 2FA Setup: Step by Step</h2>
+  <div style="display:grid;gap:12px;margin:20px 0 38px">
+    <div class="mile rv"><span class="amt">1</span><p style="flex:1;color:var(--muted)"><b>Install an authenticator.</b> Roobet's guide recommends Authy and also explains setup using Google Authenticator.</p></div>
+    <div class="mile rv d1"><span class="amt">2</span><p style="flex:1;color:var(--muted)"><b>Open Account Security.</b> Sign in through the official Roobet domain and navigate to the security settings.</p></div>
+    <div class="mile rv d2"><span class="amt">3</span><p style="flex:1;color:var(--muted)"><b>Enable Two-Factor Authentication.</b> Use the switch at the bottom of the security page.</p></div>
+    <div class="mile rv d3"><span class="amt">4</span><p style="flex:1;color:var(--muted)"><b>Scan the QR code or enter the setup key.</b> The authenticator app will create a Roobet entry.</p></div>
+    <div class="mile rv"><span class="amt">5</span><p style="flex:1;color:var(--muted)"><b>Store the recovery key privately.</b> Anyone with it may be able to remove 2FA from the account.</p></div>
+    <div class="mile rv d1"><span class="amt">6</span><p style="flex:1;color:var(--muted)"><b>Enter the current six-digit code.</b> Codes rotate every 30 seconds, so use the newest value shown in the app.</p></div>
+  </div>
+
+  <h2 class="rv" style="margin-top:48px">How to Protect the Recovery Key</h2>
+  <p class="rv" style="color:var(--muted)">The recovery key is not an ordinary verification code. Roobet's official instructions warn that it can be used to remove two-factor authentication. Keep it separate from your everyday login credentials, preferably in a secure password manager or offline location only you control.</p>
+  <div class="cards c2 rv"><div class="card"><div class="ic">✅</div><h3>Do</h3><p>Keep one private backup, secure the email connected to the account and review active sessions from the official security page.</p></div><div class="card" style="border-color:rgba(255,90,90,.28)"><div class="ic">⛔</div><h3>Never</h3><p>Share the recovery key, QR code, password or current authenticator code with an affiliate, moderator or unsolicited “support” account.</p></div></div>
+
+  <h2 class="rv" style="margin-top:48px">If the 2FA Code Is Rejected</h2>
+  <ul class="rv" style="color:var(--muted);line-height:1.9;padding-left:24px"><li>Wait for a fresh code and enter it before the 30-second timer expires.</li><li>Set the phone or computer clock to automatic time synchronization.</li><li>Confirm that you selected the Roobet entry rather than another account in the authenticator.</li><li>Use only the official recovery and support process if access is lost.</li></ul>
+  <p class="rv" style="color:var(--muted)">Do not disable security because of a temporary code error, and do not pay a third party to “recover” the account.</p>
+
+  <h2 class="rv" style="margin-top:48px">2FA and Roobet Chat Access</h2>
+  <p class="rv" style="color:var(--muted)">Roobet's current chat-requirements article lists two separate conditions: 2FA must be enabled and the account must have wagered at least $500. Enabling 2FA therefore improves security but does not, by itself, guarantee chat access.</p>
+
+  <h2 class="rv" style="margin-top:48px">Primary Sources</h2>
+  <p class="rv" style="color:var(--muted)">The setup steps were checked against Roobet's official <a href="https://help.roobet.com/en/articles/5017812-2fa-guide" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">2FA Guide</a> and <a href="https://help.roobet.com/en/articles/6840930-chat-requirements" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Chat Requirements</a> on 7 October 2026.</p>
+
+  <h2 class="rv" style="margin-top:48px">Roobet 2FA FAQ</h2>
+  <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in twofa_faq)}</div>
+</article></section>
+{cta_banner("Secure Your Account First","Enable 2FA, protect your recovery key and complete verification before handling deposits or rewards.")}
+""")
+
+# ================= BLOG: RESTRICTED COUNTRIES =================
+regions_faq = [
+    ("Can residents of the United States use Roobet?", "Roobet's restricted-regions article reviewed on 7 October 2026 lists the United States among jurisdictions whose residents may not access the website or register an account."),
+    ("Why can an available Roobet account still be missing a game?", "Third-party game providers apply their own regional restrictions. A provider or individual game may be unavailable even where the Roobet account itself is permitted."),
+    ("Can I use a VPN to bypass a Roobet restriction?", "No. Do not disguise your location or submit false information to bypass account or provider restrictions. Check the official policies and applicable local law."),
+    ("Where should I verify current regional availability?", "Check Roobet's current Restricted Regions and Regional Restrictions by Game Provider Help Center articles, the Terms of Service and the availability shown in your authenticated account."),
+]
+PAGES["roobet-restricted-countries.html"] = dict(
+    title="Roobet Restricted Countries & Game Provider Rules (2026)",
+    desc="Roobet restricted countries explained: account-level eligibility, separate game-provider restrictions, VPN risks and how to verify current availability safely.",
+    kw="roobet restricted countries, where is roobet restricted, roobet countries, roobet game provider restrictions",
+    og_image="/assets/roobet-restricted-countries.webp",
+    og_type="article",
+    schema=[
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Restricted Countries and Game Provider Rules","description":"A current guide to Roobet account restrictions and separate third-party game-provider rules.","image":SITE + "/assets/roobet-restricted-countries.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"Roobet Casino Rewards Editorial Team"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards","url":SITE + "/"}},
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in regions_faq]},
+    ],
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Regional Eligibility</p>
+  <span class="eyebrow rv">🌍 Eligibility Guide · Published 7 October 2026</span>
+  <h1 class="rv d1">Roobet Restricted Countries <span class="grad">&amp; Provider Rules</span></h1>
+  <p class="lead rv d2">Roobet account access and individual casino-game availability are controlled by different restriction lists. Understanding that distinction prevents many registration and KYC problems.</p>
+</div></section>
+<section style="padding-top:10px"><article class="wrap" style="max-width:880px">
+  <img class="rv" src="/assets/roobet-restricted-countries.webp" alt="Roobet restricted countries and game provider availability" width="1200" height="630" style="width:100%;height:auto;border-radius:18px;border:1px solid var(--border);margin-bottom:34px">
+  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">Roobet Casino Rewards Editorial Team</a> · Reviewed 7 October 2026 · 9 min read</p>
+  <div class="card rv" style="border-color:rgba(255,199,0,.38);margin-top:24px"><h2 style="font-size:1.25rem">Two different questions</h2><p><b>Account eligibility:</b> may a resident access Roobet or register an account? <b>Provider availability:</b> if the account is allowed, may a particular studio supply its games in that location? Passing the first test does not guarantee every game will appear.</p></div>
+
+  <h2 class="rv" style="margin-top:48px">Roobet's Current Account-Level Restricted List</h2>
+  <p class="rv" style="color:var(--muted)">Roobet's official Restricted Regions article, dated 25 August 2026 and checked again on 7 October 2026, lists residents of the following jurisdictions and territories as unable to access the website or register an account:</p>
+  <div class="card rv"><p style="color:var(--muted);line-height:1.9;margin:0">Aruba, Australia, Bonaire, Cuba, Curaçao, Cyprus, Gibraltar, Haiti, Iran, Iraq, Malta, Myanmar, Netherlands, Nicaragua, North Korea, Saba, Saint Maarten, Saint Martin, South Sudan, Statia, Syria, United States, United Kingdom, Yemen and Zimbabwe.</p></div>
+  <p class="rv" style="color:var(--muted)">This list is time-sensitive. Do not treat a copied list as permanent legal advice. Roobet's current Help Center, Terms of Service and the laws applying where you are located control eligibility.</p>
+
+  <h2 class="rv" style="margin-top:48px">Why Some Games Can Still Be Missing</h2>
+  <p class="rv" style="color:var(--muted)">Roobet publishes a separate provider-restrictions article because third-party studios make their own distribution decisions. A provider may block an entire country, restrict only selected regulated regions or apply extra rules to premium content and individual titles.</p>
+  <div class="cards c2 rv"><div class="card"><div class="ic">👤</div><h3>Account-level rule</h3><p>Determines whether a resident may use the Roobet website or register an account.</p></div><div class="card"><div class="ic">🎮</div><h3>Provider-level rule</h3><p>Determines whether a studio's games are supplied in a particular location after account access is established.</p></div></div>
+  <p class="rv" style="color:var(--muted)">That is why a friend in another permitted region may see a slot that does not appear in your lobby. It does not necessarily mean the account is broken or the game has been removed globally.</p>
+
+  <h2 class="rv" style="margin-top:48px">Do Not Use a VPN or False Details</h2>
+  <div class="card rv" style="border-color:rgba(255,90,90,.32)"><h3>Stop if your location is restricted</h3><p>Do not use a VPN, false address, borrowed identity document or another person's account to bypass a restriction. Those actions can violate platform rules, create KYC mismatches and put deposited funds at risk.</p></div>
+  <p class="rv" style="color:var(--muted)">If you travel or relocate, ask official support how the change affects the account before depositing or playing. An affiliate cannot authorize access, override a provider block or guarantee that a withdrawal will be approved.</p>
+
+  <h2 class="rv" style="margin-top:48px">Eligibility Checklist Before Registration</h2>
+  <ol class="rv" style="color:var(--muted);line-height:2;padding-left:24px"><li>Read the current Roobet Restricted Regions article.</li><li>Check the Terms of Service and the law applicable in your location.</li><li>Review provider restrictions if a particular studio or game matters to you.</li><li>Use your real location and identity information during registration and KYC.</li><li>Confirm any uncertainty with official support before depositing.</li></ol>
+  <p class="rv" style="color:var(--muted)">If you are eligible and proceed, our <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">KYC guide</a> explains verification, while the <a href="/how-to-enable-roobet-2fa" style="color:var(--gold)">2FA guide</a> covers account security.</p>
+
+  <h2 class="rv" style="margin-top:48px">Primary Sources</h2>
+  <p class="rv" style="color:var(--muted)">This guide was checked against Roobet's official <a href="https://help.roobet.com/en/articles/13686927-roobet-restricted-regions" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Restricted Regions</a> and <a href="https://help.roobet.com/en/articles/6610575-regional-restrictions-by-game-provider" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Regional Restrictions by Game Provider</a> articles on 7 October 2026.</p>
+
+  <h2 class="rv" style="margin-top:48px">Restricted Countries FAQ</h2>
+  <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in regions_faq)}</div>
+</article></section>
+{cta_banner("Check Eligibility Before Depositing","Use accurate location details, complete KYC honestly and never bypass a regional restriction.")}
+""")
+
 
 # ================= WATCH LIVE =================
 watch_faq = [
@@ -2861,31 +3045,47 @@ for _fn, _pairs in PAGE_FAQS.items():
 
 out = os.path.dirname(os.path.abspath(__file__))
 for fname, p in PAGES.items():
-    html = post(shell(fname, p["title"], p["desc"], p["kw"], p["body"], p.get("schema")))
-    with open(os.path.join(out, fname), "w", encoding="utf-8") as f:
+    html = post(shell(
+        fname,
+        p["title"],
+        p["desc"],
+        p["kw"],
+        p["body"],
+        schema=p.get("schema"),
+        og_type=p.get("og_type", "website"),
+        og_image=p.get("og_image"),
+    ))
+    with open(os.path.join(out, fname), "w", encoding="utf-8", newline="\n") as f:
         f.write(html)
     print("wrote", fname, len(html))
 
 # sitemap
 urls = [SITE + "/"] + [SITE + "/" + f[:-5] for f in PAGES if f != "index.html"]
+lastmods = {
+    f"{SITE}/blog": "2026-10-07",
+    f"{SITE}/roobet-wagering-requirements": "2026-10-07",
+    f"{SITE}/how-to-enable-roobet-2fa": "2026-10-07",
+    f"{SITE}/roobet-restricted-countries": "2026-10-07",
+    f"{SITE}/roobet-deposit-bonus-free-spins": "2026-09-17",
+}
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
-    lastmod = "<lastmod>2026-09-17</lastmod>" if u == f"{SITE}/roobet-deposit-bonus-free-spins" else ""
+    lastmod = f"<lastmod>{lastmods[u]}</lastmod>" if u in lastmods else ""
     sm += f"  <url><loc>{u}</loc>{lastmod}<changefreq>weekly</changefreq><priority>{'1.0' if u.endswith('.com/') else '0.8'}</priority></url>\n"
 sm += "</urlset>\n"
-open(os.path.join(out, "sitemap.xml"), "w").write(sm)
+open(os.path.join(out, "sitemap.xml"), "w", newline="\n").write(sm)
 
-open(os.path.join(out, "robots.txt"), "w").write(
+open(os.path.join(out, "robots.txt"), "w", newline="\n").write(
     "User-agent: *\nAllow: /\n"
     "Disallow: /raffle-admin.html\nDisallow: /vip-admin.html\nDisallow: /merch-admin.html\nDisallow: /admin.html\nDisallow: /api/\n"
     f"\nSitemap: {SITE}/sitemap.xml\n")
 
-open(os.path.join(out, "vercel.json"), "w").write(json.dumps({
+open(os.path.join(out, "vercel.json"), "w", newline="\n").write(json.dumps({
     "cleanUrls": True, "trailingSlash": False,
     "headers": [{"source": "/assets/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]}]
 }, indent=2))
 
-open(os.path.join(out, "assets", "favicon.svg"), "w").write(
+open(os.path.join(out, "assets", "favicon.svg"), "w", newline="\n").write(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="none" stroke="#ffc700" stroke-width="4" stroke-dasharray="9 5"/><circle cx="24" cy="24" r="14" fill="#ffc700"/><text x="24" y="30" text-anchor="middle" font-family="Arial" font-weight="800" font-size="17" fill="#1a1230">R</text></svg>')
 
 print("done:", len(PAGES), "pages + sitemap + robots + vercel.json + favicon")
