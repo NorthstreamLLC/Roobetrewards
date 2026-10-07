@@ -523,7 +523,7 @@ def banner(title, href, cta="Learn more", eyebrow="", text="", c="gold", ic="",
 ACTIVE_PROMOS = [
     dict(
         title="Roobet Airdrop V4",
-        prize="$10,000",
+        prize="$14,000",
         unit="CURRENT POOL",
         window="Sep 16 &ndash; Oct 31, 2026",
         ic="gift", c="gold",
