@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4XLL2RYBWD"></script>
+<!-- Google Analytics is queued immediately, then downloaded after first render. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-4XLL2RYBWD');
+  window.addEventListener('load', function(){
+    var loadAnalytics = function(){
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4XLL2RYBWD';
+      document.head.appendChild(script);
+    };
+    setTimeout(function(){
+      if ('requestIdleCallback' in window) requestIdleCallback(loadAnalytics, {timeout:1200});
+      else loadAnalytics();
+    }, 1800);
+  }, {once:true});
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,10 +40,6 @@
 <link rel="icon" href="assets/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#0d0919">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="css/style.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://www.roobetcasinorewards.com/#website", "url": "https://www.roobetcasinorewards.com/", "name": "Roobet Casino Rewards", "publisher": {"@id": "https://www.roobetcasinorewards.com/#org"}, "inLanguage": "en"}, {"@type": "Organization", "@id": "https://www.roobetcasinorewards.com/#org", "name": "Roobet Casino Rewards", "url": "https://www.roobetcasinorewards.com/", "logo": {"@type": "ImageObject", "url": "https://www.roobetcasinorewards.com/assets/apple-touch-icon.png"}, "sameAs": ["https://kick.com/dailygambling", "https://discord.gg/dailygamba", "https://t.me/slotessentialsVIP", "https://slotessentials.com"]}, {"@type": "WebPage", "@id": "https://www.roobetcasinorewards.com/giveaways#webpage", "url": "https://www.roobetcasinorewards.com/giveaways", "name": "Community Raffle \u2014 Free to Enter for Active Players", "description": "Our Community Raffle is free to enter for active players. Sign in with Kick, enter in one click, and winners are drawn live on stream. Plus giveaways and drops for players under code DAILY or ELITE.", "isPartOf": {"@id": "https://www.roobetcasinorewards.com/#website"}, "primaryImageOfPage": {"@type": "ImageObject", "url": "https://www.roobetcasinorewards.com/assets/og-image.png"}, "inLanguage": "en", "isRelatedTo": [{"@type": "WebPage", "name": "Roobet Casino Rewards Homepage", "url": "https://www.roobetcasinorewards.com/"}, {"@type": "WebPage", "name": "$50,000 Roobet Wager Leaderboard", "url": "https://www.roobetcasinorewards.com/leaderboard"}, {"@type": "WebPage", "name": "Roobet Wager Milestones", "url": "https://www.roobetcasinorewards.com/wager-milestones"}, {"@type": "WebPage", "name": "Roobet Free Spins Bonus", "url": "https://www.roobetcasinorewards.com/free-spins"}, {"@type": "WebPage", "name": "Roobet Max Win Merch", "url": "https://www.roobetcasinorewards.com/max-win-merch"}, {"@type": "WebPage", "name": "ELITE Points Shop", "url": "https://www.roobetcasinorewards.com/elite-points"}, {"@type": "WebPage", "name": "Roobet Slot Challenges", "url": "https://www.roobetcasinorewards.com/slot-challenges"}, {"@type": "WebPage", "name": "Roobet Rewards Explained", "url": "https://www.roobetcasinorewards.com/roobet-rewards"}, {"@type": "WebPage", "name": "Transfer Your VIP Status to Roobet", "url": "https://www.roobetcasinorewards.com/vip-transfer"}, {"@type": "WebPage", "name": "Roobet Guides & Blog", "url": "https://www.roobetcasinorewards.com/blog"}, {"@type": "WebPage", "name": "Play on Roobet with code DAILY", "url": "https://roobet.com/?ref=daily"}, {"@type": "WebPage", "name": "Slotessentials", "url": "https://slotessentials.com/"}], "breadcrumb": {"@id": "https://www.roobetcasinorewards.com/giveaways#breadcrumb"}, "mainEntity": {"@id": "https://www.roobetcasinorewards.com/giveaways#faq"}}, {"@type": "BreadcrumbList", "@id": "https://www.roobetcasinorewards.com/giveaways#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Roobet Casino Rewards", "item": "https://www.roobetcasinorewards.com/"}, {"@type": "ListItem", "position": 2, "name": "Community Raffle", "item": "https://www.roobetcasinorewards.com/giveaways"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is the Community Raffle really free to enter?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. There is no deposit and no purchase. Sign in with your Kick account on the raffle page and you are entered in one click, one entry per account."}}, {"@type": "Question", "name": "How are Community Raffle winners chosen?", "acceptedAnswer": {"@type": "Answer", "text": "Winners are drawn at random from all valid entries using a cryptographically secure draw, and the draw happens live on stream so everyone can see it."}}, {"@type": "Question", "name": "Why do I need to sign in with Kick to enter the raffle?", "acceptedAnswer": {"@type": "Answer", "text": "Kick sign-in is how we enforce one entry per person and confirm you are an active member of the community rather than a duplicate account."}}], "@id": "https://www.roobetcasinorewards.com/giveaways#faq"}]}</script>
 </head>
@@ -42,7 +48,7 @@
 <div class="grid-bg"></div>
 <nav aria-label="Main">
   <div class="nav-inner">
-    <a class="brand" href="/"><img src="assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+    <a class="brand" href="/"><img src="assets/roobet-chip-256.webp" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
     <div class="nav-links">
       <a href="/">Home</a>
       <div class="dropdown mega">
@@ -113,7 +119,7 @@
     <div class="bn-right">
       <div class="bn-art" aria-hidden="true">
         <img class="a-main" src="assets/fox-vip.png" alt="" width="458" height="700" loading="lazy">
-        <img class="a-left" src="assets/roobet-chip.png" alt="" width="512" height="511" loading="lazy">
+        <img class="a-left" src="assets/roobet-chip-256.webp" alt="" width="256" height="256" loading="lazy" decoding="async">
       </div>
       <div class="bn-stat">
         <div class="bs-top"><span class="bs-label">Entry cost</span><span class="bs-badge">&#10003; Kick verified</span></div>
@@ -149,7 +155,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><img src="assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+        <a class="brand" href="/"><img src="assets/roobet-chip-256.webp" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
         <p style="color:var(--muted);font-size:.9rem;margin-top:16px;max-width:280px">The home of the biggest Roobet casino rewards — $100,000 in monthly rewards for players using code <a href="https://roobet.com/?ref=daily" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> or <a href="https://roobet.com/?ref=elite" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a>.</p>
       </div>
       <div><h4>Rewards</h4><a href="/leaderboard">$50K Wager Leaderboard</a><a href="/wager-milestones">Wager Milestones</a><a href="/max-win-merch">Max Win Merch</a><a href="/free-spins">Free Spins Bonus</a></div>

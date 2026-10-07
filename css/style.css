@@ -21,8 +21,8 @@
   --radius:15px;
   --radius-sm:10px;
   --nav-h:64px;
-  --font:'Outfit',system-ui,-apple-system,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  --font:'Segoe UI Variable','Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'Cascadia Mono','Segoe UI Mono',ui-monospace,SFMono-Regular,monospace;
   /* legacy aliases so older page markup keeps working */
   --bg2:var(--surface);--bg3:var(--surface-2);--card:var(--surface);--card-hover:var(--surface-2);
   --gold2:var(--gold-soft);--gold-soft-bg:rgba(245,165,36,.07);--purple:#7b8cff;
@@ -196,6 +196,14 @@ h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
 .hero{position:relative;min-height:auto;display:block;padding:0;overflow:hidden}
 .hero .bd-grid{display:none}
 .hero .bd-orb-a,.hero .bd-orb-b{animation:none;filter:none;opacity:.45}
+.home nav{background:rgba(10,15,31,.97);backdrop-filter:none;-webkit-backdrop-filter:none}
+.home .rv{opacity:1;transform:none;transition:none}
+.home .btn-gold::after{display:none}
+.home .pulse,.home .live-dot,.home .hu-dot,.home .ticker-track,
+.home .vip-band::before,.home .bn-art img,.home .pl-step.is-now i{animation:none!important}
+.home .ticker-track{will-change:auto}
+.home .vip-band::before{filter:none;opacity:.55}
+.home .pl-track i,.home .earn-bar i{transition:none}
 .hero-inner{position:relative;z-index:2;margin:0 auto}
 .hero-split{display:grid;grid-template-columns:minmax(440px,.9fr) minmax(520px,1.1fr);align-items:center;gap:clamp(38px,5vw,88px);max-width:1440px;padding:clamp(58px,6vw,92px) clamp(24px,3vw,44px) clamp(48px,5vw,76px)}
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-width:0}
@@ -524,6 +532,8 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
     overflow-y:auto;-webkit-overflow-scrolling:touch;
     transform:translateY(-100%);visibility:hidden;transition:transform .28s ease,visibility .28s}
   .nav-links.open{transform:none;visibility:visible}
+  .nav-links:not(.open) .menu{visibility:hidden;pointer-events:none}
+  .nav-links.open .menu{visibility:visible;pointer-events:auto}
   body.nav-lock{overflow:hidden}
   .nav-links>a{padding:15px 4px;font-size:16px;font-weight:600;color:var(--text);
     border-bottom:1px solid var(--hairline)}
@@ -549,10 +559,18 @@ footer{border-top:1px solid var(--hairline);background:var(--bg-sunk);padding:40
   .mega-item b{font-size:15px}
   .mega-item i{font-size:12px}
   .mega-foot{display:none}
+  .nav-links:not(.open) .dropdown.mega .menu{visibility:hidden!important;pointer-events:none}
   .burger{display:block}
   .nav-cta .btn-ghost{display:none}
   .banner-in{max-width:100%}
   .banner-art{inset:0 0 0 62%;opacity:.5}
+}
+@media(max-width:560px){
+  .nav-inner{gap:8px;padding:0 12px}
+  .brand>span{display:none}
+  .nav-cta{gap:6px}
+  .nav-cta .btn-gold{padding:10px 13px;font-size:12px}
+  .burger{padding:4px}
 }
 .mile .perks{display:inline-block;margin-left:7px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
 

@@ -127,7 +127,7 @@ def nav(active=""):
     rewards_cls = ' class="active"' if active in reward_slugs else ""
     return f"""<nav aria-label="Main">
   <div class="nav-inner">
-    <a class="brand" href="/"><img src="/assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+    <a class="brand" href="/"><img src="/assets/roobet-chip-256.webp" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
     <div class="nav-links">
       {link("/", "Home")}
       <div class="dropdown mega">
@@ -184,7 +184,7 @@ def footer():
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><img src="/assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+        <a class="brand" href="/"><img src="/assets/roobet-chip-256.webp" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
         <p style="color:var(--muted);font-size:.9rem;margin-top:16px;max-width:280px">The home of the biggest Roobet casino rewards — $100,000 in monthly rewards for players using code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b>.</p>
       </div>
       <div><h4>Rewards</h4>{rew}</div>
@@ -329,14 +329,24 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4XLL2RYBWD"></script>
+<!-- Google Analytics is queued immediately, then downloaded after first render. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
-
   gtag('config', 'G-4XLL2RYBWD');
+  window.addEventListener('load', function(){{
+    var loadAnalytics = function(){{
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4XLL2RYBWD';
+      document.head.appendChild(script);
+    }};
+    setTimeout(function(){{
+      if ('requestIdleCallback' in window) requestIdleCallback(loadAnalytics, {{timeout:1200}});
+      else loadAnalytics();
+    }}, 1800);
+  }}, {{once:true}});
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -358,14 +368,10 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
 <link rel="icon" href="/assets/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <meta name="theme-color" content="#0d0919">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="/css/style.css">
 {schema_tag}
 </head>
-<body>
+<body{' class="home"' if fname == 'index.html' else ''}>
 <div class="orbs"><div class="orb g"></div><div class="orb p"></div><div class="orb p2"></div></div>
 <div class="grid-bg"></div>
 {nav(active=canon.rsplit('/',1)[-1])}
@@ -601,8 +607,8 @@ def promo_card(p, expired=False):
 </article>"""
 
 # chip anchors behind, one character in front — more than one reads as clutter
-PROMO_ART = [("/assets/roobet-chip.png", "a-main"),
-             ("/assets/zeus.png", "a-right")]
+PROMO_ART = [("/assets/roobet-chip-256.webp", "a-main"),
+             ("/assets/zeus-optimized.webp", "a-right")]
 PROMO_STAT = dict(label="Last promotion paid out", value="$200.00", badge="Paid",
                   rows=[("&#128176;", "Raw cash"), ("&#127942;", "$30,000 wagered"),
                         ("&#128197;", "Aug 28 &ndash; Sep 4")])
@@ -699,7 +705,7 @@ home_raffle = banner(
     text=RAFFLE["blurb"],
     href="/giveaways", cta="Enter the raffle",
     art=[("/assets/fox-vip.png", "a-main"),
-         ("/assets/roobet-chip.png", "a-left")],
+         ("/assets/roobet-chip-256.webp", "a-left")],
     stat=dict(label="Entry cost", value="Free", badge="Kick verified",
               rows=[("&#127903;", "One entry per account"), ("&#128250;", "Drawn live on stream")]))
 
@@ -816,7 +822,7 @@ PAGES["index.html"] = dict(
 
   <div class="banners">
     <div class="banner rv">
-      <div class="banner-art chip"><img src="/assets/roobet-chip.png" alt="Roobet wager leaderboard" width="176" height="176" loading="lazy"></div>
+      <div class="banner-art chip"><img src="/assets/roobet-chip-256.webp" alt="Roobet wager leaderboard" width="176" height="176" loading="lazy" decoding="async"></div>
       <div class="banner-veil"></div>
       <div class="banner-in">
         <div>
@@ -832,7 +838,7 @@ PAGES["index.html"] = dict(
     </div>
 
     <div class="banner rv d1">
-      <div class="banner-art"><img src="/assets/medals.png" alt="Monthly wager milestones" width="760" height="459" loading="lazy"></div>
+      <div class="banner-art"><img src="/assets/medals-optimized.webp" alt="Monthly wager milestones" width="760" height="459" loading="lazy" decoding="async"></div>
       <div class="banner-veil"></div>
       <div class="banner-in">
         <div>
@@ -941,9 +947,9 @@ PAGES["index.html"] = dict(
       </div>
     </div>
     <div class="rv d2"><div class="phone">
-      <div class="vid-mask"><img src="/assets/roobet-chip.png" alt="" width="18" height="18"><span><span class="b1">ROOBET</span>REWARDS</span></div>
+      <div class="vid-mask"><img src="/assets/roobet-chip-256.webp" alt="" width="18" height="18"><span><span class="b1">ROOBET</span>REWARDS</span></div>
       <div class="vid-wash"></div>
-      <video src="/assets/roo-signup.mp4" autoplay muted loop playsinline preload="none" poster="/assets/og-image.png" aria-label="Roobet sign-up walkthrough"></video>
+      <video data-lazy-video data-src="/assets/roo-signup.mp4" data-poster="/assets/og-image.png" muted loop playsinline preload="none" aria-label="Roobet sign-up walkthrough"></video>
     </div></div>
   </div>
 </div></section>
@@ -1158,7 +1164,7 @@ PAGES["wager-milestones.html"] = dict(
       </div>
     </div>
     <div class="rv d2"><div class="phone">
-      <div class="vid-mask"><img src="/assets/roobet-chip.png" alt="" width="18" height="18"><span><span class="b1">ROOBET</span>REWARDS</span></div>
+      <div class="vid-mask"><img src="/assets/roobet-chip-256.webp" alt="" width="18" height="18"><span><span class="b1">ROOBET</span>REWARDS</span></div>
       <div class="vid-wash"></div>
       <video src="/assets/wager.mp4" autoplay muted loop playsinline preload="none" poster="/assets/og-image.png" aria-label="Wager leaderboard preview"></video>
     </div></div>
@@ -1560,7 +1566,7 @@ PAGES["giveaways.html"] = dict(
     <div class="bn-right">
       <div class="bn-art" aria-hidden="true">
         <img class="a-main" src="/assets/fox-vip.png" alt="" width="458" height="700" loading="lazy">
-        <img class="a-left" src="/assets/roobet-chip.png" alt="" width="512" height="511" loading="lazy">
+        <img class="a-left" src="/assets/roobet-chip-256.webp" alt="" width="256" height="256" loading="lazy" decoding="async">
       </div>
       <div class="bn-stat">
         <div class="bs-top"><span class="bs-label">Entry cost</span><span class="bs-badge">&#10003; Kick verified</span></div>
@@ -3059,6 +3065,7 @@ for fname, p in PAGES.items():
         og_type=p.get("og_type", "website"),
         og_image=p.get("og_image"),
     ))
+    html = "\n".join(line.rstrip() for line in html.splitlines()) + "\n"
     with open(os.path.join(out, fname), "w", encoding="utf-8", newline="\n") as f:
         f.write(html)
     print("wrote", fname, len(html))

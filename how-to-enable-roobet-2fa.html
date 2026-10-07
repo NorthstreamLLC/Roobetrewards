@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4XLL2RYBWD"></script>
+<!-- Google Analytics is queued immediately, then downloaded after first render. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-4XLL2RYBWD');
+  window.addEventListener('load', function(){
+    var loadAnalytics = function(){
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4XLL2RYBWD';
+      document.head.appendChild(script);
+    };
+    setTimeout(function(){
+      if ('requestIdleCallback' in window) requestIdleCallback(loadAnalytics, {timeout:1200});
+      else loadAnalytics();
+    }, 1800);
+  }, {once:true});
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,10 +40,6 @@
 <link rel="icon" href="assets/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#0d0919">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="css/style.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://www.roobetcasinorewards.com/#website", "url": "https://www.roobetcasinorewards.com/", "name": "Roobet Casino Rewards", "publisher": {"@id": "https://www.roobetcasinorewards.com/#org"}, "inLanguage": "en"}, {"@type": "Organization", "@id": "https://www.roobetcasinorewards.com/#org", "name": "Roobet Casino Rewards", "url": "https://www.roobetcasinorewards.com/", "logo": {"@type": "ImageObject", "url": "https://www.roobetcasinorewards.com/assets/apple-touch-icon.png"}, "sameAs": ["https://kick.com/dailygambling", "https://discord.gg/dailygamba", "https://t.me/slotessentialsVIP", "https://slotessentials.com"]}, {"@type": "WebPage", "@id": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa#webpage", "url": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa", "name": "How to Enable Roobet 2FA: Setup & Recovery Key Safety", "description": "Set up Roobet two-factor authentication safely, store the recovery key, understand rotating codes and troubleshoot common authenticator problems.", "isPartOf": {"@id": "https://www.roobetcasinorewards.com/#website"}, "primaryImageOfPage": {"@type": "ImageObject", "url": "https://www.roobetcasinorewards.com/assets/roobet-2fa-guide.webp"}, "inLanguage": "en", "isRelatedTo": [{"@type": "WebPage", "name": "Roobet Casino Rewards Homepage", "url": "https://www.roobetcasinorewards.com/"}, {"@type": "WebPage", "name": "$50,000 Roobet Wager Leaderboard", "url": "https://www.roobetcasinorewards.com/leaderboard"}, {"@type": "WebPage", "name": "Roobet Wager Milestones", "url": "https://www.roobetcasinorewards.com/wager-milestones"}, {"@type": "WebPage", "name": "Roobet Free Spins Bonus", "url": "https://www.roobetcasinorewards.com/free-spins"}, {"@type": "WebPage", "name": "Roobet Max Win Merch", "url": "https://www.roobetcasinorewards.com/max-win-merch"}, {"@type": "WebPage", "name": "ELITE Points Shop", "url": "https://www.roobetcasinorewards.com/elite-points"}, {"@type": "WebPage", "name": "Roobet Slot Challenges", "url": "https://www.roobetcasinorewards.com/slot-challenges"}, {"@type": "WebPage", "name": "Community Raffle", "url": "https://www.roobetcasinorewards.com/giveaways"}, {"@type": "WebPage", "name": "Roobet Rewards Explained", "url": "https://www.roobetcasinorewards.com/roobet-rewards"}, {"@type": "WebPage", "name": "Transfer Your VIP Status to Roobet", "url": "https://www.roobetcasinorewards.com/vip-transfer"}, {"@type": "WebPage", "name": "Roobet Guides & Blog", "url": "https://www.roobetcasinorewards.com/blog"}, {"@type": "WebPage", "name": "Play on Roobet with code DAILY", "url": "https://roobet.com/?ref=daily"}], "breadcrumb": {"@id": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa#breadcrumb"}, "mainEntity": {"@id": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa#article"}}, {"@type": "BreadcrumbList", "@id": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Roobet Casino Rewards", "item": "https://www.roobetcasinorewards.com/"}, {"@type": "ListItem", "position": 2, "name": "How to Enable Roobet 2FA: Setup & Recovery Key Safety", "item": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa"}]}, {"@type": "Article", "headline": "How to Enable Roobet 2FA", "description": "A step-by-step guide to Roobet authenticator setup and recovery-key safety.", "image": "https://www.roobetcasinorewards.com/assets/roobet-2fa-guide.webp", "datePublished": "2026-10-07", "dateModified": "2026-10-07", "author": {"@type": "Organization", "name": "Roobet Casino Rewards Editorial Team"}, "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "url": "https://www.roobetcasinorewards.com/"}, "@id": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa#article", "mainEntityOfPage": {"@id": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa#webpage"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What app can I use for Roobet 2FA?", "acceptedAnswer": {"@type": "Answer", "text": "Roobet's current guide recommends Authy and also describes using Google Authenticator. A compatible time-based authenticator app can generate the required rotating code."}}, {"@type": "Question", "name": "How often does a Roobet 2FA code change?", "acceptedAnswer": {"@type": "Answer", "text": "The official guide says a new authenticator code is generated every 30 seconds."}}, {"@type": "Question", "name": "Should I share my Roobet 2FA recovery key with support?", "acceptedAnswer": {"@type": "Answer", "text": "No. Roobet warns that the recovery key can be used to remove 2FA. Store it privately and never send it through chat, email, Telegram or Discord."}}, {"@type": "Question", "name": "Is 2FA enough to use Roobet chat?", "acceptedAnswer": {"@type": "Answer", "text": "No. Roobet's current chat requirements also say the account must have wagered at least $500. These requirements can change."}}], "@id": "https://www.roobetcasinorewards.com/how-to-enable-roobet-2fa#faq"}]}</script>
 </head>
@@ -42,7 +48,7 @@
 <div class="grid-bg"></div>
 <nav aria-label="Main">
   <div class="nav-inner">
-    <a class="brand" href="/"><img src="assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+    <a class="brand" href="/"><img src="assets/roobet-chip-256.webp" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
     <div class="nav-links">
       <a href="/">Home</a>
       <div class="dropdown mega">
@@ -151,7 +157,7 @@
       </div>
 
     </div>
-    <div class="bn-right"><div class="bn-art"><img class="a-main" src="assets/roobet-chip.png" alt="" loading="lazy" aria-hidden="true"><img class="a-right" src="assets/zeus.png" alt="" loading="lazy" aria-hidden="true"></div><div class="bn-stat">
+    <div class="bn-right"><div class="bn-art"><img class="a-main" src="assets/roobet-chip-256.webp" alt="" loading="lazy" aria-hidden="true"><img class="a-right" src="assets/zeus-optimized.webp" alt="" loading="lazy" aria-hidden="true"></div><div class="bn-stat">
         <div class="bs-top"><span class="bs-label">Current Pool</span><span class="bs-badge">&#10003; Live</span></div>
         <p class="bs-value">$14,000</p>
         <div class="bs-rows"><span><i>&#128197;</i>Sep 16 &ndash; Oct 31, 2026</span><span><i>&#128200;</i>Grows with community wager</span></div>
@@ -163,7 +169,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><img src="assets/roobet-chip.png" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+        <a class="brand" href="/"><img src="assets/roobet-chip-256.webp" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
         <p style="color:var(--muted);font-size:.9rem;margin-top:16px;max-width:280px">The home of the biggest Roobet casino rewards — $100,000 in monthly rewards for players using code <a href="https://roobet.com/?ref=daily" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> or <a href="https://roobet.com/?ref=elite" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a>.</p>
       </div>
       <div><h4>Rewards</h4><a href="/leaderboard">$50K Wager Leaderboard</a><a href="/wager-milestones">Wager Milestones</a><a href="/max-win-merch">Max Win Merch</a><a href="/free-spins">Free Spins Bonus</a></div>

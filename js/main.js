@@ -56,6 +56,7 @@
 })();
 
 (function () {
+  const isHome = document.body.classList.contains('home');
   // sticky nav
   const nav = document.querySelector('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
@@ -98,12 +99,16 @@
   });
 
   // scroll reveal
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  if (isHome) {
+    document.querySelectorAll('.rv').forEach(el => el.classList.add('on'));
+  } else {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  }
 
   // animated counters  <span data-count="100000" data-prefix="$">
   const fmt = n => n.toLocaleString('en-US');
@@ -123,7 +128,7 @@
       requestAnimationFrame(tick);
     });
   }, { threshold: 0.4 });
-  document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+  if (!isHome) document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 
   // milestone progress bars
   const mio = new IntersectionObserver(entries => {
@@ -137,15 +142,17 @@
   document.querySelectorAll('.mile').forEach(el => mio.observe(el));
 
   // card tilt
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('mousemove', ev => {
-      const r = card.getBoundingClientRect(),
-        x = (ev.clientX - r.left) / r.width - 0.5,
-        y = (ev.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `translateY(-6px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+  if (!isHome) {
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', ev => {
+        const r = card.getBoundingClientRect(),
+          x = (ev.clientX - r.left) / r.width - 0.5,
+          y = (ev.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `translateY(-6px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+      });
+      card.addEventListener('mouseleave', () => card.style.transform = '');
     });
-    card.addEventListener('mouseleave', () => card.style.transform = '');
-  });
+  }
 
   // countdown  <span data-deadline="monthly|weekly|daily">
   function next(kind) {
@@ -215,6 +222,29 @@
     };
     upd(); setInterval(upd, 1000);
   });
+})();
+
+// Load decorative walkthrough videos only when they are close to view. This keeps
+// their poster and media requests out of the critical homepage load.
+(function () {
+  const videos = document.querySelectorAll('video[data-lazy-video]');
+  if (!videos.length) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        if (!video.src) {
+          if (video.dataset.poster) video.poster = video.dataset.poster;
+          video.src = video.dataset.src;
+          video.load();
+        }
+        video.play().catch(() => {});
+      } else if (!video.paused) {
+        video.pause();
+      }
+    });
+  }, { rootMargin: '240px 0px', threshold: 0.01 });
+  videos.forEach(video => io.observe(video));
 })();
 
 // point shop card flip
