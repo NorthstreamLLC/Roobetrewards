@@ -756,16 +756,14 @@ reward_cards = "".join(f"""<a class="card rv d{i%3+1}" href="/{f[:-5]}"><div cla
 # Urgency strip in the hero — only while a promo is running.
 # PROMO_DEADLINE is an ISO date the countdown ticks toward.
 PROMO_DEADLINE = "2026-10-31T23:59:59Z"
-hero_urgency = (f"""
-    <a class="hero-urg rv d2" href="/exclusive-promotions">
-      <span class="hu-dot"></span>
-      <span class="hu-t"><b>{ACTIVE_PROMOS[0]['title']}</b> &mdash; pool at {ACTIVE_PROMOS[0]['prize']} and climbing</span>
-      <span class="hu-cd">Ends in <b data-deadline-iso="{PROMO_DEADLINE}">&mdash;</b></span>
-    </a>""" if ACTIVE_PROMOS else "")
+hero_urgency = (f"""<a class="hero-urg rv d2" href="/exclusive-promotions">
+        <span class="hu-dot"></span>
+        <span class="hu-t"><b>{ACTIVE_PROMOS[0]['title']}</b> &mdash; pool at {ACTIVE_PROMOS[0]['prize']} and climbing</span>
+        <span class="hu-cd">Ends in <b data-deadline-iso="{PROMO_DEADLINE}">&mdash;</b></span>
+      </a>""" if ACTIVE_PROMOS else "")
 
 HERO_BD = """<div class="hero-bd" aria-hidden="true">
   <i class="bd-wash"></i><i class="bd-cone"></i>
-  <img class="bd-chip" src="/assets/roobet-chip.png" alt="" width="820" height="820" aria-hidden="true">
   <i class="bd-orb-a"></i><i class="bd-orb-b"></i><i class="bd-grid"></i><i class="bd-fade"></i>
 </div>"""
 
@@ -787,20 +785,26 @@ PAGES["index.html"] = dict(
     body=f"""
 <section class="hero">
   {HERO_BD}
-  <div class="hero-inner">
-    <span class="eyebrow rv">The #1 Roobet Rewards Hub</span>
-    <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Roobet Casino Rewards.<br>Every Single Month.</h1>
-    <p class="lead rv d2">Roobet casino rewards on code <b style="color:var(--gold)">DAILY</b> stack on top of everything Roobet already gives you: a $50,000 wager leaderboard, $11,350 in wager milestones, exclusive free spins, free max win merch, VIP status transfer and a free-to-enter community raffle &mdash; over $100,000 paid out every month.</p>
-    {hero_urgency}
-    <div class="hero-cta rv d3">
-      <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY</a>
-      <a class="btn btn-ghost btn-lg" href="{KYC}" target="_blank" rel="noopener">How to KYC on Roobet</a>
+  <div class="hero-inner hero-split">
+    <div class="hero-copy">
+      <span class="eyebrow rv">The #1 Roobet Rewards Hub</span>
+      <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Roobet Casino Rewards.<br>Every Single Month.</h1>
+      <p class="lead rv d2">Roobet casino rewards on code <b style="color:var(--gold)">DAILY</b> stack on top of everything Roobet already gives you: a $50,000 wager leaderboard, $11,350 in wager milestones, exclusive free spins, free max win merch, VIP status transfer and a free-to-enter community raffle &mdash; over $100,000 paid out every month.</p>
+      {hero_urgency}
+      <div class="hero-cta rv d3">
+        <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY</a>
+        <a class="btn btn-ghost btn-lg" href="{KYC}" target="_blank" rel="noopener">How to KYC on Roobet</a>
+      </div>
+      <p class="hero-free rv d4">
+        <span class="hf-tag">No deposit needed</span>
+        Not ready to deposit? The <a href="/giveaways">Community Raffle</a> is free to enter &mdash;
+        sign in with Kick, one click, winners drawn live on stream.
+      </p>
     </div>
-    <p class="hero-free rv d4">
-      <span class="hf-tag">No deposit needed</span>
-      Not ready to deposit? The <a href="/giveaways">Community Raffle</a> is free to enter &mdash;
-      sign in with Kick, one click, winners drawn live on stream.
-    </p>
+    <figure class="hero-visual rv d2">
+      <img src="/assets/roobethub-hero-v2.webp" alt="Gold trophy, VIP diamond, reward token, merchandise and prizes inside a premium rewards vault" width="1536" height="1024" fetchpriority="high" decoding="async">
+      <figcaption><b>One code.</b> Every reward connected.</figcaption>
+    </figure>
   </div>
 </section>
 
