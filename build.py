@@ -350,6 +350,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preload" href="/assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <meta name="keywords" content="{kw}">
