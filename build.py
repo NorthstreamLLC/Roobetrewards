@@ -360,7 +360,8 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
 <meta name="theme-color" content="#0d0919">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="/css/style.css">
 {schema_tag}
 </head>
@@ -802,8 +803,7 @@ PAGES["index.html"] = dict(
       </p>
     </div>
     <figure class="hero-visual rv d2">
-      <img src="/assets/roobethub-hero-v3.webp" alt="Roobet-branded gold reward token with trophy, VIP diamond, merchandise and prizes inside a premium rewards vault" width="1536" height="1024" fetchpriority="high" decoding="async">
-      <figcaption><b>One code.</b> Every reward connected.</figcaption>
+      <img src="/assets/roobethub-rewards-cutout-v1.webp" alt="Roobet-branded reward token with trophy, VIP diamond, merchandise and prizes" width="1200" height="800" fetchpriority="high" decoding="async">
     </figure>
   </div>
 </section>
