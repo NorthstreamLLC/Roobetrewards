@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Static site generator for roobetcasinorewards.com"""
+"""Static site generator for roobethub.com"""
 import os, re, json
 
-SITE = "https://www.roobetcasinorewards.com"
+SITE = "https://roobethub.com"
 ELITE = "https://roobet.com/?ref=elite"
 DAILY = "https://roobet.com/?ref=daily"
 KICK = "https://kick.com/dailygambling"
@@ -127,7 +127,7 @@ def nav(active=""):
     rewards_cls = ' class="active"' if active in reward_slugs else ""
     return f"""<nav aria-label="Main">
   <div class="nav-inner">
-    <a class="brand" href="/"><img src="/assets/roobet-chip-256.webp" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+    <a class="brand" href="/"><img src="/assets/roobet-chip-256.webp" alt="RoobetHub" width="28" height="28"><span><span class="b1">ROOBET</span>HUB</span></a>
     <div class="nav-links">
       {link("/", "Home")}
       <div class="dropdown mega">
@@ -184,7 +184,7 @@ def footer():
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><img src="/assets/roobet-chip-256.webp" alt="Roobet Casino Rewards" width="28" height="28"><span><span class="b1">ROOBET</span>REWARDS</span></a>
+        <a class="brand" href="/"><img src="/assets/roobet-chip-256.webp" alt="RoobetHub" width="28" height="28"><span><span class="b1">ROOBET</span>HUB</span></a>
         <p style="color:var(--muted);font-size:.9rem;margin-top:16px;max-width:280px">The home of the biggest Roobet casino rewards — $100,000 in monthly rewards for players using code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b>.</p>
       </div>
       <div><h4>Rewards</h4>{rew}</div>
@@ -203,21 +203,21 @@ def footer():
     <div class="foot-note">
       <span class="badge-18">18+</span>
       <p>Gamble responsibly. You must be of legal gambling age in your jurisdiction to play at Roobet. Gambling involves risk — never wager more than you can afford to lose. If gambling stops being fun, seek help at <a href="https://www.begambleaware.org" style="color:var(--gold)">BeGambleAware.org</a>. This is an independent affiliate website; offers are provided in partnership with Roobet and Slotessentials and may change at any time. Terms &amp; conditions apply to all rewards.</p>
-      <p style="margin-top:10px">© 2026 roobetcasinorewards.com — All rights reserved.</p>
+      <p style="margin-top:10px">© 2026 roobethub.com — All rights reserved.</p>
     </div>
   </div>
 </footer>"""
 
 ORG = {
     "@type": "Organization", "@id": SITE + "/#org",
-    "name": "Roobet Casino Rewards", "url": SITE + "/",
+    "name": "RoobetHub", "url": SITE + "/",
     "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"},
     "sameAs": [KICK, DISCORD, TELEGRAM, "https://slotessentials.com"],
 }
 
 # Related-links pool for WebPage.isRelatedTo (mirrors the slotessentials schema pattern)
 REL_POOL = [
-    ("Roobet Casino Rewards Homepage", SITE + "/"),
+    ("RoobetHub Homepage", SITE + "/"),
     ("$50,000 Roobet Wager Leaderboard", SITE + "/leaderboard"),
     ("Roobet Wager Milestones", SITE + "/wager-milestones"),
     ("Roobet Free Spins Bonus", SITE + "/free-spins"),
@@ -288,7 +288,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
 
     graph = [
         {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/",
-         "name": "Roobet Casino Rewards", "publisher": {"@id": SITE + "/#org"}, "inLanguage": "en"},
+         "name": "RoobetHub", "publisher": {"@id": SITE + "/#org"}, "inLanguage": "en"},
         dict(ORG),
     ]
     webpage = {
@@ -304,7 +304,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
         graph.append({
             "@type": "BreadcrumbList", "@id": canon + "#breadcrumb",
             "itemListElement": [
-                {"@type": "ListItem", "position": 1, "name": "Roobet Casino Rewards", "item": SITE + "/"},
+                {"@type": "ListItem", "position": 1, "name": "RoobetHub", "item": SITE + "/"},
                 {"@type": "ListItem", "position": 2, "name": page_name, "item": canon},
             ]})
 
@@ -359,7 +359,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canon}">
-<meta property="og:site_name" content="Roobet Casino Rewards">
+<meta property="og:site_name" content="RoobetHub">
 <meta property="og:image" content="{image_url}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -437,7 +437,7 @@ def schedule_block():
 <section class="watch-sec"><div class="wrap watch-wrap">
   <a class="promo-banner rv" href="https://roobet.com/?ref=daily" rel="nofollow sponsored" target="_blank">
     <span class="pb-copy">
-      <span class="pb-eyebrow">Roobet Casino Rewards</span>
+      <span class="pb-eyebrow">RoobetHub</span>
       <span class="pb-title"><b>$100,000</b> in monthly rewards</span>
       <span class="pb-sub">$50K leaderboard &middot; up to 125 free spins &middot; max win merch &mdash; all on code DAILY</span>
     </span>
@@ -1606,7 +1606,7 @@ PAGES["roobet-rewards.html"] = dict(
     title="Roobet Rewards Explained — Rakeback, Vault & Bonuses",
     desc="The complete guide to Roobet rewards: instant rakeback every 30 minutes, daily, weekly and monthly bonuses, the Vault system, level-up bonuses and rakeboosts up to +20%.",
     kw="roobet rewards, roobet rakeback, roobet vault, roobet daily bonus, roobet weekly bonus, roobet monthly bonus, rakeboost",
-    schema={"@context":"https://schema.org","@type":"Article","headline":"Roobet Rewards Explained — Rakeback, Vault & Bonuses","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+    schema={"@context":"https://schema.org","@type":"Article","headline":"Roobet Rewards Explained — Rakeback, Vault & Bonuses","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
     body=f"""
 <section class="page-hero"><div class="wrap">
   {crumb("Roobet Rewards")}
@@ -1883,11 +1883,11 @@ PAGES["transparency.html"] = dict(
     desc="Transparency report for Roobet rewards under codes DAILY and ELITE: $3M+ given away, the payout ledger, fixed prize pools and verified merch claims — with the methodology stated in full.",
     kw="roobet rewards transparency, roobet payout proof, roobet rewards paid out, roobet casino rewards proof, roobet affiliate payouts",
     schema={"@context": "https://schema.org", "@type": "Dataset",
-            "name": "Roobet Casino Rewards — Payout and Wager Transparency Report",
+            "name": "RoobetHub — Payout and Wager Transparency Report",
             "description": "Aggregate community wager totals and reward payouts for players using Roobet affiliate codes DAILY and ELITE, refreshed from the Roobet affiliate API.",
             "url": SITE + "/transparency",
             "license": "https://creativecommons.org/licenses/by/4.0/",
-            "creator": {"@type": "Organization", "name": "Roobet Casino Rewards"},
+            "creator": {"@type": "Organization", "name": "RoobetHub"},
             "isAccessibleForFree": True,
             "keywords": ["Roobet", "casino rewards", "affiliate data", "payouts", "wager leaderboard"]},
     body=f"""
@@ -1939,7 +1939,7 @@ PAGES["contact.html"] = dict(
     title="Contact Us — VIP Team on Telegram & Discord",
     desc="Questions about our Roobet rewards? Contact our VIP Team on Telegram or join us on Discord — reward claims, VIP transfers, merch shipping and KYC help, handled personally.",
     kw="contact roobet casino rewards, slotessentials vip team, roobet rewards support, telegram vip, discord",
-    schema={"@context": "https://schema.org", "@type": "ContactPage", "name": "Contact Roobet Casino Rewards", "url": SITE + "/contact"},
+    schema={"@context": "https://schema.org", "@type": "ContactPage", "name": "Contact RoobetHub", "url": SITE + "/contact"},
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Contact Us</p>
@@ -2034,8 +2034,8 @@ PAGES["how-to-deposit-on-roobet.html"] = dict(
         {"@context": "https://schema.org", "@type": "Article",
          "headline": "How to Deposit on Roobet — Step-by-Step Guide",
          "datePublished": "2026-07-21", "dateModified": "2026-07-21",
-         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
-         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "author": {"@type": "Organization", "name": "RoobetHub"},
+         "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
         {"@context": "https://schema.org", "@type": "FAQPage",
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in deposit_faq]},
@@ -2103,8 +2103,8 @@ PAGES["how-to-kyc-on-roobet.html"] = dict(
         {"@context": "https://schema.org", "@type": "Article",
          "headline": "How to KYC on Roobet — Verification Guide",
          "datePublished": "2026-07-21", "dateModified": "2026-07-21",
-         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
-         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "author": {"@type": "Organization", "name": "RoobetHub"},
+         "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
         {"@context": "https://schema.org", "@type": "FAQPage",
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in kyc_faq]},
@@ -2167,8 +2167,8 @@ PAGES["roobet-rewards-guide.html"] = dict(
         {"@context": "https://schema.org", "@type": "Article",
          "headline": "Roobet Rewards: The Complete 2026 Guide",
          "datePublished": "2026-08-07", "dateModified": "2026-08-07",
-         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
-         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "author": {"@type": "Organization", "name": "RoobetHub"},
+         "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
         {"@context": "https://schema.org", "@type": "FAQPage",
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in rw_faq]},
@@ -2249,8 +2249,8 @@ PAGES["best-roobet-slots.html"] = dict(
         {"@context": "https://schema.org", "@type": "Article",
          "headline": "Best Roobet Slots in 2026 — Top Picks",
          "datePublished": "2026-08-07", "dateModified": "2026-08-07",
-         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
-         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "author": {"@type": "Organization", "name": "RoobetHub"},
+         "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
         {"@context": "https://schema.org", "@type": "FAQPage",
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in sl_faq]},
@@ -2303,8 +2303,8 @@ PAGES["how-to-withdraw-on-roobet.html"] = dict(
         {"@context": "https://schema.org", "@type": "Article",
          "headline": "How to Withdraw on Roobet — Step-by-Step Guide",
          "datePublished": "2026-08-07", "dateModified": "2026-08-07",
-         "author": {"@type": "Organization", "name": "Roobet Casino Rewards"},
-         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
+         "author": {"@type": "Organization", "name": "RoobetHub"},
+         "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
         {"@context": "https://schema.org", "@type": "FAQPage",
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in wd_faq]},
@@ -2359,7 +2359,7 @@ PAGES["roobet-vip-program-rank-system.html"] = dict(
     desc="Roobet VIP program and rank system explained: how to level up, rank rewards, rakeboosts, VIP transfers and how to access the complete rewards package.",
     kw="roobet vip program, roobet vip, roobet rank system, roobet vip transfer, roobet levels",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet VIP Program & Rank System Explained","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet VIP Program & Rank System Explained","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in vip_faq]},
     ],
     body=f"""
@@ -2401,7 +2401,7 @@ PAGES["roobet-rakeback-cashback-bonus-schedule.html"] = dict(
     desc="Roobet rakeback and cashback guide with daily, weekly and monthly bonus release times, Vault claims, expiry rules and every rakeboost percentage.",
     kw="roobet cashback, roobet rakeback, when does roobet release monthly bonus, roobet monthly bonus, roobet weekly bonus",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Rakeback, Cashback & Bonus Schedule","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Rakeback, Cashback & Bonus Schedule","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in bonus_faq]},
     ],
     body=f"""
@@ -2445,7 +2445,7 @@ PAGES["roobet-deposit-bonus-free-spins.html"] = dict(
     desc="Roobet deposit bonus and free spins guide: cumulative all-time deposit and wager tiers for 75, 100 or 125 spins when joining with code DAILY.",
     kw="roobet deposit bonus, roobet welcome bonus, roobet free spins, free spins roobet, roobet bonus code daily",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Deposit Bonus & Free Spins Guide","datePublished":"2026-08-18","dateModified":"2026-09-17","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Deposit Bonus & Free Spins Guide","datePublished":"2026-08-18","dateModified":"2026-09-17","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in deposit_bonus_faq]},
     ],
     body=f"""
@@ -2492,7 +2492,7 @@ PAGES["when-can-you-receive-tips-roobet.html"] = dict(
     desc="When can you receive tips on Roobet? Learn about account eligibility, verification, common restrictions, missing tips and the safest steps to troubleshoot.",
     kw="when can you receive tips roobet, roobet tips, receive tips on roobet, roobet tip eligibility",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"When Can You Receive Tips on Roobet?","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"Roobet Casino Rewards"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"When Can You Receive Tips on Roobet?","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in tips_faq]},
     ],
     body=f"""
@@ -2533,7 +2533,7 @@ PAGES["roobet-wagering-requirements.html"] = dict(
     og_image="/assets/roobet-wagering-requirements.webp",
     og_type="article",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Wagering Requirements: Deposits, Withdrawals and Tips","description":"A current guide to Roobet deposit, withdrawal and tip wagering requirements.","image":SITE + "/assets/roobet-wagering-requirements.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"Roobet Casino Rewards Editorial Team"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards","url":SITE + "/"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Wagering Requirements: Deposits, Withdrawals and Tips","description":"A current guide to Roobet deposit, withdrawal and tip wagering requirements.","image":SITE + "/assets/roobet-wagering-requirements.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"RoobetHub Editorial Team"},"publisher":{"@type":"Organization","name":"RoobetHub","url":SITE + "/"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in wagering_faq]},
     ],
     body=f"""
@@ -2545,7 +2545,7 @@ PAGES["roobet-wagering-requirements.html"] = dict(
 </div></section>
 <section style="padding-top:10px"><article class="wrap" style="max-width:880px">
   <img class="rv" src="/assets/roobet-wagering-requirements.webp" alt="Roobet wagering requirements for deposits, withdrawals and tips" width="1200" height="630" style="width:100%;height:auto;border-radius:18px;border:1px solid var(--border);margin-bottom:34px">
-  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">Roobet Casino Rewards Editorial Team</a> · Reviewed 7 October 2026 · 8 min read</p>
+  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">RoobetHub Editorial Team</a> · Reviewed 7 October 2026 · 8 min read</p>
   <div class="card rv" style="border-color:rgba(255,199,0,.38);margin-top:24px"><h2 style="font-size:1.25rem">The short answer</h2><p>Roobet's current AML guidance says cryptocurrency and cash deposits must be wagered at <b>100% of the deposited amount</b> before withdrawal. Received tips carry a separate <b>30% wagering requirement</b>. Only settled sportsbook bets count.</p></div>
 
   <h2 class="rv" style="margin-top:48px">Current Roobet Wagering Rules</h2>
@@ -2591,7 +2591,7 @@ PAGES["how-to-enable-roobet-2fa.html"] = dict(
     og_image="/assets/roobet-2fa-guide.webp",
     og_type="article",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"How to Enable Roobet 2FA","description":"A step-by-step guide to Roobet authenticator setup and recovery-key safety.","image":SITE + "/assets/roobet-2fa-guide.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"Roobet Casino Rewards Editorial Team"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards","url":SITE + "/"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"How to Enable Roobet 2FA","description":"A step-by-step guide to Roobet authenticator setup and recovery-key safety.","image":SITE + "/assets/roobet-2fa-guide.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"RoobetHub Editorial Team"},"publisher":{"@type":"Organization","name":"RoobetHub","url":SITE + "/"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in twofa_faq]},
     ],
     body=f"""
@@ -2603,7 +2603,7 @@ PAGES["how-to-enable-roobet-2fa.html"] = dict(
 </div></section>
 <section style="padding-top:10px"><article class="wrap" style="max-width:880px">
   <img class="rv" src="/assets/roobet-2fa-guide.webp" alt="How to enable Roobet two-factor authentication safely" width="1200" height="630" style="width:100%;height:auto;border-radius:18px;border:1px solid var(--border);margin-bottom:34px">
-  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">Roobet Casino Rewards Editorial Team</a> · Reviewed 7 October 2026 · 7 min read</p>
+  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">RoobetHub Editorial Team</a> · Reviewed 7 October 2026 · 7 min read</p>
   <div class="card rv" style="border-color:rgba(255,199,0,.38);margin-top:24px"><h2 style="font-size:1.25rem">Before you start</h2><p>Install a reputable authenticator app, open Roobet's Account Security page and prepare a private place to store the recovery key. Never save the key in a public screenshot or send it to someone offering account help.</p></div>
 
   <h2 class="rv" style="margin-top:48px">Roobet 2FA Setup: Step by Step</h2>
@@ -2650,7 +2650,7 @@ PAGES["roobet-restricted-countries.html"] = dict(
     og_image="/assets/roobet-restricted-countries.webp",
     og_type="article",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Restricted Countries and Game Provider Rules","description":"A current guide to Roobet account restrictions and separate third-party game-provider rules.","image":SITE + "/assets/roobet-restricted-countries.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"Roobet Casino Rewards Editorial Team"},"publisher":{"@type":"Organization","name":"Roobet Casino Rewards","url":SITE + "/"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Restricted Countries and Game Provider Rules","description":"A current guide to Roobet account restrictions and separate third-party game-provider rules.","image":SITE + "/assets/roobet-restricted-countries.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"RoobetHub Editorial Team"},"publisher":{"@type":"Organization","name":"RoobetHub","url":SITE + "/"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in regions_faq]},
     ],
     body=f"""
@@ -2662,7 +2662,7 @@ PAGES["roobet-restricted-countries.html"] = dict(
 </div></section>
 <section style="padding-top:10px"><article class="wrap" style="max-width:880px">
   <img class="rv" src="/assets/roobet-restricted-countries.webp" alt="Roobet restricted countries and game provider availability" width="1200" height="630" style="width:100%;height:auto;border-radius:18px;border:1px solid var(--border);margin-bottom:34px">
-  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">Roobet Casino Rewards Editorial Team</a> · Reviewed 7 October 2026 · 9 min read</p>
+  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">RoobetHub Editorial Team</a> · Reviewed 7 October 2026 · 9 min read</p>
   <div class="card rv" style="border-color:rgba(255,199,0,.38);margin-top:24px"><h2 style="font-size:1.25rem">Two different questions</h2><p><b>Account eligibility:</b> may a resident access Roobet or register an account? <b>Provider availability:</b> if the account is allowed, may a particular studio supply its games in that location? Passing the first test does not guarantee every game will appear.</p></div>
 
   <h2 class="rv" style="margin-top:48px">Roobet's Current Account-Level Restricted List</h2>
@@ -2715,7 +2715,7 @@ PAGES["watch.html"] = dict(
          "thumbnailUrl": SITE + "/assets/og-image.png",
          "uploadDate": "2026-08-07",
          "embedUrl": "https://player.kick.com/dailygambling",
-         "publisher": {"@type": "Organization", "name": "Roobet Casino Rewards"}},
+         "publisher": {"@type": "Organization", "name": "RoobetHub"}},
         {"@context": "https://schema.org", "@type": "FAQPage",
          "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in watch_faq]},
     ],

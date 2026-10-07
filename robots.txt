@@ -6,4 +6,4 @@ Disallow: /merch-admin.html
 Disallow: /admin.html
 Disallow: /api/
 
-Sitemap: https://www.roobetcasinorewards.com/sitemap.xml
+Sitemap: https://roobethub.com/sitemap.xml

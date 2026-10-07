@@ -1,4 +1,4 @@
-# roobetcasinorewards.com — Design & Architecture Brief
+# roobethub.com — Design & Architecture Brief
 
 **Purpose of this doc:** hand it to Claude Design (or any designer) so they can redesign pages
 without breaking the live data, SEO or deploy pipeline. Everything a redesign must preserve is
@@ -11,7 +11,7 @@ listed under **"Contract"** below.
 The official rewards hub for **DailyGambling** on **Roobet** — leaderboards, rewards, guides,
 live stream and raffles. Affiliate codes: **DAILY** (primary) and **ELITE** (secondary).
 
-- **Live:** https://roobetcasinorewards.com
+- **Live:** https://roobethub.com
 - **Repo:** github.com/NorthstreamLLC/Roobetrewards
 - **Host:** Vercel (auto-deploys on push to `main`)
 - **Analytics:** GA4 `G-4XLL2RYBWD`

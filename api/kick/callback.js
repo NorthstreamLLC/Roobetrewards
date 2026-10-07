@@ -1,7 +1,7 @@
 // Kick OAuth callback: verify state, exchange code (PKCE), create session cookie
 const crypto = require("crypto");
 const { redis } = require("../../lib/redis");
-const SITE = "https://www.roobetcasinorewards.com";
+const SITE = "https://roobethub.com";
 
 module.exports = async (req, res) => {
   try {
@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
     const sid = crypto.randomBytes(24).toString("base64url");
     await redis("SET", `sess:${sid}`, JSON.stringify({ kickId, username }), "EX", 604800); // 7 days
     res.setHeader("Set-Cookie",
-      `rr_sess=${sid}; Domain=.roobetcasinorewards.com; Path=/; Max-Age=604800; HttpOnly; Secure; SameSite=Lax`);
+      `rr_sess=${sid}; Domain=.roobethub.com; Path=/; Max-Age=604800; HttpOnly; Secure; SameSite=Lax`);
     res.statusCode = 302;
     res.setHeader("Location", "/giveaways#raffle");
     res.end();

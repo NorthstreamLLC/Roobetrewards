@@ -1,4 +1,4 @@
-/* roobetcasinorewards.com — motion + interactions */
+/* roobethub.com — motion + interactions */
 
 // ===== conversion tracking =====
 // Every affiliate click is an event, tagged with where on the page it came from,
