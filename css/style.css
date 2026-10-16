@@ -1234,6 +1234,12 @@ a.vt-alt:hover{color:var(--gold)}
 .pl-step.is-on b{color:var(--text-mid)}
 .pl-step.is-now i{box-shadow:0 0 0 4px rgba(245,165,36,.18);animation:ring 2s infinite}
 .pl-step.is-now b{color:var(--gold);font-weight:700}
+.pl-count{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:13px;
+  padding-top:11px;border-top:1px solid var(--hairline)}
+.pl-count i{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-faint)}
+.pl-count b{font-size:15px;font-weight:800;letter-spacing:-.015em;color:var(--text);
+  font-variant-numeric:tabular-nums}
 .pl-foot{display:block;margin-top:12px;font-family:var(--mono);font-size:10.5px;
   letter-spacing:.1em;color:var(--text-faint)}
 

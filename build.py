@@ -537,6 +537,8 @@ ACTIVE_PROMOS = [
         ic="gift", c="gold",
         ladder=["$10K", "$20K", "$30K", "$40K", "$50K"],
         at=0,
+        counter="$11,435,251",
+        counter_label="Community wagered so far",
         foot="&#127875; Paid out on Halloween",
         terms=[
             "Every dollar the community wagers on code <b>DAILY</b> grows the airdrop",
@@ -584,8 +586,10 @@ def promo_ladder(p):
         for k, s in enumerate(p["ladder"]))
     pct = 0 if len(p["ladder"]) < 2 else round(at / (len(p["ladder"]) - 1) * 100)
     foot = f'<span class="pl-foot">{p["foot"]}</span>' if p.get("foot") else ""
+    counter = (f'<span class="pl-count"><i>{p.get("counter_label", "Wagered so far")}</i>'
+               f'<b>{p["counter"]}</b></span>') if p.get("counter") else ""
     return (f'<div class="pladder"><div class="pl-track"><i style="width:{pct}%"></i></div>'
-            f'<div class="pl-steps">{steps}</div>{foot}</div>')
+            f'<div class="pl-steps">{steps}</div>{counter}{foot}</div>')
 
 def promo_card(p, expired=False):
     terms = "".join(f"<li>{t}</li>" for t in p["terms"])
