@@ -51,7 +51,7 @@ costs existing Google rankings unless we add 301 redirects.
 `/sweet-bonanza-max-win-shirt` · `/sugar-rush-max-win-shirt` · `/big-bass-max-win-shirt`
 `/mental-max-win-shirt` · `/rip-city-benny-the-beer-max-win-shirt`
 
-**Hidden:** `/raffle-admin.html` (noindex, admin-key protected — do not link it)
+**Hidden:** `/admin.html` (noindex, admin-key protected — do not link it)
 
 ---
 
@@ -96,10 +96,10 @@ A redesign may replace all of this freely — **as long as the contract in §5 i
 | Raffle | `GET/POST /api/raffle` | View/enter (player) + create/draw (admin key) |
 | Kick login | `/api/kick/login` → `/api/kick/callback` | OAuth 2.1 + PKCE, session cookie `rr_sess`, Redis-backed |
 | VIP transfer form | `POST /api/vip-transfer` | Public submit. Rate-limited 5/hr per IP, honeypot field, only accepts image URLs on the Vercel Blob domain. Stored in Redis (`vip:sub:<id>` + `vip:index`) |
-| VIP transfer admin | `GET/PATCH/DELETE /api/vip-transfer` | Requires `VIP_ADMIN_KEY` via `x-admin-key` header or `?key=`. Panel at `/vip-admin.html` |
+| VIP transfer admin | `GET/PATCH/DELETE /api/vip-transfer` | Requires `VIP_ADMIN_KEY` via `x-admin-key` header or `?key=`. Panel at `/admin.html` |
 | Screenshot upload | `POST /api/vip-upload` | Browser compresses to JPEG → base64 → Vercel Blob REST API (no SDK). Magic-byte sniffed, 4MB cap, 40/hr per IP. Shared by the VIP and merch forms |
 | Merch claims | `POST /api/merch-claim` | Public submit from the shirt pages (shirt, size, colorway, username, proof). Rate-limited 8/hr per IP + honeypot |
-| Merch claim admin | `GET/PATCH/DELETE /api/merch-claim` | Same `VIP_ADMIN_KEY`. Panel at `/merch-admin.html` |
+| Merch claim admin | `GET/PATCH/DELETE /api/merch-claim` | Same `VIP_ADMIN_KEY`. Panel at `/admin.html` |
 
 **Env vars (set in Vercel, never in code):**
 `LEADERBOARD_API_URL`, `LEADERBOARD_API_KEY_<CODE>` (+ optional `LEADERBOARD_API_URL_<CODE>`),

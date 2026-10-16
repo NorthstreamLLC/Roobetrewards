@@ -1,8 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /raffle-admin.html
-Disallow: /vip-admin.html
-Disallow: /merch-admin.html
 Disallow: /admin.html
 Disallow: /api/
 

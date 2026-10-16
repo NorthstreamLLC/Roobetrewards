@@ -3093,7 +3093,7 @@ open(os.path.join(out, "sitemap.xml"), "w", newline="\n").write(sm)
 
 open(os.path.join(out, "robots.txt"), "w", newline="\n").write(
     "User-agent: *\nAllow: /\n"
-    "Disallow: /raffle-admin.html\nDisallow: /vip-admin.html\nDisallow: /merch-admin.html\nDisallow: /admin.html\nDisallow: /api/\n"
+    "Disallow: /admin.html\nDisallow: /api/\n"
     f"\nSitemap: {SITE}/sitemap.xml\n")
 
 open(os.path.join(out, "vercel.json"), "w", newline="\n").write(json.dumps({
