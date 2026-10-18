@@ -1763,11 +1763,7 @@ for slug, name, prov, img in MERCH:
                f"{name} Max Win Shirt — Free Roobet Merch | Code DAILY"),
         desc=f"Hit a max win on {name} by {prov} while playing on Roobet under code DAILY or ELITE and get this exclusive {name} Max Win shirt shipped to you free. One of 16 designs to collect.",
         kw=f"{name.lower()} max win shirt, {name.lower()} max win, {prov.lower()} max win merch, roobet max win merch, free casino merch",
-        schema={"@context": "https://schema.org", "@type": "Product",
-                "name": f"{name} Max Win Shirt",
-                "description": f"Exclusive {name} ({prov}) Max Win shirt — earned free by hitting a max win on Roobet under code DAILY or ELITE.",
-                "image": f"{SITE}/assets/{img}",
-                "brand": {"@type": "Brand", "name": "Slotessentials"}},
+        # Earned rewards are not sale products; retain WebPage, breadcrumbs and FAQ schema.
         body=(lambda shots: f"""
 <section class="page-hero" style="padding-bottom:12px"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/max-win-merch">Max Win Merch</a> / {name}</p>
