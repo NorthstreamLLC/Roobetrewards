@@ -8,7 +8,7 @@ DAILY = "https://roobet.com/?ref=daily"
 KICK = "https://kick.com/dailygambling"
 SLOTS = "https://slotessentials.com/rewards/sign-up-bonuses"
 KYC = "https://www.howtokyc.com/"
-TELEGRAM = "https://t.me/slotessentialsVIP"
+TELEGRAM = "https://t.me/casinoperks"
 DISCORD = "https://discord.gg/dailygamba"
 SLOTS_MILES = "https://slotessentials.com/rewards/wager-milestones"
 SLOTS_HOME = "https://slotessentials.com"
@@ -733,7 +733,7 @@ faq_items = [
     ("Can I transfer my VIP status to Roobet?",
      "Yes. If you hold VIP status at any other casino, you can transfer it directly to Roobet when you join under code ELITE or DAILY — keeping your level, rakeback rate and bonuses without starting over."),
     ("I have a question — how do I reach the VIP team?",
-     f"Message our VIP team directly on Telegram at <a href='{TELEGRAM}' target='_blank' rel='noopener'>t.me/slotessentialsVIP</a> or join the <a href='{DISCORD}' target='_blank' rel='noopener'>DailyGambling Discord</a> and open a ticket. The VIP team handles reward claims, VIP transfers, merch shipping and any questions about your account."),
+     f"Message our VIP team directly on Telegram at <a href='{TELEGRAM}' target='_blank' rel='noopener'>t.me/casinoperks</a> or join the <a href='{DISCORD}' target='_blank' rel='noopener'>DailyGambling Discord</a> and open a ticket. The VIP team handles reward claims, VIP transfers, merch shipping and any questions about your account."),
 ]
 def linkify(t):
     """Hyperlink codes and channels inside plain-text answers."""
@@ -1954,7 +1954,7 @@ PAGES["contact.html"] = dict(
       <h3>VIP Team on Telegram</h3>
       <p style="margin:10px 0 24px">The fastest way to reach us — direct line to the VIP team for rewards, claims and VIP transfers.</p>
       <a class="btn btn-gold btn-lg pulse" href="{TELEGRAM}" target="_blank" rel="noopener">Message on Telegram {ARR}</a>
-      <p style="margin-top:14px;color:var(--muted);font-size:.85rem">t.me/slotessentialsVIP</p>
+      <p style="margin-top:14px;color:var(--muted);font-size:.85rem">t.me/casinoperks</p>
     </div>
     <div class="card rv d1 center" style="padding:44px 32px"><div class="glow"></div><div class="ic" style="margin:0 auto 18px">🎮</div>
       <h3>Prefer Discord?</h3>
