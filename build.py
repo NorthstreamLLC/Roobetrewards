@@ -248,7 +248,9 @@ def page_banner(slug):
     # (the live raffle widget / the active-promotions slot), so no extra one
     if slug in ("exclusive-promotions", "giveaways"):
         return ""
-    return home_raffle if slug in RAFFLE_BANNER_PAGES else home_promo
+    if slug in RAFFLE_BANNER_PAGES and RAFFLE["live"]:
+        return home_raffle
+    return home_promo
 
 def promo_modal_html():
     """Entry pop-up: the live promo while one is running, the free-spins offer otherwise."""
@@ -462,6 +464,11 @@ PAGES = {}
 #   unit    : small label beside the prize, e.g. "CASH" — "" to hide
 RAFFLE = dict(
     name="Community Raffle",
+    # Flip to True when a raffle is actually running in /admin.html. While it is
+    # False the site stops claiming one is open — the hero hook, the sitewide
+    # banner and the ticker line all drop out. The /giveaways page stays up
+    # (it also covers stream giveaways) and its widget reports the real state.
+    live=False,
     prize="",
     unit="",
     short="Free to enter for active players",
@@ -719,6 +726,13 @@ home_raffle = banner(
     stat=dict(label="Entry cost", value="Free", badge="Kick verified",
               rows=[("&#127903;", "One entry per account"), ("&#128250;", "Drawn live on stream")]))
 
+# Hero's no-deposit hook — only claim the raffle is open when it actually is.
+hero_free = ("""<p class="hero-free rv d4">
+        <span class="hf-tag">No deposit needed</span>
+        Not ready to deposit? The <a href="/giveaways">Community Raffle</a> is free to enter &mdash;
+        sign in with Kick, one click, winners drawn live on stream.
+      </p>""" if RAFFLE["live"] else "")
+
 # ================= HOME =================
 faq_items = [
     ("What are the best Roobet casino rewards?",
@@ -787,9 +801,11 @@ HERO_BD = """<div class="hero-bd" aria-hidden="true">
 import re as _re
 HERO_BD_SHORT = _re.sub(r'\s*<img class="bd-chip"[^>]*>', '', HERO_BD).replace('class="hero-bd"', 'class="hero-bd short"')
 
-TICKER = """<div class="ticker" aria-hidden="true"><div class="ticker-track">
-  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; Free-to-enter <b>Community Raffle</b></span><span>&#128176; Rakeback every <b>30 minutes</b></span>
-  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span><span>&#127873; Free-to-enter <b>Community Raffle</b></span><span>&#128176; Rakeback every <b>30 minutes</b></span>
+raffle_tick = ('<span>&#127873; Free-to-enter <b>Community Raffle</b></span>'
+               if RAFFLE["live"] else '')
+TICKER = f"""<div class="ticker" aria-hidden="true"><div class="ticker-track">
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span>{raffle_tick}<span>&#128176; Rakeback every <b>30 minutes</b></span>
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span>{raffle_tick}<span>&#128176; Rakeback every <b>30 minutes</b></span>
 </div></div>"""
 
 PAGES["index.html"] = dict(
@@ -812,11 +828,7 @@ PAGES["index.html"] = dict(
         <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY</a>
         <a class="btn btn-ghost btn-lg" href="{KYC}" target="_blank" rel="noopener">How to KYC on Roobet</a>
       </div>
-      <p class="hero-free rv d4">
-        <span class="hf-tag">No deposit needed</span>
-        Not ready to deposit? The <a href="/giveaways">Community Raffle</a> is free to enter &mdash;
-        sign in with Kick, one click, winners drawn live on stream.
-      </p>
+      {hero_free}
     </div>
     <figure class="hero-visual rv d2">
       <img src="/assets/roobethub-rewards-cutout-v1.webp" alt="Roobet-branded reward token with trophy, VIP diamond, merchandise and prizes" width="1200" height="800" fetchpriority="high" decoding="async">
@@ -1559,7 +1571,7 @@ PAGES["giveaways.html"] = dict(
   <h1 class="rv d1"><span class="grad">{RAFFLE["name"]}</span></h1>
   <p class="lead rv d2">{RAFFLE["blurb"]}</p>
   <div class="hero-cta rv d3" style="justify-content:center">
-    <a class="btn btn-gold btn-lg pulse" href="#raffle">Enter the Raffle {ARR}</a>
+    <a class="btn btn-gold btn-lg pulse" href="#raffle">{"Enter the Raffle" if RAFFLE["live"] else "See the raffle status"} {ARR}</a>
     <a class="btn btn-ghost btn-lg" href="{KICK}" target="_blank" rel="noopener">Watch the Draw on Kick</a>
   </div>
 </div></section>
@@ -2812,7 +2824,7 @@ PAGES["watch.html"] = dict(
 
 <section class="watch-sec"><div class="wrap watch-wrap">
   <div class="cards c4">
-    <a class="card rv" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">Enter the raffle {ARR}</span></a>
+    <a class="card rv" href="/giveaways#raffle"><div class="ic">&#127881;</div><h3>Live giveaways</h3><p>Drops happen during stream &mdash; and our Kick-verified raffle runs on the site between them.</p><span class="more">{"Enter the raffle" if RAFFLE["live"] else "See the raffle"} {ARR}</span></a>
     <a class="card rv d1" href="/slot-challenges"><div class="ic">&#127918;</div><h3>Slot challenges</h3><p>Challenges get announced live. Complete them and claim extra prizes on top of your rewards.</p><span class="more">See challenges {ARR}</span></a>
     <a class="card rv d2" href="/leaderboard"><div class="ic">&#127942;</div><h3>Play the leaderboard</h3><p>Wager along under code DAILY and climb the $50,000 monthly board while you watch.</p><span class="more">Standings {ARR}</span></a>
     <a class="card rv d3" href="/youtube"><div class="ic">&#127909;</div><h3>Missed the stream?</h3><p>Recent uploads and full sessions land on the DailyGambling YouTube channel.</p><span class="more">Watch recent videos {ARR}</span></a>
