@@ -329,10 +329,14 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Analytics is queued immediately, then downloaded after first render. -->
+<!-- Google Analytics is queued immediately, then downloaded after first render.
+     Production hostnames only — Vercel preview deployments carry this same file,
+     and without the guard every preview visit lands in the production property. -->
 <script>
+  window.rrAnalytics = /(^|\\.)roobethub\\.com$/.test(location.hostname);
   window.dataLayer = window.dataLayer || [];
   function gtag(){{dataLayer.push(arguments);}}
+  if (window.rrAnalytics) {{
   gtag('js', new Date());
   gtag('config', 'G-4XLL2RYBWD');
   window.addEventListener('load', function(){{
@@ -347,6 +351,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
       else loadAnalytics();
     }}, 1800);
   }}, {{once:true}});
+  }}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
