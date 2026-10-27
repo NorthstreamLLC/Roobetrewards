@@ -1230,6 +1230,8 @@ a.vt-alt:hover{color:var(--gold)}
   border:1px solid transparent;transition:.2s}
 .pl-step b{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;
   color:var(--text-faint);white-space:nowrap}
+/* longer ladders (8+ rungs) need tighter labels to stay on one line */
+.pl-steps:has(> :nth-child(7)) .pl-step b{font-size:9px;letter-spacing:0}
 .pl-step.is-on i{background:var(--gold)}
 .pl-step.is-on b{color:var(--text-mid)}
 .pl-step.is-now i{box-shadow:0 0 0 4px rgba(245,165,36,.18);animation:ring 2s infinite}
