@@ -655,6 +655,7 @@ past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
 # keep it current. (who, what, amount, when, kind)
 #   kind: cash | merch | spins | bonus   — only changes the icon and accent
 PAYOUTS = [
+    ("Community", "Roobet Airdrop, previous cycle", "$28,243", "Previous cycle", "cash"),
     ("Mrt****", "1st place, monthly leaderboard", "$12,500", "Sep 2026", "cash"),
     ("Spi****", "2nd place, monthly leaderboard", "$7,000", "Sep 2026", "cash"),
     ("Mar****", "3rd place, monthly leaderboard", "$5,000", "Sep 2026", "cash"),
