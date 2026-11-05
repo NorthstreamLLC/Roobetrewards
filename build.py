@@ -42,7 +42,7 @@ MENU_ITEMS = [
     ("leaderboard.html", "🏆", "$50K Wager Leaderboard", "Monthly cash-prize race"),
     ("wager-milestones.html", "🎯", "Wager Milestones", "Up to $11,350 extra / month"),
     ("max-win-merch.html", "👕", "Max Win Merch", "Free merch for every max win"),
-    ("free-spins.html", "🎰", "Free Spins Bonus", "Up to 125 exclusive free spins"),
+    ("free-spins.html", "🎰", "Deposit Bonus & Free Spins", "20% match + up to 500 free spins"),
     ("elite-points.html", "⭐", "ELITE Points", "Redeem points for real prizes"),
     ("slot-challenges.html", "🎮", "Slot Challenges", "Complete challenges, win prizes"),
     ("giveaways.html", "🎁", "Community Raffle", "Free to enter for active players"),
@@ -88,7 +88,7 @@ REWARD_GROUPS = [
         ("/giveaways", "gift", "pink", "Community Raffle", "Free to enter, drawn live on stream"),
     ]),
     ("Perks &amp; Merch", [
-        ("/free-spins", "spin", "green", "Free Spins Bonus", "Up to 125 spins at $1.00 each"),
+        ("/free-spins", "spin", "green", "Deposit Bonus", "20% match + up to 500 spins at $2"),
         ("/max-win-merch", "shirt", "cyan", "Max Win Merch", "Free shirts for every max win"),
         ("/elite-points", "star", "amber", "ELITE Points", "Earn daily, redeem in the Point Shop"),
     ]),
@@ -275,7 +275,7 @@ def promo_modal_html():
     <button class="modal-x" aria-label="Close">&times;</button>
     <span class="eyebrow">&#127873; Exclusive Offer</span>
     <h2>Join Roobet on code <span class="grad">DAILY</span></h2>
-    <p class="lead" style="margin:12px auto 24px">&hellip;and receive <b style="color:var(--gold)">Free Spins</b> &mdash; up to 125 spins at $1.00 each.</p>
+    <p class="lead" style="margin:12px auto 24px">&hellip;and get a <b style="color:var(--gold)">20% deposit match</b> up to $500, plus up to <b style="color:var(--gold)">500 free spins</b> at $2 each as you wager.</p>
     <div class="hero-cta" style="justify-content:center">
       <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Claim with code DAILY {ARR}</a>
       <a class="btn btn-ghost btn-lg" href="/free-spins">See Free Spins Tiers</a>
@@ -446,7 +446,7 @@ def schedule_block():
     <span class="pb-copy">
       <span class="pb-eyebrow">RoobetHub</span>
       <span class="pb-title"><b>$100,000</b> in monthly rewards</span>
-      <span class="pb-sub">$50K leaderboard &middot; up to 125 free spins &middot; max win merch &mdash; all on code DAILY</span>
+      <span class="pb-sub">$50K leaderboard &middot; 20&#37; deposit match &middot; up to 500 free spins &mdash; all on code DAILY</span>
     </span>
     <span class="pb-cta">Join with DAILY</span>
   </a>
@@ -540,27 +540,21 @@ def banner(title, href, cta="Learn more", eyebrow="", text="", c="gold", ic="",
 #   ladder : optional list of pool steps, e.g. ["$10K","$20K",…]
 #   at     : index of the step currently reached (0 = first)
 #   foot   : optional line under the ladder
-ACTIVE_PROMOS = [
-    dict(
-        title="Roobet Halloween Airdrop",
-        prize="$27,946",
-        unit="CURRENT PAYOUT",
-        window="Sep 16 &ndash; Oct 31, 2026",
-        ic="gift", c="gold",
-        ladder=["$10K", "$20K", "$30K", "$40K", "$50K", "$75K", "$100K", "&#8734;"],
-        at=1,
-        counter="$17,466,378",
-        counter_label="Total wagered on code DAILY",
-        foot="&#127875; Paid out on Halloween &middot; last airdrop paid $28,243",
-        terms=[
-            "Every dollar the community wagers on code <b>DAILY</b> grows the airdrop",
-            "Starts at <b>$10,000</b> and climbs through <b>$100,000</b> to an unlimited pool",
-            "Counts from <b>9/16</b> to <b>10/31</b> &mdash; paid out on Halloween",
-        ],
-    ),
-]
+ACTIVE_PROMOS = []
 
 PAST_PROMOS = [
+    dict(
+        title="Roobet Halloween Airdrop",
+        prize="$29,433.71",
+        unit="PAID OUT",
+        window="Sep 16 &ndash; Oct 31, 2026",
+        ic="gift", c="gold",
+        terms=[
+            "Every dollar the community wagered on code <b>DAILY</b> grew the airdrop",
+            "Final pool reached <b>$29,433.71</b> from a $10,000 starting point",
+            "Paid out to <b>code DAILY</b> players on Halloween",
+        ],
+    ),
     dict(
         title="Raw Cash Wager Race",
         prize="$200",
@@ -655,7 +649,8 @@ past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
 # keep it current. (who, what, amount, when, kind)
 #   kind: cash | merch | spins | bonus   — only changes the icon and accent
 PAYOUTS = [
-    ("Community", "Roobet Airdrop, previous cycle", "$28,243", "Previous cycle", "cash"),
+    ("Code DAILY players", "Halloween Airdrop payout", "$29,433.71", "Oct 2026", "cash"),
+    ("Code DAILY players", "Roobet Airdrop, previous cycle", "$28,243", "Previous cycle", "cash"),
     ("Mrt****", "1st place, monthly leaderboard", "$12,500", "Sep 2026", "cash"),
     ("Spi****", "2nd place, monthly leaderboard", "$7,000", "Sep 2026", "cash"),
     ("Mar****", "3rd place, monthly leaderboard", "$5,000", "Sep 2026", "cash"),
@@ -739,7 +734,7 @@ faq_items = [
     ("What are the best Roobet casino rewards?",
      "Players using code ELITE or DAILY on Roobet unlock the full $100,000 monthly rewards package: the $50,000 Wager Leaderboard, up to $11,350 in Wager Milestones, exclusive Free Spins sign-up bonuses, Max Win Merch, ELITE Points, slot challenges, the free-to-enter Community Raffle, and VIP status transfer — all stacked on top of Roobet's own rakeback, daily, weekly and monthly bonuses."),
     ("How do I claim Roobet free spins?",
-     "Sign up at Roobet with code ELITE or DAILY — your all-time deposit and wager totals unlock the exclusive free spins bonus (not a single deposit): $500 deposited and $5,000 wagered all-time earns 75 free spins at $0.60, $1,000 and $10,000 earns 100 free spins at $0.80, and $2,000 and $20,000 earns 125 free spins at $1.00 each."),
+     "Sign up at Roobet with code DAILY and you get a 20% deposit match up to $500 — it maxes out on a $2,500 deposit. On top of that, free spins unlock as your all-time wager grows: 100 free spins at $10,000 wagered and 500 free spins at $50,000 wagered, each spin worth $2."),
     ("How does the $50,000 Wager Leaderboard work?",
      "Every dollar you wager on Roobet under code ELITE or DAILY earns you a spot on the monthly leaderboard. The top wagerers split $50,000 in prizes each month — climb the ranks for cash prizes, free spins and redeemable points."),
     ("Is there a Roobet sign-up bonus?",
@@ -777,7 +772,7 @@ reward_cards = "".join(f"""<a class="card rv d{i%3+1}" href="/{f[:-5]}"><div cla
         ("leaderboard.html", "🏆", "$50,000 Wager Leaderboard", "Wager under code ELITE or DAILY and race for your share of $50,000 in cash prizes — paid out every single month."),
         ("wager-milestones.html", "🎯", "Wager Milestones", "Hit wager targets and claim up to an extra $11,350 each month. Every milestone pays — no raffles, no luck required."),
         ("max-win-merch.html", "👕", "Max Win Merch", "Hit a max win on Pragmatic, Hacksaw or Nolimit slots and get an exclusive shirt shipped free. 16 designs to collect."),
-        ("free-spins.html", "🎰", "Exclusive Free Spins", "Up to 125 free spins at $1.00 per spin with our exclusive sign-up bonus tiers. The biggest Roobet free spins deal anywhere."),
+        ("free-spins.html", "🎰", "Deposit Bonus & Free Spins", "A 20% deposit match up to $500, then 100 free spins at $10,000 wagered and 500 more at $50,000 — every spin worth $2."),
         ("vip-transfer.html", "💎", "VIP Status Transfer", "Already VIP somewhere else? Transfer your status straight to Roobet and keep everything you've earned."),
         ("elite-points.html", "⭐", "ELITE Points", "Earn points by watching streams, wagering and staying active — then redeem them for real prizes via Slotessentials."),
         ("slot-challenges.html", "🎮", "Slot Challenges", "Complete casino challenges while you play and stack extra prizes on top of your regular rewards."),
@@ -805,8 +800,8 @@ HERO_BD_SHORT = _re.sub(r'\s*<img class="bd-chip"[^>]*>', '', HERO_BD).replace('
 raffle_tick = ('<span>&#127873; Free-to-enter <b>Community Raffle</b></span>'
                if RAFFLE["live"] else '')
 TICKER = f"""<div class="ticker" aria-hidden="true"><div class="ticker-track">
-  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span>{raffle_tick}<span>&#128176; Rakeback every <b>30 minutes</b></span>
-  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; Up to <b>125 free spins</b> at $1.00 each</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span>{raffle_tick}<span>&#128176; Rakeback every <b>30 minutes</b></span>
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; <b>20% deposit match</b> + up to <b>500 free spins</b> at $2</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span>{raffle_tick}<span>&#128176; Rakeback every <b>30 minutes</b></span>
+  <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; <b>20% deposit match</b> + up to <b>500 free spins</b> at $2</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span>{raffle_tick}<span>&#128176; Rakeback every <b>30 minutes</b></span>
 </div></div>"""
 
 PAGES["index.html"] = dict(
@@ -879,13 +874,13 @@ PAGES["index.html"] = dict(
 
   <div class="cards c3" style="margin-top:14px">
     <div class="detail rv">
-      <div class="head"><h3>Exclusive Free Spins<br>&ldquo;Sign Up Bonus&rdquo;</h3></div>
-      <p class="statement">Claim <b style="color:var(--text)">ONE</b> exclusive free spin offer:</p>
+      <div class="head"><h3>Deposit Match + Free Spins<br>&ldquo;Sign Up Bonus&rdquo;</h3></div>
+      <p class="statement">Deposit match <b style="color:var(--text)">+</b> free spins as you wager:</p>
       <ul>
-        <li>Deposit $500 &mdash; Wager $5,000 &rarr; <b>75 Free Spins ($0.60 each)</b></li>
-        <li>Deposit $1,000 &mdash; Wager $10,000 &rarr; <b>100 Free Spins ($0.80 each)</b></li>
-        <li>Deposit $2,000 &mdash; Wager $20,000 &rarr; <b>125 Free Spins ($1.00 each)</b></li>
-        <li>Tiers use your <b>all-time</b> deposit and wager totals.</li>
+        <li><b>20% welcome match</b> up to $500, <b>no wagering</b> &mdash; maxes out on a $2,500 deposit</li>
+        <li>Wager $10,000 &rarr; <b>100 Free Spins ($2 each)</b></li>
+        <li>Wager $50,000 &rarr; <b>500 Free Spins ($2 each)</b></li>
+        <li>Spin milestones use your <b>all-time</b> wager total.</li>
       </ul>
       <a class="btn btn-gold" href="/free-spins">Unlock Your Sign-Up Bonus</a>
     </div>
@@ -957,7 +952,7 @@ PAGES["index.html"] = dict(
         </div></div>
         <div class="step rv d2"><span class="step-label">Step 3</span><div class="step-body">
           <h3>Deposit &amp; grab your free spins</h3>
-          <p>Pick your <a href="/free-spins" style="color:var(--gold);font-weight:600">free spins tier</a> &mdash; your rakeback and rakeboost start running straight away.</p>
+          <p>Take your <a href="/free-spins" style="color:var(--gold);font-weight:600">20% deposit match</a> &mdash; your rakeback and rakeboost start running straight away.</p>
         </div></div>
         <div class="step rv d3"><span class="step-label">Step 4</span><div class="step-body">
           <h3>Climb the $50K leaderboard</h3>
@@ -986,7 +981,7 @@ PAGES["index.html"] = dict(
       <div class="hero-cta" style="justify-content:flex-start;margin-top:16px">
         <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up on code DAILY</a>
       </div>
-      <p class="mono" style="font-size:12px;letter-spacing:.1em;color:var(--text-faint);margin-top:14px">125 FREE SPINS &middot; $125 VALUE</p>
+      <p class="mono" style="font-size:12px;letter-spacing:.1em;color:var(--text-faint);margin-top:14px">20% DEPOSIT MATCH &middot; UP TO 500 FREE SPINS</p>
     </div>
     <div class="faq rv d1">{faq_html}</div>
   </div>
@@ -1209,37 +1204,38 @@ PAGES["wager-milestones.html"] = dict(
 
 # ================= FREE SPINS =================
 PAGES["free-spins.html"] = dict(
-    title="Roobet Free Spins — Up to 125 Spins on Code DAILY",
-    desc="Get exclusive Roobet free spins with our sign-up bonus: up to 125 free spins at $1.00 per spin. Deposit, wager, and claim the biggest Roobet free spins package with code ELITE or DAILY.",
-    kw="roobet free spins, free spins roobet, sign-up bonus, no deposit free spins, roobet sign up bonus, exclusive free spins",
+    title="Roobet Deposit Bonus — 20% Match + 500 Free Spins",
+    desc="Roobet sign-up bonus on code DAILY: a 20% deposit match up to $500, then 100 free spins at $10,000 wagered and 500 free spins at $50,000 — every spin worth $2.",
+    kw="roobet free spins, roobet deposit bonus, roobet deposit match, roobet sign up bonus, free spins roobet, roobet code daily",
     schema={"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-        {"@type":"Question","name":"How do I get Roobet free spins?","acceptedAnswer":{"@type":"Answer","text":"Sign up at Roobet with code ELITE or DAILY — your all-time deposit and wager totals unlock up to 125 exclusive free spins worth up to $1.00 per spin. It's cumulative, not a single deposit."}},
-        {"@type":"Question","name":"Are there no deposit free spins on Roobet?","acceptedAnswer":{"@type":"Answer","text":"Our exclusive free spins packages require a deposit and wager. Active players can also win free spins and prizes through our free-to-enter Community Raffle and by redeeming ELITE Points — entries are earned through activity, not luck."}}]},
+        {"@type":"Question","name":"How do I get Roobet free spins?","acceptedAnswer":{"@type":"Answer","text":"Sign up at Roobet with code DAILY. Free spins unlock as your all-time wager grows: 100 free spins once you reach $10,000 wagered and 500 free spins once you reach $50,000, each spin worth $2. It is cumulative, not tied to a single session."}},
+        {"@type":"Question","name":"How does the Roobet deposit match work?","acceptedAnswer":{"@type":"Answer","text":"It is a one-time welcome offer for new players on code DAILY: a 20% match on your deposit, capped at $500, with no wagering requirement on the match. That cap is reached on a $2,500 deposit — anything above that still earns the maximum $500."}},
+        {"@type":"Question","name":"Are there no deposit free spins on Roobet?","acceptedAnswer":{"@type":"Answer","text":"No. The deposit match needs a deposit and the free spins unlock through wagering. Active players can also pick up spins through stream giveaways and by redeeming ELITE Points."}}]},
     body=f"""
 <section class="page-hero"><div class="wrap">
-  {crumb("Free Spins Bonus")}
+  {crumb("Deposit Bonus & Free Spins")}
   <span class="eyebrow rv">🎰 Exclusive Sign-Up Bonus</span>
-  <h1 class="rv d1">Roobet Free Spins — Up to <span class="grad">125 Spins</span> at $1.00 Each</h1>
-  <p class="lead rv d2">The biggest Roobet free spins deal you'll find. Join with code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b> — your <b style="color:var(--text)">all-time</b> deposit &amp; wager totals unlock the tiers, so every session gets you closer.</p>
-  <div class="hero-cta rv d3" style="justify-content:center"><a class="btn btn-gold btn-lg pulse" href="{SLOTS}" target="_blank" rel="noopener">Claim Free Spins {ARR}</a></div>
+  <h1 class="rv d1">Roobet Deposit Bonus — <span class="grad">20% Match</span> + Up to 500 Free Spins</h1>
+  <p class="lead rv d2">Deposit match up front, free spins as you wager. Join with code <b style="color:var(--gold)">DAILY</b> — the match lands on your deposit, and spins unlock as your <b style="color:var(--text)">all-time</b> wager total climbs. Every spin is worth $2.</p>
+  <div class="hero-cta rv d3" style="justify-content:center"><a class="btn btn-gold btn-lg pulse" href="{SLOTS}" target="_blank" rel="noopener">Claim the Bonus {ARR}</a></div>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap"><div class="cards c3">
-  <div class="card rv center"><div class="glow"></div><p class="amount">75 Spins</p><p style="font-weight:700;color:var(--text)">$0.60 per spin — $45 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$500</b> all-time<br>Wager <b style="color:var(--gold)">$5,000</b> all-time</p></div>
-  <div class="card rv d1 center" style="border-color:rgba(255,199,0,.5)"><span class="tag">Most Popular</span><div class="glow"></div><p class="amount">100 Spins</p><p style="font-weight:700;color:var(--text)">$0.80 per spin — $80 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$1,000</b> all-time<br>Wager <b style="color:var(--gold)">$10,000</b> all-time</p></div>
-  <div class="card rv d2 center"><span class="tag">Max Value</span><div class="glow"></div><p class="amount">125 Spins</p><p style="font-weight:700;color:var(--text)">$1.00 per spin — $125 value</p><p style="margin-top:10px">Deposit <b style="color:var(--gold)">$2,000</b> all-time<br>Wager <b style="color:var(--gold)">$20,000</b> all-time</p></div>
+  <div class="card rv center"><span class="tag">Welcome Offer</span><div class="glow"></div><p class="amount">20% Match</p><p style="font-weight:700;color:var(--text)">Up to $500 &middot; no wagering</p><p style="margin-top:10px">Maxes out on a <b style="color:var(--gold)">$2,500</b> deposit<br>$2,500 &times; 20% = $500</p></div>
+  <div class="card rv d1 center"><div class="glow"></div><p class="amount">100 Spins</p><p style="font-weight:700;color:var(--text)">$2 per spin &mdash; $200 value</p><p style="margin-top:10px">Unlocks at <b style="color:var(--gold)">$10,000</b><br>wagered all-time</p></div>
+  <div class="card rv d2 center" style="border-color:rgba(255,199,0,.5)"><span class="tag">Max Value</span><div class="glow"></div><p class="amount">500 Spins</p><p style="font-weight:700;color:var(--text)">$2 per spin &mdash; $1,000 value</p><p style="margin-top:10px">Unlocks at <b style="color:var(--gold)">$50,000</b><br>wagered all-time</p></div>
 </div>
-<p class="rv center" style="margin-top:24px;color:var(--muted);font-size:.92rem">Tiers are based on your <b style="color:var(--gold)">all-time</b> deposit and wager totals under code DAILY or ELITE — not a single deposit. Every session counts toward your next tier.</p>
+<p class="rv center" style="margin-top:24px;color:var(--muted);font-size:.92rem">Spin milestones track your <b style="color:var(--gold)">all-time</b> wager under code DAILY &mdash; not a single session, so every bet counts toward the next one.</p>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
   <div class="cards c2">
-    <div class="card rv"><div class="glow"></div><div class="ic">🎁</div><h3>More Ways to Win Spins</h3><p>Active players earn entries in our <a href="/giveaways" style="color:var(--gold);font-weight:700">free Community Raffle</a> and collect <a href="/elite-points" style="color:var(--gold);font-weight:700">ELITE Points</a> by watching DailyGambling live on Kick — redeemable for prizes including spins.</p></div>
+    <div class="card rv"><div class="glow"></div><div class="ic">🎁</div><h3>More Ways to Win Spins</h3><p>Active players catch <a href="/giveaways" style="color:var(--gold);font-weight:700">stream giveaways</a> and collect <a href="/elite-points" style="color:var(--gold);font-weight:700">ELITE Points</a> by watching DailyGambling live on Kick — redeemable for prizes including spins.</p></div>
     <div class="card rv d1"><div class="glow"></div><div class="ic">⚡</div><h3>Stack Your Welcome Boost</h3><p>New sign-ups get a +10% welcome rakeboost for 24 hours. Your qualifying wagers also count toward the <a href="/leaderboard" style="color:var(--gold);font-weight:700">$50K Leaderboard</a> and <a href="/wager-milestones" style="color:var(--gold);font-weight:700">Wager Milestones</a> at the same time.</p></div>
   </div>
 </div></section>
 
-{cta_banner("125 Free Spins Are Waiting","Sign up with DAILY or ELITE, pick your tier, and spin on us.",funnel="Get Your Free Spins")}
+{cta_banner("20% Match and 500 Free Spins Are Waiting","Sign up with code DAILY, take the match on your deposit, and unlock spins as you play.",funnel="Claim the Bonus")}
 """)
 
 # ================= MAX WIN MERCH =================
@@ -2000,7 +1996,7 @@ BLOG_POSTS = [
     ("roobet-restricted-countries", "Roobet Restricted Countries & Provider Rules", "The difference between Roobet account restrictions and game-provider availability, with a current eligibility checklist and safe next steps.", "2026-10-07", "9 min read", "🌍", "/assets/roobet-restricted-countries.webp"),
     ("roobet-vip-program-rank-system", "Roobet VIP Program & Rank System Explained", "How Roobet VIP ranks work, how players level up, what rewards unlock, and how to transfer VIP status from another casino.", "2026-08-18", "6 min read", "💎"),
     ("roobet-rakeback-cashback-bonus-schedule", "Roobet Rakeback, Cashback & Bonus Schedule", "When Roobet rakeback, daily, weekly and monthly bonuses become available — plus Vault timing, expiry rules and rakeboosts.", "2026-08-18", "7 min read", "💰"),
-    ("roobet-deposit-bonus-free-spins", "Roobet Deposit Bonus & Free Spins Guide", "How the Roobet free-spins offer works under code DAILY, including cumulative all-time deposit and wager requirements for every tier.", "2026-08-18", "5 min read", "🎁"),
+    ("roobet-deposit-bonus-free-spins", "Roobet Deposit Bonus & Free Spins Guide", "How the Roobet sign-up bonus works under code DAILY: the 20% deposit match up to $500, and the free spins that unlock at $10,000 and $50,000 wagered.", "2026-08-18", "5 min read", "🎁"),
     ("when-can-you-receive-tips-roobet", "When Can You Receive Tips on Roobet?", "A practical guide to receiving Roobet tips, account eligibility, verification, common restrictions and what to check when a tip does not arrive.", "2026-08-18", "4 min read", "💸"),
     ("how-to-deposit-on-roobet", "How to Deposit on Roobet", "Step-by-step guide to making your first Roobet deposit — crypto options, buying with card, confirmation times, and how to unlock your free spins bonus.", "2026-07-21", "5 min read", "💳"),
     ("how-to-kyc-on-roobet", "How to KYC on Roobet", "What Roobet's verification asks for, when you need it, and how to pass it first try — documents, common mistakes, and how long it takes.", "2026-07-21", "4 min read", "🪪"),
@@ -2039,14 +2035,14 @@ PAGES["blog.html"] = dict(
 deposit_faq = [
     ("How long do Roobet deposits take?", "Crypto deposits are credited after network confirmation — usually within a few minutes. Bitcoin can take longer during network congestion; coins like Litecoin and Solana are typically near-instant."),
     ("Do I need to verify my account before depositing?", "You can deposit quickly after signing up, but verification (KYC) is required to withdraw — it's smart to complete it upfront. Our step-by-step guide at HowToKYC.com walks you through the whole process."),
-    ("What is the minimum deposit on Roobet?", "Minimums are small and vary by cryptocurrency. The exclusive free spins bonus starts at $500 in all-time deposits under code DAILY or ELITE — cumulative across all your deposits, not one single deposit."),
+    ("What is the minimum deposit on Roobet?", "Minimums are small and vary by cryptocurrency. New players on code DAILY get a 20% welcome match on their deposit, up to $500 in bonus — the cap is reached on a $2,500 deposit."),
     ("Can I deposit on Roobet without crypto?", "Yes — Roobet lets you buy crypto directly in the deposit window with a card via third-party on-ramp providers, which then credits your balance."),
 ]
 deposit_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in deposit_faq)
 
 PAGES["how-to-deposit-on-roobet.html"] = dict(
     title="How to Deposit on Roobet — Step-by-Step Guide (2026)",
-    desc="How to deposit on Roobet in 2026: create your account with code DAILY, pick a crypto or buy with card, send your deposit and unlock up to 125 free spins. Full step-by-step guide.",
+    desc="How to deposit on Roobet in 2026: create your account with code DAILY, pick a crypto or buy with card, send your deposit and get a 20% match plus up to 500 free spins. Full step-by-step guide.",
     kw="how to deposit on roobet, roobet deposit, roobet deposit methods, roobet crypto deposit, roobet minimum deposit, roobet buy crypto with card",
     schema=[
         {"@context": "https://schema.org", "@type": "Article",
@@ -2064,7 +2060,7 @@ PAGES["how-to-deposit-on-roobet.html"] = dict(
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / How to Deposit on Roobet</p>
   <span class="eyebrow rv">💳 Guide · 5 min read</span>
   <h1 class="rv d1">How to Deposit on <span class="grad">Roobet</span></h1>
-  <p class="lead rv d2">Everything you need to make your first deposit — from creating your account to unlocking up to 125 free spins on top of it. Updated July 2026.</p>
+  <p class="lead rv d2">Everything you need to make your first deposit — from creating your account to the 20% deposit match and up to 500 free spins on top of it. Updated November 2026.</p>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:860px">
@@ -2090,11 +2086,11 @@ PAGES["how-to-deposit-on-roobet.html"] = dict(
   </div>
 
   <h2 class="rv">Step 5 — Make Your Deposit Work Harder</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 20px">This is where playing under code DAILY pays off. Your <b style="color:var(--text)">all-time</b> deposit and wager totals unlock the exclusive free spins bonus — it's cumulative, so every deposit moves you up:</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 20px">This is where playing under code DAILY pays off. Your deposit gets a match straight away, and free spins unlock as your <b style="color:var(--text)">all-time</b> wager grows:</p>
   <div class="cards c3 rv" style="margin-bottom:30px">
-    <div class="card center"><p class="amount">75 Spins</p><p style="color:var(--muted)">$500 deposited · $5,000 wagered all-time</p></div>
-    <div class="card center" style="border-color:rgba(255,199,0,.5)"><p class="amount">100 Spins</p><p style="color:var(--muted)">$1,000 deposited · $10,000 wagered all-time</p></div>
-    <div class="card center"><p class="amount">125 Spins</p><p style="color:var(--muted)">$2,000 deposited · $20,000 wagered all-time</p></div>
+    <div class="card center" style="border-color:rgba(255,199,0,.5)"><p class="amount">20% Match</p><p style="color:var(--muted)">Up to $500 &middot; no wagering &middot; maxes out on a $2,500 deposit</p></div>
+    <div class="card center"><p class="amount">100 Spins</p><p style="color:var(--muted)">$10,000 wagered all-time &middot; $2 each</p></div>
+    <div class="card center"><p class="amount">500 Spins</p><p style="color:var(--muted)">$50,000 wagered all-time &middot; $2 each</p></div>
   </div>
   <p class="rv" style="color:var(--muted);margin-bottom:30px">Every dollar you then wager counts toward the <a href="/leaderboard" style="color:var(--gold);font-weight:700">$50,000 monthly leaderboard</a>, <a href="/wager-milestones" style="color:var(--gold);font-weight:700">$11,350 in wager milestones</a> and <a href="/elite-points" style="color:var(--gold);font-weight:700">ELITE Points</a> — all at the same time.</p>
 
@@ -2102,7 +2098,7 @@ PAGES["how-to-deposit-on-roobet.html"] = dict(
   <div class="faq rv" style="max-width:none">{deposit_faq_html}</div>
 </div></section>
 
-{cta_banner("Ready for Your First Deposit?","Join with code DAILY, deposit, and walk away with up to 125 free spins on top.")}
+{cta_banner("Ready for Your First Deposit?","Join with code DAILY, take the 20% match, and unlock up to 500 free spins as you play.")}
 """)
 
 kyc_faq = [
@@ -2161,7 +2157,7 @@ PAGES["how-to-kyc-on-roobet.html"] = dict(
   <h2 class="rv" style="margin-bottom:20px">KYC FAQ</h2>
   <div class="faq rv" style="max-width:none">{kyc_faq_html}</div>
 
-  <p class="rv" style="color:var(--muted);margin-top:30px">Verified and ready? Next up: <a href="/how-to-deposit-on-roobet" style="color:var(--gold);font-weight:700">how to make your first deposit</a> — and how to turn it into up to 125 free spins.</p>
+  <p class="rv" style="color:var(--muted);margin-top:30px">Verified and ready? Next up: <a href="/how-to-deposit-on-roobet" style="color:var(--gold);font-weight:700">how to make your first deposit</a> — and how to turn it into a 20% match plus free spins.</p>
 </div></section>
 
 {cta_banner("Verified? Time to Get Rewarded.","Join with code DAILY — your wagers count toward the $50K leaderboard from the very first spin.")}
@@ -2169,7 +2165,7 @@ PAGES["how-to-kyc-on-roobet.html"] = dict(
 
 # ================= BLOG: ROOBET REWARDS GUIDE =================
 rw_faq = [
-    ("Is there a Roobet deposit bonus?", "Yes — under code DAILY or ELITE your all-time deposits and wagers unlock an exclusive free spins deposit bonus: $500 deposited / $5,000 wagered earns 75 free spins, $1,000 / $10,000 earns 100 spins, and $2,000 / $20,000 earns 125 spins at $1.00 each. New sign-ups also get a +10% welcome rakeboost for 24 hours."),
+    ("Is there a Roobet deposit bonus?", "Yes — under code DAILY you get a 20% deposit match up to $500, reached on a $2,500 deposit. Free spins then unlock with your all-time wager: 100 spins at $10,000 and 500 spins at $50,000, each worth $2. New sign-ups also get a +10% welcome rakeboost for 24 hours."),
     ("Does Roobet have cashback?", "Yes — Roobet's cashback is called Instant Rakeback: a percentage of every wager comes back to you, claimable every 30 minutes, and it never expires. Part credits instantly and part flows to your Vault, which unlocks 3 claims per day. Rakeboosts of up to +20% multiply it."),
     ("When does Roobet release the monthly bonus?", "The monthly bonus is released on the 1st of every month at midnight UTC. The weekly bonus drops every Saturday at 7 PM EST / midnight UTC, and the daily bonus can be claimed every 24 hours at midnight UTC."),
     ("How does the Roobet VIP program and rank system work?", "Wagering levels up your account, and every rank-up pays a level-up bonus plus a +10% rakeboost for 60 minutes — the higher your level, the bigger your daily, weekly and monthly bonus percentages. Already VIP at another casino? You can transfer your status directly to Roobet under code DAILY or ELITE."),
@@ -2205,11 +2201,11 @@ PAGES["roobet-rewards-guide.html"] = dict(
   <p class="rv" style="color:var(--muted);margin:12px 0 30px">Roobet's cashback system is <b style="color:var(--text)">Instant Rakeback</b>: a slice of every wager comes back to you, claimable every 30 minutes, and it never expires. Part hits your balance instantly; part fills your Vault (3 claims a day, every 8 hours). Rakeboosts push it further — +10% on signup and rank-ups, +15% on vault calendar claims, and the big one: <b style="color:var(--gold)">+20% for 72 hours</b> when you redeem code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> or <a href="{ELITE}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a>. Full mechanics on our <a href="/roobet-rewards" style="color:var(--gold);font-weight:700">Roobet rewards system page</a>.</p>
 
   <h2 class="rv">The Roobet Deposit Bonus</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 20px">Roobet doesn't do a classic "match bonus" — under our codes you get something better: an <a href="/free-spins" style="color:var(--gold);font-weight:700">exclusive free spins deposit bonus</a> based on your all-time totals, so every deposit moves you up a tier:</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 20px">Under code DAILY the <a href="/free-spins" style="color:var(--gold);font-weight:700">Roobet deposit bonus</a> comes in two parts: a match on your deposit, then free spins that unlock as your all-time wager climbs:</p>
   <div class="cards c3 rv" style="margin-bottom:30px">
-    <div class="card center"><p class="amount">75 Spins</p><p style="color:var(--muted)">$500 deposited · $5,000 wagered all-time</p></div>
-    <div class="card center" style="border-color:rgba(255,199,0,.5)"><p class="amount">100 Spins</p><p style="color:var(--muted)">$1,000 · $10,000 all-time</p></div>
-    <div class="card center"><p class="amount">125 Spins</p><p style="color:var(--muted)">$2,000 · $20,000 all-time</p></div>
+    <div class="card center" style="border-color:rgba(255,199,0,.5)"><p class="amount">20% Match</p><p style="color:var(--muted)">Up to $500 &middot; on a $2,500 deposit</p></div>
+    <div class="card center"><p class="amount">100 Spins</p><p style="color:var(--muted)">$10,000 wagered &middot; $2 each</p></div>
+    <div class="card center"><p class="amount">500 Spins</p><p style="color:var(--muted)">$50,000 wagered &middot; $2 each</p></div>
   </div>
 
   <h2 class="rv">Daily, Weekly &amp; Monthly Bonuses — Release Times</h2>
@@ -2453,42 +2449,42 @@ PAGES["roobet-rakeback-cashback-bonus-schedule.html"] = dict(
 
 # ================= BLOG: DEPOSIT BONUS / FREE SPINS =================
 deposit_bonus_faq = [
-    ("Does Roobet have a deposit bonus?", "Our code DAILY offer rewards eligible players with free spins after cumulative all-time deposit and wager requirements are reached. It is not limited to one single deposit."),
-    ("How many free spins can I receive?", "The current tiers provide 75 free spins after $500 deposited and $5,000 wagered, 100 free spins after $1,000 deposited and $10,000 wagered, or 125 free spins after $2,000 deposited and $20,000 wagered."),
-    ("Do deposits have to be made all at once?", "No. The published offer is based on cumulative all-time deposits and wagering under the eligible affiliate code."),
-    ("Is this a no-deposit bonus?", "No. The free-spins tiers require both cumulative deposits and wagering. Always review the current offer terms before participating."),
+    ("What is the Roobet deposit match on code DAILY?", "A one-time welcome offer for new players: a 20% match on your deposit, capped at $500, with no wagering requirement on the match. The cap is reached on a $2,500 deposit; deposits above that still earn the $500 maximum."),
+    ("When do the free spins unlock?", "Free spins are tied to your all-time wager under code DAILY: 100 free spins once you reach $10,000 wagered and 500 free spins once you reach $50,000 wagered. Each spin is worth $2."),
+    ("Does the wager have to happen in one session?", "No. Spin milestones track your cumulative all-time wager under the eligible affiliate code, so every eligible bet counts toward the next one."),
+    ("Is this a no-deposit bonus?", "No. The match requires a deposit and the spins require wagering. Always review the current offer terms before participating."),
 ]
 PAGES["roobet-deposit-bonus-free-spins.html"] = dict(
     title="Roobet Deposit Bonus & Free Spins — Code DAILY (2026)",
-    desc="Roobet deposit bonus and free spins guide: cumulative all-time deposit and wager tiers for 75, 100 or 125 spins when joining with code DAILY.",
+    desc="Roobet deposit bonus on code DAILY: a 20% match up to $500, then 100 free spins at $10,000 wagered and 500 free spins at $50,000 — $2 per spin.",
     kw="roobet deposit bonus, roobet welcome bonus, roobet free spins, free spins roobet, roobet bonus code daily",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Deposit Bonus & Free Spins Guide","datePublished":"2026-08-18","dateModified":"2026-09-17","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Deposit Bonus & Free Spins Guide","datePublished":"2026-08-18","dateModified":"2026-11-05","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in deposit_bonus_faq]},
     ],
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Deposit Bonus</p>
-  <span class="eyebrow rv">🎁 DAILY &amp; ELITE Offer · Updated 17 September 2026</span>
+  <span class="eyebrow rv">🎁 Code DAILY Offer · Updated 5 November 2026</span>
   <h1 class="rv d1">Roobet Deposit Bonus &amp; <span class="grad">Free Spins</span></h1>
-  <p class="lead rv d2">The key detail: these thresholds are cumulative all-time totals—not one giant deposit. Every eligible deposit and wager moves you toward the next tier.</p>
+  <p class="lead rv d2">Two parts: a 20% match on your deposit up to $500, then free spins that unlock as your all-time wager climbs. The wager milestones are cumulative, not one session.</p>
 </div></section>
 <section style="padding-top:10px"><div class="wrap" style="max-width:940px">
   <div class="cards c3 rv">
-    <div class="card center"><span class="eyebrow">Tier 1</span><h2>75 Spins</h2><p><b>$500</b> cumulative deposits<br><b>$5,000</b> cumulative wager<br>$0.60 per spin</p></div>
-    <div class="card center"><span class="eyebrow">Tier 2</span><h2>100 Spins</h2><p><b>$1,000</b> cumulative deposits<br><b>$10,000</b> cumulative wager<br>$0.80 per spin</p></div>
-    <div class="card center"><span class="eyebrow">Tier 3</span><h2>125 Spins</h2><p><b>$2,000</b> cumulative deposits<br><b>$20,000</b> cumulative wager<br>$1.00 per spin</p></div>
+    <div class="card center"><span class="eyebrow">Welcome offer</span><h2>20% Match</h2><p>Up to <b>$500</b>, no wagering<br>Maxes out on a <b>$2,500</b> deposit<br>$2,500 &times; 20% = $500</p></div>
+    <div class="card center"><span class="eyebrow">Milestone 1</span><h2>100 Spins</h2><p><b>$10,000</b> cumulative wager<br>$2 per spin<br>$200 value</p></div>
+    <div class="card center"><span class="eyebrow">Milestone 2</span><h2>500 Spins</h2><p><b>$50,000</b> cumulative wager<br>$2 per spin<br>$1,000 value</p></div>
   </div>
   <h2 class="rv" style="margin-top:48px">Codes, Claim Limits &amp; Withdrawal Rules</h2>
-  <p class="rv" style="color:var(--muted)">DAILY and ELITE are both our affiliate codes and qualify for the same free-spin tiers and community leaderboard benefits. This equivalence was confirmed by our team on 17 September 2026; it is not a separate Roobet-wide promotion. Existing players should not create another account or assume they can switch referral codes.</p>
-  <p class="rv" style="color:var(--muted)"><b>Claim one exclusive free-spin bonus.</b> The 75, 100 and 125-spin options are alternative qualification tiers, not three rewards to add together. Confirm your account's eligibility, qualifying totals and the available tier with the team before claiming. A displayed spin value is not a guaranteed cash payout.</p>
+  <p class="rv" style="color:var(--muted)">DAILY and ELITE are both our affiliate codes and qualify for the same deposit bonus and community leaderboard benefits. This equivalence was confirmed by our team on 17 September 2026; it is not a separate Roobet-wide promotion. Existing players should not create another account or assume they can switch referral codes.</p>
+  <p class="rv" style="color:var(--muted)"><b>How claiming works.</b> The 20% match applies to your deposit, capped at $500 in bonus. The 100- and 500-spin rewards unlock at the $10,000 and $50,000 all-time wager milestones. Confirm your account's eligibility and qualifying totals with the team before claiming. A displayed spin value is not a guaranteed cash payout.</p>
   <p class="rv" style="color:var(--muted)">The offer's deposit and weighted-wager targets are separate from Roobet's withdrawal requirements. Roobet's <a href="https://help.roobet.com/en/articles/13239839-wagering-requirements" target="_blank" rel="noopener" style="color:var(--gold)">official wagering guidance</a> requires wagering the full deposit amount before withdrawal. Meeting that requirement does not by itself qualify you for this offer, and meeting an offer tier does not guarantee a withdrawal will be approved.</p>
   <p class="rv" style="color:var(--muted)">Read the <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">verification guide</a> and <a href="/how-to-withdraw-on-roobet" style="color:var(--gold)">withdrawal guide</a>, or our <a href="/roobet-rakeback-cashback-bonus-schedule" style="color:var(--gold)">recurring reward schedule</a> for a different type of reward. Do not deposit or increase wagering just to chase a bonus; only play where legal and within a limit you can afford to lose.</p>
   <h2 class="rv" style="margin-top:48px">How to Qualify</h2>
   <div style="display:grid;gap:12px;margin:20px 0 38px">
     <div class="mile rv"><span class="amt">1</span><p style="flex:1;color:var(--muted)">Create your Roobet account using code <a href="{DAILY}" target="_blank" rel="nofollow sponsored" style="color:var(--gold);font-weight:700">DAILY</a>.</p></div>
     <div class="mile rv d1"><span class="amt">2</span><p style="flex:1;color:var(--muted)">Complete KYC and make eligible deposits over time.</p></div>
-    <div class="mile rv d2"><span class="amt">3</span><p style="flex:1;color:var(--muted)">Build cumulative weighted wagering until you reach a tier.</p></div>
+    <div class="mile rv d2"><span class="amt">3</span><p style="flex:1;color:var(--muted)">Build cumulative wagering toward the $10,000 and $50,000 spin milestones.</p></div>
     <div class="mile rv d3"><span class="amt">4</span><p style="flex:1;color:var(--muted)">Follow the claim process on SlotEssentials or contact the VIP team if you need help.</p></div>
   </div>
   <div class="hero-cta rv"><a class="btn btn-gold btn-lg" href="{SLOTS}" target="_blank" rel="noopener">View Offer &amp; Claim {ARR}</a><a class="btn btn-ghost btn-lg" href="/how-to-deposit-on-roobet">Deposit Guide</a></div>
