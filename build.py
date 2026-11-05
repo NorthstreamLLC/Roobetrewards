@@ -1999,7 +1999,7 @@ BLOG_POSTS = [
     ("roobet-deposit-bonus-free-spins", "Roobet Deposit Bonus & Free Spins Guide", "How the Roobet sign-up bonus works under code DAILY: the 20% deposit match up to $500, and the free spins that unlock at $10,000 and $50,000 wagered.", "2026-08-18", "5 min read", "🎁"),
     ("when-can-you-receive-tips-roobet", "When Can You Receive Tips on Roobet?", "A practical guide to receiving Roobet tips, account eligibility, verification, common restrictions and what to check when a tip does not arrive.", "2026-08-18", "4 min read", "💸"),
     ("how-to-deposit-on-roobet", "How to Deposit on Roobet", "Step-by-step guide to making your first Roobet deposit — crypto options, buying with card, confirmation times, and how to unlock your free spins bonus.", "2026-07-21", "5 min read", "💳"),
-    ("how-to-kyc-on-roobet", "How to KYC on Roobet", "What Roobet's verification asks for, when you need it, and how to pass it first try — documents, common mistakes, and how long it takes.", "2026-07-21", "4 min read", "🪪"),
+    ("how-to-kyc-on-roobet", "Does Roobet Require ID? Roobet KYC Explained", "Which ID Roobet accepts, when it asks you to verify, how long review takes, and how to pass KYC first try.", "2026-11-05", "6 min read", "🪪"),
     ("roobet-rewards-guide", "Roobet Rewards: The Complete Guide", "Every Roobet reward explained — rakeback & cashback, deposit bonus, daily/weekly/monthly bonus release times, the VIP program and rank system, plus the $100K monthly extras.", "2026-08-07", "7 min read", "💰"),
     ("best-roobet-slots", "Best Roobet Slots to Play", "The best slots on Roobet right now — RTP, max win potential, and which ones earn you free Max Win Merch under code DAILY or ELITE.", "2026-08-07", "6 min read", "🎰"),
     ("how-to-withdraw-on-roobet", "How to Withdraw on Roobet", "Step-by-step Roobet withdrawal guide — KYC, crypto payouts, timing, fees, why a withdrawal might be blocked, and how tips work.", "2026-08-07", "5 min read", "💸"),
@@ -2102,21 +2102,23 @@ PAGES["how-to-deposit-on-roobet.html"] = dict(
 """)
 
 kyc_faq = [
-    ("Is KYC required to play on Roobet?", "You can sign up and deposit quickly, but identity verification is required before you can withdraw. Completing it right after signing up means your winnings are never stuck waiting."),
-    ("What documents do I need for Roobet KYC?", "Typically a government-issued photo ID (passport, driver's license or national ID) and a selfie. Depending on your account, proof of address or source-of-funds checks can also be requested."),
-    ("How long does Roobet verification take?", "Document checks are usually processed quickly — often within minutes to a few hours. Blurry photos or mismatched details are the most common cause of delays."),
-    ("My KYC got rejected — what now?", "Re-submit with a clear, glare-free photo of the original document and make sure your account details exactly match your ID. Still stuck? Message our VIP team on Telegram and we'll help you sort it."),
+    ("Does Roobet require ID?", "Yes, for full account access. Roobet's Level 2 verification asks for a passport, driving licence or other government-issued ID, uploaded as a front-and-back image in your account settings. You can sign up and deposit first, but expect ID to be requested before withdrawals and some account features."),
+    ("At what amount does Roobet make you verify?", "Roobet does not publish a fixed dollar threshold. Its compliance team can request verification at any time, and it is most often triggered by a withdrawal or account review. Anyone quoting an exact number is guessing — verifying early is the only reliable way to avoid a delay."),
+    ("Can you use Roobet without verifying your identity?", "You can register, deposit and play before completing Level 2, but some features stay limited until you verify, and an unverified account can be held up the moment you try to cash out."),
+    ("Which ID documents does Roobet accept?", "Roobet's official Level 2 article lists three: a passport, a driving licence, or a government-issued identification document. Upload a clear front-and-back image of the original — not a photocopy — through roobet.com account settings."),
+    ("How long does Roobet verification take?", "There is no guaranteed time. Roobet says its compliance team reviews documents daily and will contact you after manual review if anything else is needed. Clear photos and details that match your ID exactly are what keep it quick."),
+    ("My Roobet KYC got rejected — what now?", "Re-upload a sharp, glare-free image of the original document with all four corners visible, and make sure your account name and date of birth match it exactly. If it is still rejected, contact Roobet's official Help Center. Never send ID images to anyone over Telegram, Discord or email."),
 ]
 kyc_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in kyc_faq)
 
 PAGES["how-to-kyc-on-roobet.html"] = dict(
-    title="How to KYC on Roobet — Verification Guide (2026)",
-    desc="How to KYC on Roobet in 2026: which documents you need, how to pass verification first try, how long it takes, and what to do if it's rejected. Full walkthrough at HowToKYC.com.",
-    kw="how to kyc on roobet, roobet kyc, roobet verification, roobet identity verification, roobet documents, roobet kyc rejected",
+    title="Does Roobet Require ID? Roobet KYC Guide (2026)",
+    desc="Does Roobet require ID? Yes — here's which documents Roobet accepts, when it asks you to verify, how long review takes and how to fix a rejected KYC.",
+    kw="does roobet require id, roobet kyc, roobet verification, roobet identity verification, do you need id for roobet, roobet level 2 verification, roobet kyc rejected",
     schema=[
         {"@context": "https://schema.org", "@type": "Article",
-         "headline": "How to KYC on Roobet — Verification Guide",
-         "datePublished": "2026-07-21", "dateModified": "2026-07-21",
+         "headline": "Does Roobet Require ID? Roobet KYC & Verification Guide",
+         "datePublished": "2026-07-21", "dateModified": "2026-11-05",
          "author": {"@type": "Organization", "name": "RoobetHub"},
          "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
@@ -2127,34 +2129,49 @@ PAGES["how-to-kyc-on-roobet.html"] = dict(
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / How to KYC on Roobet</p>
-  <span class="eyebrow rv">🪪 Guide · 4 min read</span>
-  <h1 class="rv d1">How to <span class="grad">KYC</span> on Roobet</h1>
-  <p class="lead rv d2">Verification is the one step between you and withdrawing your winnings. Here's how to pass it first try — updated July 2026.</p>
+  <span class="eyebrow rv">🪪 Guide · 6 min read · Updated 5 November 2026</span>
+  <h1 class="rv d1">Does Roobet Require ID? <span class="grad">Roobet KYC</span> Explained</h1>
+  <p class="lead rv d2">What Roobet asks for, when it asks, how long review takes and how to pass verification first try &mdash; checked against Roobet's official Help Center.</p>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:860px">
-  <h2 class="rv">Why Roobet Asks for KYC</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 30px">KYC ("Know Your Customer") is standard identity verification every licensed casino runs — it protects your account, prevents fraud, and it's required before withdrawals. You can deposit and play beforehand, but do it early: nobody wants a max win sitting in limbo while documents process. New to the process entirely? Our dedicated sister site <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> covers every step with screenshots.</p>
+  <h2 class="rv">Does Roobet Require ID?</h2>
+  <p class="rv" style="color:var(--text);margin:12px 0 14px;font-size:17px"><b>Yes.</b> Roobet's Level 2 verification requires a <b>passport, driving licence or other government-issued ID</b>, uploaded as a front-and-back image in your account settings. You can sign up, deposit and play first, but expect ID to be requested before withdrawals and some account features &mdash; so verify early.</p>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px">KYC (&ldquo;Know Your Customer&rdquo;) is the identity check licensed casinos run to prevent fraud and protect accounts. Source: Roobet's official <a href="https://help.roobet.com/en/articles/14709132-level-2-verification" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Level 2 Verification</a> article. For a full illustrated walkthrough, our sister site <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> covers every screen.</p>
 
-  <h2 class="rv">What You'll Need</h2>
-  <div class="cards c3 rv" style="margin:20px 0 30px">
-    <div class="card center"><div class="glow"></div><div class="ic">🪪</div><h3>Photo ID</h3><p>Passport, driver's license or national ID — valid and undamaged.</p></div>
-    <div class="card center"><div class="glow"></div><div class="ic">🤳</div><h3>A Selfie</h3><p>Taken live during verification to match you to your ID.</p></div>
-    <div class="card center"><div class="glow"></div><div class="ic">🧾</div><h3>Sometimes More</h3><p>Proof of address or source of funds, if requested on your account.</p></div>
+  <h2 class="rv">When Does Roobet Make You Verify?</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 14px">Roobet <b>does not publish a fixed dollar amount</b> that triggers verification. Its compliance team can request it at any time, and in practice it usually comes up at one of these points:</p>
+  <ul class="rv" style="color:var(--muted);margin:0 0 14px 20px;line-height:1.8">
+    <li>When you request a <a href="/how-to-withdraw-on-roobet" style="color:var(--gold)">withdrawal</a>, especially your first or a large one</li>
+    <li>When you want to use features that need Level 2, such as <a href="/when-can-you-receive-tips-roobet" style="color:var(--gold)">receiving tips</a></li>
+    <li>During a routine or manual account review</li>
+  </ul>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px">You will see threshold figures quoted on other sites. None of them come from Roobet. The only reliable way to never be held up is to verify the day you sign up.</p>
+
+  <h2 class="rv">Documents Roobet Accepts</h2>
+  <div class="cards c3 rv" style="margin:20px 0 14px">
+    <div class="card center"><div class="glow"></div><div class="ic">🛂</div><h3>Passport</h3><p>Valid, undamaged, photo page clearly readable.</p></div>
+    <div class="card center"><div class="glow"></div><div class="ic">🚗</div><h3>Driving Licence</h3><p>Front and back, all four corners in frame.</p></div>
+    <div class="card center"><div class="glow"></div><div class="ic">🪪</div><h3>Government ID</h3><p>A national ID card or other government-issued document.</p></div>
   </div>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px">Roobet asks for a <b>front-and-back image</b> of the document. Depending on your account, compliance may request more information after manual review. Full checklist with examples: <a href="https://www.howtokyc.com/roobet-verification-documents" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet verification documents</a>.</p>
 
-  <h2 class="rv">The Process, Step by Step</h2>
+  <h2 class="rv">How to Verify on Roobet, Step by Step</h2>
   <div style="display:grid;gap:12px;margin:20px 0 30px">
-    <div class="mile rv"><span class="amt">Step 1</span><p style="flex:1;color:var(--muted)">Sign up (or log in) — join with code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> to stack the rewards while you're at it.</p></div>
-    <div class="mile rv d1"><span class="amt">Step 2</span><p style="flex:1;color:var(--muted)">Open your account settings and find the verification section.</p></div>
-    <div class="mile rv d2"><span class="amt">Step 3</span><p style="flex:1;color:var(--muted)">Upload your ID and complete the selfie check. Good lighting, no glare, all four corners of the document visible.</p></div>
-    <div class="mile rv d3"><span class="amt">Step 4</span><p style="flex:1;color:var(--muted)">Wait for approval — usually fast. Once verified, deposits, play and withdrawals are all frictionless.</p></div>
+    <div class="mile rv"><span class="amt">Step 1</span><p style="flex:1;color:var(--muted)">Check that Roobet is available where you live &mdash; see our <a href="/roobet-restricted-countries" style="color:var(--gold);font-weight:700">restricted countries guide</a>. Never use a VPN or false details; it will fail KYC and can lock the account.</p></div>
+    <div class="mile rv d1"><span class="amt">Step 2</span><p style="flex:1;color:var(--muted)">Sign up with your real legal name, date of birth and address &mdash; join with code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> to stack the rewards.</p></div>
+    <div class="mile rv d2"><span class="amt">Step 3</span><p style="flex:1;color:var(--muted)">Go to <b>Account Settings &rarr; Verification</b> on roobet.com and upload a clear front-and-back image of your ID. Good light, no glare, nothing cropped.</p></div>
+    <div class="mile rv d3"><span class="amt">Step 4</span><p style="flex:1;color:var(--muted)">Wait for review. Roobet's compliance team reviews documents daily and will contact you if anything else is needed.</p></div>
   </div>
+
+  <h2 class="rv">How Long Does Roobet Verification Take?</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">There is no guaranteed turnaround. Clean uploads with matching details move fastest; anything that triggers a manual review takes longer. What slows it down and when to chase support: <a href="https://www.howtokyc.com/roobet-kyc-verification-time" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet KYC verification time</a>.</p>
 
   <h2 class="rv">Pass It First Try</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 30px">The three mistakes that cause almost every rejection: blurry or cropped document photos, account details that don't exactly match the ID (name spelling, date of birth), and expired documents. Get those right and it's a one-and-done process. If anything goes sideways, message our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> or open a ticket in the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Discord</a> — we deal with this daily.</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 14px">Three mistakes cause almost every rejection: blurry or cropped photos, account details that don't exactly match the ID (name spelling, date of birth), and expired documents. Get those right and it's one-and-done.</p>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px">Still stuck? Work through <a href="https://www.howtokyc.com/roobet-verification-problems" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet verification problems</a>, then contact <a href="https://help.roobet.com/en/" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet's Help Center</a>. Our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> can point you in the right direction, but no affiliate can approve KYC &mdash; and <b>never send ID images to anyone in chat</b>. Lock the account down too: <a href="/how-to-enable-roobet-2fa" style="color:var(--gold);font-weight:700">enable Roobet 2FA</a>.</p>
 
-  <h2 class="rv" style="margin-bottom:20px">KYC FAQ</h2>
+  <h2 class="rv" style="margin-bottom:20px">Roobet KYC FAQ</h2>
   <div class="faq rv" style="max-width:none">{kyc_faq_html}</div>
 
   <p class="rv" style="color:var(--muted);margin-top:30px">Verified and ready? Next up: <a href="/how-to-deposit-on-roobet" style="color:var(--gold);font-weight:700">how to make your first deposit</a> — and how to turn it into a 20% match plus free spins.</p>
