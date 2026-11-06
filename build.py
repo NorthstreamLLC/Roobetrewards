@@ -651,7 +651,7 @@ past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
 PAYOUTS = [
     ("32 viewers", "Live stream giveaway", "$10,000", "Nov 2026", "cash"),
     ("Top 100 players", "$50K monthly leaderboard, 1st&ndash;100th paid", "$50,000 / mo", "Every month", "cash"),
-    ("Code DAILY &amp; ELITE players", "Wager milestone bonuses, monthly average", "$16,455 / mo", "Last 8 months", "bonus"),
+    ("~100 players a month", "Wager milestone bonuses &middot; $8K&ndash;$10K in a typical month, far more in big ones", "$131,640", "Last 8 months", "bonus"),
     ("Code DAILY players", "Halloween Airdrop payout", "$29,433.71", "Oct 2026", "cash"),
     ("Code DAILY players", "Roobet Airdrop, previous cycle", "$28,243", "Previous cycle", "cash"),
     ("Mrt****", "1st place, monthly leaderboard", "$12,500", "Sep 2026", "cash"),
