@@ -489,8 +489,11 @@ document.querySelectorAll('.flip').forEach(c => {
           const el = document.querySelector(sel);
           if (el && val) el.textContent = val;
         };
-        setTile('.trh-v', t.given_away);
-        setTile('.trh-n', t.given_away_note);
+        // the headline is a rolling counter driven by build.py; admin can't override it
+        if (!document.getElementById('tr-given')) {
+          setTile('.trh-v', t.given_away);
+          setTile('.trh-n', t.given_away_note);
+        }
         if (t.milestones_paid) {
           setTile('[data-tile="milestones"] .trs-v', t.milestones_paid);
           setTile('[data-tile="milestones"] .trs-n', t.milestones_note);
@@ -555,6 +558,33 @@ document.querySelectorAll('.flip').forEach(c => {
       }
     })
     .catch(() => { /* built-in values stand */ });
+})();
+
+// ===== transparency report: rolling given-away counter =====
+// base (tallied at `since`) + rate per month, advanced continuously.
+(function () {
+  const el = document.getElementById('tr-given');
+  if (!el) return;
+  const base = parseFloat(el.dataset.base) || 0;
+  const rate = parseFloat(el.dataset.rate) || 0;
+  const since = Date.parse(el.dataset.since) || Date.now();
+  const perMs = rate / (30.436875 * 86400000);       // average month length
+  const fmt = n => '$' + Math.floor(n).toLocaleString('en-US');
+  const now = () => base + Math.max(0, Date.now() - since) * perMs;
+
+  // roll up from ~97% on first view, then keep climbing
+  const target = now(), start = target * 0.97, dur = 1600, t0 = performance.now();
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function intro(ts) {
+    const p = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(start + (now() - start) * e);
+    if (p < 1) requestAnimationFrame(intro); else tick();
+  }
+  function tick() {
+    el.textContent = fmt(now());
+    setTimeout(tick, 1000);
+  }
+  if (reduce) tick(); else requestAnimationFrame(intro);
 })();
 
 // ===== transparency report: live aggregate figures =====

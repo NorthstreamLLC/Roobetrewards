@@ -649,6 +649,9 @@ past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
 # keep it current. (who, what, amount, when, kind)
 #   kind: cash | merch | spins | bonus   — only changes the icon and accent
 PAYOUTS = [
+    ("32 viewers", "Live stream giveaway", "$10,000", "Nov 2026", "cash"),
+    ("Top 100 players", "$50K monthly leaderboard, 1st&ndash;100th paid", "$50,000 / mo", "Every month", "cash"),
+    ("Code DAILY &amp; ELITE players", "Wager milestone bonuses, monthly average", "$16,455 / mo", "Last 8 months", "bonus"),
     ("Code DAILY players", "Halloween Airdrop payout", "$29,433.71", "Oct 2026", "cash"),
     ("Code DAILY players", "Roobet Airdrop, previous cycle", "$28,243", "Previous cycle", "cash"),
     ("Mrt****", "1st place, monthly leaderboard", "$12,500", "Sep 2026", "cash"),
@@ -1874,16 +1877,23 @@ PAGES["exclusive-promotions.html"] = dict(
 # shown here is either a fixed commitment or something already paid out.
 #   given_away        : headline all-time figure
 #   milestones_monthly: set once you have the number, e.g. "$8,400" ("" hides the tile)
+#   given_away_base/rate/since: the headline rolls up in the browser from the
+#   tallied base at `since`, at `rate` dollars per month. Re-tally: set a new
+#   base + since date.
 TRANSPARENCY = dict(
-    given_away="$3M+",
-    given_away_note="Cumulative across every reward program since launch",
+    given_away="$2,304,492",
+    given_away_base=2304492,
+    given_away_rate=105926,              # dollars per month
+    given_away_since="2026-11-06T00:00:00Z",
+    given_away_since_label="6 November 2026",
+    given_away_note="Paid to players since launch &middot; rising with our ~$105,926 monthly average",
     milestones_paid="$131,640",          # "" falls back to showing the fixed pool
     milestones_exact="$131,640.50",
     milestones_note="Paid out in milestone bonuses",
     milestones_period="the last 8 months",   # stated in the methodology, not on the tile
     # shirts shipped before the on-site claim system existed. Claims verified
     # through the new form are added on top of this automatically.
-    merch_baseline=51,
+    merch_baseline=27,
 )
 payout_ledger = "".join(payout_row(p) for p in PAYOUTS)
 
@@ -1894,7 +1904,7 @@ _tr_milestone_tile = (f"""
 
 PAGES["transparency.html"] = dict(
     title="Roobet Rewards Transparency Report — Live Payout Data",
-    desc="Transparency report for Roobet rewards under codes DAILY and ELITE: $3M+ given away, the payout ledger, fixed prize pools and verified merch claims — with the methodology stated in full.",
+    desc="Transparency report for Roobet rewards under codes DAILY and ELITE: $2.3M+ paid to players and rising, the payout ledger, fixed prize pools and verified merch claims — with the methodology stated in full.",
     kw="roobet rewards transparency, roobet payout proof, roobet rewards paid out, roobet casino rewards proof, roobet affiliate payouts",
     schema={"@context": "https://schema.org", "@type": "Dataset",
             "name": "RoobetHub — Payout and Wager Transparency Report",
@@ -1917,7 +1927,7 @@ PAGES["transparency.html"] = dict(
 <section style="padding-top:6px"><div class="wrap">
   <div class="tr-hero rv">
     <span class="trh-l">Given away to players</span>
-    <b class="trh-v">{TRANSPARENCY['given_away']}</b>
+    <b class="trh-v" id="tr-given" data-base="{TRANSPARENCY['given_away_base']}" data-rate="{TRANSPARENCY['given_away_rate']}" data-since="{TRANSPARENCY['given_away_since']}">{TRANSPARENCY['given_away']}</b>
     <span class="trh-n">{TRANSPARENCY['given_away_note']}</span>
   </div>
   <div class="tr-grid rv" id="tr-stats">
@@ -1939,7 +1949,7 @@ PAGES["transparency.html"] = dict(
 <section style="padding-top:26px"><div class="wrap">
   <div class="center rv promo-head"><span class="eyebrow">&#128300; Methodology</span><h2>How These Numbers Are Calculated</h2></div>
   <div class="cards c2" style="margin-top:6px">
-    <div class="card rv"><div class="glow"></div><div class="ic">&#128176;</div><h3>The headline figure</h3><p>A cumulative estimate of what has gone back to players across every reward program we run since launch &mdash; leaderboard cash, wager milestones, free spins, promo payouts, merch and VIP perks. It is added up across programs rather than audited as one figure, so we state it as an approximation rather than an exact total.</p></div>
+    <div class="card rv"><div class="glow"></div><div class="ic">&#128176;</div><h3>The headline figure</h3><p>What has gone back to players across every reward program we run since launch &mdash; leaderboard cash, wager milestones, free spins, promo payouts, merch and VIP perks. Last tallied at <b>{TRANSPARENCY['given_away']}</b> on {TRANSPARENCY['given_away_since_label']}. Between tallies the counter rolls forward at our average payout rate of <b>${TRANSPARENCY['given_away_rate']:,}</b> a month, and it is reset to the real total whenever we re-tally.</p></div>
     <div class="card rv d1"><div class="glow"></div><div class="ic">&#127942;</div><h3>Prize pools and milestones</h3><p>The $50,000 leaderboard and $11,350 milestone pools are fixed commitments, not estimates &mdash; the ladder pays 1st through 100th place, and the milestone track pays at every tier reached. Both are published in full on their own pages. The <b>{TRANSPARENCY['milestones_exact']}</b> figure is what players have actually claimed in milestone bonuses over {TRANSPARENCY['milestones_period']}.</p></div>
     <div class="card rv d2"><div class="glow"></div><div class="ic">&#128085;</div><h3>Merch shipped</h3><p>{TRANSPARENCY['merch_baseline']} shirts have gone out to players who hit a max win, counted only once the win was verified against their Roobet account and the shirt actually shipped. Claims submitted through the form on this site are added on top automatically; pending and rejected claims are excluded.</p></div>
     <div class="card rv d3"><div class="glow"></div><div class="ic">&#9888;&#65039;</div><h3>What this does not include</h3><p>Roobet's own rakeback, daily, weekly and monthly bonuses are paid by Roobet directly and are not counted here &mdash; they sit on top. We also don't publish community wager totals or player counts, for competitive reasons.</p></div>
@@ -2002,7 +2012,7 @@ BLOG_POSTS = [
     ("how-to-kyc-on-roobet", "Does Roobet Require ID? Roobet KYC Explained", "Which ID Roobet accepts, when it asks you to verify, how long review takes, and how to pass KYC first try.", "2026-11-05", "6 min read", "🪪"),
     ("roobet-rewards-guide", "Roobet Rewards: The Complete Guide", "Every Roobet reward explained — rakeback & cashback, deposit bonus, daily/weekly/monthly bonus release times, the VIP program and rank system, plus the $100K monthly extras.", "2026-08-07", "7 min read", "💰"),
     ("best-roobet-slots", "Best Roobet Slots to Play", "The best slots on Roobet right now — RTP, max win potential, and which ones earn you free Max Win Merch under code DAILY or ELITE.", "2026-08-07", "6 min read", "🎰"),
-    ("how-to-withdraw-on-roobet", "How to Withdraw on Roobet", "Step-by-step Roobet withdrawal guide — KYC, crypto payouts, timing, fees, why a withdrawal might be blocked, and how tips work.", "2026-08-07", "5 min read", "💸"),
+    ("how-to-withdraw-on-roobet", "Roobet Withdrawal Guide: Times, Minimums & Rules", "The 100% wager rule, confirmations per coin, minimums, fees, and the six reasons a Roobet withdrawal gets blocked.", "2026-11-06", "7 min read", "💸"),
 ]
 def blog_card(post, i):
     slug, title, description, date, read, ic = post[:6]
@@ -2318,22 +2328,25 @@ PAGES["best-roobet-slots.html"] = dict(
 
 # ================= BLOG: HOW TO WITHDRAW =================
 wd_faq = [
-    ("How long do Roobet withdrawals take?", "Withdrawals are typically processed quickly — often within minutes once approved. Total time depends on the blockchain: Litecoin and Solana are near-instant, Bitcoin can take longer during network congestion."),
-    ("Why can't I withdraw from Roobet?", "The most common reasons: your account isn't verified yet (KYC is required for withdrawals), active bonus funds carry wagering conditions, or the withdrawal amount is below the minimum for that coin. If none of those apply, message our VIP team on Telegram and we'll help you sort it."),
-    ("Do I need KYC to withdraw on Roobet?", "Yes — identity verification is required before your first withdrawal. Complete it early so your winnings are never stuck waiting. Our guide at HowToKYC.com walks through every step."),
-    ("Can I withdraw a tip someone sent me on Roobet?", "Tips land in your normal Roobet balance, so they withdraw like any other funds once your account is verified. Tipping itself unlocks with account standing — typically a verified (KYC'd) account with real wagering history, as an anti-abuse measure. If tipping isn't available on your account yet, keep playing and verify, or ask Roobet support for your account's specific requirements."),
-    ("Are there withdrawal fees on Roobet?", "You pay the blockchain network fee for the coin you withdraw. Choosing a faster, cheaper chain like Litecoin usually costs a fraction of a Bitcoin transaction."),
+    ("How long do Roobet withdrawals take?", "Once your requirements are met, the withdrawal is sent and the clock is the blockchain. Roobet's Help Center says a transaction needs 1 confirmation for BTC, LTC, XRP, TRX and DOGE, or 3 for ETH, USDT and USDC, before your wallet credits it. Some wallets require more confirmations, and Bitcoin slows down when the network is congested."),
+    ("What is the minimum wager to withdraw crypto on Roobet?", "100% of your deposit. Under Roobet's AML policy you must wager the full amount of a crypto deposit before you can withdraw, tip or use instant raffles. Deposit $200 and you need $200 in wagers first. Only settled sportsbook bets count."),
+    ("What is the minimum withdrawal on Roobet?", "It depends on the coin. Roobet does not publish one fixed minimum; the current minimum and network fee for each currency are shown on the Withdraw tab of the Cashier before you confirm. If your balance is below it, switch to a different coin or keep playing until you clear it."),
+    ("Can you cash out on Roobet?", "Yes. Roobet pays out in crypto to your own external wallet: BTC, ETH, LTC, USDT, USDC, XRP, TRX, DOGE, SUI, SOL and BNB. Copy the receive address from your wallet, paste it into the Cashier's Withdraw tab, enter the amount and select Withdraw Funds."),
+    ("Why can't I withdraw from Roobet?", "Usually one of five things: you haven't wagered 100% of your deposit yet, the deposit hasn't reached its required confirmations, the amount is below that coin's minimum, the address is a smart contract (Roobet doesn't support those), or your account has a verification or compliance request open. Check each in that order before contacting support."),
+    ("Does Roobet verify you before a withdrawal?", "It can. Roobet's compliance team may request Level 2 ID verification at any time, and a withdrawal is the most common trigger. Verifying the day you sign up means a win is never left waiting on documents."),
+    ("Can I withdraw a tip someone sent me on Roobet?", "Yes, once it is wagered. Roobet's AML guidance says a received tip must be wagered at 30% of its value before it can be withdrawn — a $100 tip needs $30 in wagers. Our tips guide covers when tipping unlocks on an account."),
+    ("Are there withdrawal fees on Roobet?", "Roobet doesn't charge a withdrawal fee of its own. You do pay the blockchain network fee, which is shown at the bottom of the Cashier's Withdraw page before you confirm. Faster, cheaper chains like Litecoin or Solana usually cost a fraction of Bitcoin."),
 ]
 wd_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in wd_faq)
 
 PAGES["how-to-withdraw-on-roobet.html"] = dict(
-    title="How to Withdraw on Roobet — Step-by-Step Guide (2026)",
-    desc="How to withdraw on Roobet in 2026: complete KYC, pick your crypto, avoid network mistakes and get paid fast. Plus withdrawal times, fees, common blockers and how Roobet tips work.",
-    kw="how to withdraw on roobet, roobet withdrawal, roobet withdraw, roobet withdrawal time, roobet tips, when can you receive tips roobet",
+    title="Roobet Withdrawal Guide: Times, Minimums & Rules (2026)",
+    desc="How to withdraw from Roobet in 2026: the 100% wager rule, confirmations per coin, network fees, withdrawal times and what to fix when a cash-out won't go through.",
+    kw="roobet withdrawal, how to withdraw from roobet, roobet withdrawal time, roobet minimum withdrawal, roobet minimum wager to withdraw crypto, can you cash out on roobet, roobet withdrawal verification",
     schema=[
         {"@context": "https://schema.org", "@type": "Article",
-         "headline": "How to Withdraw on Roobet — Step-by-Step Guide",
-         "datePublished": "2026-08-07", "dateModified": "2026-08-07",
+         "headline": "Roobet Withdrawal Guide: Times, Minimums & Rules",
+         "datePublished": "2026-08-07", "dateModified": "2026-11-06",
          "author": {"@type": "Organization", "name": "RoobetHub"},
          "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
@@ -2344,32 +2357,60 @@ PAGES["how-to-withdraw-on-roobet.html"] = dict(
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / How to Withdraw on Roobet</p>
-  <span class="eyebrow rv">💸 Guide · 5 min read</span>
-  <h1 class="rv d1">How to <span class="grad">Withdraw</span> on Roobet</h1>
-  <p class="lead rv d2">You hit the win — now get it out clean. The full withdrawal process, what blocks payouts, and how to avoid the one mistake that loses funds. Updated August 2026.</p>
+  <span class="eyebrow rv">💸 Guide · 7 min read · Updated 6 November 2026</span>
+  <h1 class="rv d1">Roobet <span class="grad">Withdrawal</span> Guide: Times, Minimums &amp; Rules</h1>
+  <p class="lead rv d2">You hit the win &mdash; now get it out clean. The exact rules Roobet applies before a cash-out, how long each coin takes, and what to fix when a withdrawal won't go through. Checked against Roobet's official Help Center.</p>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:860px">
-  <h2 class="rv">Before Anything: Verify Your Account</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 30px">KYC is required before your first withdrawal — no way around it, and it's why we tell everyone to verify on day one. If you haven't yet, our <a href="/how-to-kyc-on-roobet" style="color:var(--gold);font-weight:700">KYC guide</a> and <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> get you through it in minutes.</p>
+  <h2 class="rv">How to Withdraw from Roobet (Quick Answer)</h2>
+  <p class="rv" style="color:var(--text);margin:12px 0 30px;font-size:17px">Wager <b>100% of your deposit</b>, wait for the deposit's blockchain confirmations, then open <b>Cashier &rarr; Withdraw</b>, pick your coin, paste your own wallet's receive address, enter the amount and select <b>Withdraw Funds</b>. Roobet charges no withdrawal fee &mdash; you only pay the network fee shown before you confirm.</p>
+
+  <h2 class="rv">Roobet Withdrawal Requirements</h2>
+  <div class="cards c3 rv" style="margin:20px 0 14px">
+    <div class="card"><div class="glow"></div><div class="ic">🔁</div><h3>Wager 100% of Your Deposit</h3><p>Roobet's AML rule: a crypto or cash deposit must be wagered in full before withdrawal. Deposit $200, wager $200. Only settled sports bets count.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">⛓️</div><h3>Deposit Confirmed</h3><p>Your deposit needs 1 confirmation (BTC, LTC, XRP) or 3 (ETH, USDT, USDC) before those funds can be withdrawn or tipped.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">🪪</div><h3>Account in Good Standing</h3><p>Compliance can request <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">ID verification</a> at any time &mdash; a withdrawal is the most common trigger.</p></div>
+  </div>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px">The full breakdown, including the 30% rule on received tips, is in our <a href="/roobet-wagering-requirements" style="color:var(--gold);font-weight:700">Roobet wagering requirements guide</a>. Verify early with our <a href="/how-to-kyc-on-roobet" style="color:var(--gold);font-weight:700">KYC guide</a> or <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> so a win never waits on documents.</p>
 
   <h2 class="rv">Withdrawing, Step by Step</h2>
   <div style="display:grid;gap:12px;margin:20px 0 30px">
-    <div class="mile rv"><span class="amt">Step 1</span><p style="flex:1;color:var(--muted)">Open your wallet on Roobet and hit <b style="color:var(--text)">Withdraw</b>.</p></div>
-    <div class="mile rv d1"><span class="amt">Step 2</span><p style="flex:1;color:var(--muted)">Pick your coin. Tip: Litecoin or Solana are fast with tiny network fees; Bitcoin is slower and pricier.</p></div>
-    <div class="mile rv d2"><span class="amt">Step 3</span><p style="flex:1;color:var(--muted)"><b style="color:var(--text)">Paste your wallet address and triple-check the network.</b> Sending to the wrong chain is the one mistake that can permanently lose funds.</p></div>
-    <div class="mile rv d3"><span class="amt">Step 4</span><p style="flex:1;color:var(--muted)">Confirm the amount (minding the coin's minimum), submit, and watch it land — usually within minutes.</p></div>
+    <div class="mile rv"><span class="amt">Step 1</span><p style="flex:1;color:var(--muted)">In your external wallet, open the coin you want to receive and copy its <b style="color:var(--text)">Receive / Deposit</b> address.</p></div>
+    <div class="mile rv d1"><span class="amt">Step 2</span><p style="flex:1;color:var(--muted)">On Roobet, open <b style="color:var(--text)">Cashier &rarr; Withdraw</b> and pick the same coin. Litecoin and Solana are fast with small network fees; Bitcoin is slower and pricier.</p></div>
+    <div class="mile rv d2"><span class="amt">Step 3</span><p style="flex:1;color:var(--muted)"><b style="color:var(--text)">Paste the address and triple-check the network.</b> Sending to the wrong chain can permanently lose funds, and Roobet does not process withdrawals to smart-contract addresses.</p></div>
+    <div class="mile rv d3"><span class="amt">Step 4</span><p style="flex:1;color:var(--muted)">Enter the amount (at or above that coin's minimum), check the network fee, and select <b style="color:var(--text)">Withdraw Funds</b>.</p></div>
   </div>
+
+  <h2 class="rv">How Long Do Roobet Withdrawals Take?</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 18px">Once the withdrawal is sent, timing is down to the blockchain. Roobet's Help Center lists these confirmation requirements before your wallet receives the funds &mdash; some wallets ask for more:</p>
+  <div class="rv" style="overflow-x:auto;margin:0 0 14px">
+    <table class="tbl">
+      <thead><tr><th>Coin</th><th>Confirmations</th><th>Typical speed</th></tr></thead>
+      <tbody>
+        <tr><td>Litecoin (LTC), XRP, TRON (TRX), Dogecoin (DOGE)</td><td>1</td><td>Fast</td></tr>
+        <tr><td>Bitcoin (BTC)</td><td>1</td><td>Slower when the network is congested</td></tr>
+        <tr><td>Ethereum (ETH), Tether (USDT), USDC</td><td>3</td><td>Moderate; gas fees vary</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px">To track a withdrawal, grab the transaction ID from your Roobet notifications or withdrawal history and paste it into that coin's block explorer.</p>
+
+  <h2 class="rv">Minimum Withdrawal &amp; Fees</h2>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">Roobet doesn't publish one fixed minimum withdrawal &mdash; it varies by coin, and the live minimum and network fee are shown on the Withdraw tab before you confirm. Roobet itself charges <b>no withdrawal fee</b>; the only cost is the blockchain network fee. If you're below the minimum on one coin, a cheaper chain like Litecoin is usually the fix.</p>
 
   <h2 class="rv">If Your Withdrawal Won't Go Through</h2>
   <div class="cards c3 rv" style="margin:20px 0 30px">
-    <div class="card"><div class="glow"></div><div class="ic">🪪</div><h3>Not Verified</h3><p>The #1 blocker. Complete KYC and the button unlocks.</p></div>
-    <div class="card"><div class="glow"></div><div class="ic">🎁</div><h3>Bonus Conditions</h3><p>Active bonus funds can carry wagering conditions before cash-out.</p></div>
-    <div class="card"><div class="glow"></div><div class="ic">📉</div><h3>Below Minimum</h3><p>Each coin has a small minimum — switch coins or top the amount up.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">🔁</div><h3>Wager Not Met</h3><p>You haven't wagered 100% of the deposit yet. Check your remaining requirement in the Cashier.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">⏳</div><h3>Deposit Unconfirmed</h3><p>The deposit is still waiting on its 1 or 3 blockchain confirmations.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">📉</div><h3>Below Minimum</h3><p>Each coin has its own minimum &mdash; switch coins or top the amount up.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">📄</div><h3>Contract Address</h3><p>Roobet can't send to smart-contract addresses. Use a standard wallet address.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">🪪</div><h3>Verification Open</h3><p>Compliance has requested documents. Complete <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">KYC</a> and resubmit.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">🌍</div><h3>Region Restricted</h3><p>Roobet doesn't serve every country &mdash; see the <a href="/roobet-restricted-countries" style="color:var(--gold)">restricted countries list</a>.</p></div>
   </div>
-  <p class="rv" style="color:var(--muted);margin-bottom:30px">Still stuck? Message our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> or open a ticket in the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Discord</a> — withdrawal issues are our daily bread.</p>
+  <p class="rv" style="color:var(--muted);margin-bottom:30px">Still stuck? Contact <a href="https://help.roobet.com/en/" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet's Help Center</a>, or message our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> or the <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Discord</a> and we'll point you the right way. Received a tip? Here's <a href="/when-can-you-receive-tips-roobet" style="color:var(--gold);font-weight:700">when you can receive and withdraw tips</a>.</p>
 
-  <h2 class="rv" style="margin-bottom:20px">Withdrawals &amp; Tips FAQ</h2>
+  <h2 class="rv" style="margin-bottom:20px">Roobet Withdrawal FAQ</h2>
   <div class="faq rv" style="max-width:none">{wd_faq_html}</div>
 
   <p class="rv" style="color:var(--muted);margin-top:30px">Full circle: <a href="/how-to-deposit-on-roobet" style="color:var(--gold);font-weight:700">how to deposit</a> → <a href="/how-to-kyc-on-roobet" style="color:var(--gold);font-weight:700">how to KYC</a> → withdraw. And everything you wager in between counts toward the <a href="/roobet-rewards-guide" style="color:var(--gold);font-weight:700">full rewards stack</a>.</p>
@@ -3034,8 +3075,8 @@ PAGE_FAQS = {
   "If you are new, start with how to deposit on Roobet, then how to KYC on Roobet — verification is required before your first withdrawal, so doing it early saves time later."),
 ],
 "transparency.html": [
- ("What does the $3M+ given away figure cover?",
-  "It is a cumulative estimate of rewards delivered to players across every program since launch: leaderboard cash, wager milestones, free spins, promo payouts, Max Win Merch and VIP perks. It is summed across programs rather than audited as one figure, which is why it is stated as an approximation."),
+ ("What does the given-away counter cover?",
+  "Rewards paid to players across every program since launch: leaderboard cash, wager milestones, free spins, promo payouts, Max Win Merch and VIP perks. It was last tallied at $2,304,492 on 6 November 2026; between tallies the counter advances at our average payout rate of $105,926 per month, and it is reset to the real total at each new tally."),
  ("Why don't you publish community wager totals?",
   "Wager volume and player counts would tell competing affiliates the size of our Roobet deal, so we keep them private. Everything shown on this page is either a fixed commitment or something already paid out."),
  ("Does the transparency report include Roobet's own bonuses?",
