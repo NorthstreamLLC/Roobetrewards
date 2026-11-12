@@ -946,10 +946,11 @@ PAGES["index.html"] = dict(
       <div class="banner-veil"></div>
       <div class="banner-in">
         <div>
-          <p class="fig">20% + 500 Spins</p>
+          <p class="fig fig-offer">20% Deposit Bonus</p>
+          <p class="fig fig-offer fig-plus">+ 500 Free Spins</p>
           <p class="ttl"><a href="/free-spins">ROOBET WELCOME BONUS</a></p>
         </div>
-        <p>20% deposit match up to $500, no wagering.<br>Plus 100 spins at $10K and 500 at $50K wagered.</p>
+        <p>Up to $500 with <b style="color:var(--text)">no wagering</b>.<br>100 spins at $10K wagered, 500 at $50K.</p>
         <div class="row">
           <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Claim Bonus</a>
           <a class="btn btn-ghost" href="/free-spins">View</a>

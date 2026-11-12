@@ -1405,3 +1405,6 @@ body.vt-lock{overflow:hidden}
 }
 .hl-spins .hl-rank{color:var(--gold);font-size:13px}
 .hl-spins .hl-name{color:var(--text-dim)}
+.banner .fig-offer{font-size:clamp(26px,2.5vw,36px);white-space:nowrap}
+.banner .fig-plus{margin-top:4px}
+@media(max-width:420px){.banner .fig-offer{font-size:24px}}
