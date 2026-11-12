@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Static site generator for roobethub.com"""
 import os, re, json
+from datetime import date
 
 SITE = "https://roobethub.com"
 ELITE = "https://roobet.com/?ref=elite"
@@ -13,6 +14,8 @@ DISCORD = "https://discord.gg/dailygamba"
 SLOTS_MILES = "https://slotessentials.com/rewards/wager-milestones"
 SLOTS_HOME = "https://slotessentials.com"
 YOUTUBE = "https://www.youtube.com/@DAILYGambling"
+ROOBET_REWARDS_SOURCE = "https://help.roobet.com/en/articles/9546773-rewards-explained"
+ROOBET_PROMO_SOURCE = "https://help.roobet.com/en/articles/4739870-promo-codes-explained"
 
 # Weekly stream schedule (America/New_York). (day index 0=Sun, label, time or None, note)
 SCHEDULE = [
@@ -203,6 +206,7 @@ def footer():
     <div class="foot-note">
       <span class="badge-18">18+</span>
       <p>Gamble responsibly. You must be of legal gambling age in your jurisdiction to play at Roobet. Gambling involves risk — never wager more than you can afford to lose. If gambling stops being fun, seek help at <a href="https://www.begambleaware.org" style="color:var(--gold)">BeGambleAware.org</a>. This is an independent affiliate website; offers are provided in partnership with Roobet and Slotessentials and may change at any time. Terms &amp; conditions apply to all rewards.</p>
+      <p style="margin-top:10px"><a href="/about" style="color:var(--gold)">About RoobetHub</a> &middot; <a href="/editorial-policy" style="color:var(--gold)">Editorial policy</a> &middot; <a href="/affiliate-disclosure" style="color:var(--gold)">Affiliate disclosure</a> &middot; <a href="/responsible-gambling" style="color:var(--gold)">Responsible gambling</a></p>
       <p style="margin-top:10px">© 2026 roobethub.com — All rights reserved.</p>
     </div>
   </div>
@@ -212,7 +216,15 @@ ORG = {
     "@type": "Organization", "@id": SITE + "/#org",
     "name": "RoobetHub", "url": SITE + "/",
     "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"},
-    "sameAs": [KICK, DISCORD, TELEGRAM, "https://slotessentials.com"],
+    "description": "An independent Roobet rewards guide and player-rewards hub operated by the DailyGambling team.",
+    "publishingPrinciples": SITE + "/editorial-policy",
+    "sameAs": [KICK, YOUTUBE, DISCORD, TELEGRAM, "https://slotessentials.com"],
+}
+
+EDITORIAL_TEAM = {
+    "@type": "Organization", "@id": SITE + "/#editorial-team",
+    "name": "RoobetHub Editorial Team", "url": SITE + "/about",
+    "parentOrganization": {"@id": SITE + "/#org"},
 }
 
 # Related-links pool for WebPage.isRelatedTo (mirrors the slotessentials schema pattern)
@@ -232,6 +244,8 @@ REL_POOL = [
     ("Slotessentials", "https://slotessentials.com/"),
     ("How to KYC on Roobet", KYC),
     ("Watch DailyGambling on Kick", KICK),
+    ("About RoobetHub", SITE + "/about"),
+    ("RoobetHub Editorial Policy", SITE + "/editorial-policy"),
 ]
 
 # Which showcase banner each page carries above the footer. The homepage has both
@@ -246,7 +260,8 @@ def page_banner(slug):
         return ""                      # homepage carries the promo banner inline
     # both of these pages now render the banner design inline as their main block
     # (the live raffle widget / the active-promotions slot), so no extra one
-    if slug in ("exclusive-promotions", "giveaways"):
+    if slug in ("exclusive-promotions", "giveaways", "about", "editorial-policy",
+                "affiliate-disclosure", "responsible-gambling"):
         return ""
     if slug in RAFFLE_BANNER_PAGES and RAFFLE["live"]:
         return home_raffle
@@ -292,6 +307,7 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
         {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/",
          "name": "RoobetHub", "publisher": {"@id": SITE + "/#org"}, "inLanguage": "en"},
         dict(ORG),
+        dict(EDITORIAL_TEAM),
     ]
     webpage = {
         "@type": "WebPage", "@id": canon + "#webpage", "url": canon,
@@ -313,18 +329,44 @@ def shell(fname, title, desc, kw, body, schema=None, og_type="website", og_image
     # merge page-specific entities into the graph, cross-linked via @id
     extras = [schema] if schema and not isinstance(schema, list) else (schema or [])
     id_map = {"FAQPage": "#faq", "Article": "#article", "Product": "#product", "VideoGame": "#game"}
+    article_entity = None
     for s in extras:
         s = dict(s); s.pop("@context", None)
         t = s.get("@type")
-        if t == "ContactPage":       # ContactPage IS the WebPage
-            webpage["@type"] = "ContactPage"
+        if t in ("ContactPage", "AboutPage"):  # these entities ARE the WebPage
+            webpage["@type"] = t
             continue
         s["@id"] = canon + id_map.get(t, "#entity")
         if "mainEntity" not in webpage and t in id_map:
             webpage["mainEntity"] = {"@id": s["@id"]}
         if t == "Article":
+            s["author"] = {"@id": SITE + "/#editorial-team"}
+            s["publisher"] = {"@id": SITE + "/#org"}
             s["mainEntityOfPage"] = {"@id": canon + "#webpage"}
+            article_entity = s
         graph.append(s)
+
+    if article_entity:
+        def _pretty_date(value):
+            try:
+                parsed = date.fromisoformat(value)
+                return f"{parsed.day} {parsed.strftime('%B %Y')}"
+            except (TypeError, ValueError):
+                return value or ""
+        published = _pretty_date(article_entity.get("datePublished"))
+        modified = _pretty_date(article_entity.get("dateModified"))
+        dates = ""
+        if published:
+            dates += f"Published {published}"
+        if modified and modified != published:
+            dates += (" &middot; " if dates else "") + f"Reviewed {modified}"
+        editorial_bar = f"""<section style="padding:0"><div class="wrap" style="max-width:860px">
+  <div class="card" style="padding:14px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <p style="margin:0;color:var(--muted);font-size:.9rem">By <a href="/about" style="color:var(--gold);font-weight:700">RoobetHub Editorial Team</a>{(' &middot; ' + dates) if dates else ''}</p>
+    <p style="margin:0;font-size:.85rem"><a href="/editorial-policy" style="color:var(--gold)">How we verify Roobet information</a></p>
+  </div>
+</div></section>"""
+        body = body.replace("</section>", "</section>\n" + editorial_bar, 1)
 
     graph.insert(2, webpage)
     schema_tag = f'<script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@graph": graph})}</script>'
@@ -1091,7 +1133,7 @@ PAGES["leaderboard.html"] = dict(
 <section class="page-hero">{HERO_BD_SHORT}<div class="wrap">
   {crumb("$50K Wager Leaderboard")}
   <span class="eyebrow rv"><span class="live-dot"></span> Live Standings &middot; Updating Now</span>
-  <h1 class="rv d1"><span class="grad" data-count="50000" data-prefix="$">$0</span> Wager Leaderboard</h1>
+  <h1 class="rv d1"><span class="grad" data-count="50000" data-prefix="$">$50,000</span> Roobet Wager Leaderboard</h1>
   <p class="lead rv d2">Every wager you place on Roobet under code <b style="color:var(--gold)">ELITE</b> or <b style="color:var(--gold)">DAILY</b> pushes you up the monthly leaderboard. Top spots split $50,000 — every single month.</p>
   <div class="hero-cta rv d3" style="justify-content:center">
     <a class="btn btn-gold btn-lg pulse" href="{SLOTS}" target="_blank" rel="noopener">Join the Race {ARR}</a>
@@ -1627,7 +1669,7 @@ PAGES["roobet-rewards.html"] = dict(
     title="Roobet Rewards Explained — Rakeback, Vault & Bonuses",
     desc="The complete guide to Roobet rewards: instant rakeback every 30 minutes, daily, weekly and monthly bonuses, the Vault system, level-up bonuses and rakeboosts up to +20%.",
     kw="roobet rewards, roobet rakeback, roobet vault, roobet daily bonus, roobet weekly bonus, roobet monthly bonus, rakeboost",
-    schema={"@context":"https://schema.org","@type":"Article","headline":"Roobet Rewards Explained — Rakeback, Vault & Bonuses","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
+    schema={"@context":"https://schema.org","@type":"Article","headline":"Roobet Rewards Explained — Rakeback, Vault & Bonuses","datePublished":"2026-07-21","dateModified":"2026-11-12","image":SITE + "/assets/og-image.png","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
     body=f"""
 <section class="page-hero"><div class="wrap">
   {crumb("Roobet Rewards")}
@@ -1659,6 +1701,13 @@ PAGES["roobet-rewards.html"] = dict(
 <div class="cards c2" style="margin-top:40px">
   <div class="card rv"><div class="glow"></div><div class="ic">📈</div><h3>Level-Up Bonuses</h3><p>Wagering levels up your account, and every level-up pays a bonus — the higher the level, the bigger the bonus. <a href="/vip-transfer" style="color:var(--gold);font-weight:700">Transfer your VIP status</a> to start high.</p></div>
   <div class="card rv d1"><div class="glow"></div><div class="ic">⏰</div><h3>Claim on Time</h3><p>Unclaimed rewards expire when your next reward becomes available. Active players who claim on schedule extract every dollar the system offers.</p></div>
+</div>
+
+<div class="card rv" style="margin-top:34px">
+  <span class="eyebrow">Source &amp; verification</span>
+  <h2 style="margin-top:10px">Checked Against Roobet's Current Rewards Rules</h2>
+  <p style="color:var(--muted);margin-top:10px">The timings, Vault rules and Rakeboost triggers on this page were reviewed on 12 November 2026 against Roobet's official <a href="{ROOBET_REWARDS_SOURCE}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Rewards Explained</a> documentation. Roobet states that active Rakeboosts do not stack or queue: if more than one is running, only the highest percentage applies. Reward amounts can vary by account activity, game category and performance.</p>
+  <p style="color:var(--muted);margin-top:10px">Our $50,000 leaderboard, wager milestones, merch and community rewards are separate RoobetHub programs. Their current rules and live status are published on their own pages and in our <a href="/transparency" style="color:var(--gold);font-weight:700">transparency report</a>.</p>
 </div>
 </div></section>
 
@@ -2207,7 +2256,7 @@ PAGES["roobet-rewards-guide.html"] = dict(
     schema=[
         {"@context": "https://schema.org", "@type": "Article",
          "headline": "Roobet Rewards: The Complete 2026 Guide",
-         "datePublished": "2026-08-07", "dateModified": "2026-08-07",
+         "datePublished": "2026-08-07", "dateModified": "2026-11-12",
          "author": {"@type": "Organization", "name": "RoobetHub"},
          "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
@@ -2218,14 +2267,15 @@ PAGES["roobet-rewards-guide.html"] = dict(
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Roobet Rewards Guide</p>
-  <span class="eyebrow rv">💰 Guide · 7 min read</span>
+  <span class="eyebrow rv">💰 Guide · 8 min read · Reviewed 12 November 2026</span>
   <h1 class="rv d1">Roobet Rewards: <span class="grad">The Complete Guide</span></h1>
-  <p class="lead rv d2">Rakeback, cashback, deposit bonuses, the VIP program — and the $100,000 monthly package on top. Everything Roobet pays you, in one place. Updated August 2026.</p>
+  <p class="lead rv d2">Rakeback, cashback, deposit bonuses, the VIP program — and the $100,000 monthly package on top. Everything Roobet pays you, in one place, checked against Roobet's current help documentation.</p>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:860px">
   <h2 class="rv">Rakeback &amp; Cashback — Every 30 Minutes</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 30px">Roobet's cashback system is <b style="color:var(--text)">Instant Rakeback</b>: a slice of every wager comes back to you, claimable every 30 minutes, and it never expires. Part hits your balance instantly; part fills your Vault (3 claims a day, every 8 hours). Rakeboosts push it further — +10% on signup and rank-ups, +15% on vault calendar claims, and the big one: <b style="color:var(--gold)">+20% for 72 hours</b> when you redeem code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> or <a href="{ELITE}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a>. Full mechanics on our <a href="/roobet-rewards" style="color:var(--gold);font-weight:700">Roobet rewards system page</a>.</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 12px">Roobet's cashback system is <b style="color:var(--text)">Instant Rakeback</b>: a slice of every wager comes back to you, claimable every 30 minutes, and it never expires. Part hits your balance instantly; part fills your Vault (3 claims a day, every 8 hours). Rakeboosts push it further — +10% on signup and rank-ups, +15% on vault calendar claims, and the big one: <b style="color:var(--gold)">+20% for 72 hours</b> when you redeem code <a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> or <a href="{ELITE}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">ELITE</a>. Full mechanics on our <a href="/roobet-rewards" style="color:var(--gold);font-weight:700">Roobet rewards system page</a>.</p>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px"><b style="color:var(--text)">Important:</b> active Rakeboosts do not stack or queue. Roobet says only the highest active percentage applies. Source: <a href="{ROOBET_REWARDS_SOURCE}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet Rewards Explained</a>, reviewed 12 November 2026.</p>
 
   <h2 class="rv">The Roobet Deposit Bonus</h2>
   <p class="rv" style="color:var(--muted);margin:12px 0 20px">Under code DAILY the <a href="/free-spins" style="color:var(--gold);font-weight:700">Roobet deposit bonus</a> comes in two parts: a match on your deposit, then free spins that unlock as your all-time wager climbs:</p>
@@ -2962,6 +3012,149 @@ PAGES["youtube.html"] = dict(
 {cta_banner("Play the Same Slots", "Join Roobet with code DAILY and every spin counts toward the $50K leaderboard and your milestones.")}
 """)
 
+# ================= TRUST & PUBLISHER PAGES =================
+PAGES["about.html"] = dict(
+    title="About RoobetHub — Who We Are & How Our Rewards Work",
+    desc="Meet the DailyGambling team behind RoobetHub, learn how our Roobet rewards are funded and tracked, and see how we verify guides before publishing.",
+    kw="about roobethub, dailygambling roobet, roobet rewards team, roobet code daily",
+    schema={"@context":"https://schema.org","@type":"AboutPage"},
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  {crumb("About RoobetHub")}
+  <span class="eyebrow rv">Independent rewards hub &middot; Built by players</span>
+  <h1 class="rv d1">About <span class="grad">RoobetHub</span></h1>
+  <p class="lead rv d2">RoobetHub is the DailyGambling team's independent home for Roobet reward guides, live community programs and practical account help.</p>
+</div></section>
+
+<section style="padding-top:18px"><div class="wrap" style="max-width:960px">
+  <div class="cards c2">
+    <div class="card rv"><div class="glow"></div><div class="ic">&#127942;</div><h2 style="font-size:1.35rem">What we operate</h2><p>We publish the live $50,000 wager leaderboard, monthly wager milestones, ELITE Points, Max Win Merch, slot challenges, community giveaways and limited promotions available to eligible players using code DAILY or ELITE.</p></div>
+    <div class="card rv d1"><div class="glow"></div><div class="ic">&#128214;</div><h2 style="font-size:1.35rem">What we explain</h2><p>Our guides cover Roobet's own rewards system, deposits, withdrawals, verification, account security, restricted regions and the practical questions players ask before risking money.</p></div>
+  </div>
+
+  <h2 class="rv" style="margin-top:56px">RoobetHub Is Independent</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">RoobetHub is not Roobet and does not operate the Roobet casino. We are an independent affiliate publisher and rewards community. Roobet controls casino accounts, identity checks, deposits, withdrawals, game availability and its native reward system. Our team controls only the additional RoobetHub programs described on this site.</p>
+
+  <h2 class="rv" style="margin-top:42px">Why This Site Exists</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">Players should be able to see the actual reward ladder, current standings, claim instructions and important limitations before joining a code. That is why the leaderboard is pulled from the affiliate data feed, why payout totals are documented in our <a href="/transparency" style="color:var(--gold);font-weight:700">transparency report</a>, and why important Roobet facts link back to official documentation.</p>
+
+  <h2 class="rv" style="margin-top:42px">The Team Behind RoobetHub</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">The RoobetHub Editorial Team works with DailyGambling's streaming and VIP teams. The editorial side checks sources and maintains guides; the community side runs the leaderboard, promotions and reward claims; and the VIP team helps eligible members through Telegram and Discord. DailyGambling's sessions and reward activity can be followed on <a href="{KICK}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Kick</a> and <a href="{YOUTUBE}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">YouTube</a>.</p>
+
+  <div class="card rv" style="margin-top:42px"><span class="eyebrow">Questions or corrections?</span><h2 style="margin-top:10px">Talk to a real person</h2><p style="color:var(--muted);margin-top:10px">Use our <a href="/contact" style="color:var(--gold);font-weight:700">contact page</a> for reward help, a correction, or a question about how a claim is handled. For casino-account decisions such as KYC approval or a withdrawal review, contact Roobet's official support directly.</p></div>
+</div></section>
+""")
+
+PAGES["editorial-policy.html"] = dict(
+    title="RoobetHub Editorial Policy — Sources, Reviews & Corrections",
+    desc="How RoobetHub verifies casino information, separates Roobet facts from community offers, dates updates, handles corrections and protects editorial accuracy.",
+    kw="roobethub editorial policy, roobet guide sources, roobet rewards verification",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  {crumb("Editorial Policy")}
+  <span class="eyebrow rv">Last reviewed 12 November 2026</span>
+  <h1 class="rv d1">Our <span class="grad">Editorial Policy</span></h1>
+  <p class="lead rv d2">Every important claim should tell you what is official, what is first-party RoobetHub data, and when it was last checked.</p>
+</div></section>
+
+<section style="padding-top:18px"><div class="wrap" style="max-width:900px">
+  <h2 class="rv">Our Source Order</h2>
+  <div class="cards c2" style="margin-top:20px">
+    <div class="card rv"><div class="ic">1</div><h3>Official Roobet documentation</h3><p>Roobet's Help Center and account interface are the primary sources for native rewards, KYC, security, deposits, withdrawals and regional access.</p></div>
+    <div class="card rv d1"><div class="ic">2</div><h3>Live first-party data</h3><p>Leaderboard standings come from our Roobet affiliate feed. RoobetHub payout and promotion records come from the team operating those programs.</p></div>
+    <div class="card rv"><div class="ic">3</div><h3>Provider documentation</h3><p>Game rules, RTP configurations and maximum wins should come from the developer or the in-game information panel, not copied affiliate claims.</p></div>
+    <div class="card rv d1"><div class="ic">4</div><h3>Hands-on verification</h3><p>We use current screens and team experience to clarify steps, but never present an observation as a universal casino rule.</p></div>
+  </div>
+
+  <h2 class="rv" style="margin-top:52px">How Reviews and Updates Work</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">The editor checks time-sensitive facts against a current primary source, adds a visible review date to guide pages, and updates structured data and the sitemap only when the page materially changes. We do not change a date merely to make an old page appear fresh. Reward amounts, promotion windows and casino rules can change; a live account or official support always controls if it conflicts with an older article.</p>
+
+  <h2 class="rv" style="margin-top:42px">Official Rewards vs. RoobetHub Rewards</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">Roobet's Instant Rakeback, Vault, daily, weekly and monthly rewards are native casino features. The RoobetHub leaderboard, wager milestones, merchandise, ELITE Points and community promotions are separate affiliate-community programs. We label and source them separately so readers are not led to think an affiliate offer is guaranteed by the casino.</p>
+
+  <h2 class="rv" style="margin-top:42px">Affiliate Relationships Do Not Buy Conclusions</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">RoobetHub can earn commission when an eligible player uses one of our tracked links or codes. That relationship funds the site and community rewards, but it does not change the source hierarchy above. Limitations, eligibility conditions and risks belong beside the benefit, not hidden after the call to action. Read the complete <a href="/affiliate-disclosure" style="color:var(--gold);font-weight:700">affiliate disclosure</a>.</p>
+
+  <h2 class="rv" style="margin-top:42px">Corrections</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">If a fact is wrong or outdated, send the page URL and supporting source through our <a href="/contact" style="color:var(--gold);font-weight:700">contact page</a>. Material errors are corrected in the page copy, visible review date, structured data and sitemap. We do not silently leave a known error in place because it ranks.</p>
+
+  <div class="card rv" style="margin-top:42px"><span class="eyebrow">Current primary references</span><p style="color:var(--muted);margin-top:10px"><a href="{ROOBET_REWARDS_SOURCE}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet: Rewards Explained</a> &middot; <a href="{ROOBET_PROMO_SOURCE}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet: Promo Codes Explained</a> &middot; <a href="https://help.roobet.com/en/" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet Help Center</a></p></div>
+</div></section>
+""")
+
+PAGES["affiliate-disclosure.html"] = dict(
+    title="RoobetHub Affiliate Disclosure — How Codes DAILY & ELITE Work",
+    desc="RoobetHub is an independent affiliate site. Learn how tracked links and codes DAILY and ELITE support the site and which rewards are separate from Roobet.",
+    kw="roobethub affiliate disclosure, roobet code daily, roobet code elite",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  {crumb("Affiliate Disclosure")}
+  <span class="eyebrow rv">Plain-language disclosure</span>
+  <h1 class="rv d1">Affiliate <span class="grad">Disclosure</span></h1>
+  <p class="lead rv d2">RoobetHub is independent from Roobet and can earn commission when eligible users join or play through our tracked links and codes.</p>
+</div></section>
+
+<section style="padding-top:18px"><div class="wrap" style="max-width:860px">
+  <h2 class="rv">How RoobetHub Is Funded</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">Links marked with code DAILY or ELITE are affiliate links. If an eligible player uses one, Roobet can attribute that account's activity to our community and pay us a commission. There is no separate charge added to the player's deposit or wager for using the tracked link.</p>
+
+  <h2 class="rv" style="margin-top:42px">What the Relationship Means</h2>
+  <div class="cards c2" style="margin-top:20px">
+    <div class="card rv"><div class="ic">&#10003;</div><h3>We run the extra programs</h3><p>Leaderboard prizes, wager milestones, ELITE Points, merch and community promotions are funded and administered through the RoobetHub/DailyGambling affiliate community unless a page explicitly says otherwise.</p></div>
+    <div class="card rv d1"><div class="ic">&#10007;</div><h3>We do not control accounts</h3><p>Roobet alone handles balances, game results, KYC decisions, restrictions, deposits and withdrawals. Our team cannot approve or override those decisions.</p></div>
+  </div>
+
+  <h2 class="rv" style="margin-top:42px">Offers and Eligibility Can Change</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">A reward is not guaranteed merely because a link appears on this site. Age, country, account status, code attribution, wagering, promotion dates and other terms can affect eligibility. Read the current page terms and confirm the offer in your account before depositing or playing.</p>
+
+  <h2 class="rv" style="margin-top:42px">Our Linking Standard</h2>
+  <p class="rv" style="color:var(--muted);margin-top:12px">Commercial outbound links are marked <code>rel=&quot;sponsored nofollow&quot;</code> in the page code. Editorial source links point to the relevant documentation without affiliate tracking. Our <a href="/editorial-policy" style="color:var(--gold);font-weight:700">editorial policy</a> explains how facts and corrections are handled independently of conversion value.</p>
+
+  <div class="card rv" style="margin-top:42px"><h2>Play only if it stays entertainment</h2><p style="color:var(--muted);margin-top:10px">An affiliate reward never improves the house edge or makes gambling a source of income. Set a hard budget, do not chase losses, and use our <a href="/responsible-gambling" style="color:var(--gold);font-weight:700">responsible gambling resources</a> if play stops feeling controlled.</p></div>
+</div></section>
+""")
+
+PAGES["responsible-gambling.html"] = dict(
+    title="Responsible Gambling Help & Safer Play Resources | RoobetHub",
+    desc="Practical safer-gambling steps, warning signs and independent support resources for RoobetHub visitors. Gambling is 18+ and never a way to make money.",
+    kw="responsible gambling help, safer gambling resources, problem gambling support",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  {crumb("Responsible Gambling")}
+  <span class="eyebrow rv">18+ &middot; Support is available</span>
+  <h1 class="rv d1">Keep Gambling <span class="grad">Controlled</span></h1>
+  <p class="lead rv d2">Gambling is paid entertainment with a real risk of loss. Rewards, rakeback and leaderboards do not remove the house edge.</p>
+</div></section>
+
+<section style="padding-top:18px"><div class="wrap" style="max-width:900px">
+  <div class="cards c3">
+    <div class="card rv"><div class="ic">&#128176;</div><h3>Set the loss limit first</h3><p>Choose an amount you can afford to lose before starting. Do not increase it because a session is going badly.</p></div>
+    <div class="card rv d1"><div class="ic">&#9201;</div><h3>Set a time limit</h3><p>Take breaks and stop at the planned time. Long sessions make it harder to judge risk clearly.</p></div>
+    <div class="card rv d2"><div class="ic">&#128683;</div><h3>Never chase losses</h3><p>A larger bet does not make a previous loss more likely to return. Every wager carries new risk.</p></div>
+  </div>
+
+  <h2 class="rv" style="margin-top:52px">Signs It Is Time to Stop</h2>
+  <ul class="rv" style="color:var(--muted);margin:16px 0 0 22px;line-height:1.9">
+    <li>Borrowing money, using bill money or hiding spending</li>
+    <li>Trying to win losses back by increasing bets or session length</li>
+    <li>Feeling anxious, angry or unable to stop when planned</li>
+    <li>Gambling interfering with sleep, work, relationships or health</li>
+    <li>Seeing rewards or leaderboard position as a reason to exceed your budget</li>
+  </ul>
+  <p class="rv" style="color:var(--muted);margin-top:18px">If any of these feel familiar, stop gambling now, contact the operator to ask about limits or self-exclusion, and talk to an independent support service. Our affiliate or VIP team cannot provide treatment or override casino safeguards.</p>
+
+  <h2 class="rv" style="margin-top:42px">Independent Help</h2>
+  <div class="cards c2" style="margin-top:20px">
+    <a class="card rv" href="https://www.ncpgambling.org/help-treatment/" target="_blank" rel="noopener"><div class="ic">&#127482;&#127480;</div><h3>United States</h3><p>The National Problem Gambling Helpline connects people to support across every state and U.S. territory. Call or text 1-800-MY-RESET, or use its online chat.</p><span class="more">NCPG help and treatment {ARR}</span></a>
+    <a class="card rv d1" href="https://www.gamcare.org.uk/get-support/" target="_blank" rel="noopener"><div class="ic">&#127468;&#127463;</div><h3>United Kingdom</h3><p>GamCare provides information and support services for people affected by gambling harms in Great Britain.</p><span class="more">Find GamCare support {ARR}</span></a>
+    <a class="card rv" href="https://gamblingtherapy.org/" target="_blank" rel="noopener"><div class="ic">&#127758;</div><h3>International support</h3><p>Gambling Therapy offers online information and support for people affected by gambling-related harm around the world.</p><span class="more">Visit Gambling Therapy {ARR}</span></a>
+    <a class="card rv d1" href="https://help.roobet.com/en/" target="_blank" rel="noopener"><div class="ic">&#128274;</div><h3>Account controls</h3><p>Contact Roobet's official Help Center for the limits, breaks or self-exclusion options available on your account.</p><span class="more">Roobet Help Center {ARR}</span></a>
+  </div>
+
+  <div class="card rv" style="margin-top:42px;border-color:rgba(255,199,0,.5)"><h2>If there is immediate danger</h2><p style="color:var(--muted);margin-top:10px">Problem-gambling services are not emergency responders. If you or someone else is in immediate danger, contact local emergency services or a crisis service in your country now.</p></div>
+</div></section>
+""")
+
 # ================= WRITE FILES =================
 import re
 def post(s):
@@ -3053,8 +3246,8 @@ PAGE_FAQS = {
   "Instant rakeback is claimable every 30 minutes and never expires. Part is credited to your balance immediately and part goes to your vault, which unlocks three claims per day."),
  ("What is the Roobet Vault?",
   "The Vault is where a portion of your instant rakeback accumulates instead of going straight to your balance. It unlocks three claims per day, so checking in regularly is worth more than letting it build."),
- ("Do Roobet rakeboosts stack with each other?",
-  "Rakeboosts multiply the rakeback you earn while active — up to +20% from redeeming an affiliate code, plus +10% on signup, rank-ups, and daily and weekly claims. Running several at once is how players maximise what comes back."),
+  ("Do Roobet rakeboosts stack with each other?",
+   "No. Roobet says Rakeboosts do not stack or queue. If several are active at the same time, they run in parallel but only the highest percentage applies to your Instant Rakeback claim."),
  ("How does the Roobet rank system work?",
   "Ranks rise with your total wagered amount, and each rank-up increases your rakeback percentage and bonus sizes. Every rank-up also triggers a +10% rakeboost for 60 minutes."),
 ],
@@ -3145,12 +3338,27 @@ for fname, p in PAGES.items():
 
 # sitemap
 urls = [SITE + "/"] + [SITE + "/" + f[:-5] for f in PAGES if f != "index.html"]
+# bump a page's date ONLY when its content really changed
 lastmods = {
-    f"{SITE}/blog": "2026-10-07",
+    f"{SITE}/": "2026-11-05",
+    f"{SITE}/blog": "2026-11-06",
+    f"{SITE}/how-to-withdraw-on-roobet": "2026-11-06",
+    f"{SITE}/how-to-kyc-on-roobet": "2026-11-05",
+    f"{SITE}/transparency": "2026-11-06",
+    f"{SITE}/free-spins": "2026-11-05",
+    f"{SITE}/roobet-deposit-bonus-free-spins": "2026-11-05",
+    f"{SITE}/how-to-deposit-on-roobet": "2026-11-05",
+    f"{SITE}/exclusive-promotions": "2026-11-05",
     f"{SITE}/roobet-wagering-requirements": "2026-10-07",
     f"{SITE}/how-to-enable-roobet-2fa": "2026-10-07",
     f"{SITE}/roobet-restricted-countries": "2026-10-07",
-    f"{SITE}/roobet-deposit-bonus-free-spins": "2026-09-17",
+    f"{SITE}/leaderboard": "2026-11-12",
+    f"{SITE}/roobet-rewards": "2026-11-12",
+    f"{SITE}/roobet-rewards-guide": "2026-11-12",
+    f"{SITE}/about": "2026-11-12",
+    f"{SITE}/editorial-policy": "2026-11-12",
+    f"{SITE}/affiliate-disclosure": "2026-11-12",
+    f"{SITE}/responsible-gambling": "2026-11-12",
 }
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
