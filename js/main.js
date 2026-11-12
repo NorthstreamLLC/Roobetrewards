@@ -560,31 +560,45 @@ document.querySelectorAll('.flip').forEach(c => {
     .catch(() => { /* built-in values stand */ });
 })();
 
-// ===== transparency report: rolling given-away counter =====
+// ===== rolling "paid to players" counters ([data-roll]) =====
 // base (tallied at `since`) + rate per month, advanced continuously.
 (function () {
-  const el = document.getElementById('tr-given');
-  if (!el) return;
-  const base = parseFloat(el.dataset.base) || 0;
-  const rate = parseFloat(el.dataset.rate) || 0;
-  const since = Date.parse(el.dataset.since) || Date.now();
-  const perMs = rate / (30.436875 * 86400000);       // average month length
-  const fmt = n => '$' + Math.floor(n).toLocaleString('en-US');
-  const now = () => base + Math.max(0, Date.now() - since) * perMs;
-
-  // roll up from ~97% on first view, then keep climbing
-  const target = now(), start = target * 0.97, dur = 1600, t0 = performance.now();
+  const els = document.querySelectorAll('[data-roll]');
+  if (!els.length) return;
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function intro(ts) {
-    const p = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-    el.textContent = fmt(start + (now() - start) * e);
-    if (p < 1) requestAnimationFrame(intro); else tick();
-  }
-  function tick() {
-    el.textContent = fmt(now());
-    setTimeout(tick, 1000);
-  }
-  if (reduce) tick(); else requestAnimationFrame(intro);
+  const fmt = n => '$' + Math.floor(n).toLocaleString('en-US');
+  els.forEach(el => {
+    const base = parseFloat(el.dataset.base) || 0;
+    const rate = parseFloat(el.dataset.rate) || 0;
+    const since = Date.parse(el.dataset.since) || Date.now();
+    const perMs = rate / (30.436875 * 86400000);       // average month length
+    const now = () => base + Math.max(0, Date.now() - since) * perMs;
+    const tick = () => { el.textContent = fmt(now()); setTimeout(tick, 1000); };
+    if (reduce) return tick();
+    // roll up from ~97% on first view, then keep climbing
+    const start = now() * 0.97, dur = 1600, t0 = performance.now();
+    (function intro(ts) {
+      const p = Math.min(1, ((ts || t0) - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(start + (now() - start) * e);
+      if (p < 1) requestAnimationFrame(intro); else tick();
+    })(t0);
+  });
+})();
+
+// ===== homepage hero: live top 3 (names only; prizes are fixed) =====
+(function () {
+  const slots = document.querySelectorAll('[data-hero-pod]');
+  if (!slots.length) return;
+  fetch('/api/leaderboard')
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => {
+      if (!d || !Array.isArray(d.entries)) return;
+      d.entries.forEach(e => {
+        const el = document.querySelector('[data-hero-pod="' + e.rank + '"]');
+        if (el && e.username) el.textContent = e.username;
+      });
+    })
+    .catch(() => { /* build-time snapshot stays */ });
 })();
 
 // ===== transparency report: live aggregate figures =====
@@ -1316,4 +1330,17 @@ document.querySelectorAll('.flip').forEach(c => {
     .catch(() => {
       grid.innerHTML = '<a class="card" href="https://kick.com/dailygambling/clips" target="_blank" rel="noopener" style="grid-column:1/-1;text-align:center"><div class="ic" style="margin:0 auto 12px">🎬</div><h3>Clips live on Kick</h3><p>Browse every max win, bonus buy and giveaway moment on the Kick channel.</p></a>';
     });
+})();
+
+// ===== click-to-copy codes ([data-copy]) =====
+(function () {
+  document.querySelectorAll('[data-copy]').forEach(el => {
+    el.addEventListener('click', () => {
+      const code = el.dataset.copy, done = () => {
+        el.classList.add('copied');
+        setTimeout(() => el.classList.remove('copied'), 1400);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(code).then(done, done); else done();
+    });
+  });
 })();

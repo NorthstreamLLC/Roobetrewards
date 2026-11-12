@@ -783,7 +783,7 @@ faq_items = [
     ("How does the $50,000 Wager Leaderboard work?",
      "Every dollar you wager on Roobet under code ELITE or DAILY earns you a spot on the monthly leaderboard. The top wagerers split $50,000 in prizes each month — climb the ranks for cash prizes, free spins and redeemable points."),
     ("Is there a Roobet sign-up bonus?",
-     "Yes — new players joining with code ELITE or DAILY get a +10% welcome rakeboost for 24 hours, access to exclusive free spins packages, and instant entry into all monthly reward programs, on top of Roobet's instant rakeback claimable every 30 minutes."),
+     "Yes — new players joining with code DAILY get a one-time 20% deposit match up to $500 with no wagering requirement on the match, then 100 free spins at $10,000 wagered and 500 free spins at $50,000 wagered. You also go straight into every monthly reward program, on top of Roobet's instant rakeback claimable every 30 minutes."),
     ("How does the Community Raffle work?",
      "The Community Raffle is free to enter for active players — sign in with your Kick account on the raffle page and you're entered in one click, one entry per account, and winners are drawn live on stream. Stay active by watching DailyGambling on Kick, wagering under code DAILY or ELITE on Roobet, and taking part in the community, and you'll also earn ELITE Points redeemable for real prizes."),
     ("What is Roobet rakeback and how often can I claim it?",
@@ -849,6 +849,69 @@ TICKER = f"""<div class="ticker" aria-hidden="true"><div class="ticker-track">
   <span>&#127942; <b>$50,000</b> wager leaderboard &mdash; live now</span><span>&#127920; <b>20% deposit match</b> + up to <b>500 free spins</b> at $2</span><span>&#127919; Claim up to <b>$11,350</b> in wager milestones</span><span>&#128085; Free <b>max win merch</b> &mdash; 16 exclusive designs</span><span>&#128142; <b>VIP transfer</b> from any casino</span>{raffle_tick}<span>&#128176; Rakeback every <b>30 minutes</b></span>
 </div></div>"""
 
+
+#   given_away_base/rate/since: the headline rolls up in the browser from the
+#   tallied base at `since`, at `rate` dollars per month. Re-tally: set a new
+#   base + since date.
+TRANSPARENCY = dict(
+    given_away="$2,304,492",
+    given_away_base=2304492,
+    given_away_rate=105926,              # dollars per month
+    given_away_since="2026-11-06T00:00:00Z",
+    given_away_since_label="6 November 2026",
+    given_away_note="Paid to players since launch &middot; rising with our ~$105,926 monthly average",
+    milestones_paid="$131,640",          # "" falls back to showing the fixed pool
+    milestones_exact="$131,640.50",
+    milestones_note="Paid out in milestone bonuses",
+    milestones_period="the last 8 months",   # stated in the methodology, not on the tile
+    # shirts shipped before the on-site claim system existed. Claims verified
+    # through the new form are added on top of this automatically.
+    merch_baseline=27,
+)
+
+# streamer avatar: drop a square image at assets/dailygambling-avatar.webp and it appears
+_av = "assets/dailygambling-avatar.webp"
+_av_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), _av)
+hero_avatar = (f'<div class="hb-av rv"><img src="/{_av}" alt="DailyGambling" width="200" height="200" fetchpriority="high" decoding="async"></div>'
+               if os.path.exists(_av_path) else
+               # fallback until the streamer photo exists: Roobet chip in the ring
+               '<div class="hb-av hb-av-chip rv"><img src="/assets/roobet-chip-256.webp" alt="Roobet" width="256" height="256" fetchpriority="high" decoding="async"></div>')
+
+# ---- homepage hero: live data panel (replaces the stock render) ----
+# Top 3 are seeded from the leaderboard snapshot at build time, then refreshed
+# from /api/leaderboard in the browser. Shows prizes, never wager amounts.
+HERO_POD_PRIZES = ["$12,500", "$7,000", "$5,000"]
+def hero_live_panel():
+    try:
+        seed = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "leaderboard-data.json"), encoding="utf-8")).get("entries", [])
+    except Exception:
+        seed = []
+    names = {e.get("rank"): e.get("username", "") for e in seed}
+    rows = "".join(
+        f'<li class="hl-row"><span class="hl-rank">{r}</span>'
+        f'<span class="hl-name" data-hero-pod="{r}">{names.get(r) or "&mdash;"}</span>'
+        f'<b class="hl-prize">{HERO_POD_PRIZES[r-1]}</b></li>'
+        for r in (1, 2, 3))
+    T = TRANSPARENCY
+    return f"""<aside class="hero-live rv d2" aria-label="Roobet rewards on code DAILY">
+      <div class="hl-sec">
+        <div class="hl-top"><h2 class="hl-h">$50,000 Leaderboard</h2><span class="hl-cd">Ends in <b data-deadline="period16" aria-live="off">&mdash;</b></span></div>
+        <ol class="hl-pod">{rows}</ol>
+        <a class="hl-link" href="/leaderboard">Full standings &middot; top 100 paid</a>
+      </div>
+      <div class="hl-sec">
+        <div class="hl-top"><h2 class="hl-h">Welcome Bonus</h2><span class="hl-tag">New players &middot; no wagering</span></div>
+        <p class="hl-big">20% match <span>up to $500</span> + <span>up to 500 free spins</span></p>
+        <ol class="hl-pod hl-spins">
+          <li class="hl-row"><span class="hl-rank">&#10003;</span><span class="hl-name">20% deposit match, no wagering</span><b class="hl-prize">$500 max</b></li>
+          <li class="hl-row"><span class="hl-rank">&#10003;</span><span class="hl-name">At $10,000 wagered</span><b class="hl-prize">100 spins</b></li>
+          <li class="hl-row"><span class="hl-rank">&#10003;</span><span class="hl-name">At $50,000 wagered</span><b class="hl-prize">500 spins</b></li>
+        </ol>
+        <a class="hl-link" href="/free-spins">How the welcome bonus works</a>
+      </div>
+      <a class="hl-paid" href="/transparency"><span>Paid to players</span><b data-roll data-base="{T['given_away_base']}" data-rate="{T['given_away_rate']}" data-since="{T['given_away_since']}" aria-live="off">{T['given_away']}</b></a>
+    </aside>"""
+
 PAGES["index.html"] = dict(
     # Targets "roobet casino rewards" (exact-match domain, winnable) rather than the
     # bare head term "roobet rewards", which roobet.com/rewards owns outright.
@@ -857,24 +920,20 @@ PAGES["index.html"] = dict(
     kw="roobet casino rewards, roobet rewards, roobet code daily, roobet wager leaderboard, roobet max win merch, roobet vip transfer, roobet free spins",
     schema=faq_schema,
     body=f"""
-<section class="hero">
+<section class="hero hero-brand">
   {HERO_BD}
-  <div class="hero-inner hero-split">
-    <div class="hero-copy">
-      <span class="eyebrow rv">The #1 Roobet Rewards Hub</span>
-      <h1 class="rv d1"><span class="grad" data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Roobet Casino Rewards.<br>Every Single Month.</h1>
-      <p class="lead rv d2">Roobet casino rewards on code <b style="color:var(--gold)">DAILY</b> stack on top of everything Roobet already gives you: a $50,000 wager leaderboard, $11,350 in wager milestones, exclusive free spins, free max win merch, VIP status transfer and a free-to-enter community raffle &mdash; over $100,000 paid out every month.</p>
-      {hero_urgency}
-      <div class="hero-cta rv d3">
-        <a class="btn btn-gold btn-lg pulse" href="{DAILY}" rel="nofollow sponsored" target="_blank">Sign up with DAILY</a>
-        <a class="btn btn-ghost btn-lg" href="{KYC}" target="_blank" rel="noopener">How to KYC on Roobet</a>
-      </div>
-      {hero_free}
+  <div class="hero-inner hb-inner">
+    {hero_avatar}
+    <h1 class="hb-h1 rv d1"><span class="hb-kick">DailyGambling &times; Roobet</span><span class="hb-word">Rewards</span></h1>
+    <p class="hb-line rv d2"><span data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Roobet casino rewards every month.</p>
+    <p class="hb-sub rv d2">All under code <button class="hb-code" type="button" data-copy="DAILY" aria-label="Copy code DAILY">DAILY</button> on Roobet.</p>
+    <div class="hero-cta hb-cta rv d3">
+      <a class="btn btn-gold btn-lg" href="{DAILY}" rel="nofollow sponsored" target="_blank">Claim Rewards</a>
+      <a class="btn btn-ghost btn-lg" href="/leaderboard">Leaderboard</a>
     </div>
-    <figure class="hero-visual rv d2">
-      <img src="/assets/roobethub-rewards-cutout-v1.webp" alt="Roobet-branded reward token with trophy, VIP diamond, merchandise and prizes" width="1200" height="800" fetchpriority="high" decoding="async">
-    </figure>
+    <div class="hb-partner rv d3"><span class="hb-pl">Partnered with</span><a class="hb-logo" href="{DAILY}" rel="nofollow sponsored" target="_blank"><img src="/assets/roobet-wordmark-trim.webp" alt="Roobet" width="369" height="96" decoding="async"></a></div>
   </div>
+  <div class="hb-panel-wrap">{hero_live_panel()}</div>
 </section>
 
 <section id="rewards" style="padding-top:6px"><div class="wrap">
@@ -1926,24 +1985,6 @@ PAGES["exclusive-promotions.html"] = dict(
 # shown here is either a fixed commitment or something already paid out.
 #   given_away        : headline all-time figure
 #   milestones_monthly: set once you have the number, e.g. "$8,400" ("" hides the tile)
-#   given_away_base/rate/since: the headline rolls up in the browser from the
-#   tallied base at `since`, at `rate` dollars per month. Re-tally: set a new
-#   base + since date.
-TRANSPARENCY = dict(
-    given_away="$2,304,492",
-    given_away_base=2304492,
-    given_away_rate=105926,              # dollars per month
-    given_away_since="2026-11-06T00:00:00Z",
-    given_away_since_label="6 November 2026",
-    given_away_note="Paid to players since launch &middot; rising with our ~$105,926 monthly average",
-    milestones_paid="$131,640",          # "" falls back to showing the fixed pool
-    milestones_exact="$131,640.50",
-    milestones_note="Paid out in milestone bonuses",
-    milestones_period="the last 8 months",   # stated in the methodology, not on the tile
-    # shirts shipped before the on-site claim system existed. Claims verified
-    # through the new form are added on top of this automatically.
-    merch_baseline=27,
-)
 payout_ledger = "".join(payout_row(p) for p in PAYOUTS)
 
 _tr_milestone_tile = (f"""
@@ -1976,7 +2017,7 @@ PAGES["transparency.html"] = dict(
 <section style="padding-top:6px"><div class="wrap">
   <div class="tr-hero rv">
     <span class="trh-l">Given away to players</span>
-    <b class="trh-v" id="tr-given" data-base="{TRANSPARENCY['given_away_base']}" data-rate="{TRANSPARENCY['given_away_rate']}" data-since="{TRANSPARENCY['given_away_since']}">{TRANSPARENCY['given_away']}</b>
+    <b class="trh-v" id="tr-given" data-roll data-base="{TRANSPARENCY['given_away_base']}" data-rate="{TRANSPARENCY['given_away_rate']}" data-since="{TRANSPARENCY['given_away_since']}">{TRANSPARENCY['given_away']}</b>
     <span class="trh-n">{TRANSPARENCY['given_away_note']}</span>
   </div>
   <div class="tr-grid rv" id="tr-stats">
