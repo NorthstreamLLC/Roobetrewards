@@ -869,14 +869,6 @@ TRANSPARENCY = dict(
     merch_baseline=27,
 )
 
-# streamer avatar: drop a square image at assets/dailygambling-avatar.webp and it appears
-_av = "assets/dailygambling-avatar.webp"
-_av_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), _av)
-hero_avatar = (f'<div class="hb-av rv"><img src="/{_av}" alt="DailyGambling" width="200" height="200" fetchpriority="high" decoding="async"></div>'
-               if os.path.exists(_av_path) else
-               # fallback until the streamer photo exists: Roobet chip in the ring
-               '<div class="hb-av hb-av-chip rv"><img src="/assets/roobet-chip-256.webp" alt="Roobet" width="256" height="256" fetchpriority="high" decoding="async"></div>')
-
 # ---- homepage hero: live data panel (replaces the stock render) ----
 # Top 3 are seeded from the leaderboard snapshot at build time, then refreshed
 # from /api/leaderboard in the browser. Shows prizes, never wager amounts.
@@ -923,15 +915,13 @@ PAGES["index.html"] = dict(
 <section class="hero hero-brand">
   {HERO_BD}
   <div class="hero-inner hb-inner">
-    {hero_avatar}
-    <h1 class="hb-h1 rv d1"><span class="hb-kick">DailyGambling &times; Roobet</span><span class="hb-word">Rewards</span></h1>
-    <p class="hb-line rv d2"><span data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Roobet casino rewards every month.</p>
-    <p class="hb-sub rv d2">All under code <button class="hb-code" type="button" data-copy="DAILY" aria-label="Copy code DAILY">DAILY</button> on Roobet.</p>
+    <img class="hb-mark rv" src="/assets/roobet-wordmark-trim.webp" alt="" width="369" height="96" fetchpriority="high" decoding="async">
+    <h1 class="hb-h1 rv d1"><span class="hb-amt" data-count="100000" data-prefix="$" data-suffix="+" aria-live="off">$100,000+</span> in Roobet casino rewards, every month.</h1>
+    <p class="hb-sub rv d2">Leaderboard cash, wager milestones and a welcome bonus with free spins &mdash; all under code <button class="hb-code" type="button" data-copy="DAILY" aria-label="Copy code DAILY">DAILY</button>.</p>
     <div class="hero-cta hb-cta rv d3">
       <a class="btn btn-gold btn-lg" href="{DAILY}" rel="nofollow sponsored" target="_blank">Claim Rewards</a>
       <a class="btn btn-ghost btn-lg" href="/leaderboard">Leaderboard</a>
     </div>
-    <div class="hb-partner rv d3"><span class="hb-pl">Partnered with</span><a class="hb-logo" href="{DAILY}" rel="nofollow sponsored" target="_blank"><img src="/assets/roobet-wordmark-trim.webp" alt="Roobet" width="369" height="96" decoding="async"></a></div>
   </div>
   <div class="hb-panel-wrap">{hero_live_panel()}</div>
 </section>
