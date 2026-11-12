@@ -693,9 +693,9 @@ past_html = "".join(promo_card(p, expired=True) for p in PAST_PROMOS)
 PAYOUTS = [
     ("32 viewers", "Live stream giveaway", "$10,000", "Nov 2026", "cash"),
     ("Top 100 players", "$50K monthly leaderboard, 1st&ndash;100th paid", "$50,000 / mo", "Every month", "cash"),
-    ("~100 players a month", "Wager milestone bonuses &middot; $8K&ndash;$10K in a typical month, far more in big ones", "$131,640", "Last 8 months", "bonus"),
-    ("Code DAILY players", "Halloween Airdrop payout", "$29,433.71", "Oct 2026", "cash"),
-    ("Code DAILY players", "Roobet Airdrop, previous cycle", "$28,243", "Previous cycle", "cash"),
+    ("~100 players", "Wager milestone bonuses, last 8 months combined", "$131,640", "Mar&ndash;Oct 2026", "bonus"),
+    ("Code DAILY", "Halloween Airdrop payout", "$29,433.71", "Oct 2026", "cash"),
+    ("Code DAILY", "Roobet Airdrop, previous cycle", "$28,243", "Previous cycle", "cash"),
     ("Mrt****", "1st place, monthly leaderboard", "$12,500", "Sep 2026", "cash"),
     ("Spi****", "2nd place, monthly leaderboard", "$7,000", "Sep 2026", "cash"),
     ("Mar****", "3rd place, monthly leaderboard", "$5,000", "Sep 2026", "cash"),
@@ -923,15 +923,7 @@ PAGES["index.html"] = dict(
       <a class="btn btn-ghost btn-lg" href="/leaderboard">Leaderboard</a>
     </div>
   </div>
-  <div class="hb-panel-wrap">{hero_live_panel()}</div>
-</section>
-
-<section id="rewards" style="padding-top:6px"><div class="wrap">
-  <div class="sec-head rv">
-    <div><span class="eyebrow">Our Rewards</span><h2>Earn More</h2></div>
-    <p class="lead">Two headline races, three exclusive perks, and Roobet&rsquo;s own rewards stacked underneath &mdash; all on one code.</p>
-  </div>
-
+  <div class="hb-panel-wrap">
   <div class="banners">
     <div class="banner rv">
       <div class="banner-art chip"><img src="/assets/roobet-chip-256.webp" alt="Roobet wager leaderboard" width="176" height="176" loading="lazy" decoding="async"></div>
@@ -950,33 +942,41 @@ PAGES["index.html"] = dict(
     </div>
 
     <div class="banner rv d1">
-      <div class="banner-art"><img src="/assets/medals-optimized.webp" alt="Monthly wager milestones" width="760" height="459" loading="lazy" decoding="async"></div>
+      <div class="banner-art"><img src="/assets/zeus-optimized.webp" alt="Roobet welcome bonus free spins" width="333" height="700" loading="lazy" decoding="async"></div>
       <div class="banner-veil"></div>
       <div class="banner-in">
         <div>
-          <p class="fig" data-count="11350" data-prefix="$" aria-live="off">$11,350</p>
-          <p class="ttl"><a href="/wager-milestones">MONTHLY WAGER MILESTONES</a></p>
+          <p class="fig">20% + 500 Spins</p>
+          <p class="ttl"><a href="/free-spins">ROOBET WELCOME BONUS</a></p>
         </div>
-        <p>Claim guaranteed rewards all month!<br>Sign up using code <b style="color:var(--gold)">&ldquo;DAILY&rdquo;</b></p>
+        <p>20% deposit match up to $500, no wagering.<br>Plus 100 spins at $10K and 500 at $50K wagered.</p>
         <div class="row">
-          <a class="btn btn-gold" href="{SLOTS_MILES}" target="_blank" rel="noopener">Claim Milestones</a>
-          <a class="btn btn-ghost" href="/wager-milestones">View</a>
+          <a class="btn btn-gold" href="{DAILY}" rel="nofollow sponsored" target="_blank">Claim Bonus</a>
+          <a class="btn btn-ghost" href="/free-spins">View</a>
         </div>
       </div>
     </div>
   </div>
 
+  </div>
+</section>
+
+<section id="rewards" style="padding-top:6px"><div class="wrap">
+  <div class="sec-head rv">
+    <div><span class="eyebrow">Our Rewards</span><h2>Earn More</h2></div>
+    <p class="lead">Guaranteed milestones, exclusive perks, and Roobet&rsquo;s own rewards stacked underneath &mdash; all on one code.</p>
+  </div>
+
   <div class="cards c3" style="margin-top:14px">
     <div class="detail rv">
-      <div class="head"><h3>Deposit Match + Free Spins<br>&ldquo;Sign Up Bonus&rdquo;</h3></div>
-      <p class="statement">Deposit match <b style="color:var(--text)">+</b> free spins as you wager:</p>
+      <div class="head"><h3>Monthly Wager Milestones<br>&ldquo;Guaranteed Rewards&rdquo;</h3></div>
+      <p class="statement">Hit a wager tier, claim the reward &mdash; no ranking needed:</p>
       <ul>
-        <li><b>20% welcome match</b> up to $500, <b>no wagering</b> &mdash; maxes out on a $2,500 deposit</li>
-        <li>Wager $10,000 &rarr; <b>100 Free Spins ($2 each)</b></li>
-        <li>Wager $50,000 &rarr; <b>500 Free Spins ($2 each)</b></li>
-        <li>Spin milestones use your <b>all-time</b> wager total.</li>
+        <li>Up to <b>$11,350</b> claimable every month</li>
+        <li>Paid at <b>every tier you reach</b>, not just the top spots</li>
+        <li>Tiers reset on the <b>1st of every month</b></li>
       </ul>
-      <a class="btn btn-gold" href="/free-spins">Unlock Your Sign-Up Bonus</a>
+      <a class="btn btn-gold" href="/wager-milestones">See the Milestone Tiers</a>
     </div>
 
     <div class="detail rv d1">
