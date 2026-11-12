@@ -662,9 +662,14 @@ def promo_card(p, expired=False):
 # chip anchors behind, one character in front — more than one reads as clutter
 PROMO_ART = [("/assets/roobet-chip-256.webp", "a-main"),
              ("/assets/zeus-optimized.webp", "a-right")]
-PROMO_STAT = dict(label="Last promotion paid out", value="$200.00", badge="Paid",
-                  rows=[("&#128176;", "Raw cash"), ("&#127942;", "$30,000 wagered"),
-                        ("&#128197;", "Aug 28 &ndash; Sep 4")])
+# "Last promotion paid out" box: always the newest entry in PAST_PROMOS, so archiving
+# a promo updates it everywhere automatically.
+_last = PAST_PROMOS[0] if PAST_PROMOS else None
+PROMO_STAT = (dict(label="Last promotion paid out", value=_last["prize"], badge="Paid",
+                   rows=[("&#127873;", _last["title"].replace("Roobet ", "")),
+                         ("&#9989;", "Paid to code DAILY"),
+                         ("&#128197;", _last["window"])])
+              if _last else None)
 
 # The "Active Promotions" block: real cards when something is running, otherwise the
 # showcase banner carrying the same message.
@@ -677,8 +682,8 @@ else:
         title="No Promotion Running Right Now",
         mark="Right Now",
         eyebrow="Check Back Soon", ic="spark", c="gold",
-        text="Exclusive promos drop regularly and usually run for a week at a time &mdash; "
-             "wager races, raw cash drops and bonus buys for players under code DAILY or ELITE. "
+        text="Exclusive promos drop regularly &mdash; "
+             "airdrops, wager races, raw cash drops and bonus buys for players under code DAILY or ELITE. "
              "The fastest way to hear about the next one is the VIP Telegram or the stream.",
         href=TELEGRAM, cta="Get notified on Telegram", external=True,
         ghost="Watch on Kick", ghost_href=KICK,
@@ -748,12 +753,11 @@ else:
         title="Short-Run Promos, Real Cash Payouts",
         mark="Real Cash",
         eyebrow="Limited Time", ic="spark", c="gold",
-        text="Wager races and raw cash drops that run for a week at a time &mdash; "
+        text="Airdrops, wager races and raw cash drops &mdash; "
              "exclusive to players under code DAILY or ELITE.",
         href="/exclusive-promotions", cta="View promotions",
         art=PROMO_ART,
-        stat=dict(label="Last promotion paid out", value="$200.00", badge="Paid",
-                  rows=[("&#128176;", "Raw cash"), ("&#127942;", "$30,000 wagered")]))
+        stat=PROMO_STAT)
 
 # Community raffle banner — reads from RAFFLE above
 home_raffle = banner(
