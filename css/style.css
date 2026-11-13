@@ -1408,3 +1408,32 @@ body.vt-lock{overflow:hidden}
 .banner .fig-offer{font-size:clamp(26px,2.5vw,36px);white-space:nowrap}
 .banner .fig-plus{margin-top:4px}
 @media(max-width:420px){.banner .fig-offer{font-size:24px}}
+.detail .detail-art{display:block;height:120px;width:auto;max-width:100%;margin:0 auto 14px;object-fit:contain;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,.45))}
+@media(max-width:768px){.detail .detail-art{height:100px}}
+
+/* ===== homepage "Earn More" perk cards ===== */
+.perks{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+.perk{display:flex;flex-direction:column;background:var(--surface);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;
+  transition:border-color .2s,transform .2s}
+.perk:hover{border-color:rgba(245,165,36,.35);transform:translateY(-3px)}
+.perk-art{height:190px;display:grid;place-items:center;padding:22px;
+  background:radial-gradient(70% 90% at 50% 100%,rgba(245,165,36,.13),transparent 70%),var(--surface-2);border-bottom:1px solid rgba(255,255,255,.06)}
+.perk-art img{height:100%;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 12px 24px rgba(0,0,0,.5))}
+.perk-body{display:flex;flex-direction:column;flex:1;padding:24px 26px 26px}
+.perk-tag{align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.perk h3{margin:0;font-size:22px;font-weight:800;letter-spacing:-.015em;color:var(--text)}
+.perk-lead{margin:8px 0 0;font-size:15.5px;line-height:1.5;color:var(--text-dim)}
+.perk ul{list-style:none;margin:18px 0 22px;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.06);display:grid;gap:10px;flex:1;align-content:start}
+.perk li{position:relative;padding-left:18px;font-size:14.5px;line-height:1.5;color:var(--text-dim)}
+.perk li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.perk li b{color:var(--text);font-weight:600}
+.perk li a{color:var(--gold);font-weight:600}
+.perk-btn{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:var(--gold);text-decoration:none}
+.perk-btn:hover{text-decoration:underline}
+.perk-btn svg{width:16px;height:16px}
+@media(max-width:1024px){.perks{grid-template-columns:1fr 1fr}.perks .perk:last-child{grid-column:1/-1}}
+@media(max-width:700px){.perks{grid-template-columns:1fr}.perk-art{height:160px}.perk-body{padding:20px}}
+.perk-art{overflow:hidden}
+.perk-art img{height:146px;max-height:146px}
+@media(max-width:700px){.perk-art img{height:116px;max-height:116px}}

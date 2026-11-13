@@ -972,39 +972,51 @@ PAGES["index.html"] = dict(
     <p class="lead">Guaranteed milestones, exclusive perks, and Roobet&rsquo;s own rewards stacked underneath &mdash; all on one code.</p>
   </div>
 
-  <div class="cards c3" style="margin-top:14px">
-    <div class="detail rv">
-      <div class="head"><h3>Monthly Wager Milestones<br>&ldquo;Guaranteed Rewards&rdquo;</h3></div>
-      <p class="statement">Hit a wager tier, claim the reward &mdash; no ranking needed:</p>
-      <ul>
-        <li>Up to <b>$11,350</b> claimable every month</li>
-        <li>Paid at <b>every tier you reach</b>, not just the top spots</li>
-        <li>Tiers reset on the <b>1st of every month</b></li>
-      </ul>
-      <a class="btn btn-gold" href="/wager-milestones">See the Milestone Tiers</a>
-    </div>
+  <div class="perks">
+    <article class="perk rv">
+      <div class="perk-art"><img src="/assets/card-milestones.webp" alt="Roobet monthly wager milestone medals" width="464" height="280" loading="lazy" decoding="async"></div>
+      <div class="perk-body">
+        <span class="perk-tag">Guaranteed</span>
+        <h3>Monthly Wager Milestones</h3>
+        <p class="perk-lead">Hit a wager tier, claim the reward. No ranking needed.</p>
+        <ul>
+          <li>Up to <b>$11,350</b> claimable every month</li>
+          <li>Paid at <b>every tier</b> you reach</li>
+          <li>Resets on the <b>1st</b> of every month</li>
+        </ul>
+        <a class="perk-btn" href="/wager-milestones">See the milestone tiers {ARR}</a>
+      </div>
+    </article>
 
-    <div class="detail rv d1">
-      <div class="head"><h3>Max Win Merch</h3></div>
-      <p class="statement"><b style="color:var(--text)">Max Win Merch</b> for every max win you hit!</p>
-      <ul>
-        <li>Earn exclusive Max Win Merch for every max win you hit</li>
-        <li>Using code <b>&ldquo;DAILY&rdquo;</b> or <b>&ldquo;ELITE&rdquo;</b> on Roobet</li>
-        <li>Exclusive Pragmatic Play, Hacksaw, Nolimit &amp; Slotessentials general Max Win Merch.</li>
-      </ul>
-      <a class="btn btn-gold" href="/max-win-merch">View Merch</a>
-    </div>
+    <article class="perk rv d1">
+      <div class="perk-art"><img src="/assets/card-merch.webp" alt="Exclusive Max Win Merch shirts" width="568" height="280" loading="lazy" decoding="async"></div>
+      <div class="perk-body">
+        <span class="perk-tag">Free</span>
+        <h3>Max Win Merch</h3>
+        <p class="perk-lead">Hit a max win, get the shirt. Shipped free.</p>
+        <ul>
+          <li>Exclusive designs for <b>Pragmatic Play, Hacksaw &amp; Nolimit City</b> slots</li>
+          <li>On code <b>DAILY</b> or <b>ELITE</b></li>
+          <li>Verified against your Roobet account</li>
+        </ul>
+        <a class="perk-btn" href="/max-win-merch">View the merch {ARR}</a>
+      </div>
+    </article>
 
-    <div class="detail rv d2">
-      <div class="head"><h3>Exclusive In-House VIP Team</h3></div>
-      <p class="statement">Real people, <b style="color:var(--text)">not a call centre</b></p>
-      <ul>
-        <li>Exclusive individual bonuses and promos negotiated for you</li>
-        <li>Direct support on <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold)">Telegram</a> &amp; <a href="{DISCORD}" target="_blank" rel="noopener" style="color:var(--gold)">Discord</a> for claims, KYC and payouts</li>
-        <li>VIP status transferred and matched from any other casino</li>
-      </ul>
-      <a class="btn btn-gold" href="/contact">Meet the VIP Team</a>
-    </div>
+    <article class="perk rv d2">
+      <div class="perk-art"><img src="/assets/card-vip.webp" alt="Roobet VIP team" width="295" height="280" loading="lazy" decoding="async"></div>
+      <div class="perk-body">
+        <span class="perk-tag">Real people</span>
+        <h3>In-House VIP Team</h3>
+        <p class="perk-lead">Not a call centre &mdash; a team that knows your account.</p>
+        <ul>
+          <li>Bonuses and promos <b>negotiated for you</b></li>
+          <li>Help on <a href="{TELEGRAM}" target="_blank" rel="noopener">Telegram</a> &amp; <a href="{DISCORD}" target="_blank" rel="noopener">Discord</a> with claims, KYC and payouts</li>
+          <li>VIP status <b>matched</b> from any other casino</li>
+        </ul>
+        <a class="perk-btn" href="/contact">Meet the VIP team {ARR}</a>
+      </div>
+    </article>
   </div>
 
   <p class="also rv">Also included:
