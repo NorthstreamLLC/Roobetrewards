@@ -16,6 +16,7 @@ SLOTS_HOME = "https://slotessentials.com"
 YOUTUBE = "https://www.youtube.com/@DAILYGambling"
 ROOBET_REWARDS_SOURCE = "https://help.roobet.com/en/articles/9546773-rewards-explained"
 ROOBET_PROMO_SOURCE = "https://help.roobet.com/en/articles/4739870-promo-codes-explained"
+ROOBET_REFERRALS_SOURCE = "https://help.roobet.com/en/articles/5017835-referrals-explained"
 
 # Weekly stream schedule (America/New_York). (day index 0=Sun, label, time or None, note)
 SCHEDULE = [
@@ -2098,6 +2099,7 @@ PAGES["contact.html"] = dict(
 
 # ================= BLOG =================
 BLOG_POSTS = [
+    ("roobet-promo-codes-vs-referral-codes", "Roobet Promo Codes vs Referral & Affiliate Codes", "Promo codes, referral codes and affiliate codes do different jobs. Learn when each code can be entered, what it unlocks and why an expired promo is not the same as a referral.", "2026-11-16", "7 min read", "🎟️"),
     ("roobet-wagering-requirements", "Roobet Wagering Requirements Explained", "Understand deposit wagering, withdrawal eligibility, sportsbook settlement, tips and instant-raffle access under Roobet's current AML rules.", "2026-10-07", "8 min read", "📊", "/assets/roobet-wagering-requirements.webp"),
     ("how-to-enable-roobet-2fa", "How to Enable Roobet 2FA", "Set up an authenticator app, protect the recovery key, troubleshoot changing codes and understand the separate Roobet chat requirements.", "2026-10-07", "7 min read", "🔐", "/assets/roobet-2fa-guide.webp"),
     ("roobet-restricted-countries", "Roobet Restricted Countries & Provider Rules", "The difference between Roobet account restrictions and game-provider availability, with a current eligibility checklist and safe next steps.", "2026-10-07", "9 min read", "🌍", "/assets/roobet-restricted-countries.webp"),
@@ -2137,6 +2139,72 @@ PAGES["blog.html"] = dict(
   </div>
 </div></section>
 {cta_banner("While You're Here","The $100K monthly rewards package is live right now — join with code DAILY and start claiming.")}
+""")
+
+# ================= BLOG: PROMO CODES VS REFERRAL / AFFILIATE CODES =================
+promo_code_faq = [
+    ("What is the difference between a Roobet promo code and a referral code?", "A promo code is a limited claim that can award a small balance or free spins when eligible. A referral code identifies the person who referred a new account and must be set within the first 24 hours. Roobet treats them as different code types even though both are entered through the promo area."),
+    ("Can I use more than one Roobet referral code?", "No. Roobet's current referral guidance says a referral can only be set once and cannot be changed after submission."),
+    ("Why does my Roobet promo code say it does not exist?", "The code may be mistyped, expired, removed after its claim limit was reached, or restricted to depositors who met recent activity requirements. Check the exact characters and the original promotion terms."),
+    ("Does code DAILY count as a promo code?", "DAILY is our affiliate code. It identifies the referring partner and connects eligible players to the RoobetHub community rewards described on this site. It is not a promise that every temporary public promo code will also be available."),
+    ("When must I enter a Roobet referral code?", "Roobet's current Help Center says a referrer must be set within the first 24 hours after account creation. After that window the referral code will not work."),
+]
+promo_code_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in promo_code_faq)
+
+PAGES["roobet-promo-codes-vs-referral-codes.html"] = dict(
+    title="Roobet Promo Codes vs Referral & Affiliate Codes (2026)",
+    desc="Roobet promo codes, referral codes and affiliate codes explained: what each code does, when it must be entered, claim limits and common error messages.",
+    kw="roobet promo code, roobet referral code, roobet affiliate code, roobet code daily, roobet promo code not working",
+    schema=[
+        {"@context": "https://schema.org", "@type": "Article",
+         "headline": "Roobet Promo Codes vs Referral and Affiliate Codes",
+         "description": "The practical differences between Roobet promo, referral and affiliate codes, based on Roobet's current Help Center guidance.",
+         "datePublished": "2026-11-16", "dateModified": "2026-11-16",
+         "author": {"@type": "Organization", "name": "RoobetHub Editorial Team"},
+         "publisher": {"@type": "Organization", "name": "RoobetHub", "url": SITE + "/"},
+         "image": SITE + "/assets/og-image.png"},
+        {"@context": "https://schema.org", "@type": "FAQPage",
+         "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in promo_code_faq]},
+    ],
+    og_type="article",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Promo Codes vs Referral Codes</p>
+  <span class="eyebrow rv">🎟️ Code Guide · Published 16 November 2026</span>
+  <h1 class="rv d1">Roobet Promo Codes vs <span class="grad">Referral &amp; Affiliate Codes</span></h1>
+  <p class="lead rv d2">They share one redemption box, but they do not do the same job. Here is what each Roobet code changes, when it must be entered and why a rejected code may not be broken.</p>
+</div></section>
+
+<section style="padding-top:10px"><article class="wrap" style="max-width:900px">
+  <div class="table-wrap rv"><table class="tbl"><thead><tr><th>Code type</th><th>What it does</th><th>Main limitation</th></tr></thead><tbody>
+    <tr><td><b>Promo code</b></td><td>Temporary claim for an eligible balance reward or free spins.</td><td>Can expire, reach a claim limit or require recent depositing or wagering.</td></tr>
+    <tr><td><b>Referral code</b></td><td>Connects a new account to the player who referred it.</td><td>Must currently be set within 24 hours and cannot later be changed.</td></tr>
+    <tr><td><b>Affiliate code</b></td><td>Connects an account to a professional partner and that partner's eligible offers.</td><td>Offer terms still apply; the code does not override account or regional eligibility.</td></tr>
+  </tbody></table></div>
+
+  <h2 class="rv" style="margin-top:48px">How Roobet Promo Codes Work</h2>
+  <p class="rv" style="color:var(--muted)">Roobet describes promo codes as limited claims that usually award free spins or a small balance. Some are open to non-depositors; others require a deposit or a specified amount of recent activity. Because campaigns can have a fixed number of claims, a real code can stop working after the allocation is gone.</p>
+  <p class="rv" style="color:var(--muted)">A message that the code does not exist can therefore mean more than a typo: the code may have expired or been removed. Return to the original source of the offer rather than trying random variations or third-party “generator” pages.</p>
+
+  <h2 class="rv" style="margin-top:48px">How Referral Codes Differ</h2>
+  <p class="rv" style="color:var(--muted)">A referral code is not a one-off giveaway. It identifies the account that introduced you to Roobet. Roobet's current referral article says it must be set within the first 24 hours after account creation, can only be submitted once and cannot be changed afterwards.</p>
+  <p class="rv" style="color:var(--muted)">That permanence is why the code should be checked before submission. Do not open a second account to correct a referral: multiple accounts can create a larger compliance problem.</p>
+
+  <h2 class="rv" style="margin-top:48px">Where Affiliate Code DAILY Fits</h2>
+  <p class="rv" style="color:var(--muted)"><a href="{DAILY}" rel="nofollow sponsored" target="_blank" style="color:var(--gold);font-weight:700">DAILY</a> is the RoobetHub affiliate code. Using it connects eligible players to the partner relationship behind this site and to the separate community benefits published here, including the <a href="/leaderboard" style="color:var(--gold)">$50,000 leaderboard</a>, <a href="/wager-milestones" style="color:var(--gold)">wager milestones</a> and supported reward claims.</p>
+  <div class="card rv" style="border-color:rgba(255,199,0,.35)"><h3>What DAILY does not do</h3><p>It does not bypass KYC, regional rules, deposit or wagering requirements. It does not guarantee a temporary public promo, a particular reward amount or a withdrawal outcome. Current offer terms and the authenticated Roobet account screen remain decisive.</p></div>
+
+  <h2 class="rv" style="margin-top:48px">Troubleshooting a Code That Will Not Work</h2>
+  <ol class="rv" style="color:var(--muted);line-height:1.9;padding-left:24px"><li>Copy the code from its original source and check every character.</li><li>Confirm whether it is a promo, referral or affiliate code.</li><li>Check the claim deadline, deposit requirement and recent-activity requirement.</li><li>For a referral, confirm the account is still inside Roobet's current 24-hour window.</li><li>Do not create a duplicate account. Use Roobet's official Help Center if the account state is unclear.</li></ol>
+
+  <h2 class="rv" style="margin-top:48px">Sources and Review Standard</h2>
+  <p class="rv" style="color:var(--muted)">This guide was checked on 16 November 2026 against Roobet's official <a href="{ROOBET_PROMO_SOURCE}" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Promo Codes Explained</a> and <a href="{ROOBET_REFERRALS_SOURCE}" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Referrals Explained</a> articles. Roobet can change eligibility and redemption flows; use the current terms shown in your account.</p>
+
+  <h2 class="rv" style="margin-top:48px">Promo and Referral Code FAQ</h2>
+  <div class="faq rv" style="max-width:none">{promo_code_faq_html}</div>
+  <p class="rv" style="color:var(--muted);margin-top:30px">Next, read the <a href="/roobet-rakeback-cashback-bonus-schedule" style="color:var(--gold);font-weight:700">Roobet Vault and bonus schedule</a> or the <a href="/roobet-rewards-guide" style="color:var(--gold);font-weight:700">complete Roobet rewards guide</a>.</p>
+</article></section>
+{cta_banner("Use the Right Code Once","Join with code DAILY only if it fits your account and region, then review every current offer term before depositing.")}
 """)
 
 deposit_faq = [
@@ -2571,13 +2639,13 @@ PAGES["roobet-rakeback-cashback-bonus-schedule.html"] = dict(
     desc="Roobet rakeback and cashback guide with daily, weekly and monthly bonus release times, Vault claims, expiry rules and every rakeboost percentage.",
     kw="roobet cashback, roobet rakeback, when does roobet release monthly bonus, roobet monthly bonus, roobet weekly bonus",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Rakeback, Cashback & Bonus Schedule","datePublished":"2026-08-18","dateModified":"2026-08-18","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Rakeback, Cashback & Bonus Schedule","datePublished":"2026-08-18","dateModified":"2026-11-16","author":{"@type":"Organization","name":"RoobetHub"},"publisher":{"@type":"Organization","name":"RoobetHub"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in bonus_faq]},
     ],
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Rakeback &amp; Bonus Schedule</p>
-  <span class="eyebrow rv">💰 Reward Calendar · Updated August 2026</span>
+  <span class="eyebrow rv">💰 Reward Calendar · Reviewed 16 November 2026</span>
   <h1 class="rv d1">Roobet Rakeback, Cashback &amp; <span class="grad">Bonus Schedule</span></h1>
   <p class="lead rv d2">What players call Roobet cashback is a stack of recurring rewards. Here is when each one becomes claimable and how long you have before it expires.</p>
 </div></section>
@@ -2595,7 +2663,8 @@ PAGES["roobet-rakeback-cashback-bonus-schedule.html"] = dict(
     <div class="card"><h3>+15%</h3><p>Vault Calendar claim boost for 60 minutes.</p></div>
     <div class="card"><h3>+20%</h3><p>Affiliate-code redemption boost for 72 hours.</p></div>
   </div>
-  <p class="rv" style="color:var(--muted);margin:24px 0 40px">Boosts run in parallel but do not stack: the highest active boost is the one that applies. Reward availability and calculations remain subject to Roobet's current account terms.</p>
+  <p class="rv" style="color:var(--muted);margin:24px 0 14px">Boosts run in parallel but do not stack: the highest active boost is the one that applies. Reward availability and calculations remain subject to Roobet's current account terms.</p>
+  <p class="rv" style="color:var(--muted);margin:0 0 40px">Source: Roobet's official <a href="{ROOBET_REWARDS_SOURCE}" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:700">Rewards Explained</a>, reviewed 16 November 2026.</p>
   <h2 class="rv">Bonus Schedule FAQ</h2>
   <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in bonus_faq)}</div>
   <p class="rv" style="color:var(--muted);margin-top:30px">See the full <a href="/roobet-rewards" style="color:var(--gold);font-weight:700">Roobet rewards breakdown</a>, then add our <a href="/wager-milestones" style="color:var(--gold);font-weight:700">$11,350 wager milestones</a> and <a href="/leaderboard" style="color:var(--gold);font-weight:700">$50K leaderboard</a>.</p>
@@ -3403,6 +3472,8 @@ lastmods = {
     f"{SITE}/leaderboard": "2026-11-12",
     f"{SITE}/roobet-rewards": "2026-11-12",
     f"{SITE}/roobet-rewards-guide": "2026-11-12",
+    f"{SITE}/roobet-promo-codes-vs-referral-codes": "2026-11-16",
+    f"{SITE}/roobet-rakeback-cashback-bonus-schedule": "2026-11-16",
     f"{SITE}/about": "2026-11-12",
     f"{SITE}/editorial-policy": "2026-11-12",
     f"{SITE}/affiliate-disclosure": "2026-11-12",
