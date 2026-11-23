@@ -458,9 +458,15 @@ const vipQ = queue({ api:'/api/vip-transfer', listKey:'requests', rows:'vip-rows
 const merchQ = queue({ api:'/api/merch-claim', listKey:'claims', rows:'merch-rows', empty:'merch-empty',
   q:'merch-q', refresh:'merch-refresh', count:'c-merch',
   statuses:[['pending','Pending'],['verified','Verified'],['shipped','Shipped'],['rejected','Rejected']],
-  cells:r=>'<td><b>'+esc(r.roobet)+'</b></td><td>'+esc(r.shirt)+'</td><td>'+esc(r.size)+
-    '</td><td>'+esc(r.color||'—')+'</td><td>'+esc(r.discord||'—')+'</td><td>'+
-    (r.telegram?'@'+esc(r.telegram):'—')+'</td><td>'+shots(r.proof)+'</td>' });
+  cells:r=>'<td><b>'+esc(r.roobet)+'</b>'+(r.source==='maxwinmerch'?mwm(r):'')+'</td><td>'+esc(r.shirt)+'</td><td>'+esc(r.size)+
+    '</td><td>'+esc(r.color||'—')+'</td><td>'+esc(r.discord||r.email||'—')+'</td><td>'+
+    (r.telegram?'@'+esc(r.telegram):'—')+'</td><td>'+shots(r.proof)+
+    (r.replay&&/^https:/i.test(r.replay)?'<a href="'+esc(r.replay)+'" target="_blank" rel="noopener noreferrer">Replay ↗</a>':'')+'</td>' });
+/* Claims forwarded by maxwinmerch.com: slot, base bet and the shipping address they collect up front. */
+function mwm(r){ const s=r.shipping||{};
+  return '<div style="font-size:12px;opacity:.8;margin-top:4px">via MaxWinMerch · '+esc(r.slot||'')+' · $'+esc(String(r.baseBet||''))+
+    '</div><details style="font-size:12px;margin-top:4px"><summary>Ship to</summary>'+
+    [s.name,s.phone,s.address1,s.address2,[s.city,s.postcode].filter(Boolean).join(' '),s.country].filter(Boolean).map(esc).join('<br>')+'</details>'; }
 
 /* ---------- boot ---------- */
 async function loadAll(){

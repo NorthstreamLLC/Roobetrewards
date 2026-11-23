@@ -5,6 +5,11 @@
 //   DELETE ?key=...&id=...    -> remove a claim (admin)
 //
 // Env: VIP_ADMIN_KEY (same key as the VIP transfer panel) + the Redis vars
+//      MERCH_PARTNER_KEY (optional): shared with maxwinmerch.com, whose claim form
+//      forwards here server-to-server with the header x-partner-key. A partner
+//      claim follows the SlotEssentials rules (a replay link, not a screenshot;
+//      base bet >= $0.20) and carries an email and shipping address instead of
+//      Discord/Telegram. Without the key, the endpoint behaves exactly as before.
 const { redis } = require("../lib/redis");
 
 const IDX = "merch:index";
@@ -35,8 +40,68 @@ const isAdmin = (req) => {
   return String(given) === k;
 };
 
+const isPartner = (req) => {
+  const k = process.env.MERCH_PARTNER_KEY;
+  return !!k && String(req.headers["x-partner-key"] || "") === k;
+};
+
+const okReplay = (u) => /^https:\/\/[^\s]+$/i.test(String(u || "")) && String(u).length <= 500;
+
 const okBlob = (u) =>
   /^https:\/\/[a-z0-9.-]+\.blob\.vercel-storage\.com\//i.test(String(u || ""));
+
+// A claim forwarded by maxwinmerch.com. Same record and admin queue as the
+// site's own claims, flagged with source so the panel can tell them apart.
+async function partnerClaim(b, res) {
+  const ip = clean(b.clientIp, 45) || "0.0.0.0";
+  const rk = `merch:rl:p:${ip}`;
+  const n = await redis("INCR", rk);
+  if (n === 1) await redis("EXPIRE", rk, 3600);
+  if (n > 8) return res.status(429).json({ error: "Too many claims - try again in an hour." });
+
+  const roobet = clean(b.roobet, 40);
+  const shirt = clean(b.shirt, 80);
+  const size = clean(b.size, 6);
+  const replay = okReplay(b.replay) ? String(b.replay).trim() : "";
+  const email = clean(b.email, 254);
+  const baseBet = Number(b.baseBet);
+  const missing = [];
+  if (!roobet) missing.push("Roobet username");
+  if (!shirt) missing.push("shirt");
+  if (!size) missing.push("size");
+  if (!replay) missing.push("replay link");
+  if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email)) missing.push("email");
+  if (missing.length) return res.status(400).json({ error: `Still needed: ${missing.join(", ")}.` });
+  if (!(baseBet >= 0.2)) return res.status(400).json({ error: "The base bet has to be at least $0.20 USD." });
+
+  const s = b.shipping && typeof b.shipping === "object" ? b.shipping : {};
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const claim = {
+    id, roobet, shirt, size,
+    color: clean(b.color, 30),
+    discord: "", telegram: "",
+    email,
+    source: "maxwinmerch",
+    slot: clean(b.slot, 80),
+    baseBet,
+    replay,
+    shipping: {
+      name: clean(s.name, 100), phone: clean(s.phone, 40),
+      address1: clean(s.address1, 160), address2: clean(s.address2, 160),
+      city: clean(s.city, 80), postcode: clean(s.postcode, 20), country: clean(s.country, 60),
+    },
+    notes: clean(b.notes, 600),
+    proof: [],
+    status: "pending",
+    adminNotes: "",
+    created: Date.now(),
+    updated: Date.now(),
+    ip,
+  };
+  await redis("SET", KEY(claim.id), JSON.stringify(claim));
+  await redis("ZADD", IDX, claim.created, claim.id);
+  return res.status(200).json({ ok: true, id: claim.id, ref: claim.id.toUpperCase() });
+}
 
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
@@ -45,6 +110,8 @@ module.exports = async (req, res) => {
     if (req.method === "POST") {
       const b = await readBody(req);
       if (clean(b.website)) return res.status(200).json({ ok: true }); // honeypot
+
+      if (isPartner(req)) return partnerClaim(b, res);
 
       const ip = ipOf(req);
       const rk = `merch:rl:${ip}`;
