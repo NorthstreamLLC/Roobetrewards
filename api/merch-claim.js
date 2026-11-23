@@ -79,7 +79,8 @@ async function partnerClaim(b, res) {
   const claim = {
     id, roobet, shirt, size,
     color: clean(b.color, 30),
-    discord: "", telegram: "",
+    discord: clean(b.discord, 60),
+    telegram: clean(b.telegram, 60).replace(/^@/, ""),
     email,
     source: "maxwinmerch",
     slot: clean(b.slot, 80),
