@@ -2099,6 +2099,7 @@ PAGES["contact.html"] = dict(
 
 # ================= BLOG =================
 BLOG_POSTS = [
+    ("roobet-rewards-vs-rakeback-vip", "Roobet Rewards vs Rakeback vs VIP", "Roobet rewards, rakeback, VIP status and creator-code perks are separate layers. Learn where each appears and which terms to verify live.", "2026-11-24", "8 min read", "🧭"),
     ("roobet-promo-codes-vs-referral-codes", "Roobet Promo Codes vs Referral & Affiliate Codes", "Promo codes, referral codes and affiliate codes do different jobs. Learn when each code can be entered, what it unlocks and why an expired promo is not the same as a referral.", "2026-11-16", "7 min read", "🎟️"),
     ("roobet-wagering-requirements", "Roobet Wagering Requirements Explained", "Understand deposit wagering, withdrawal eligibility, sportsbook settlement, tips and instant-raffle access under Roobet's current AML rules.", "2026-10-07", "8 min read", "📊", "/assets/roobet-wagering-requirements.webp"),
     ("how-to-enable-roobet-2fa", "How to Enable Roobet 2FA", "Set up an authenticator app, protect the recovery key, troubleshoot changing codes and understand the separate Roobet chat requirements.", "2026-10-07", "7 min read", "🔐", "/assets/roobet-2fa-guide.webp"),
@@ -2139,6 +2140,88 @@ PAGES["blog.html"] = dict(
   </div>
 </div></section>
 {cta_banner("While You're Here","The $100K monthly rewards package is live right now — join with code DAILY and start claiming.")}
+""")
+
+# ================= BLOG: REWARDS VS RAKEBACK VS VIP =================
+reward_layers_faq = [
+    ("Are Roobet rewards and rakeback the same thing?", "Rakeback can be one part of the wider Roobet rewards system. The rewards area can also include Vault activity, boosts or time-based claims depending on the account and current program."),
+    ("Does VIP rank guarantee the same reward for every player?", "No. Rank is one input, but current account activity, product use, eligibility and the live program terms can affect what appears. Check the authenticated rewards area."),
+    ("Are creator-code rewards paid by Roobet?", "Some offers are platform benefits and others are separate community or affiliate promotions. Read the page for the specific offer and do not assume one program's rules apply to another."),
+    ("Where should I check my current Roobet rewards?", "Use the authenticated Rewards area in your Roobet account for platform rewards and the official page for any separate creator or community promotion."),
+]
+reward_layers_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in reward_layers_faq)
+
+PAGES["roobet-rewards-vs-rakeback-vip.html"] = dict(
+    title="Roobet Rewards vs Rakeback vs VIP: Key Differences",
+    desc="Roobet rewards, rakeback and VIP explained: what each layer does, where it appears, how creator-code perks differ and which terms to verify live.",
+    kw="roobet rewards vs rakeback, roobet vip rewards, roobet rakeback explained, roobet rewards system",
+    schema=[
+        {"@context": "https://schema.org", "@type": "Article",
+         "headline": "Roobet Rewards vs Rakeback vs VIP",
+         "description": "A practical comparison of Roobet platform rewards, rakeback, VIP status and separate creator-code promotions.",
+         "datePublished": "2026-11-24", "dateModified": "2026-11-24",
+         "author": {"@type": "Organization", "name": "RoobetHub Editorial Team"},
+         "publisher": {"@type": "Organization", "name": "RoobetHub", "url": SITE + "/"},
+         "image": SITE + "/assets/og-image.png"},
+        {"@context": "https://schema.org", "@type": "FAQPage",
+         "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in reward_layers_faq]},
+    ],
+    og_type="article",
+    body=f"""
+<section class="page-hero"><div class="wrap">
+  <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Rewards vs Rakeback vs VIP</p>
+  <span class="eyebrow rv">🧭 Rewards Guide · Published 24 November 2026</span>
+  <h1 class="rv d1">Roobet Rewards vs <span class="grad">Rakeback vs VIP</span></h1>
+  <p class="lead rv d2">These labels overlap in conversation, but they are not interchangeable. Here is how the platform reward system, VIP status and separate creator-code promotions fit together.</p>
+</div></section>
+
+<section style="padding-top:10px"><article class="wrap" style="max-width:900px">
+  <div class="table-wrap rv"><table class="tbl"><thead><tr><th>Layer</th><th>What it describes</th><th>Where to verify it</th></tr></thead><tbody>
+    <tr><td><b>Roobet rewards</b></td><td>The wider account reward area, which can include rakeback-related claims, Vault activity, boosts or other current benefits.</td><td>Your authenticated Roobet Rewards page.</td></tr>
+    <tr><td><b>Rakeback</b></td><td>A return linked to eligible wagering and the current platform formula. It is one reward type, not the name of every benefit.</td><td>The live account reward details and current official terms.</td></tr>
+    <tr><td><b>VIP rank</b></td><td>Account progression or status based on the current VIP system. Rank can affect access or reward calculations.</td><td>Your account profile, VIP area and official program rules.</td></tr>
+    <tr><td><b>Creator-code perks</b></td><td>Separate partner-funded rewards such as community races, milestones, merchandise or promotions.</td><td>The specific creator or affiliate offer page.</td></tr>
+  </tbody></table></div>
+
+  <h2 class="rv" style="margin-top:48px">Roobet Rewards Is the Umbrella</h2>
+  <p class="rv" style="color:var(--muted)">“Rewards” is the broadest label. It can refer to the benefits surfaced inside the account reward area, not one fixed payment with one universal schedule. The exact mix visible to a player can change with the current program, eligibility, activity and operator settings.</p>
+  <p class="rv" style="color:var(--muted)">That is why an old screenshot is weak evidence. A guide can explain what a reward type means, but the authenticated account is the authority for whether a claim is available now, how it is calculated and when it expires.</p>
+
+  <h2 class="rv" style="margin-top:48px">Rakeback Is One Reward Type</h2>
+  <p class="rv" style="color:var(--muted)">Rakeback is generally tied to eligible wagering and the platform's current calculation. It returns part of the value generated by play; it does not remove the house edge or make the next wager positive expectation. A visible percentage should never be copied from another account or assumed to apply forever.</p>
+  <p class="rv" style="color:var(--muted)">Roobet's reward presentation has used terms including rakeback, cashback, the Vault and boosts. These can describe connected parts of a system, but they do not all mean the same thing. Our <a href="/roobet-rakeback-cashback-bonus-schedule" style="color:var(--gold);font-weight:700">rakeback and bonus guide</a> explains the current labels without treating a historical schedule as permanent.</p>
+
+  <h2 class="rv" style="margin-top:48px">VIP Rank Is Status, Not a Single Bonus</h2>
+  <p class="rv" style="color:var(--muted)">VIP rank tracks progression under the platform's current program. A higher rank may influence access, calculations or service, but the rank badge itself is not a cash balance and does not guarantee the same payment to every account.</p>
+  <p class="rv" style="color:var(--muted)">Two players with the same visible rank can still have different recent activity or eligibility. Use the <a href="/roobet-vip-program-rank-system" style="color:var(--gold);font-weight:700">VIP rank guide</a> to understand the structure, then check the live account for the actual reward.</p>
+
+  <h2 class="rv" style="margin-top:48px">Creator-Code Rewards Are a Separate Layer</h2>
+  <p class="rv" style="color:var(--muted)">RoobetHub's community rewards under code <b>DAILY</b> are partner promotions. They can include leaderboards, wager milestones, merchandise, free-spin offers or short-run events described on this site. Those offers sit beside the platform's own rewards; they do not replace Roobet's Vault, change a casino game's RTP or override account eligibility.</p>
+  <p class="rv" style="color:var(--muted)">Each promotion needs its own rules: eligible code, dates, qualifying activity, verification method and claim process. A player can qualify for a platform reward but not a community offer, or the reverse. Never combine two sets of terms into one promised payout.</p>
+
+  <h2 class="rv" style="margin-top:48px">A Practical Example</h2>
+  <div class="table-wrap rv"><table class="tbl"><thead><tr><th>What appears</th><th>Which layer is it?</th><th>Best next step</th></tr></thead><tbody>
+    <tr><td>A claim inside the Roobet Rewards page</td><td>Platform reward</td><td>Read the amount, timer and terms inside the account.</td></tr>
+    <tr><td>A VIP rank increase</td><td>Status progression</td><td>Open the VIP area to see what the rank currently changes.</td></tr>
+    <tr><td>A DAILY wager leaderboard prize</td><td>Creator-code promotion</td><td>Check the live leaderboard rules and claim instructions on RoobetHub.</td></tr>
+    <tr><td>A temporary public promo code</td><td>Campaign claim</td><td>Read its eligibility and claim limit; do not confuse it with the affiliate code.</td></tr>
+  </tbody></table></div>
+
+  <h2 class="rv" style="margin-top:48px">What to Check Before Counting a Reward</h2>
+  <ol class="rv" style="color:var(--muted);line-height:1.8">
+    <li>Which program is paying it: Roobet, a public campaign or a creator partner?</li>
+    <li>Is the account eligible under the live terms?</li>
+    <li>Is the reward automatic, manually claimed or subject to verification?</li>
+    <li>Does it expire or depend on a current promotion window?</li>
+    <li>Is the displayed value cash, bonus balance, free spins, merchandise or leaderboard credit?</li>
+  </ol>
+  <p class="rv" style="color:var(--muted)">If any answer is unclear, use the authenticated account or official support for platform rewards and the <a href="/contact" style="color:var(--gold);font-weight:700">RoobetHub contact page</a> for a community offer. Do not send identity documents through community chat.</p>
+
+  <h2 class="rv" style="margin-top:48px">Rewards FAQ</h2>
+  <div class="faq">{reward_layers_faq_html}</div>
+
+  <div class="cta-banner rv" style="margin-top:48px"><h2>Compare the Current Reward Pages</h2><p class="lead">Start with the platform explanation, then read the separate community terms for code DAILY.</p><div class="hero-cta" style="justify-content:center"><a class="btn btn-gold btn-lg" href="/roobet-rewards">Roobet rewards system {ARR}</a><a class="btn btn-ghost btn-lg" href="/roobet-rewards-guide">Complete rewards guide</a></div></div>
+</article></section>
 """)
 
 # ================= BLOG: PROMO CODES VS REFERRAL / AFFILIATE CODES =================
@@ -3473,6 +3556,7 @@ lastmods = {
     f"{SITE}/roobet-rewards": "2026-11-12",
     f"{SITE}/roobet-rewards-guide": "2026-11-12",
     f"{SITE}/roobet-promo-codes-vs-referral-codes": "2026-11-16",
+    f"{SITE}/roobet-rewards-vs-rakeback-vip": "2026-11-24",
     f"{SITE}/roobet-rakeback-cashback-bonus-schedule": "2026-11-16",
     f"{SITE}/about": "2026-11-12",
     f"{SITE}/editorial-policy": "2026-11-12",
