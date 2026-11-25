@@ -2109,10 +2109,10 @@ BLOG_POSTS = [
     ("roobet-deposit-bonus-free-spins", "Roobet Deposit Bonus & Free Spins Guide", "How the Roobet sign-up bonus works under code DAILY: the 20% deposit match up to $500, and the free spins that unlock at $10,000 and $50,000 wagered.", "2026-08-18", "5 min read", "🎁"),
     ("when-can-you-receive-tips-roobet", "When Can You Receive Tips on Roobet?", "A practical guide to receiving Roobet tips, account eligibility, verification, common restrictions and what to check when a tip does not arrive.", "2026-08-18", "4 min read", "💸"),
     ("how-to-deposit-on-roobet", "How to Deposit on Roobet", "Step-by-step guide to making your first Roobet deposit — crypto options, buying with card, confirmation times, and how to unlock your free spins bonus.", "2026-07-21", "5 min read", "💳"),
-    ("how-to-kyc-on-roobet", "Does Roobet Require ID? Roobet KYC Explained", "Which ID Roobet accepts, when it asks you to verify, how long review takes, and how to pass KYC first try.", "2026-11-05", "6 min read", "🪪"),
+    ("how-to-kyc-on-roobet", "Does Roobet Require ID? Roobet KYC Explained", "Which ID Roobet accepts, when it asks you to verify, how long review takes, and how to prepare your documents.", "2026-11-05", "6 min read", "🪪"),
     ("roobet-rewards-guide", "Roobet Rewards: The Complete Guide", "Every Roobet reward explained — rakeback & cashback, deposit bonus, daily/weekly/monthly bonus release times, the VIP program and rank system, plus the $100K monthly extras.", "2026-08-07", "7 min read", "💰"),
     ("best-roobet-slots", "Best Roobet Slots to Play", "The best slots on Roobet right now — RTP, max win potential, and which ones earn you free Max Win Merch under code DAILY or ELITE.", "2026-08-07", "6 min read", "🎰"),
-    ("how-to-withdraw-on-roobet", "Roobet Withdrawal Guide: Times, Minimums & Rules", "The 100% wager rule, confirmations per coin, minimums, fees, and the six reasons a Roobet withdrawal gets blocked.", "2026-11-06", "7 min read", "💸"),
+    ("how-to-withdraw-on-roobet", "Roobet Withdrawal Guide: Times, Minimums & Rules", "Crypto withdrawal requirements, minimums, fees and how to troubleshoot pending or uncredited transfers.", "2026-11-06", "7 min read", "💸"),
 ]
 def blog_card(post, i):
     slug, title, description, date, read, ic = post[:6]
@@ -2360,11 +2360,11 @@ PAGES["how-to-deposit-on-roobet.html"] = dict(
 """)
 
 kyc_faq = [
-    ("Does Roobet require ID?", "Yes, for full account access. Roobet's Level 2 verification asks for a passport, driving licence or other government-issued ID, uploaded as a front-and-back image in your account settings. You can sign up and deposit first, but expect ID to be requested before withdrawals and some account features."),
-    ("At what amount does Roobet make you verify?", "Roobet does not publish a fixed dollar threshold. Its compliance team can request verification at any time, and it is most often triggered by a withdrawal or account review. Anyone quoting an exact number is guessing — verifying early is the only reliable way to avoid a delay."),
-    ("Can you use Roobet without verifying your identity?", "You can register, deposit and play before completing Level 2, but some features stay limited until you verify, and an unverified account can be held up the moment you try to cash out."),
+    ("Does Roobet require ID?", "Yes, for full account access. Roobet's Level 2 verification asks for a passport, driving licence or other government-issued ID, uploaded as a front-and-back image in your account settings. Follow the verification requirements shown in your account before relying on access to deposits, play or withdrawals."),
+    ("At what amount does Roobet make you verify?", "The official Level 2 guide does not provide a universal monetary threshold. Follow the request in your own account; completing verification early does not guarantee that later reviews will not be needed."),
+    ("Can you use Roobet without verifying your identity?", "Do not assume an unverified account has unrestricted access. Check the current requirements in your account settings and contact official support if a feature or withdrawal is blocked."),
     ("Which ID documents does Roobet accept?", "Roobet's official Level 2 article lists three: a passport, a driving licence, or a government-issued identification document. Upload a clear front-and-back image of the original — not a photocopy — through roobet.com account settings."),
-    ("How long does Roobet verification take?", "There is no guaranteed time. Roobet says its compliance team reviews documents daily and will contact you after manual review if anything else is needed. Clear photos and details that match your ID exactly are what keep it quick."),
+    ("How long does Roobet verification take?", "There is no guaranteed time. Roobet says its compliance team reviews documents daily and will contact you after manual review if anything else is needed. Clear photos and matching account details help reviewers assess your documents, but do not guarantee a turnaround."),
     ("My Roobet KYC got rejected — what now?", "Re-upload a sharp, glare-free image of the original document with all four corners visible, and make sure your account name and date of birth match it exactly. If it is still rejected, contact Roobet's official Help Center. Never send ID images to anyone over Telegram, Discord or email."),
 ]
 kyc_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in kyc_faq)
@@ -2376,7 +2376,7 @@ PAGES["how-to-kyc-on-roobet.html"] = dict(
     schema=[
         {"@context": "https://schema.org", "@type": "Article",
          "headline": "Does Roobet Require ID? Roobet KYC & Verification Guide",
-         "datePublished": "2026-07-21", "dateModified": "2026-11-05",
+         "datePublished": "2026-07-21", "dateModified": "2026-11-25",
          "author": {"@type": "Organization", "name": "RoobetHub"},
          "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
@@ -2387,24 +2387,24 @@ PAGES["how-to-kyc-on-roobet.html"] = dict(
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / How to KYC on Roobet</p>
-  <span class="eyebrow rv">🪪 Guide · 6 min read · Updated 5 November 2026</span>
+  <span class="eyebrow rv">🪪 Guide · 6 min read · Updated 25 November 2026</span>
   <h1 class="rv d1">Does Roobet Require ID? <span class="grad">Roobet KYC</span> Explained</h1>
-  <p class="lead rv d2">What Roobet asks for, when it asks, how long review takes and how to pass verification first try &mdash; checked against Roobet's official Help Center.</p>
+  <p class="lead rv d2">What Roobet asks for, when it asks, how long review takes and how to prepare a clear document submission &mdash; checked against Roobet's official Help Center.</p>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:860px">
   <h2 class="rv">Does Roobet Require ID?</h2>
-  <p class="rv" style="color:var(--text);margin:12px 0 14px;font-size:17px"><b>Yes.</b> Roobet's Level 2 verification requires a <b>passport, driving licence or other government-issued ID</b>, uploaded as a front-and-back image in your account settings. You can sign up, deposit and play first, but expect ID to be requested before withdrawals and some account features &mdash; so verify early.</p>
+  <p class="rv" style="color:var(--text);margin:12px 0 14px;font-size:17px"><b>Yes.</b> Roobet's Level 2 verification requires a <b>passport, driving licence or other government-issued ID</b>, uploaded as a front-and-back image in your account settings. Follow the requirements displayed in your account before assuming that deposits, play or withdrawals are available.</p>
   <p class="rv" style="color:var(--muted);margin:0 0 30px">KYC (&ldquo;Know Your Customer&rdquo;) is the identity check licensed casinos run to prevent fraud and protect accounts. Source: Roobet's official <a href="https://help.roobet.com/en/articles/14709132-level-2-verification" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Level 2 Verification</a> article. For a full illustrated walkthrough, our sister site <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> covers every screen.</p>
 
   <h2 class="rv">When Does Roobet Make You Verify?</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 14px">Roobet <b>does not publish a fixed dollar amount</b> that triggers verification. Its compliance team can request it at any time, and in practice it usually comes up at one of these points:</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 14px">The official Level 2 guide <b>does not state a universal monetary threshold</b>. Check your account settings and any official compliance request. Review verification requirements:</p>
   <ul class="rv" style="color:var(--muted);margin:0 0 14px 20px;line-height:1.8">
-    <li>When you request a <a href="/how-to-withdraw-on-roobet" style="color:var(--gold)">withdrawal</a>, especially your first or a large one</li>
+    <li>When you request a <a href="/how-to-withdraw-on-roobet" style="color:var(--gold)">withdrawal</a>, if your account shows a verification requirement</li>
     <li>When you want to use features that need Level 2, such as <a href="/when-can-you-receive-tips-roobet" style="color:var(--gold)">receiving tips</a></li>
     <li>During a routine or manual account review</li>
   </ul>
-  <p class="rv" style="color:var(--muted);margin:0 0 30px">You will see threshold figures quoted on other sites. None of them come from Roobet. The only reliable way to never be held up is to verify the day you sign up.</p>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px">Do not rely on an unofficial dollar threshold to decide whether you need KYC. Verification and withdrawal approval are separate checks; more information may be requested later.</p>
 
   <h2 class="rv">Documents Roobet Accepts</h2>
   <div class="cards c3 rv" style="margin:20px 0 14px">
@@ -2423,10 +2423,10 @@ PAGES["how-to-kyc-on-roobet.html"] = dict(
   </div>
 
   <h2 class="rv">How Long Does Roobet Verification Take?</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 30px">There is no guaranteed turnaround. Clean uploads with matching details move fastest; anything that triggers a manual review takes longer. What slows it down and when to chase support: <a href="https://www.howtokyc.com/roobet-kyc-verification-time" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet KYC verification time</a>.</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">There is no guaranteed turnaround. Submit readable documents and matching details; the official guide does not promise a fixed review deadline. What slows it down and when to chase support: <a href="https://www.howtokyc.com/roobet-kyc-verification-time" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet KYC verification time</a>.</p>
 
   <h2 class="rv">Pass It First Try</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 14px">Three mistakes cause almost every rejection: blurry or cropped photos, account details that don't exactly match the ID (name spelling, date of birth), and expired documents. Get those right and it's one-and-done.</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 14px">Check for blurry or cropped photos, expired documents, and differences between your account details and ID. Correcting those issues can make a submission easier to assess, but compliance may still request more information.</p>
   <p class="rv" style="color:var(--muted);margin:0 0 30px">Still stuck? Work through <a href="https://www.howtokyc.com/roobet-verification-problems" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet verification problems</a>, then contact <a href="https://help.roobet.com/en/" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Roobet's Help Center</a>. Our <a href="{TELEGRAM}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">VIP team on Telegram</a> can point you in the right direction, but no affiliate can approve KYC &mdash; and <b>never send ID images to anyone in chat</b>. Lock the account down too: <a href="/how-to-enable-roobet-2fa" style="color:var(--gold);font-weight:700">enable Roobet 2FA</a>.</p>
 
   <h2 class="rv" style="margin-bottom:20px">Roobet KYC FAQ</h2>
@@ -2577,25 +2577,25 @@ PAGES["best-roobet-slots.html"] = dict(
 
 # ================= BLOG: HOW TO WITHDRAW =================
 wd_faq = [
-    ("How long do Roobet withdrawals take?", "Once your requirements are met, the withdrawal is sent and the clock is the blockchain. Roobet's Help Center says a transaction needs 1 confirmation for BTC, LTC, XRP, TRX and DOGE, or 3 for ETH, USDT and USDC, before your wallet credits it. Some wallets require more confirmations, and Bitcoin slows down when the network is congested."),
+    ("How long do Roobet withdrawals take?", "There is no guaranteed arrival time. First check whether the withdrawal has a transaction ID. Once broadcast, network confirmations and the receiving wallet's crediting policy determine when funds appear. If no transaction ID is available or the account shows a restriction, contact official Roobet support."),
     ("What is the minimum wager to withdraw crypto on Roobet?", "100% of your deposit. Under Roobet's AML policy you must wager the full amount of a crypto deposit before you can withdraw, tip or use instant raffles. Deposit $200 and you need $200 in wagers first. Only settled sportsbook bets count."),
-    ("What is the minimum withdrawal on Roobet?", "It depends on the coin. Roobet does not publish one fixed minimum; the current minimum and network fee for each currency are shown on the Withdraw tab of the Cashier before you confirm. If your balance is below it, switch to a different coin or keep playing until you clear it."),
+    ("What is the minimum withdrawal on Roobet?", "It depends on the coin. Roobet does not publish one fixed minimum; the current minimum and network fee for each currency are shown on the Withdraw tab of the Cashier before you confirm. If your balance is below it, ask official support which options are available. Do not gamble or deposit more just to reach a withdrawal minimum."),
     ("Can you cash out on Roobet?", "Yes. Roobet pays out in crypto to your own external wallet: BTC, ETH, LTC, USDT, USDC, XRP, TRX, DOGE, SUI, SOL and BNB. Copy the receive address from your wallet, paste it into the Cashier's Withdraw tab, enter the amount and select Withdraw Funds."),
     ("Why can't I withdraw from Roobet?", "Usually one of five things: you haven't wagered 100% of your deposit yet, the deposit hasn't reached its required confirmations, the amount is below that coin's minimum, the address is a smart contract (Roobet doesn't support those), or your account has a verification or compliance request open. Check each in that order before contacting support."),
-    ("Does Roobet verify you before a withdrawal?", "It can. Roobet's compliance team may request Level 2 ID verification at any time, and a withdrawal is the most common trigger. Verifying the day you sign up means a win is never left waiting on documents."),
+    ("Does Roobet verify you before a withdrawal?", "Verification may be required. Follow the request in your account settings. Completing KYC does not guarantee withdrawal approval or remove separate wagering and compliance checks."),
     ("Can I withdraw a tip someone sent me on Roobet?", "Yes, once it is wagered. Roobet's AML guidance says a received tip must be wagered at 30% of its value before it can be withdrawn — a $100 tip needs $30 in wagers. Our tips guide covers when tipping unlocks on an account."),
-    ("Are there withdrawal fees on Roobet?", "Roobet doesn't charge a withdrawal fee of its own. You do pay the blockchain network fee, which is shown at the bottom of the Cashier's Withdraw page before you confirm. Faster, cheaper chains like Litecoin or Solana usually cost a fraction of Bitcoin."),
+    ("Are there withdrawal fees on Roobet?", "Check the current fee shown in the Cashier for the selected currency and network before confirming. This guide covers crypto withdrawals; fiat payment methods can have separate conditions."),
 ]
 wd_faq_html = "".join(f'<details class="rv"><summary>{q}</summary><div class="a">{a}</div></details>' for q, a in wd_faq)
 
 PAGES["how-to-withdraw-on-roobet.html"] = dict(
     title="Roobet Withdrawal Guide: Times, Minimums & Rules (2026)",
-    desc="How to withdraw from Roobet in 2026: the 100% wager rule, confirmations per coin, network fees, withdrawal times and what to fix when a cash-out won't go through.",
+    desc="How to withdraw from Roobet in 2026: the 100% wager rule, network fees, withdrawal tracking, confirmation requirements and what to fix when a cash-out won't go through.",
     kw="roobet withdrawal, how to withdraw from roobet, roobet withdrawal time, roobet minimum withdrawal, roobet minimum wager to withdraw crypto, can you cash out on roobet, roobet withdrawal verification",
     schema=[
         {"@context": "https://schema.org", "@type": "Article",
          "headline": "Roobet Withdrawal Guide: Times, Minimums & Rules",
-         "datePublished": "2026-08-07", "dateModified": "2026-11-06",
+         "datePublished": "2026-08-07", "dateModified": "2026-11-25",
          "author": {"@type": "Organization", "name": "RoobetHub"},
          "publisher": {"@type": "Organization", "name": "RoobetHub", "logo": {"@type": "ImageObject", "url": SITE + "/assets/apple-touch-icon.png"}},
          "image": SITE + "/assets/og-image.png"},
@@ -2606,22 +2606,22 @@ PAGES["how-to-withdraw-on-roobet.html"] = dict(
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / How to Withdraw on Roobet</p>
-  <span class="eyebrow rv">💸 Guide · 7 min read · Updated 6 November 2026</span>
+  <span class="eyebrow rv">💸 Guide · 7 min read · Updated 25 November 2026</span>
   <h1 class="rv d1">Roobet <span class="grad">Withdrawal</span> Guide: Times, Minimums &amp; Rules</h1>
   <p class="lead rv d2">You hit the win &mdash; now get it out clean. The exact rules Roobet applies before a cash-out, how long each coin takes, and what to fix when a withdrawal won't go through. Checked against Roobet's official Help Center.</p>
 </div></section>
 
 <section style="padding-top:10px"><div class="wrap" style="max-width:860px">
   <h2 class="rv">How to Withdraw from Roobet (Quick Answer)</h2>
-  <p class="rv" style="color:var(--text);margin:12px 0 30px;font-size:17px">Wager <b>100% of your deposit</b>, wait for the deposit's blockchain confirmations, then open <b>Cashier &rarr; Withdraw</b>, pick your coin, paste your own wallet's receive address, enter the amount and select <b>Withdraw Funds</b>. Roobet charges no withdrawal fee &mdash; you only pay the network fee shown before you confirm.</p>
+  <p class="rv" style="color:var(--text);margin:12px 0 30px;font-size:17px">Wager <b>100% of your deposit</b>, wait for the deposit's blockchain confirmations, then open <b>Cashier &rarr; Withdraw</b>, pick your coin, paste your own wallet's receive address, enter the amount and select <b>Withdraw Funds</b>. Check all fees shown before you confirm. This walkthrough covers cryptocurrency withdrawals; other payment methods can have different rules.</p>
 
   <h2 class="rv">Roobet Withdrawal Requirements</h2>
   <div class="cards c3 rv" style="margin:20px 0 14px">
     <div class="card"><div class="glow"></div><div class="ic">🔁</div><h3>Wager 100% of Your Deposit</h3><p>Roobet's AML rule: a crypto or cash deposit must be wagered in full before withdrawal. Deposit $200, wager $200. Only settled sports bets count.</p></div>
     <div class="card"><div class="glow"></div><div class="ic">⛓️</div><h3>Deposit Confirmed</h3><p>Your deposit needs 1 confirmation (BTC, LTC, XRP) or 3 (ETH, USDT, USDC) before those funds can be withdrawn or tipped.</p></div>
-    <div class="card"><div class="glow"></div><div class="ic">🪪</div><h3>Account in Good Standing</h3><p>Compliance can request <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">ID verification</a> at any time &mdash; a withdrawal is the most common trigger.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">🪪</div><h3>Account in Good Standing</h3><p>Compliance can request <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">ID verification</a> at any time &mdash; follow any verification request shown in your account.</p></div>
   </div>
-  <p class="rv" style="color:var(--muted);margin:0 0 30px">The full breakdown, including the 30% rule on received tips, is in our <a href="/roobet-wagering-requirements" style="color:var(--gold);font-weight:700">Roobet wagering requirements guide</a>. Verify early with our <a href="/how-to-kyc-on-roobet" style="color:var(--gold);font-weight:700">KYC guide</a> or <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> so a win never waits on documents.</p>
+  <p class="rv" style="color:var(--muted);margin:0 0 30px">The full breakdown, including the 30% rule on received tips, is in our <a href="/roobet-wagering-requirements" style="color:var(--gold);font-weight:700">Roobet wagering requirements guide</a>. Verify early with our <a href="/how-to-kyc-on-roobet" style="color:var(--gold);font-weight:700">KYC guide</a> or <a href="{KYC}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">HowToKYC.com</a> to understand the document requirements. Verification does not guarantee a processing time.</p>
 
   <h2 class="rv">Withdrawing, Step by Step</h2>
   <div style="display:grid;gap:12px;margin:20px 0 30px">
@@ -2632,7 +2632,7 @@ PAGES["how-to-withdraw-on-roobet.html"] = dict(
   </div>
 
   <h2 class="rv">How Long Do Roobet Withdrawals Take?</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 18px">Once the withdrawal is sent, timing is down to the blockchain. Roobet's Help Center lists these confirmation requirements before your wallet receives the funds &mdash; some wallets ask for more:</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 18px">First distinguish a pending request from a broadcast transaction. Once sent, network confirmation time and your receiving wallet determine when funds are credited. Roobet's Help Center lists these confirmation requirements before your wallet receives the funds &mdash; some wallets ask for more:</p>
   <div class="rv" style="overflow-x:auto;margin:0 0 14px">
     <table class="tbl">
       <thead><tr><th>Coin</th><th>Confirmations</th><th>Typical speed</th></tr></thead>
@@ -2645,14 +2645,22 @@ PAGES["how-to-withdraw-on-roobet.html"] = dict(
   </div>
   <p class="rv" style="color:var(--muted);margin:0 0 30px">To track a withdrawal, grab the transaction ID from your Roobet notifications or withdrawal history and paste it into that coin's block explorer.</p>
 
+  <h2 class="rv">Find the Stage Where a Withdrawal Is Stuck</h2>
+  <ul class="rv" style="color:var(--muted);line-height:1.8;padding-left:24px">
+    <li><b>No transaction ID:</b> check withdrawal history and any account message, then contact official support. A block explorer cannot track a transfer that has not been broadcast.</li>
+    <li><b>Transaction ID, awaiting confirmations:</b> check the correct network explorer. Do not submit another withdrawal just because the first has not arrived.</li>
+    <li><b>Confirmed but not credited:</b> verify the destination and network, then ask the receiving wallet or exchange about its confirmation and deposit requirements. Never share a seed phrase or private key.</li>
+  </ul>
+  <p class="rv" style="color:var(--muted)">Sources reviewed 25 November 2026: <a href="https://help.roobet.com/en/articles/7046316-how-to-withdraw-via-cryptocurrency">official crypto withdrawal instructions</a>, <a href="https://help.roobet.com/en/articles/4733940-i-have-not-received-my-withdrawal">missing withdrawal guidance</a> and <a href="https://help.roobet.com/en/articles/13239839-wagering-requirements">wagering requirements</a>.</p>
+
   <h2 class="rv">Minimum Withdrawal &amp; Fees</h2>
-  <p class="rv" style="color:var(--muted);margin:12px 0 30px">Roobet doesn't publish one fixed minimum withdrawal &mdash; it varies by coin, and the live minimum and network fee are shown on the Withdraw tab before you confirm. Roobet itself charges <b>no withdrawal fee</b>; the only cost is the blockchain network fee. If you're below the minimum on one coin, a cheaper chain like Litecoin is usually the fix.</p>
+  <p class="rv" style="color:var(--muted);margin:12px 0 30px">Roobet doesn't publish one fixed minimum withdrawal &mdash; it varies by coin, and the live minimum and network fee are shown on the Withdraw tab before you confirm. Review the network fee and any other charges displayed for your selected withdrawal method before confirming. If your balance is below the minimum, ask official support about available options. Do not increase spending to unlock a withdrawal.</p>
 
   <h2 class="rv">If Your Withdrawal Won't Go Through</h2>
   <div class="cards c3 rv" style="margin:20px 0 30px">
     <div class="card"><div class="glow"></div><div class="ic">🔁</div><h3>Wager Not Met</h3><p>You haven't wagered 100% of the deposit yet. Check your remaining requirement in the Cashier.</p></div>
     <div class="card"><div class="glow"></div><div class="ic">⏳</div><h3>Deposit Unconfirmed</h3><p>The deposit is still waiting on its 1 or 3 blockchain confirmations.</p></div>
-    <div class="card"><div class="glow"></div><div class="ic">📉</div><h3>Below Minimum</h3><p>Each coin has its own minimum &mdash; switch coins or top the amount up.</p></div>
+    <div class="card"><div class="glow"></div><div class="ic">📉</div><h3>Below Minimum</h3><p>Each coin has its own minimum &mdash; ask official support about available options; do not deposit or gamble more to reach it.</p></div>
     <div class="card"><div class="glow"></div><div class="ic">📄</div><h3>Contract Address</h3><p>Roobet can't send to smart-contract addresses. Use a standard wallet address.</p></div>
     <div class="card"><div class="glow"></div><div class="ic">🪪</div><h3>Verification Open</h3><p>Compliance has requested documents. Complete <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">KYC</a> and resubmit.</p></div>
     <div class="card"><div class="glow"></div><div class="ic">🌍</div><h3>Region Restricted</h3><p>Roobet doesn't serve every country &mdash; see the <a href="/roobet-restricted-countries" style="color:var(--gold)">restricted countries list</a>.</p></div>
@@ -2960,7 +2968,7 @@ PAGES["how-to-enable-roobet-2fa.html"] = dict(
 
 # ================= BLOG: RESTRICTED COUNTRIES =================
 regions_faq = [
-    ("Can residents of the United States use Roobet?", "Roobet's restricted-regions article reviewed on 7 October 2026 lists the United States among jurisdictions whose residents may not access the website or register an account."),
+    ("Can residents of the United States use Roobet?", "Roobet's restricted-regions article reviewed on 25 November 2026 lists the United States among jurisdictions whose residents may not access the website or register an account."),
     ("Why can an available Roobet account still be missing a game?", "Third-party game providers apply their own regional restrictions. A provider or individual game may be unavailable even where the Roobet account itself is permitted."),
     ("Can I use a VPN to bypass a Roobet restriction?", "No. Do not disguise your location or submit false information to bypass account or provider restrictions. Check the official policies and applicable local law."),
     ("Where should I verify current regional availability?", "Check Roobet's current Restricted Regions and Regional Restrictions by Game Provider Help Center articles, the Terms of Service and the availability shown in your authenticated account."),
@@ -2972,23 +2980,24 @@ PAGES["roobet-restricted-countries.html"] = dict(
     og_image="/assets/roobet-restricted-countries.webp",
     og_type="article",
     schema=[
-        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Restricted Countries and Game Provider Rules","description":"A current guide to Roobet account restrictions and separate third-party game-provider rules.","image":SITE + "/assets/roobet-restricted-countries.webp","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Organization","name":"RoobetHub Editorial Team"},"publisher":{"@type":"Organization","name":"RoobetHub","url":SITE + "/"}},
+        {"@context":"https://schema.org","@type":"Article","headline":"Roobet Restricted Countries and Game Provider Rules","description":"A current guide to Roobet account restrictions and separate third-party game-provider rules.","image":SITE + "/assets/roobet-restricted-countries.webp","datePublished":"2026-10-07","dateModified":"2026-11-25","author":{"@type":"Organization","name":"RoobetHub Editorial Team"},"publisher":{"@type":"Organization","name":"RoobetHub","url":SITE + "/"}},
         {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in regions_faq]},
     ],
     body=f"""
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / <a href="/blog">Blog</a> / Regional Eligibility</p>
-  <span class="eyebrow rv">🌍 Eligibility Guide · Published 7 October 2026</span>
+  <span class="eyebrow rv">🌍 Eligibility Guide · Updated 25 November 2026</span>
   <h1 class="rv d1">Roobet Restricted Countries <span class="grad">&amp; Provider Rules</span></h1>
   <p class="lead rv d2">Roobet account access and individual casino-game availability are controlled by different restriction lists. Understanding that distinction prevents many registration and KYC problems.</p>
 </div></section>
 <section style="padding-top:10px"><article class="wrap" style="max-width:880px">
   <img class="rv" src="/assets/roobet-restricted-countries.webp" alt="Roobet restricted countries and game provider availability" width="1200" height="630" style="width:100%;height:auto;border-radius:18px;border:1px solid var(--border);margin-bottom:34px">
-  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">RoobetHub Editorial Team</a> · Reviewed 7 October 2026 · 9 min read</p>
+  <p class="rv" style="color:var(--muted);font-size:.88rem">By <a href="/transparency" style="color:var(--gold)">RoobetHub Editorial Team</a> · Reviewed 25 November 2026 · 9 min read</p>
   <div class="card rv" style="border-color:rgba(255,199,0,.38);margin-top:24px"><h2 style="font-size:1.25rem">Two different questions</h2><p><b>Account eligibility:</b> may a resident access Roobet or register an account? <b>Provider availability:</b> if the account is allowed, may a particular studio supply its games in that location? Passing the first test does not guarantee every game will appear.</p></div>
 
+  <p class="rv" style="color:var(--muted)"><b>Quick answer:</b> the United States, United Kingdom and Australia are on Roobet's restricted-resident list. A country being absent from this list does not establish local legality or guarantee access. Check the current terms and official support before registering or depositing.</p>
   <h2 class="rv" style="margin-top:48px">Roobet's Current Account-Level Restricted List</h2>
-  <p class="rv" style="color:var(--muted)">Roobet's official Restricted Regions article, dated 25 August 2026 and checked again on 7 October 2026, lists residents of the following jurisdictions and territories as unable to access the website or register an account:</p>
+  <p class="rv" style="color:var(--muted)">Roobet's official Restricted Regions article, dated 25 August 2026 and checked again on 25 November 2026, lists residents of the following jurisdictions and territories as unable to access the website or register an account:</p>
   <div class="card rv"><p style="color:var(--muted);line-height:1.9;margin:0">Aruba, Australia, Bonaire, Cuba, Curaçao, Cyprus, Gibraltar, Haiti, Iran, Iraq, Malta, Myanmar, Netherlands, Nicaragua, North Korea, Saba, Saint Maarten, Saint Martin, South Sudan, Statia, Syria, United States, United Kingdom, Yemen and Zimbabwe.</p></div>
   <p class="rv" style="color:var(--muted)">This list is time-sensitive. Do not treat a copied list as permanent legal advice. Roobet's current Help Center, Terms of Service and the laws applying where you are located control eligibility.</p>
 
@@ -3006,7 +3015,7 @@ PAGES["roobet-restricted-countries.html"] = dict(
   <p class="rv" style="color:var(--muted)">If you are eligible and proceed, our <a href="/how-to-kyc-on-roobet" style="color:var(--gold)">KYC guide</a> explains verification, while the <a href="/how-to-enable-roobet-2fa" style="color:var(--gold)">2FA guide</a> covers account security.</p>
 
   <h2 class="rv" style="margin-top:48px">Primary Sources</h2>
-  <p class="rv" style="color:var(--muted)">This guide was checked against Roobet's official <a href="https://help.roobet.com/en/articles/13686927-roobet-restricted-regions" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Restricted Regions</a> and <a href="https://help.roobet.com/en/articles/6610575-regional-restrictions-by-game-provider" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Regional Restrictions by Game Provider</a> articles on 7 October 2026.</p>
+  <p class="rv" style="color:var(--muted)">This guide was checked against Roobet's official <a href="https://help.roobet.com/en/articles/13686927-roobet-restricted-regions" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Restricted Regions</a> and <a href="https://help.roobet.com/en/articles/6610575-regional-restrictions-by-game-provider" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Regional Restrictions by Game Provider</a> articles on 25 November 2026.</p>
 
   <h2 class="rv" style="margin-top:48px">Restricted Countries FAQ</h2>
   <div class="faq rv" style="max-width:none">{"".join(f'<div class="faq-item"><button>{q}<span>+</span></button><div class="answer"><p>{a}</p></div></div>' for q,a in regions_faq)}</div>
@@ -3541,9 +3550,9 @@ urls = [SITE + "/"] + [SITE + "/" + f[:-5] for f in PAGES if f != "index.html"]
 # bump a page's date ONLY when its content really changed
 lastmods = {
     f"{SITE}/": "2026-11-05",
-    f"{SITE}/blog": "2026-11-06",
-    f"{SITE}/how-to-withdraw-on-roobet": "2026-11-06",
-    f"{SITE}/how-to-kyc-on-roobet": "2026-11-05",
+    f"{SITE}/blog": "2026-11-25",
+    f"{SITE}/how-to-withdraw-on-roobet": "2026-11-25",
+    f"{SITE}/how-to-kyc-on-roobet": "2026-11-25",
     f"{SITE}/transparency": "2026-11-06",
     f"{SITE}/free-spins": "2026-11-05",
     f"{SITE}/roobet-deposit-bonus-free-spins": "2026-11-05",
@@ -3551,7 +3560,7 @@ lastmods = {
     f"{SITE}/exclusive-promotions": "2026-11-05",
     f"{SITE}/roobet-wagering-requirements": "2026-10-07",
     f"{SITE}/how-to-enable-roobet-2fa": "2026-10-07",
-    f"{SITE}/roobet-restricted-countries": "2026-10-07",
+    f"{SITE}/roobet-restricted-countries": "2026-11-25",
     f"{SITE}/leaderboard": "2026-11-12",
     f"{SITE}/roobet-rewards": "2026-11-12",
     f"{SITE}/roobet-rewards-guide": "2026-11-12",
