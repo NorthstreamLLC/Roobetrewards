@@ -2016,12 +2016,12 @@ _tr_milestone_tile = (f"""
     <div class="tr-stat" data-tile="milestones"><span class="trs-l">Milestone pool</span><b class="trs-v">$11,350</b><span class="trs-n">Guaranteed, claimable every month</span></div>""")
 
 PAGES["transparency.html"] = dict(
-    title="Roobet Rewards Transparency Report — Live Payout Data",
-    desc="Transparency report for Roobet rewards under codes DAILY and ELITE: $2.3M+ paid to players and rising, the payout ledger, fixed prize pools and verified merch claims — with the methodology stated in full.",
+    title="Roobet Rewards Transparency: Records & Estimates",
+    desc="RoobetHub community reward records, published prize pools and payout estimates. See the last reported tally, estimate method and limits of the figures.",
     kw="roobet rewards transparency, roobet payout proof, roobet rewards paid out, roobet casino rewards proof, roobet affiliate payouts",
     schema={"@context": "https://schema.org", "@type": "Dataset",
             "name": "RoobetHub — Payout and Wager Transparency Report",
-            "description": "Aggregate community wager totals and reward payouts for players using Roobet affiliate codes DAILY and ELITE, refreshed from the Roobet affiliate API.",
+            "description": "Community reward records and published prize pools. The headline total is projected from a reported historical tally and monthly average; it is not a live payout ledger.",
             "url": SITE + "/transparency",
             "license": "https://creativecommons.org/licenses/by/4.0/",
             "creator": {"@type": "Organization", "name": "RoobetHub"},
@@ -2030,31 +2030,29 @@ PAGES["transparency.html"] = dict(
     body=f"""
 <section class="page-hero"><div class="wrap">
   {crumb("Transparency Report")}
-  <span class="eyebrow rv">&#128202; Open Data</span>
+  <span class="eyebrow rv">Community records · Updated 25 November 2026</span>
   <h1 class="rv d1">Roobet Rewards <span class="grad">Transparency Report</span></h1>
-  <p class="lead rv d2">Every rewards site claims big numbers. This page publishes ours &mdash; community
-    wager totals, what has actually been paid out, and exactly how each figure is calculated.
-    Live from the Roobet affiliate API, not a screenshot.</p>
+  <p class="lead rv d2">This page separates reported reward records, published prize pools and estimates. The headline counter is projected from a historical tally and an average monthly rate; it is not a live total of confirmed payments. Community wager totals are not published here.</p>
 </div></section>
 
 <section style="padding-top:6px"><div class="wrap">
   <div class="tr-hero rv">
-    <span class="trh-l">Given away to players</span>
+    <span class="trh-l">Estimated community rewards total</span>
     <b class="trh-v" id="tr-given" data-roll data-base="{TRANSPARENCY['given_away_base']}" data-rate="{TRANSPARENCY['given_away_rate']}" data-since="{TRANSPARENCY['given_away_since']}">{TRANSPARENCY['given_away']}</b>
-    <span class="trh-n">{TRANSPARENCY['given_away_note']}</span>
+    <span class="trh-n">Last reported tally: {TRANSPARENCY['given_away']} on {TRANSPARENCY['given_away_since_label']}. Growth since then is estimated, not confirmed payout data.</span>
   </div>
   <div class="tr-grid rv" id="tr-stats">
     <div class="tr-stat"><span class="trs-l">Leaderboard pool</span><b class="trs-v">$50,000</b><span class="trs-n">Paid every period, fixed commitment</span></div>{_tr_milestone_tile}
     <div class="tr-stat"><span class="trs-l">Merch shipped</span><b class="trs-v" id="tr-merch" data-base="{TRANSPARENCY['merch_baseline']}">{TRANSPARENCY['merch_baseline']}</b><span class="trs-n">Verified max wins, shipped free</span></div>
   </div>
-  <p class="tr-updated rv" id="tr-updated">Loading live figures&hellip;</p>
+  <p class="tr-updated rv" id="tr-updated">Loading shipped-claim count&hellip;</p>
 </div></section>
 
 <section style="padding-top:20px"><div class="wrap">
   <div class="center rv promo-head">
     <span class="eyebrow">&#10003; The Ledger</span>
-    <h2>What We've Actually Paid</h2>
-    <p class="lead">Named payouts, newest first. Usernames are masked the same way they appear on the live leaderboard.</p>
+    <h2>Published Payout Records</h2>
+    <p class="lead">Selected community payout records, newest first. This list is not a complete ledger reconciling the estimated headline total. Usernames are masked.</p>
   </div>
   <div class="pay-list rv">{payout_ledger}</div>
 </div></section>
@@ -2067,7 +2065,7 @@ PAGES["transparency.html"] = dict(
     <div class="card rv d2"><div class="glow"></div><div class="ic">&#128085;</div><h3>Merch shipped</h3><p>{TRANSPARENCY['merch_baseline']} shirts have gone out to players who hit a max win, counted only once the win was verified against their Roobet account and the shirt actually shipped. Claims submitted through the form on this site are added on top automatically; pending and rejected claims are excluded.</p></div>
     <div class="card rv d3"><div class="glow"></div><div class="ic">&#9888;&#65039;</div><h3>What this does not include</h3><p>Roobet's own rakeback, daily, weekly and monthly bonuses are paid by Roobet directly and are not counted here &mdash; they sit on top. We also don't publish community wager totals or player counts, for competitive reasons.</p></div>
   </div>
-  <p class="tr-note rv">Figures refresh every 10 minutes. If a number looks wrong,
+  <p class="tr-note rv">The shipped-claim count is fetched separately. Refreshing it does not verify or reconcile the estimated headline total. If a number looks wrong,
     <a href="/contact">tell us</a> &mdash; we would rather correct it than defend it.</p>
 </div></section>
 """)
@@ -3493,13 +3491,13 @@ PAGE_FAQS = {
  ("Are the Roobet guides kept up to date?",
   "Yes. Guides are reviewed as Roobet changes its payment methods, verification requirements and rewards structure, so the steps match what you will actually see."),
  ("Which Roobet guide should I read first?",
-  "If you are new, start with how to deposit on Roobet, then how to KYC on Roobet — verification is required before your first withdrawal, so doing it early saves time later."),
+  "Start with regional eligibility and the KYC guide before depositing. Follow the verification requests in your own account; verification does not guarantee a withdrawal deadline."),
 ],
 "transparency.html": [
- ("What does the given-away counter cover?",
-  "Rewards paid to players across every program since launch: leaderboard cash, wager milestones, free spins, promo payouts, Max Win Merch and VIP perks. It was last tallied at $2,304,492 on 6 November 2026; between tallies the counter advances at our average payout rate of $105,926 per month, and it is reset to the real total at each new tally."),
+ ("Is the headline rewards counter a confirmed payout total?",
+  "No. It projects community rewards from the reported tally of $2,304,492 on 6 November 2026, using an average rate of $105,926 per month. Growth after that tally is an estimate, not confirmation of individual payments. Published payout records and prize pools are shown separately."),
  ("Why don't you publish community wager totals?",
-  "Wager volume and player counts would tell competing affiliates the size of our Roobet deal, so we keep them private. Everything shown on this page is either a fixed commitment or something already paid out."),
+  "Wager volume and player counts would tell competing affiliates the size of our Roobet deal, so we keep them private. This report distinguishes reported historical payouts, published reward pools and the estimated headline counter."),
  ("Does the transparency report include Roobet's own bonuses?",
   "No. Roobet's rakeback, daily, weekly and monthly bonuses are paid by Roobet directly and sit on top of everything counted here. The report covers only rewards paid through codes DAILY and ELITE."),
 ],
@@ -3572,7 +3570,7 @@ lastmods = {
     f"{SITE}/blog": "2026-11-25",
     f"{SITE}/how-to-withdraw-on-roobet": "2026-11-25",
     f"{SITE}/how-to-kyc-on-roobet": "2026-11-25",
-    f"{SITE}/transparency": "2026-11-06",
+    f"{SITE}/transparency": "2026-11-25",
     f"{SITE}/free-spins": "2026-11-05",
     f"{SITE}/roobet-deposit-bonus-free-spins": "2026-11-05",
     f"{SITE}/how-to-deposit-on-roobet": "2026-11-05",

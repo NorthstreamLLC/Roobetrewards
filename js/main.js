@@ -606,9 +606,9 @@ document.querySelectorAll('.flip').forEach(c => {
   const wrap = document.getElementById('tr-stats');
   if (!wrap) return;
   const $ = id => document.getElementById(id);
-  const stamp = t => 'Figures refreshed ' +
+  const stamp = t => 'Shipped-claim count refreshed ' +
     new Date(t || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
-    ' · verified payouts only';
+    ' · headline total remains an estimate';
 
   // the tile is already rendered with the historical baseline; live claims add on top
   const el = $('tr-merch');
@@ -623,7 +623,7 @@ document.querySelectorAll('.flip').forEach(c => {
       $('tr-updated').textContent = stamp(d.generated);
     })
     .catch(() => {
-      $('tr-updated').textContent = 'Live figures are temporarily unavailable — the totals shown are unaffected.';
+      $('tr-updated').textContent = 'Live shipped-claim count is temporarily unavailable; the historical baseline is shown. The headline total remains an estimate.';
     });
 })();
 
