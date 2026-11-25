@@ -1962,25 +1962,40 @@ for slug, name, prov, img in MERCH:
 DISCORD_GAMBA = "https://discord.gg/dailygamba"
 
 PAGES["exclusive-promotions.html"] = dict(
-    title="Exclusive Roobet Promotions — Limited-Time Cash Drops",
-    desc="Exclusive limited-time Roobet promotions for players under code DAILY or ELITE — wager races, raw cash drops and bonus buys. See what's running now and what's already ended.",
+    title="Roobet Promotions: Current Offers, Eligibility & Past Events",
+    desc="Check current RoobetHub community promotions, code eligibility, offer dates and claim steps. Archived offers are closed and are not available to new entrants.",
     kw="roobet promotions, exclusive roobet promo, roobet wager race, roobet cash drop, code daily promotion",
     body=f"""
 <div class="promo-page">
 <section class="page-hero"><div class="wrap">
   <p class="breadcrumb rv"><a href="/">Home</a> / Exclusive Promotions</p>
-  <span class="eyebrow rv">⚡ Limited Time</span>
-  <h1 class="rv d1"><span class="grad">Exclusive Promotions</span></h1>
+  <span class="eyebrow rv">Community promotions · Updated 25 November 2026</span>
+  <h1 class="rv d1"><span class="grad">Roobet Promotions</span>: Current Offers &amp; Rules</h1>
   <p class="lead rv d2">Short-run promos on top of everything else we give away &mdash; wager races, raw cash drops and bonus buys, only for players under code <b style="color:var(--text)">DAILY</b> or <b style="color:var(--text)">ELITE</b>.</p>
 </div></section>
 
 <section><div class="wrap">
-  <div class="center rv promo-head"><span class="eyebrow">Running Now</span><h2>Active Promotions</h2></div>
+  <div class="center rv promo-head"><span class="eyebrow">Current Status</span><h2>Active Promotions</h2></div>
 </div></section>
 {active_block}
+<section><div class="wrap" style="max-width:880px">
+  <h2>Before You Enter a Promotion</h2>
+  <p>These are community offers for eligible accounts using the code specified on each promotion. An offer may accept DAILY, ELITE or only one of them. This page is an independent RoobetHub listing, not a complete list of Roobet's own promotions.</p>
+  <ol style="color:var(--muted);line-height:1.9;padding-left:24px">
+    <li><b>Check the status and dates.</b> Only an active offer's published window applies. Do not use an archived reward amount or an old social post as evidence that an offer is open.</li>
+    <li><b>Confirm the eligible code.</b> Check your account attribution and the offer's terms before participating. If you are unsure, ask the community team before depositing.</li>
+    <li><b>Read how qualification is measured.</b> Check whether the reward depends on qualifying wagering, a ranking or another condition. Do not assume thresholds or rewards carry between promotions.</li>
+    <li><b>Check the claim method and deadline.</b> Use the instructions attached to that specific offer. If either is missing, contact the team through the linked community channels before taking part.</li>
+    <li><b>Keep the relevant details.</b> Retain the offer name, dates and account username for a claim query. Never send passwords, two-factor codes or identity documents to community chat.</li>
+  </ol>
+  <p>No reward is guaranteed merely by registering or depositing. Do not increase your gambling spend to reach an offer threshold.</p>
+  <h2>Community Offers and Roobet Account Rules</h2>
+  <p>Community promotion eligibility is separate from <a href="/roobet-restricted-countries">regional availability</a>, <a href="/how-to-kyc-on-roobet">identity verification</a> and <a href="/roobet-wagering-requirements">account wagering requirements</a>. A successful claim does not override those requirements or guarantee a withdrawal.</p>
+  <p>For ongoing benefits rather than temporary offers, see the <a href="/roobet-rewards-vs-rakeback-vip">community rewards, rakeback and VIP comparison</a>. Questions about a listed offer can go to the <a href="{TELEGRAM}" target="_blank" rel="noopener">community VIP team</a>; account verification and payment restrictions must be resolved with official Roobet support.</p>
+</div></section>
 
 <section><div class="wrap">
-  <div class="center rv promo-head"><span class="eyebrow">The Archive</span><h2>Past Promotions</h2><p class="lead">What we've already paid out &mdash; so you know these are real.</p></div>
+  <div class="center rv promo-head"><span class="eyebrow">The Archive</span><h2>Past Promotions</h2><p class="lead">Closed community promotions retained for reference. Archived amounts describe those past events, not an offer available today.</p></div>
   <div class="promo-grid" data-promo-slot="past">{past_html}</div>
 </div></section>
 </div>
@@ -3461,12 +3476,16 @@ PAGE_FAQS = {
   "Ranks rise with your total wagered amount, and each rank-up increases your rakeback percentage and bonus sizes. Every rank-up also triggers a +10% rakeboost for 60 minutes."),
 ],
 "exclusive-promotions.html": [
- ("How often do exclusive Roobet promotions run?",
-  "Short-run promos drop regularly and usually last about a week — wager races, raw cash drops and bonus buys for players under code DAILY or ELITE. They are announced on stream and in the VIP Telegram first."),
- ("How do I qualify for an exclusive promotion?",
-  "Your Roobet account has to be registered under code DAILY or ELITE, and you need to meet whatever wager requirement that specific promotion sets during its window."),
- ("What was the last exclusive promotion paid out?",
-  "A $200 raw cash wager race that ran from 28 August to 4 September, requiring $30,000 wagered, paid with no wagering requirement on the reward."),
+ ("Is a Roobet promotion running right now?",
+  "Check the Active Promotions section on this page. If it says no promotion is running, the archived offers are closed. There is no fixed schedule or guaranteed next offer."),
+ ("Which referral code qualifies for a promotion?",
+  "Use the code specified in that offer's terms. Some community offers accept DAILY or ELITE; others apply only to DAILY. Confirm your account attribution before participating."),
+ ("How do I claim a community promotion reward?",
+  "Follow that offer's claim instructions and deadline. Keep the promotion name, dates and account username available. If the instructions are missing or unclear, ask the linked community team before depositing or wagering."),
+ ("Can I still enter a promotion shown in the archive?",
+  "No. Past Promotions lists closed events for reference. Its dates, thresholds and reward amounts do not apply to a new promotion and do not create a current claim entitlement."),
+ ("Does a community reward remove Roobet withdrawal requirements?",
+  "No. Account eligibility, verification, payment checks and applicable wagering requirements are separate. Read the offer terms and the linked account guides before relying on a reward being withdrawable."),
 ],
 "blog.html": [
  ("What do the Roobet guides cover?",
@@ -3557,7 +3576,7 @@ lastmods = {
     f"{SITE}/free-spins": "2026-11-05",
     f"{SITE}/roobet-deposit-bonus-free-spins": "2026-11-05",
     f"{SITE}/how-to-deposit-on-roobet": "2026-11-05",
-    f"{SITE}/exclusive-promotions": "2026-11-05",
+    f"{SITE}/exclusive-promotions": "2026-11-25",
     f"{SITE}/roobet-wagering-requirements": "2026-10-07",
     f"{SITE}/how-to-enable-roobet-2fa": "2026-10-07",
     f"{SITE}/roobet-restricted-countries": "2026-11-25",
